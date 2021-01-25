@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Home from "./components/Home";
 import Login from "./components/Login";
 
 export default class App extends Component {
@@ -8,7 +9,14 @@ export default class App extends Component {
     return (
       <div>
         <BrowserRouter basename={process.env.PUBLIC_URL}>
-          <Login />
+          <Switch>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/main">
+              <Home />
+            </Route>
+          </Switch>
         </BrowserRouter>
       </div>
     );
