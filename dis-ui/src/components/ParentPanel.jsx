@@ -6,7 +6,7 @@ export default class ParentPanel extends Component {
     return (
       <div>
         <NavBar />
-        <h1> SpecialistPanel</h1>
+        <h1> ParentPanel</h1>
       </div>
     );
   }
