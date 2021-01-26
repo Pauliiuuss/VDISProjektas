@@ -1,10 +1,11 @@
-import React, { Component } from "react";
-import logo from "./logo.png";
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+import logo from './logo.png';
 
 class Login extends Component {
   state = {
-    userid: "",
-    password: "",
+    userid: '',
+    password: '',
   };
 
   handleChange = (event) => {
@@ -23,19 +24,19 @@ class Login extends Component {
         <div
           className="mx-auto"
           style={{
-            width: "30rem",
-            marginTop: "5rem",
-            backgroundColor: "#E2E2E2",
-            paddingBottom: "1rem",
+            width: '30rem',
+            marginTop: '5rem',
+            backgroundColor: '#E2E2E2',
+            paddingBottom: '1rem',
           }}
         >
-          <img src={logo} alt="logo" style={{ width: "30rem" }} />
+          <img src={logo} alt="logo" style={{ width: '30rem' }} />
           <form
             className="mx-auto m-2"
-            style={{ width: "25rem" }}
+            style={{ width: '25rem' }}
             onSubmit={this.handleSubmit}
           >
-            <div className="mx-auto form-group" style={{ width: "25rem" }}>
+            <div className="mx-auto form-group" style={{ width: '25rem' }}>
               <label>Prisijungimo vardas</label>
               <input
                 type="text"
@@ -58,9 +59,12 @@ class Login extends Component {
               />
             </div>
             <div className="row justify-content-center">
-              <button type="submit" className="btn btn-secondary">
+              {/* <button type="submit" className="btn btn-secondary">
                 Prisijungti
-              </button>
+              </button> */}
+              <NavLink className="nav-link btn-secondary" to="/admin">
+                Prisijungti
+              </NavLink>
             </div>
           </form>
         </div>

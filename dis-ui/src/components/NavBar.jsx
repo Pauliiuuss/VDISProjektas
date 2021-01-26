@@ -11,12 +11,9 @@ const NavBar = () => {
         <ul className="nav">
           <img src={logo} alt="logo" style={{ width: '5rem' }} />
         </ul>
-        <NavLink to="/admin" className="nav-link text-light">
-          AdminPanel
-        </NavLink>
         <ul className="nav">
           <FontAwesomeIcon icon={faUser} className="text-light mx-3 my-auto" />
-          <span className="text-light my-auto">ADMIN USERNAME</span>
+          <span className="text-light my-auto">ADMIN</span>
           <NavLink className="nav-link text-light" to="/">
             Atsijungti
           </NavLink>

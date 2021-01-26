@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import NavBar from './NavBar';
 
 export default class AdminPanel extends Component {
   render() {
     return (
       <div>
+        <NavBar />
         <div className="container text-center mt-5">
           <NavLink
             to="admin/addParent"
