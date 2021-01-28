@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import Form from 'react-validation/build/form';
-import Input from 'react-validation/build/input';
-import CheckButton from 'react-validation/build/button';
-import { isEmail } from 'validator';
+import React, { Component } from "react";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+import { isEmail } from "validator";
 
-import AuthService from '../services/auth.service';
+import AuthService from "../services/auth.service";
 
 const required = (value) => {
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert">
-        This field is required!
+        Šis laukas privalomas!
       </div>
     );
   }
@@ -20,27 +20,28 @@ const email = (value) => {
   if (!isEmail(value)) {
     return (
       <div className="alert alert-danger" role="alert">
-        This is not a valid email.
+        Nurodykite teisingą el. paštą.
       </div>
     );
   }
 };
 
 const vusername = (value) => {
-  if (value.length < 3 || value.length > 20) {
+  if (value.length < 4 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
-        The username must be between 3 and 20 characters.
+        Vartotojo vardą turi sudaryti nemažiau kaip 4 simboliai.
       </div>
     );
   }
 };
 
 const vpassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
+  if (value.length < 8 || value.length > 40) {
     return (
       <div className="alert alert-danger" role="alert">
-        The password must be between 6 and 40 characters.
+        Slaptažodį turi sudaryti nemažiau kaip 8 simboliai. Slaptažodyje turi
+        būti didžiųjų ir mažųjų raidžių ir bent vienas skaičius.
       </div>
     );
   }
@@ -55,11 +56,11 @@ export default class Register extends Component {
     this.onChangePassword = this.onChangePassword.bind(this);
 
     this.state = {
-      username: '',
-      email: '',
-      password: '',
+      username: "",
+      email: "",
+      password: "",
       successful: false,
-      message: '',
+      message: "",
     };
   }
 
@@ -85,7 +86,7 @@ export default class Register extends Component {
     e.preventDefault();
 
     this.setState({
-      message: '',
+      message: "",
       successful: false,
     });
 
@@ -104,12 +105,7 @@ export default class Register extends Component {
           });
         },
         (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
+          const resMessage = "Įvyko klaida! Bandykite dar kartą.";
 
           this.setState({
             successful: false,
@@ -139,7 +135,7 @@ export default class Register extends Component {
             {!this.state.successful && (
               <div>
                 <div className="form-group">
-                  <label htmlFor="username">Username</label>
+                  <label htmlFor="username">Prisijungimo vardas</label>
                   <Input
                     type="text"
                     className="form-control"
@@ -151,7 +147,7 @@ export default class Register extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">El. paštas</label>
                   <Input
                     type="text"
                     className="form-control"
@@ -163,7 +159,7 @@ export default class Register extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="password">Password</label>
+                  <label htmlFor="password">Slaptažodis</label>
                   <Input
                     type="password"
                     className="form-control"
@@ -175,7 +171,9 @@ export default class Register extends Component {
                 </div>
 
                 <div className="form-group">
-                  <button className="btn btn-primary btn-block">Sign Up</button>
+                  <button className="btn btn-primary btn-block">
+                    Užregistruoti
+                  </button>
                 </div>
               </div>
             )}
@@ -185,8 +183,8 @@ export default class Register extends Component {
                 <div
                   className={
                     this.state.successful
-                      ? 'alert alert-success'
-                      : 'alert alert-danger'
+                      ? "alert alert-success"
+                      : "alert alert-danger"
                   }
                   role="alert"
                 >
@@ -195,7 +193,7 @@ export default class Register extends Component {
               </div>
             )}
             <CheckButton
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               ref={(c) => {
                 this.checkBtn = c;
               }}
