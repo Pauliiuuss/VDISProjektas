@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-import logo from "../img/logo.png";
+import React, { Component } from 'react';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import CheckButton from 'react-validation/build/button';
+import logo from '../img/logo.png';
 
-import AuthService from "../services/auth.service";
+import AuthService from '../services/auth.service';
 
 const required = (value) => {
   if (!value) {
     return (
       <div className="alert alert-danger" role="alert">
-        Privalomi laukai turi būti užpildyti!
+        This field is required!
       </div>
     );
   }
@@ -24,10 +24,10 @@ export default class Login extends Component {
     this.onChangePassword = this.onChangePassword.bind(this);
 
     this.state = {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       loading: false,
-      message: "",
+      message: '',
     };
   }
 
@@ -47,7 +47,7 @@ export default class Login extends Component {
     e.preventDefault();
 
     this.setState({
-      message: "",
+      message: '',
       loading: true,
     });
 
@@ -56,11 +56,16 @@ export default class Login extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       AuthService.login(this.state.username, this.state.password).then(
         () => {
-          this.props.history.push("/dis-app/profile");
+          this.props.history.push('/dis-app/profile');
           window.location.reload();
         },
         (error) => {
-          const resMessage = "Neteisingi prisijungimo vardas ar slaptažodis!";
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
 
           this.setState({
             loading: false,
@@ -81,20 +86,20 @@ export default class Login extends Component {
         <div
           className="mx-auto"
           style={{
-            width: "30rem",
-            marginTop: "5rem",
-            backgroundColor: "#E2E2E2",
-            paddingBottom: "1rem",
+            width: '30rem',
+            marginTop: '5rem',
+            backgroundColor: '#E2E2E2',
+            paddingBottom: '1rem',
           }}
         >
-          <img src={logo} alt="logo" style={{ width: "30rem" }} />
+          <img src={logo} alt="logo" style={{ width: '30rem' }} />
           <Form
             onSubmit={this.handleLogin}
             ref={(c) => {
               this.form = c;
             }}
           >
-            <div className="form-group mx-auto mt-3" style={{ width: "10rem" }}>
+            <div className="form-group mx-auto mt-3" style={{ width: '10rem' }}>
               <label htmlFor="username">Prisijungimo vardas</label>
               <Input
                 type="text"
@@ -106,7 +111,7 @@ export default class Login extends Component {
               />
             </div>
 
-            <div className="form-group mx-auto" style={{ width: "10rem" }}>
+            <div className="form-group mx-auto" style={{ width: '10rem' }}>
               <label htmlFor="password">Slaptažodis</label>
               <Input
                 type="password"
@@ -138,7 +143,7 @@ export default class Login extends Component {
               </div>
             )}
             <CheckButton
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               ref={(c) => {
                 this.checkBtn = c;
               }}
