@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/dis-app/static/css/main.90566059.chunk.css",
+    "main.js": "/dis-app/static/js/main.6f3f7232.chunk.js",
+    "main.js.map": "/dis-app/static/js/main.6f3f7232.chunk.js.map",
+    "runtime-main.js": "/dis-app/static/js/runtime-main.4955cb28.js",
+    "runtime-main.js.map": "/dis-app/static/js/runtime-main.4955cb28.js.map",
+    "static/css/2.ff645aaf.chunk.css": "/dis-app/static/css/2.ff645aaf.chunk.css",
+    "static/js/2.3ca6137f.chunk.js": "/dis-app/static/js/2.3ca6137f.chunk.js",
+    "static/js/2.3ca6137f.chunk.js.map": "/dis-app/static/js/2.3ca6137f.chunk.js.map",
+    "index.html": "/dis-app/index.html",
+    "precache-manifest.8baa4f225d7188cc27e0082f83c5cba9.js": "/dis-app/precache-manifest.8baa4f225d7188cc27e0082f83c5cba9.js",
+    "service-worker.js": "/dis-app/service-worker.js",
+    "static/css/2.ff645aaf.chunk.css.map": "/dis-app/static/css/2.ff645aaf.chunk.css.map",
+    "static/css/main.90566059.chunk.css.map": "/dis-app/static/css/main.90566059.chunk.css.map",
+    "static/js/2.3ca6137f.chunk.js.LICENSE.txt": "/dis-app/static/js/2.3ca6137f.chunk.js.LICENSE.txt",
+    "static/media/logo.png": "/dis-app/static/media/logo.86652faf.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4955cb28.js",
+    "static/css/2.ff645aaf.chunk.css",
+    "static/js/2.3ca6137f.chunk.js",
+    "static/css/main.90566059.chunk.css",
+    "static/js/main.6f3f7232.chunk.js"
+  ]
+}
