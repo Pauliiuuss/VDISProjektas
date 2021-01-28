@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 
 public class RegisterRequest {
 	@NotBlank
-	@Size(min = 8, max = 20)
+	@Size(min = 4, max = 20)
 	private String username;
 
 	private String role;
