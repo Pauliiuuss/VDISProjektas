@@ -56,11 +56,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers("/api/auth/**").permitAll().antMatchers("/console/**").permitAll()
-				.antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**", "favicon.ico")
+				.antMatchers("/**").permitAll().antMatchers("/api/auth/**").permitAll()
+				.antMatchers("/v2/api-docs", "/console/**", "/swagger-resources/**", "/swagger-ui/**", "/webjars/**",
+						"favicon.ico")
 				.permitAll().antMatchers("/api/test/**").permitAll().antMatchers("/oauth/**").permitAll().anyRequest()
 				.authenticated();
 
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+		http.headers().frameOptions().sameOrigin();
 	}
 }
