@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { NavLink, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import AdminService from "../../services/admin.service";
 import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
@@ -20,6 +20,10 @@ export default class AdminMainPage extends Component {
     userReady: false,
   };
 
+  handleClearFields = () => {
+    this.setState({ name: "", pass: "" });
+  };
+
   handleCreate = async (e) => {
     e.preventDefault();
     this.setState({
@@ -28,6 +32,16 @@ export default class AdminMainPage extends Component {
     });
 
     const { name, pass, selectedRole } = this.state;
+
+    if (name === "" || pass === "") {
+      this.setState({
+        successful: false,
+        message:
+          "Prisijungimo vardo ir slaptažodžio laukas negali būti tuščias!",
+        loading: false,
+      });
+      return;
+    }
 
     this.form.validateAll();
     if (this.checkBtn.context._errors.length === 0) {
@@ -77,11 +91,11 @@ export default class AdminMainPage extends Component {
 
   handleSelectChange = (e) => {
     const selectedRole = e.target.value;
-    this.setState({ selectedRole });
+    this.setState({ selectedRole, message: "" });
   };
 
   handleInputChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value, message: "" });
   };
 
   render() {
@@ -136,15 +150,31 @@ export default class AdminMainPage extends Component {
               <label htmlFor="exampleInputPassword1" className="form-label">
                 Priskirti role
               </label>
-              <select
-                defaultValue="ROLE_SPEC"
-                onChange={this.handleSelectChange}
-                className="form-control"
-                id="exampleFormControlSelect1"
-              >
-                <option value="ROLE_SPEC">Švietimo specialistas</option>
-                <option value="ROLE_PARENT">Globėjas</option>
-              </select>
+              <div onChange={this.handleSelectChange} className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="role"
+                  id="ROLE_SPEC"
+                  value="ROLE_SPEC"
+                  defaultChecked
+                />
+                <label className="form-check-label" htmlFor="ROLE_SPEC">
+                  Švietimo specialistas
+                </label>
+              </div>
+              <div onChange={this.handleSelectChange} className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="role"
+                  id="ROLE_PARENT"
+                  value="ROLE_PARENT"
+                />
+                <label className="form-check-label" htmlFor="ROLE_PARENT">
+                  Globėjas
+                </label>
+              </div>
             </div>
             <button
               type="submit"
@@ -157,9 +187,12 @@ export default class AdminMainPage extends Component {
               )}
               Sukurti
             </button>
-            <NavLink to="/admin" className="btn btn-secondary mr-3">
-              Atšaukti
-            </NavLink>
+            <button
+              className="btn btn-secondary mr-3"
+              onClick={this.handleClearFields}
+            >
+              Išvalyti laukus
+            </button>
             {this.state.message && (
               <div className="form-group">
                 <div
