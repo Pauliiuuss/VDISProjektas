@@ -8,6 +8,10 @@ class AdminService {
   createUser(body) {
     return axios.post(API_URL + "create", body, { headers: authHeader() });
   }
+
+  getUsers() {
+    return axios.post(API_URL + "getusers", { headers: authHeader() });
+  }
 }
 
 export default new AdminService();

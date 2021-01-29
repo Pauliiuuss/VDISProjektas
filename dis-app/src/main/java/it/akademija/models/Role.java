@@ -1,6 +1,13 @@
 package it.akademija.models;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "roles")
@@ -36,4 +43,10 @@ public class Role {
 	public void setName(ERole name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return name.toString();
+	}
+
 }
