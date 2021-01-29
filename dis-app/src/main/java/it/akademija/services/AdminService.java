@@ -65,7 +65,7 @@ public class AdminService {
 	@Transactional(readOnly = true)
 	public Collection<UserInfo> getUsers() {
 		return userRepository.findAll().stream()
-				.map(isdb -> new UserInfo(isdb.getId(), isdb.getUsername(), isdb.getPassword()))
+				.map(isdb -> new UserInfo(isdb.getId(), isdb.getUsername(), isdb.getPassword(), isdb.getRoles()))
 				.collect(Collectors.toList());
 	}
 }

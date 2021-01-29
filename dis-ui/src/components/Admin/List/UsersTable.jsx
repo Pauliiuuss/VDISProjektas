@@ -7,7 +7,7 @@ class UsersTable extends Component {
       path: "username",
       label: "Prisijungimo vardas",
     },
-    { path: "role", label: "Rolė" },
+    { path: "roles", label: "Rolė" },
   ];
 
   render() {
