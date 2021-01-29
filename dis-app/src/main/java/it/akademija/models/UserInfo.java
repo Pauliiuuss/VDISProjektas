@@ -1,28 +1,20 @@
 package it.akademija.models;
 
-import java.util.Set;
-
 public class UserInfo {
 
-    private Long id;
-    private String username;
-    private String password;
-    private Set<Role> roles;
+	private Long id;
+	private String username;
+	private String password;
+	private Role role;
 
 	public UserInfo() {
 	}
 
-    public UserInfo(Long id, String username, String password, Set<Role> roles) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
-
-	public UserInfo(Long id, String username, String password) {
+	public UserInfo(Long id, String username, String password, Role role) {
 		this.id = id;
 		this.username = username;
 		this.password = password;
+		this.role = role;
 	}
 
 	public Long getId() {
@@ -41,15 +33,15 @@ public class UserInfo {
 		this.username = username;
 	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
+	public String getRole() {
+		return role.toString();
+	}
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+	public void setRole(Role role) {
+		this.role = role;
+	}
 }

@@ -10,6 +10,7 @@ import Users from "./List/Users";
 
 export default class AdminMainPage extends Component {
   state = {
+    users: [],
     role: "",
     name: "",
     pass: "",
@@ -53,12 +54,11 @@ export default class AdminMainPage extends Component {
       }).then(
         (response) => {
           this.setState({
-            message: response.data.message,
-            successful: true,
             name: "",
             pass: "",
             loading: false,
           });
+          window.location.reload();
         },
         (error) => {
           const resMessage =
@@ -79,8 +79,10 @@ export default class AdminMainPage extends Component {
     this.setState({ loading: false });
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
+    const { data } = await AdminService.getUsers();
+    this.setState({ users: data });
 
     if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
@@ -103,12 +105,12 @@ export default class AdminMainPage extends Component {
   render() {
     if (this.state.redirect) return <Redirect to={this.state.redirect} />;
 
-    const { name, pass } = this.state;
+    const { users, name, pass } = this.state;
 
     return (
       <div className="container">
         <div className="row">
-          <div className="col">
+          <div className="col-4">
             <Form
               className="mt-5"
               ref={(c) => {
@@ -219,7 +221,7 @@ export default class AdminMainPage extends Component {
             </Form>
           </div>
           <div className="col">
-            <Users />
+            <Users users={users} />
           </div>
         </div>
 

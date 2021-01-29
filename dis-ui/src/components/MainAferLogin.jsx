@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AdminService from "../services/admin.service";
 import AuthService from "../services/auth.service";
 import AdminMainPage from "./Admin/AdminMainPage";
 
@@ -10,10 +11,11 @@ class MainAfterLogin extends Component {
     roles: [],
   };
 
-  componentDidMount() {
-    const currentUser = AuthService.getCurrentUser();
+  async componentDidMount() {
+    const currentUser = await AuthService.getCurrentUser();
 
     if (!currentUser) this.setState({ redirect: "/dis-app/home" });
+
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -22,7 +24,7 @@ class MainAfterLogin extends Component {
   }
 
   render() {
-    if (this.state.roles.indexOf('ROLE_ADMIN') > -1) return <AdminMainPage />;
+    if (this.state.roles.indexOf("ROLE_ADMIN") > -1) return <AdminMainPage />;
 
     return (
       <h1>

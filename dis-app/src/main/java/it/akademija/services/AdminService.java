@@ -1,8 +1,6 @@
 package it.akademija.services;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,6 @@ public class AdminService {
 		User user = new User(signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()));
 
 		String role = signUpRequest.getRole();
-		Set<Role> roles = new HashSet<>();
 
 		if (role == null || role.equals("")) {
 			throw new RuntimeException("Error: Role is not found.");
@@ -48,32 +45,25 @@ public class AdminService {
 			if (role.equals("ROLE_SPEC")) {
 				Role specRole = roleRepository.findByName(ERole.ROLE_SPEC)
 						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-				roles.add(specRole);
+				user.setRole(specRole);
+				;
 			} else {
 				Role parentRole = roleRepository.findByName(ERole.ROLE_PARENT)
 						.orElseThrow(() -> new RuntimeException("Error: Role is not found!!!"));
-				roles.add(parentRole);
+				user.setRole(parentRole);
+				;
 			}
 		}
 
-		user.setRoles(roles);
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("Naudotojas užregistruotas!"));
 	}
 
-        return ResponseEntity.ok(new MessageResponse("Naudotojas užregistruotas!"));
-    }
-
-    @Transactional(readOnly = true)
-    public Collection<UserInfo> getUsers(){
-       return userRepository.findAll()
-                .stream()
-                .map( isdb -> new UserInfo(
-                        isdb.getId(),
-                        isdb.getUsername(),
-                        isdb.getPassword(),
-                        isdb.getRoles()))
-                .collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public Collection<UserInfo> getUsers() {
+		return userRepository.findAll().stream()
+				.map(isdb -> new UserInfo(isdb.getId(), isdb.getUsername(), isdb.getPassword(), isdb.getRole()))
+				.collect(Collectors.toList());
+	}
 }
