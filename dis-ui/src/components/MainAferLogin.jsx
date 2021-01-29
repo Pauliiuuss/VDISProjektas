@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import AuthService from "../services/auth.service";
-import AdminMainPage from "./AdminMainPage";
+import React, { Component } from 'react';
+import AuthService from '../services/auth.service';
+import AdminMainPage from './AdminMainPage';
 
 class MainAfterLogin extends Component {
   state = {
     redirect: null,
     userReady: false,
-    currentUser: { username: "" },
+    currentUser: { username: '' },
     roles: [],
   };
 
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
 
-    if (!currentUser) this.setState({ redirect: "/dis-app/home" });
+    if (!currentUser) this.setState({ redirect: '/dis-app/home' });
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -22,7 +22,7 @@ class MainAfterLogin extends Component {
   }
 
   render() {
-    if (this.state.roles.indexOf("ROLE_ADMIN") >= 0) return <AdminMainPage />;
+    if (this.state.roles.indexOf('ROLE_ADMIN') > -1) return <AdminMainPage />;
 
     return (
       <h1>

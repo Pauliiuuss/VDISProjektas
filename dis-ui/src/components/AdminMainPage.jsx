@@ -1,31 +1,31 @@
-import React, { Component } from "react";
-import { NavLink, Redirect } from "react-router-dom";
-import AdminService from "../services/admin.service";
-import CheckButton from "react-validation/build/button";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import AuthService from "../services/auth.service";
+import React, { Component } from 'react';
+import { NavLink, Redirect } from 'react-router-dom';
+import AdminService from '../services/admin.service';
+import CheckButton from 'react-validation/build/button';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import AuthService from '../services/auth.service';
 
 const vusername = (value) => {
   if (value.length === 0) return;
   if (value.length < 4 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
-        Prisijungimo vardas turi būti sudarytas iš ne mažiau kaip 4 simbolių.{" "}
+        Prisijungimo vardas turi būti sudarytas iš ne mažiau kaip 4 simbolių.{' '}
       </div>
     );
   }
 };
 
 const vpassword = (value) => {
-  var paswd = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9].{7,19}$/;
+  var paswd = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9].{7,19}$/;
   if (value.length === 0) return;
 
   if (value.length < 8 || value.length > 20 || value.match(paswd) === null) {
     return (
       <div className="alert alert-danger" role="alert">
         Slaptažodyje, kurį turi sudaryti iš 8–20 simbolių, turi būti bent viena
-        didžioji raidė, viena mažoji raidė, vienas skaičius ir vienas simbolis.
+        didžioji raidė, viena mažoji raidė ir vienas skaičius.
       </div>
     );
   }
@@ -33,23 +33,23 @@ const vpassword = (value) => {
 
 export default class AdminMainPage extends Component {
   state = {
-    role: "",
-    name: "",
-    pass: "",
-    message: "",
+    role: '',
+    name: '',
+    pass: '',
+    message: '',
     successful: false,
-    selectedRole: "ROLE_SPEC",
+    selectedRole: 'ROLE_SPEC',
     loading: false,
     redirect: null,
     userReady: false,
-    currentUser: { username: "" },
+    currentUser: { username: '' },
     roles: [],
   };
 
   handleCreate = async (e) => {
     e.preventDefault();
     this.setState({
-      message: "",
+      message: '',
       loading: true,
     });
 
@@ -66,8 +66,8 @@ export default class AdminMainPage extends Component {
           this.setState({
             message: response.data.message,
             successful: true,
-            name: "",
-            pass: "",
+            name: '',
+            pass: '',
             loading: false,
           });
         },
@@ -93,7 +93,7 @@ export default class AdminMainPage extends Component {
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
 
-    if (!currentUser) this.setState({ redirect: "/dis-app/home" });
+    if (!currentUser) this.setState({ redirect: '/dis-app/home' });
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -191,8 +191,8 @@ export default class AdminMainPage extends Component {
                 <div
                   className={
                     this.state.successful
-                      ? "alert alert-success"
-                      : "alert alert-danger"
+                      ? 'alert alert-success'
+                      : 'alert alert-danger'
                   }
                   role="alert"
                 >
@@ -201,7 +201,7 @@ export default class AdminMainPage extends Component {
               </div>
             )}
             <CheckButton
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               ref={(c) => {
                 this.checkBtn = c;
               }}

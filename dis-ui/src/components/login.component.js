@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-import logo from "../img/logo.png";
+import React, { Component } from 'react';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import CheckButton from 'react-validation/build/button';
+import logo from '../img/logo.png';
 
-import AuthService from "../services/auth.service";
+import AuthService from '../services/auth.service';
 
 const required = (value) => {
   if (!value) {
@@ -24,10 +24,10 @@ export default class Login extends Component {
     this.onChangePassword = this.onChangePassword.bind(this);
 
     this.state = {
-      username: "",
-      password: "",
+      username: '',
+      password: '',
       loading: false,
-      message: "",
+      message: '',
     };
   }
 
@@ -47,7 +47,7 @@ export default class Login extends Component {
     e.preventDefault();
 
     this.setState({
-      message: "",
+      message: '',
       loading: true,
     });
 
@@ -60,7 +60,7 @@ export default class Login extends Component {
           window.location.reload();
         },
         (error) => {
-          const resMessage = "Neteisingi prisijungimo vardas ar slaptažodis!";
+          const resMessage = 'Neteisingi prisijungimo vardas ar slaptažodis!';
 
           this.setState({
             loading: false,
@@ -81,21 +81,21 @@ export default class Login extends Component {
         <div
           className="mx-auto"
           style={{
-            width: "30rem",
-            marginTop: "5rem",
-            backgroundColor: "#E2E2E2",
-            paddingBottom: "1rem",
+            width: '30rem',
+            marginTop: '5rem',
+            backgroundColor: '#E2E2E2',
+            paddingBottom: '1rem',
           }}
         >
-          <img src={logo} alt="logo" style={{ width: "30rem" }} />
+          <img src={logo} alt="logo" style={{ width: '30rem' }} />
           <Form
             onSubmit={this.handleLogin}
             ref={(c) => {
               this.form = c;
             }}
           >
-            <div className="form-group mx-auto mt-3" style={{ width: "10rem" }}>
-              <label htmlFor="username">Prisijungimo vardas</label>
+            <div className="form-group mx-auto mt-3" style={{ width: '10rem' }}>
+              <label htmlFor="username">Vartotojo vardas</label>
               <Input
                 type="text"
                 className="form-control"
@@ -106,7 +106,7 @@ export default class Login extends Component {
               />
             </div>
 
-            <div className="form-group mx-auto" style={{ width: "10rem" }}>
+            <div className="form-group mx-auto" style={{ width: '10rem' }}>
               <label htmlFor="password">Slaptažodis</label>
               <Input
                 type="password"
@@ -138,7 +138,7 @@ export default class Login extends Component {
               </div>
             )}
             <CheckButton
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               ref={(c) => {
                 this.checkBtn = c;
               }}
