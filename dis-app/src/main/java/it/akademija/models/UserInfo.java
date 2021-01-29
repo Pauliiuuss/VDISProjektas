@@ -4,21 +4,20 @@ import java.util.Set;
 
 public class UserInfo {
 
-	private Long id;
-	private String username;
-	private String password;
-	private Set<Role> roles;
+    private Long id;
+    private String username;
+    private String password;
+    private Set<Role> roles;
 
 	public UserInfo() {
 	}
 
-	public UserInfo(Long id, String username, String password, Set<Role> roles) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.roles = roles;
-	}
+    public UserInfo(Long id, String username, String password, Set<Role> roles) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
 
 	public UserInfo(Long id, String username, String password) {
 		this.id = id;
@@ -42,20 +41,15 @@ public class UserInfo {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
-	public String getRoles() {
-		return roles.toString();
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }
