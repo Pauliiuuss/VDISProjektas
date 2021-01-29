@@ -1,44 +1,44 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import AdminService from "../../services/admin.service";
-import CheckButton from "react-validation/build/button";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import AuthService from "../../services/auth.service";
-import { vpassword, vusername } from "./Validation";
-import ListOfUsers from "./ListOfUsers";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import AdminService from '../../services/admin.service';
+import CheckButton from 'react-validation/build/button';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import AuthService from '../../services/auth.service';
+import { vpassword, vusername } from './Validation';
+import ListOfUsers from './ListOfUsers';
 
 export default class AdminMainPage extends Component {
   state = {
-    role: "",
-    name: "",
-    pass: "",
-    message: "",
+    role: '',
+    name: '',
+    pass: '',
+    message: '',
     successful: false,
-    selectedRole: "ROLE_SPEC",
+    selectedRole: 'ROLE_SPEC',
     loading: false,
     redirect: null,
     userReady: false,
   };
 
   handleClearFields = () => {
-    this.setState({ name: "", pass: "" });
+    this.setState({ name: '', pass: '' });
   };
 
   handleCreate = async (e) => {
     e.preventDefault();
     this.setState({
-      message: "",
+      message: '',
       loading: true,
     });
 
     const { name, pass, selectedRole } = this.state;
 
-    if (name === "" || pass === "") {
+    if (name === '' || pass === '') {
       this.setState({
         successful: false,
         message:
-          "Prisijungimo vardo ir slaptažodžio laukas negali būti tuščias!",
+          'Prisijungimo vardo ir slaptažodžio laukas negali būti tuščias!',
         loading: false,
       });
       return;
@@ -55,8 +55,8 @@ export default class AdminMainPage extends Component {
           this.setState({
             message: response.data.message,
             successful: true,
-            name: "",
-            pass: "",
+            name: '',
+            pass: '',
             loading: false,
           });
         },
@@ -82,7 +82,7 @@ export default class AdminMainPage extends Component {
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
 
-    if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    if (!currentUser) this.setState({ redirect: '/dis-app/' });
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -92,11 +92,11 @@ export default class AdminMainPage extends Component {
 
   handleSelectChange = (e) => {
     const selectedRole = e.target.value;
-    this.setState({ selectedRole, message: "" });
+    this.setState({ selectedRole, message: '' });
   };
 
   handleInputChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value, message: "" });
+    this.setState({ [event.target.name]: event.target.value, message: '' });
   };
 
   render() {
@@ -105,10 +105,10 @@ export default class AdminMainPage extends Component {
     const { name, pass } = this.state;
 
     return (
-      <div className="container">
+      <div className="container col-12 col-sm-12 col-md-12 col-lg-12">
         <div>
           <Form
-            className="col-6 mx-auto mt-5"
+            className="col-12 col-sm-12 col-md-6 col-lg-6 mx-auto mt-5"
             ref={(c) => {
               this.form = c;
             }}
@@ -199,8 +199,8 @@ export default class AdminMainPage extends Component {
                 <div
                   className={
                     this.state.successful
-                      ? "alert alert-success"
-                      : "alert alert-danger"
+                      ? 'alert alert-success'
+                      : 'alert alert-danger'
                   }
                   role="alert"
                 >
@@ -209,7 +209,7 @@ export default class AdminMainPage extends Component {
               </div>
             )}
             <CheckButton
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               ref={(c) => {
                 this.checkBtn = c;
               }}
