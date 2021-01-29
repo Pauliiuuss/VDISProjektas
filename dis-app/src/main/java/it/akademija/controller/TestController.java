@@ -35,13 +35,4 @@ public class TestController {
 	public String adminAccess() {
 		return "Admin Board.";
 	}
-
-	@GetMapping("/login")
-	public String showLoginPage(){
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication == null || authentication instanceof AnonymousAuthenticationToken){
-			return "login";
-		}
-		return "redirect:/home";
-	}
 }

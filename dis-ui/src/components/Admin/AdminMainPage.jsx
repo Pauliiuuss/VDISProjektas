@@ -1,59 +1,48 @@
-import React, { Component } from 'react';
-import { NavLink, Redirect } from 'react-router-dom';
-import AdminService from '../services/admin.service';
-import CheckButton from 'react-validation/build/button';
-import Form from 'react-validation/build/form';
-import Input from 'react-validation/build/input';
-import AuthService from '../services/auth.service';
-
-const vusername = (value) => {
-  if (value.length === 0) return;
-  if (value.length < 4 || value.length > 20) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Prisijungimo vardas turi būti sudarytas iš ne mažiau kaip 4 simbolių.{' '}
-      </div>
-    );
-  }
-};
-
-const vpassword = (value) => {
-  var paswd = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9].{7,19}$/;
-  if (value.length === 0) return;
-
-  if (value.length < 8 || value.length > 20 || value.match(paswd) === null) {
-    return (
-      <div className="alert alert-danger" role="alert">
-        Slaptažodyje, kurį turi sudaryti iš 8–20 simbolių, turi būti bent viena
-        didžioji raidė, viena mažoji raidė ir vienas skaičius.
-      </div>
-    );
-  }
-};
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import AdminService from "../../services/admin.service";
+import CheckButton from "react-validation/build/button";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import AuthService from "../../services/auth.service";
+import { vpassword, vusername } from "./Validation";
+import ListOfUsers from "./ListOfUsers";
 
 export default class AdminMainPage extends Component {
   state = {
-    role: '',
-    name: '',
-    pass: '',
-    message: '',
+    role: "",
+    name: "",
+    pass: "",
+    message: "",
     successful: false,
-    selectedRole: 'ROLE_SPEC',
+    selectedRole: "ROLE_SPEC",
     loading: false,
     redirect: null,
     userReady: false,
-    currentUser: { username: '' },
-    roles: [],
+  };
+
+  handleClearFields = () => {
+    this.setState({ name: "", pass: "" });
   };
 
   handleCreate = async (e) => {
     e.preventDefault();
     this.setState({
-      message: '',
+      message: "",
       loading: true,
     });
 
     const { name, pass, selectedRole } = this.state;
+
+    if (name === "" || pass === "") {
+      this.setState({
+        successful: false,
+        message:
+          "Prisijungimo vardo ir slaptažodžio laukas negali būti tuščias!",
+        loading: false,
+      });
+      return;
+    }
 
     this.form.validateAll();
     if (this.checkBtn.context._errors.length === 0) {
@@ -66,8 +55,8 @@ export default class AdminMainPage extends Component {
           this.setState({
             message: response.data.message,
             successful: true,
-            name: '',
-            pass: '',
+            name: "",
+            pass: "",
             loading: false,
           });
         },
@@ -93,7 +82,7 @@ export default class AdminMainPage extends Component {
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
 
-    if (!currentUser) this.setState({ redirect: '/dis-app/home' });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -103,17 +92,17 @@ export default class AdminMainPage extends Component {
 
   handleSelectChange = (e) => {
     const selectedRole = e.target.value;
-    this.setState({ selectedRole });
+    this.setState({ selectedRole, message: "" });
   };
 
   handleInputChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ [event.target.name]: event.target.value, message: "" });
   };
 
   render() {
     if (this.state.redirect) return <Redirect to={this.state.redirect} />;
 
-    const { currentUser, roles, name, pass } = this.state;
+    const { name, pass } = this.state;
 
     return (
       <div className="container">
@@ -162,15 +151,31 @@ export default class AdminMainPage extends Component {
               <label htmlFor="exampleInputPassword1" className="form-label">
                 Priskirti role
               </label>
-              <select
-                defaultValue="ROLE_SPEC"
-                onChange={this.handleSelectChange}
-                className="form-control"
-                id="exampleFormControlSelect1"
-              >
-                <option value="ROLE_SPEC">Švietimo specialistas</option>
-                <option value="ROLE_PARENT">Globėjas</option>
-              </select>
+              <div onChange={this.handleSelectChange} className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="role"
+                  id="ROLE_SPEC"
+                  value="ROLE_SPEC"
+                  defaultChecked
+                />
+                <label className="form-check-label" htmlFor="ROLE_SPEC">
+                  Švietimo specialistas
+                </label>
+              </div>
+              <div onChange={this.handleSelectChange} className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="role"
+                  id="ROLE_PARENT"
+                  value="ROLE_PARENT"
+                />
+                <label className="form-check-label" htmlFor="ROLE_PARENT">
+                  Globėjas
+                </label>
+              </div>
             </div>
             <button
               type="submit"
@@ -183,16 +188,19 @@ export default class AdminMainPage extends Component {
               )}
               Sukurti
             </button>
-            <NavLink to="/admin" className="btn btn-secondary mr-3">
-              Atšaukti
-            </NavLink>
+            <button
+              className="btn btn-secondary mr-3"
+              onClick={this.handleClearFields}
+            >
+              Išvalyti laukus
+            </button>
             {this.state.message && (
               <div className="form-group">
                 <div
                   className={
                     this.state.successful
-                      ? 'alert alert-success'
-                      : 'alert alert-danger'
+                      ? "alert alert-success"
+                      : "alert alert-danger"
                   }
                   role="alert"
                 >
@@ -201,22 +209,13 @@ export default class AdminMainPage extends Component {
               </div>
             )}
             <CheckButton
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               ref={(c) => {
                 this.checkBtn = c;
               }}
             />
           </Form>
-          <h5 className="text-center mt-5">Naudotojų sąrašas</h5>
-          <table className="table col-6 mt-3 mx-auto">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Prisijungimo vardas</th>
-                <th scope="col">Rolė</th>
-              </tr>
-            </thead>
-          </table>
+          <ListOfUsers />
         </div>
       </div>
     );
