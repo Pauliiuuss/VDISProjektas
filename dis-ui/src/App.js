@@ -5,7 +5,6 @@ import "./App.css";
 
 import Navbar from "./components/navbar.component";
 import Login from "./components/login.component";
-import Register from "./components/register.component";
 import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
@@ -18,13 +17,8 @@ class App extends Component {
         <Navbar />
         <div className="container mt-3">
           <Switch>
-            <Route
-              exact
-              path={["/dis-app", "/dis-app/login"]}
-              component={Login}
-            />
-            <Route exact path="/dis-app/register" component={Register} />
-            <Route exact path="/dis-app/profile" component={MainAfterLogin} />
+            <Route exact path="/dis-app/" component={Login} />
+            <Route exact path="/dis-app/home" component={MainAfterLogin} />
             <Route path="/dis-app/user" component={BoardUser} />
             <Route path="/dis-app/mod" component={BoardModerator} />
             <Route path="/dis-app/admin" component={BoardAdmin} />

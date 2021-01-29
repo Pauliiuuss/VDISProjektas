@@ -18,7 +18,7 @@ const vusername = (value) => {
 };
 
 const vpassword = (value) => {
-  var paswd = /^(?=.*[0-9])(?=.*[!@#$%^&+*])[a-zA-Z0-9!@#$%^+&*].{8,20}$/;
+  var paswd = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9].{7,19}$/;
   if (value.length === 0) return;
 
   if (value.length < 8 || value.length > 20 || value.match(paswd) === null) {
