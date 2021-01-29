@@ -38,7 +38,6 @@ public class AdminController {
 	}
 
 	@PostMapping("/getusers")
-	@PreAuthorize("hasRole('ADMIN')")
 	public Collection<UserInfo> getUsers() {
 		return adminService.getUsers();
 	}

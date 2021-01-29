@@ -71,7 +71,8 @@ public class AdminService {
                 .map( isdb -> new UserInfo(
                         isdb.getId(),
                         isdb.getUsername(),
-                        isdb.getPassword()))
+                        isdb.getPassword(),
+                        isdb.getRoles()))
                 .collect(Collectors.toList());
     }
 }
