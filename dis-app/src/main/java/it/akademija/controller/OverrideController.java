@@ -1,4 +1,4 @@
-package it.akademija;
+package it.akademija.controller;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
