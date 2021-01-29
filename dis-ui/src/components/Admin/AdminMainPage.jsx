@@ -6,6 +6,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import AuthService from "../../services/auth.service";
 import { vpassword, vusername } from "./Validation";
+import ListOfUsers from "./ListOfUsers";
 
 export default class AdminMainPage extends Component {
   state = {
@@ -214,16 +215,7 @@ export default class AdminMainPage extends Component {
               }}
             />
           </Form>
-          <h5 className="text-center mt-5">Naudotojų sąrašas</h5>
-          <table className="table col-6 mt-3 mx-auto">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Prisijungimo vardas</th>
-                <th scope="col">Rolė</th>
-              </tr>
-            </thead>
-          </table>
+          <ListOfUsers />
         </div>
       </div>
     );
