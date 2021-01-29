@@ -17,7 +17,11 @@ class App extends Component {
         <Navbar />
         <div className="container mt-3">
           <Switch>
-            <Route exact path="/dis-app/" component={Login} />
+            <Route
+              exact
+              path={["/dis-app/", "/dis-app/login"]}
+              component={Login}
+            />
             <Route exact path="/dis-app/home" component={MainAfterLogin} />
             <Route path="/dis-app/user" component={BoardUser} />
             <Route path="/dis-app/mod" component={BoardModerator} />
