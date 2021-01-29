@@ -22,7 +22,7 @@ class MainAfterLogin extends Component {
   }
 
   render() {
-    if (this.state.roles.indexOf("ROLE_ADMIN") > -1) return <AdminMainPage />;
+    if (this.state.roles.indexOf('ROLE_ADMIN') > -1) return <AdminMainPage />;
 
     return (
       <h1>

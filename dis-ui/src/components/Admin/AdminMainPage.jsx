@@ -82,7 +82,7 @@ export default class AdminMainPage extends Component {
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
 
-    if (!currentUser) this.setState({ redirect: "/dis-app/login" });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
       currentUser: currentUser,
       userReady: true,
