@@ -46,7 +46,12 @@ public class Role {
 
 	@Override
 	public String toString() {
-		return name.toString();
+		if (name == ERole.ROLE_ADMIN)
+			return "Administratorius";
+		if (name == ERole.ROLE_SPEC)
+			return "Specelistas";
+		else
+			return "Vaiko atstovas";
 	}
 
 }

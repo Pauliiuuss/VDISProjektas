@@ -30,7 +30,6 @@ class Users extends Component {
   };
 
   render() {
-    console.log(this.state.users);
     const { length: count } = this.state.users;
     const { pageSize, currentPage } = this.state;
 
