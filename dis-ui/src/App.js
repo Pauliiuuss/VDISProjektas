@@ -9,6 +9,7 @@ import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 import MainAfterLogin from "./components/MainAferLogin";
+import "react-toastify/dist/ReactToastify.css";
 
 class App extends Component {
   render() {

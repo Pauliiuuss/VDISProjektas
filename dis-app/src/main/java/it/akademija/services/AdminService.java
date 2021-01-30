@@ -66,4 +66,12 @@ public class AdminService {
 				.map(isdb -> new UserInfo(isdb.getId(), isdb.getUsername(), isdb.getPassword(), isdb.getRole()))
 				.collect(Collectors.toList());
 	}
+
+	@Transactional
+	public ResponseEntity<?> deleteUser(Long id) {
+		userRepository.deleteById(id);
+
+		return ResponseEntity.ok(new MessageResponse("Naudotojas ištrintas!"));
+	}
+
 }

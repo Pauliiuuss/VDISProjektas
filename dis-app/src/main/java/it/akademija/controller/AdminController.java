@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +33,16 @@ public class AdminController {
 		return adminService.registerUser(signUpRequest);
 	}
 
-	@PostMapping("/getusers")
-//	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/getusers")
+	@PreAuthorize("hasRole('ADMIN')")
 	public Collection<UserInfo> getUsers() {
 		return adminService.getUsers();
+	}
+
+	@DeleteMapping("/deleteuser/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> deleteUser(@PathVariable final Long id) {
+		return adminService.deleteUser(id);
 	}
 
 }
