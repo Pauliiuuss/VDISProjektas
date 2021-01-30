@@ -18,15 +18,48 @@ class UsersTable extends Component {
               this.props.onDelete(user);
             }
           }}
-          // onClick={() => this.props.onDelete(movie)}
           className="btn btn-danger btn-sm"
         >
-          Delete
+          <i className="fa fa-trash-o" aria-hidden="true"></i>
+        </button>
+      ),
+    },
+    {
+      key: "disable",
+      content: (user) => (
+        <button
+          onClick={() => {
+            if (window.confirm(`Deaktyvuoti naudotoją: ${user.username}`)) {
+              this.props.onDisable(user);
+            }
+          }}
+          className="btn btn-warning btn-sm"
+        >
+          <i className="fa fa-lock" aria-hidden="true"></i>
+        </button>
+      ),
+    },
+    {
+      key: "reset",
+      content: (user) => (
+        <button
+          onClick={() => {
+            if (
+              window.confirm(
+                `Atstatyti slaptažodį naudotojui: ${user.username}`
+              )
+            ) {
+              this.props.onResetPassword(user);
+            }
+          }}
+          className="btn btn-success btn-sm"
+        >
+          <i className="fa fa-key" aria-hidden="true"></i>
         </button>
       ),
     },
   ];
-
+  onResetPassword;
   render() {
     const { users, onSort, sortColumn } = this.props;
 
