@@ -23,12 +23,12 @@ const customStyles = {
 export default class AdminMainPage extends Component {
   state = {
     users: [],
-    role: "",
-    name: "",
-    pass: "",
-    message: "",
+    role: '',
+    name: '',
+    pass: '',
+    message: '',
     successful: false,
-    selectedRole: "ROLE_SPEC",
+    selectedRole: 'ROLE_SPEC',
     loading: false,
     redirect: null,
     userReady: false,
@@ -44,23 +44,23 @@ export default class AdminMainPage extends Component {
   };
 
   handleClearFields = () => {
-    this.setState({ name: "", pass: "" });
+    this.setState({ name: '', pass: '' });
   };
 
   handleCreate = async (e) => {
     e.preventDefault();
     this.setState({
-      message: "",
+      message: '',
       loading: true,
     });
 
     const { name, pass, selectedRole } = this.state;
 
-    if (name === "" || pass === "") {
+    if (name === '' || pass === '') {
       this.setState({
         successful: false,
         message:
-          "Prisijungimo vardo ir slaptažodžio laukas negali būti tuščias!",
+          'Prisijungimo vardo ir slaptažodžio laukas negali būti tuščias!',
         loading: false,
       });
       return;
@@ -75,8 +75,8 @@ export default class AdminMainPage extends Component {
       }).then(
         (response) => {
           this.setState({
-            name: "",
-            pass: "",
+            name: '',
+            pass: '',
             loading: false,
           });
           window.location.reload();
@@ -105,7 +105,7 @@ export default class AdminMainPage extends Component {
     const { data } = await AdminService.getUsers();
     this.setState({ users: data });
 
-    if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    if (!currentUser) this.setState({ redirect: '/dis-app/' });
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -116,11 +116,11 @@ export default class AdminMainPage extends Component {
   handleSelectChange = (e) => {
     const selectedRole = e.target.value;
     console.log(selectedRole);
-    this.setState({ selectedRole, message: "" });
+    this.setState({ selectedRole, message: '' });
   };
 
   handleInputChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value, message: "" });
+    this.setState({ [event.target.name]: event.target.value, message: '' });
   };
 
   render() {

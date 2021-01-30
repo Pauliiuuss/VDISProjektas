@@ -49,7 +49,7 @@ public class Role {
 		if (name == ERole.ROLE_ADMIN)
 			return "Administratorius";
 		if (name == ERole.ROLE_SPEC)
-			return "Specelistas";
+			return "Švietimo specialistas";
 		else
 			return "Vaiko atstovas";
 	}
