@@ -5,30 +5,17 @@ import CheckButton from "react-validation/build/button";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import AuthService from "../../services/auth.service";
-import { vpassword, vusername } from "./Validation";
+import { vusername } from "./Validation";
 import Users from "./List/Users";
-import Modal from "react-modal";
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
 
 export default class AdminMainPage extends Component {
   state = {
     users: [],
-    role: '',
-    name: '',
-    pass: '',
-    message: '',
+    role: "",
+    name: "",
+    message: "",
     successful: false,
-    selectedRole: 'ROLE_SPEC',
+    selectedRole: "ROLE_SPEC",
     loading: false,
     redirect: null,
     userReady: false,
@@ -44,23 +31,23 @@ export default class AdminMainPage extends Component {
   };
 
   handleClearFields = () => {
-    this.setState({ name: '', pass: '' });
+    this.setState({ name: "", pass: "" });
   };
 
   handleCreate = async (e) => {
     e.preventDefault();
     this.setState({
-      message: '',
+      message: "",
       loading: true,
     });
 
     const { name, pass, selectedRole } = this.state;
 
-    if (name === '' || pass === '') {
+    if (name === "" || pass === "") {
       this.setState({
         successful: false,
         message:
-          'Prisijungimo vardo ir slaptažodžio laukas negali būti tuščias!',
+          "Prisijungimo vardo ir slaptažodžio laukas negali būti tuščias!",
         loading: false,
       });
       return;
@@ -70,16 +57,19 @@ export default class AdminMainPage extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       await AdminService.createUser({
         username: name,
-        password: pass,
+        password: name,
         role: selectedRole,
       }).then(
         (response) => {
-          this.setState({
-            name: '',
-            pass: '',
-            loading: false,
-          });
-          window.location.reload();
+          AdminService.getUsers().then((res) =>
+            this.setState({
+              users: res.data,
+              successful: true,
+              message: response.data.message,
+              name: "",
+              loading: false,
+            })
+          );
         },
         (error) => {
           const resMessage =
@@ -105,7 +95,7 @@ export default class AdminMainPage extends Component {
     const { data } = await AdminService.getUsers();
     this.setState({ users: data });
 
-    if (!currentUser) this.setState({ redirect: '/dis-app/' });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -116,38 +106,19 @@ export default class AdminMainPage extends Component {
   handleSelectChange = (e) => {
     const selectedRole = e.target.value;
     console.log(selectedRole);
-    this.setState({ selectedRole, message: '' });
+    this.setState({ selectedRole, message: "" });
   };
 
   handleInputChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value, message: '' });
+    this.setState({ [event.target.name]: event.target.value, message: "" });
   };
 
   render() {
     if (this.state.redirect) return <Redirect to={this.state.redirect} />;
 
-    const { users, name, pass } = this.state;
-
+    const { name } = this.state;
     return (
       <React.Fragment>
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onRequestClose={this.closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          <h2>Hello</h2>
-          <button onClick={this.closeModal}>close</button>
-          <div>I am a modal</div>
-          <form>
-            <input />
-            <button>tab navigation</button>
-            <button>stays</button>
-            <button>inside</button>
-            <button>the modal</button>
-          </form>
-        </Modal>
-
         <div className="container">
           <div className="row">
             <div className="col-4">
@@ -175,21 +146,6 @@ export default class AdminMainPage extends Component {
                   <div id="usernameHelp" className="form-text text-secondary">
                     pvz.: VardasPavardė
                   </div>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="exampleInputPassword1" className="form-label">
-                    Slaptažodis:
-                  </label>
-                  <Input
-                    name="pass"
-                    value={pass}
-                    onChange={this.handleInputChange}
-                    validations={[vpassword]}
-                    type="text"
-                    placeholder="Įveskite slaptažodį"
-                    className="form-control"
-                    id="pass"
-                  />
                 </div>
                 <div onChange={this.handleSelectChange} className="mb-3">
                   <label htmlFor="exampleInputPassword1" className="form-label">
@@ -261,7 +217,7 @@ export default class AdminMainPage extends Component {
               </Form>
             </div>
             <div className="col">
-              <Users users={users} />
+              <Users users={this.state.users} />
             </div>
           </div>
         </div>
