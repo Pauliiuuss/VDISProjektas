@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import UsersTable from "./UsersTable";
-import { paginate } from "../../utils/paginate";
-import Pagination from "../../utils/pagination";
-import AdminService from "../../../services/admin.service";
+import React, { Component } from 'react';
+import UsersTable from './UsersTable';
+import { paginate } from '../../utils/paginate';
+import Pagination from '../../utils/pagination';
+import AdminService from '../../../services/admin.service';
 
 class Users extends Component {
   state = {
@@ -35,8 +35,8 @@ class Users extends Component {
 
     if (count === 0)
       return (
-        <p className="m-4 mx-auto" style={{ width: "290px" }}>
-          Duomenų bazėje naudotojų nėra registruotą.
+        <p className="m-4 mx-auto" style={{ width: '290px' }}>
+          Duomenų bazėje naudotojų nėra registruota.
         </p>
       );
 
@@ -45,7 +45,7 @@ class Users extends Component {
     return (
       <div className="row">
         <div className="col">
-          <p className="m-4 mx-auto" style={{ width: "320px" }}>
+          <p className="m-4 mx-auto" style={{ width: '320px' }}>
             Duomenų bazėje {totalCount} registruotų naudotojų.
           </p>
           <UsersTable users={users} />

@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import AdminService from "../../services/admin.service";
-import CheckButton from "react-validation/build/button";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import AuthService from "../../services/auth.service";
-import { vpassword, vusername } from "./Validation";
-import Users from "./List/Users";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import AdminService from '../../services/admin.service';
+import CheckButton from 'react-validation/build/button';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import AuthService from '../../services/auth.service';
+import { vpassword, vusername } from './Validation';
+import Users from './List/Users';
 
 export default class AdminMainPage extends Component {
   state = {
     users: [],
-    role: "",
-    name: "",
-    pass: "",
-    message: "",
+    role: '',
+    name: '',
+    pass: '',
+    message: '',
     successful: false,
     selectedRole: 'ROLE_SPEC',
     loading: false,
@@ -54,8 +54,8 @@ export default class AdminMainPage extends Component {
       }).then(
         (response) => {
           this.setState({
-            name: "",
-            pass: "",
+            name: '',
+            pass: '',
             loading: false,
           });
           window.location.reload();
@@ -95,7 +95,7 @@ export default class AdminMainPage extends Component {
   handleSelectChange = (e) => {
     const selectedRole = e.target.value;
     console.log(selectedRole);
-    this.setState({ selectedRole, message: "" });
+    this.setState({ selectedRole, message: '' });
   };
 
   handleInputChange = (event) => {
@@ -110,7 +110,7 @@ export default class AdminMainPage extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-4">
+          <div className="col-12 col-sm-12 col-md-4 col-lg-4">
             <Form
               className="mt-5"
               ref={(c) => {
@@ -181,6 +181,7 @@ export default class AdminMainPage extends Component {
                   </label>
                 </div>
               </div>
+
               <button
                 type="submit"
                 onClick={this.handleCreate}
@@ -193,7 +194,7 @@ export default class AdminMainPage extends Component {
                 Sukurti
               </button>
               <button
-                className="btn btn-secondary mr-3"
+                className="btn btn-secondary"
                 onClick={this.handleClearFields}
               >
                 Išvalyti laukus
@@ -203,8 +204,8 @@ export default class AdminMainPage extends Component {
                   <div
                     className={
                       this.state.successful
-                        ? "alert alert-success"
-                        : "alert alert-danger"
+                        ? 'alert alert-success'
+                        : 'alert alert-danger'
                     }
                     role="alert"
                   >
@@ -213,7 +214,7 @@ export default class AdminMainPage extends Component {
                 </div>
               )}
               <CheckButton
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
                 ref={(c) => {
                   this.checkBtn = c;
                 }}

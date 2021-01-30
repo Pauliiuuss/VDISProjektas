@@ -44,7 +44,7 @@ export default class Navbar extends Component {
                   <div>
                     {currentUser.username} <br />
                     <span style={{ fontSize: 'small' }}>
-                      (Švietimo psecialistas)
+                      (Švietimo specialistas)
                     </span>
                   </div>
                 ) : currentUser.roles.includes('ROLE_PARENT') ? (

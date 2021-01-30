@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 export const vusername = (value) => {
   if (value.length === 0) return;
   if (value.length < 4 || value.length > 20) {
     return (
       <div className="alert alert-danger" role="alert">
-        Prisijungimo vardas turi būti sudarytas iš ne mažiau kaip 4 simbolių.{" "}
+        Prisijungimo vardas turi būti sudarytas iš ne mažiau kaip 4 simbolių.{' '}
       </div>
     );
   }
