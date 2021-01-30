@@ -1,11 +1,10 @@
-import React, { Component } from "react";
-import UsersTable from "./UsersTable";
-import { paginate } from "../../utils/paginate";
-import Pagination from "../../utils/pagination";
-import AdminService from "../../../services/admin.service";
-import SearchBox from "./SearchBox";
-import { toast } from "react-toastify";
-import _ from "lodash";
+import React, { Component } from 'react';
+import UsersTable from './UsersTable';
+import { paginate } from '../../utils/paginate';
+import Pagination from '../../utils/pagination';
+import AdminService from '../../../services/admin.service';
+import SearchBox from './SearchBox';
+import _ from 'lodash';
 
 class Users extends Component {
   state = {
@@ -13,8 +12,8 @@ class Users extends Component {
     currentPage: 1,
     pageSize: 5,
     length: 0,
-    searchQuery: "",
-    sortColumn: { path: "username", order: "asc" },
+    searchQuery: '',
+    sortColumn: { path: 'username', order: 'asc' },
   };
 
   async componentDidMount() {
@@ -41,11 +40,11 @@ class Users extends Component {
 
     await AdminService.deleteUser(user.id).then(
       (response) => {
-        +response.status < 400 && alert("Naudotojas ištrintas");
+        +response.status < 400 && alert('Naudotojas ištrintas');
       },
       (error) => {
         this.setState({ users: originalUsers });
-        +error.response.status > 400 && alert("Ivyko klaida");
+        +error.response.status > 400 && alert('Ivyko klaida');
       }
     );
   };
@@ -95,7 +94,7 @@ class Users extends Component {
       <div className="row">
         <div className="col">
           <p>
-            Duomenų bazėje {allUsers.length} registruotų naudotojų. Rodomi{" "}
+            Duomenų bazėje {allUsers.length} registruotų naudotojų. Rodomi{' '}
             {totalCount} pagal paieškos kriterijų.
           </p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
