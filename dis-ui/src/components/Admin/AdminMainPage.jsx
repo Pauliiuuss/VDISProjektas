@@ -1,21 +1,21 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import AdminService from "../../services/admin.service";
-import CheckButton from "react-validation/build/button";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import AuthService from "../../services/auth.service";
-import { vusername } from "./Validation";
-import Users from "./List/Users";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import AdminService from '../../services/admin.service';
+import CheckButton from 'react-validation/build/button';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import AuthService from '../../services/auth.service';
+import { vusername } from './Validation';
+import Users from './List/Users';
 
 export default class AdminMainPage extends Component {
   state = {
     users: [],
-    role: "",
-    name: "",
-    message: "",
+    role: '',
+    name: '',
+    message: '',
     successful: false,
-    selectedRole: "ROLE_SPEC",
+    selectedRole: 'ROLE_SPEC',
     loading: false,
     redirect: null,
     userReady: false,
@@ -31,23 +31,23 @@ export default class AdminMainPage extends Component {
   };
 
   handleClearFields = () => {
-    this.setState({ name: "", pass: "" });
+    this.setState({ name: '', pass: '' });
   };
 
   handleCreate = async (e) => {
     e.preventDefault();
     this.setState({
-      message: "",
+      message: '',
       loading: true,
     });
 
     const { name, pass, selectedRole } = this.state;
 
-    if (name === "" || pass === "") {
+    if (name === '' || pass === '') {
       this.setState({
         successful: false,
         message:
-          "Prisijungimo vardo ir slaptažodžio laukas negali būti tuščias!",
+          'Prisijungimo vardo ir slaptažodžio laukas negali būti tuščias!',
         loading: false,
       });
       return;
@@ -66,7 +66,7 @@ export default class AdminMainPage extends Component {
               users: res.data,
               successful: true,
               message: response.data.message,
-              name: "",
+              name: '',
               loading: false,
             })
           );
@@ -95,7 +95,7 @@ export default class AdminMainPage extends Component {
     const { data } = await AdminService.getUsers();
     this.setState({ users: data });
 
-    if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    if (!currentUser) this.setState({ redirect: '/dis-app/' });
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -106,11 +106,11 @@ export default class AdminMainPage extends Component {
   handleSelectChange = (e) => {
     const selectedRole = e.target.value;
     console.log(selectedRole);
-    this.setState({ selectedRole, message: "" });
+    this.setState({ selectedRole, message: '' });
   };
 
   handleInputChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value, message: "" });
+    this.setState({ [event.target.name]: event.target.value, message: '' });
   };
 
   render() {
@@ -121,16 +121,19 @@ export default class AdminMainPage extends Component {
       <React.Fragment>
         <div className="container">
           <div className="row">
-            <div className="col-4">
+            <div className="col-12 col-sm-12 col-md-4 col-lg-4">
+              <strong className="fw-bold text-secondary">
+                SUKURTI NAUDOTOJĄ
+              </strong>
               <Form
-                className="mt-5"
+                className=""
                 ref={(c) => {
                   this.form = c;
                 }}
               >
-                <div className="mb-3">
+                <div className="mb-3" style={{ fontSize: 14 }}>
                   <label htmlFor="exampleInputUsername" className="form-label">
-                    Prisijungimo vardas:
+                    Įveskite prisijungimo vardą:
                   </label>
                   <Input
                     name="name"
@@ -138,17 +141,22 @@ export default class AdminMainPage extends Component {
                     validations={[vusername]}
                     value={name}
                     type="text"
-                    placeholder="Įveskite prisijungimo vardą"
+                    placeholder="VardasPavardė"
                     className="form-control"
                     id="name"
                     aria-describedby="usernameHelp"
                   />
-                  <div id="usernameHelp" className="form-text text-secondary">
-                    pvz.: VardasPavardė
+                  <div id="usernameHelp" className="form-text text-success">
+                    Pirminis slaptažodis yra prisijungimo vardas (sugeneruoja
+                    sistema)
                   </div>
                 </div>
                 <div onChange={this.handleSelectChange} className="mb-3">
-                  <label htmlFor="exampleInputPassword1" className="form-label">
+                  <label
+                    htmlFor="exampleInputPassword1"
+                    className="form-label"
+                    style={{ fontSize: 14 }}
+                  >
                     Rolė:
                   </label>
                   <div className="form-check">
@@ -199,8 +207,8 @@ export default class AdminMainPage extends Component {
                     <div
                       className={
                         this.state.successful
-                          ? "alert alert-success"
-                          : "alert alert-danger"
+                          ? 'alert alert-success'
+                          : 'alert alert-danger'
                       }
                       role="alert"
                     >
@@ -209,7 +217,7 @@ export default class AdminMainPage extends Component {
                   </div>
                 )}
                 <CheckButton
-                  style={{ display: "none" }}
+                  style={{ display: 'none' }}
                   ref={(c) => {
                     this.checkBtn = c;
                   }}

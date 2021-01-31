@@ -12,6 +12,7 @@ import MainAfterLogin from './components/MainAferLogin';
 
 class App extends Component {
   render() {
+    document.title = 'DarželiųInformacinėSistema';
     return (
       <div>
         <Navbar />
