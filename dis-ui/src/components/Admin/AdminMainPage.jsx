@@ -132,7 +132,10 @@ export default class AdminMainPage extends Component {
               >
                 <div className="mb-3" style={{ fontSize: 14 }}>
                   <label htmlFor="exampleInputUsername" className="form-label">
-                    Įveskite prisijungimo vardą:
+                    Prisijungimo vardas
+                    <span className="text-danger" style={{ fontSize: 18 }}>
+                      *
+                    </span>
                   </label>
                   <Input
                     name="name"
@@ -156,7 +159,10 @@ export default class AdminMainPage extends Component {
                     className="form-label"
                     style={{ fontSize: 14 }}
                   >
-                    Rolė:
+                    Rolė
+                    <span className="text-danger" style={{ fontSize: 18 }}>
+                      *
+                    </span>
                   </label>
                   <div className="form-check">
                     <input
@@ -195,12 +201,12 @@ export default class AdminMainPage extends Component {
                   )}
                   Sukurti
                 </button>
-                <button
+                {/* <button
                   className="btn btn-secondary mr-3"
                   onClick={this.handleClearFields}
                 >
                   Išvalyti laukus
-                </button>
+                </button> */}
                 {this.state.message && (
                   <div className="form-group">
                     <div
