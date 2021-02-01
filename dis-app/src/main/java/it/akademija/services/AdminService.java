@@ -31,7 +31,7 @@ public class AdminService {
 	@Transactional
 	public ResponseEntity<?> registerUser(RegisterRequest signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-			return ResponseEntity.badRequest().body(new MessageResponse("Vartotojo vardas užimtas!"));
+			return ResponseEntity.badRequest().body(new MessageResponse("Toks prisijungimo vardas jau yra!"));
 		}
 
 		// Create new user's account

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-import logo from "../img/logo.png";
+import React, { Component } from 'react';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import CheckButton from 'react-validation/build/button';
+import logo from '../img/logo.png';
 
-import AuthService from "../services/auth.service";
-import { Redirect } from "react-router-dom";
+import AuthService from '../services/auth.service';
+import { Redirect } from 'react-router-dom';
 
 const required = (value) => {
   if (!value) {
@@ -19,12 +19,12 @@ const required = (value) => {
 
 export default class Login extends Component {
   state = {
-    username: "",
-    password: "",
+    username: '',
+    password: '',
     loading: false,
-    message: "",
-    currentUser: "",
-    redirect: "",
+    message: '',
+    currentUser: '',
+    redirect: '',
   };
 
   onChangeUsername = (e) => {
@@ -43,7 +43,7 @@ export default class Login extends Component {
     e.preventDefault();
 
     this.setState({
-      message: "",
+      message: '',
       loading: true,
     });
 
@@ -56,7 +56,7 @@ export default class Login extends Component {
           window.location.reload();
         },
         (error) => {
-          const resMessage = "Neteisingi prisijungimo vardas ar slaptažodis!";
+          const resMessage = 'Neteisingi prisijungimo vardas ar slaptažodis!';
 
           this.setState({
             loading: false,
@@ -72,7 +72,7 @@ export default class Login extends Component {
   };
 
   render() {
-    if (localStorage.getItem("user")) return <Redirect to={"/dis-app/home"} />;
+    if (localStorage.getItem('user')) return <Redirect to={'/dis-app/home'} />;
 
     return (
       <div className="container col-12 col-sm-12 col-md-6 col-lg-6">
@@ -102,7 +102,7 @@ export default class Login extends Component {
                 className="form-group mx-auto mt-3"
                 style={{ width: '10rem' }}
               >
-                <label htmlFor="username">Vartotojo vardas</label>
+                <label htmlFor="username">Prisijungimo vardas</label>
                 <Input
                   type="text"
                   className="form-control"
