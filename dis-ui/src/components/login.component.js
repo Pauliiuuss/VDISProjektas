@@ -56,7 +56,7 @@ export default class Login extends Component {
           window.location.reload();
         },
         (error) => {
-          const resMessage = 'Neteisingi prisijungimo vardas ar slaptažodis!';
+          const resMessage = 'Neteisingas prisijungimo vardas ar slaptažodis!';
 
           this.setState({
             loading: false,

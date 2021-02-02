@@ -1,11 +1,12 @@
-import React from "react";
+import React from 'react';
 
 export const vusername = (value) => {
+  var nospace = /^\S*$/;
   if (value.length === 0) return;
-  if (value.length < 4 || value.length > 20) {
+  if (value.length < 4 || value.length > 20 || !value.match(nospace)) {
     return (
       <div className="alert alert-danger" role="alert">
-        Prisijungimo vardas turi būti sudarytas iš ne mažiau kaip 4 simbolių.{" "}
+        Įsitikinkite, kad įvesdami prisijungimo vardą nepalikote tarpų.{' '}
       </div>
     );
   }
