@@ -10,7 +10,11 @@ import { Redirect } from 'react-router-dom';
 const required = (value) => {
   if (!value) {
     return (
-      <div className="alert alert-danger" role="alert">
+      <div
+        className="alert alert-danger text-center px-0 py-2"
+        role="alert"
+        style={{ fontSize: '9px' }}
+      >
         Privalomi laukai turi būti užpildyti!
       </div>
     );
