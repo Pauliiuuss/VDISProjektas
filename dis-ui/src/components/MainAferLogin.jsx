@@ -1,12 +1,15 @@
-import React, { Component } from "react";
-import AuthService from "../services/auth.service";
-import AdminMainPage from "./Admin/AdminMainPage";
+import React, { Component } from 'react';
+import AuthService from '../services/auth.service';
+import AdminMainPage from './Admin/AdminMainPage';
+import SpecialistMainPage from './Spec/SpecMainPage';
+import ParentMainPage from './Parent/ParentMainPage';
+import Navbar from './navbar.component';
 
 class MainAfterLogin extends Component {
   state = {
     redirect: null,
     userReady: false,
-    currentUser: { username: "" },
+    currentUser: { username: '' },
     roles: [],
   };
 
@@ -14,7 +17,7 @@ class MainAfterLogin extends Component {
     const currentUser = await AuthService.getCurrentUser();
 
     if (!currentUser) {
-      this.props.history.push("/dis-app/");
+      this.props.history.push('/dis-app/');
       window.location.reload();
     } else
       this.setState({
@@ -25,13 +28,25 @@ class MainAfterLogin extends Component {
   }
 
   render() {
-    if (this.state.roles.indexOf("ROLE_ADMIN") > -1) return <AdminMainPage />;
-
+    if (this.state.roles.indexOf('ROLE_SPEC') > -1)
+      return (
+        <React.Fragment>
+          <Navbar />
+          <SpecialistMainPage />
+        </React.Fragment>
+      );
+    if (this.state.roles.indexOf('ROLE_PARENT') > -1)
+      return (
+        <React.Fragment>
+          <Navbar />
+          <ParentMainPage />
+        </React.Fragment>
+      );
     return (
-      <h1>
-        Depending on role you will see content here. Parent and Spec main
-        screens has not been created yet!
-      </h1>
+      <React.Fragment>
+        <Navbar />
+        <AdminMainPage />
+      </React.Fragment>
     );
   }
 }

@@ -76,7 +76,8 @@ export default class Login extends Component {
   };
 
   render() {
-    if (localStorage.getItem('user')) return <Redirect to={'/dis-app/home'} />;
+    if (sessionStorage.getItem('user'))
+      return <Redirect to={'/dis-app/home'} />;
 
     return (
       <div className="container col-12 col-sm-12 col-md-6 col-lg-6">

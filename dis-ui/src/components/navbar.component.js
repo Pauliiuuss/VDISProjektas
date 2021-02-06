@@ -35,29 +35,73 @@ export default class Navbar extends Component {
       <nav className="navbar navbar-expand navbar-dark bg-dark col-12 col-sm-12 col-md-12 col-lg-12">
         <img src={logo} alt="logo" style={{ width: '5rem' }} />
         <div className="navbar-nav mr-auto"></div>
-
         {currentUser && (
           <div className="navbar-nav">
-            <li className="nav-item">
-              <Link to={'/dis-app/home'} className="nav-link">
-                {currentUser.roles.includes('ROLE_SPEC') ? (
-                  <div>
+            {currentUser.roles.includes('ROLE_SPEC') ? (
+              <React.Fragment>
+                <li className="nav-item my-auto">
+                  <Link to={'/dis-app/queue'} className="nav-link">
+                    Darželių eilės
+                  </Link>
+                </li>
+                <li className="nav-item my-auto">
+                  <Link to={'/dis-app/kindergarten'} className="nav-link">
+                    Darželiai
+                  </Link>
+                </li>
+                <li className="nav-item my-auto">
+                  <Link to={'/dis-app/statistic'} className="nav-link">
+                    Statistika
+                  </Link>
+                </li>
+                <li className="nav-item my-auto">
+                  <Link to={'/dis-app/mydata'} className="nav-link">
+                    Mano duomenys
+                  </Link>
+                </li>
+                <li className="nav-item my-auto">
+                  <Link to={'/dis-app/home'} className="nav-link">
                     {currentUser.username} <br />
                     <span style={{ fontSize: 'small' }}>
-                      (Švietimo specialistas)
+                      Švietimo specialistas
                     </span>
-                  </div>
-                ) : currentUser.roles.includes('ROLE_PARENT') ? (
-                  <div>
-                    {currentUser.username}
-                    <br />
+                  </Link>
+                </li>
+              </React.Fragment>
+            ) : currentUser.roles.includes('ROLE_PARENT') ? (
+              <React.Fragment>
+                <li className="nav-item my-auto">
+                  <Link to={'/dis-app/application'} className="nav-link">
+                    Mano prašymai
+                  </Link>
+                </li>
+                <li className="nav-item my-auto">
+                  <Link to={'/dis-app/application/new'} className="nav-link">
+                    Naujas prašymas
+                  </Link>
+                </li>
+                <li className="nav-item my-auto">
+                  <Link to={'/dis-app/statistic'} className="nav-link">
+                    Statistika
+                  </Link>
+                </li>
+                <li className="nav-item my-auto">
+                  <Link to={'/dis-app/mydata'} className="nav-link">
+                    Mano duomenys
+                  </Link>
+                </li>
+                <li className="nav-item my-auto">
+                  <Link to={'/dis-app/home'} className="nav-link">
+                    {currentUser.username} <br />
                     <span style={{ fontSize: 'small' }}>Vaiko atstovas</span>
-                  </div>
-                ) : (
-                  'Administratorius'
-                )}
+                  </Link>
+                </li>
+              </React.Fragment>
+            ) : (
+              <Link to={'/dis-app/home'} className="nav-link">
+                <span>Administratorius</span>
               </Link>
-            </li>
+            )}
             <li className="nav-item my-auto">
               <a href="/dis-app/" className="nav-link" onClick={this.logOut}>
                 {' '}
