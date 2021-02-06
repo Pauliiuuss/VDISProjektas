@@ -45,6 +45,8 @@ public class SpecService {
 
 	@Transactional(readOnly = true)
 	public Collection<GroupInfo> getGroups(Long id) {
+		if (!kindergartenRepository.existsById(id))
+			return new ArrayList<>();
 		return kindergartenRepository.findById(id).orElseGet(null).getGroups().stream()
 				.map(isdb -> new GroupInfo(isdb.getId(), isdb.getName(), isdb.getCapasity(), isdb.getType()))
 				.collect(Collectors.toList());

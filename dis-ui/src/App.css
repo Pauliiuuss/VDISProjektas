@@ -7,6 +7,10 @@ label {
   max-width: 350px !important;
   padding: 40px 40px;
 }
+.table > tbody > tr.active > td {
+  background: #394449;
+  color: #fff;
+}
 
 .card {
   background-color: #f7f7f7;

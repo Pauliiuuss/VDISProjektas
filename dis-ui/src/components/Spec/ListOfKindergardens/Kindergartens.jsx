@@ -2,10 +2,8 @@ import React, { Component } from "react";
 import KindergartenTable from "./KindergartenTable";
 import { paginate } from "../../utils/paginate";
 import Pagination from "../../utils/pagination";
-import AdminService from "../../../services/admin.service";
 import SearchBox from "./SearchBox";
 import _ from "lodash";
-import SpecService from "../../../services/spec.service";
 
 class Kindergartens extends Component {
   state = {
@@ -42,14 +40,12 @@ class Kindergartens extends Component {
 
     const movies = paginate(sorted, currentPage, pageSize);
 
-    // return { totalCount: filtered.length, data: movies };
-    return { totalCount: 1, data: movies };
+    return { totalCount: filtered.length, data: movies };
   };
 
   render() {
     const allKindergartens = this.props.kindergartens;
-    // const count = allKindergartens.length;
-    const count = 1;
+    const count = allKindergartens ? allKindergartens.length : 0;
     const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
 
     if (count === 0)
@@ -77,6 +73,7 @@ class Kindergartens extends Component {
             kindergartens={kindergartens}
             sortColumn={sortColumn}
             onSort={this.handleSort}
+            onKindergartenChange={this.props.onKindergartenChange}
           />
           <Pagination
             itemsCount={kindergartens.length}

@@ -12,6 +12,10 @@ class SpecService {
   getKindergartens() {
     return axios.get(API_URL + "getkindergartens", { headers: authHeader() });
   }
+
+  getGroups(id) {
+    return axios.get(API_URL + "getgroups/" + id, { headers: authHeader() });
+  }
 }
 
 export default new SpecService();

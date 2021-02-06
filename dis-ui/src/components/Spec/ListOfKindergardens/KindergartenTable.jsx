@@ -12,7 +12,12 @@ class KindergartenTable extends Component {
     { path: "capasity", label: "Vietų skaičius" },
   ];
   render() {
-    const { kindergartens, onSort, sortColumn } = this.props;
+    const {
+      kindergartens,
+      onSort,
+      sortColumn,
+      onKindergartenChange,
+    } = this.props;
 
     return (
       <Table
@@ -20,6 +25,7 @@ class KindergartenTable extends Component {
         data={kindergartens}
         sortColumn={sortColumn}
         onSort={onSort}
+        onKindergartenChange={onKindergartenChange}
       />
     );
   }

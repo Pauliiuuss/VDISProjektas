@@ -8,12 +8,12 @@ public class KindergartenInfo {
 	private String name;
 	private String lang;
 	private Long capasity;
-	private List<Group> groups;
+	private List<GroupInfo> groups;
 
 	public KindergartenInfo() {
 	}
 
-	public KindergartenInfo(Long id, String address, String name, String lang, Long capasity, List<Group> groups) {
+	public KindergartenInfo(Long id, String address, String name, String lang, Long capasity, List<GroupInfo> groups) {
 		this.id = id;
 		this.address = address;
 		this.name = name;
@@ -71,11 +71,11 @@ public class KindergartenInfo {
 		this.capasity = capasity;
 	}
 
-	public List<Group> getGroups() {
+	public List<GroupInfo> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(List<Group> groups) {
+	public void setGroups(List<GroupInfo> groups) {
 		this.groups = groups;
 	}
 

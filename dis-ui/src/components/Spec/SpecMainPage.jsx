@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import SpecService from "../../services/spec.service";
 import AuthService from "../../services/auth.service";
-import Kindergartens from "./List/Kindergartens";
+import Kindergartens from "./ListOfKindergardens/Kindergartens";
+import Groups from "./ListOfGroups/Groups";
 
 class SpecMainPage extends Component {
   state = {
+    groups: [],
+    selectedKindergarten: "",
     currentUser: "",
     userReady: false,
     roles: "",
@@ -15,7 +18,6 @@ class SpecMainPage extends Component {
     const currentUser = AuthService.getCurrentUser();
     const { data } = await SpecService.getKindergartens();
     this.setState({ kindergartens: data });
-    console.log(this.state);
 
     if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
@@ -25,10 +27,30 @@ class SpecMainPage extends Component {
     });
   }
 
+  handleKindergartenChange = async (id) => {
+    await SpecService.getGroups(id).then((response) => {
+      const { data } = response;
+      this.setState({ groups: data });
+    });
+  };
+
   render() {
     return (
       <div className="container">
-        <Kindergartens kindergartens={this.state.kindergartens} />
+        <div className="row">
+          <div className="col-7">
+            <Kindergartens
+              onKindergartenChange={this.handleKindergartenChange}
+              kindergartens={this.state.kindergartens}
+            />
+          </div>
+          <div className="col-5">
+            <Groups
+              groups={this.state.groups}
+              selectedKindergarten={this.state.selectedKindergarten}
+            />
+          </div>
+        </div>
       </div>
     );
   }
