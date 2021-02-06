@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import AuthService from "../services/auth.service";
 import AdminMainPage from "./Admin/AdminMainPage";
+import SpecMainPage from "./Spec/SpecMainPage";
 
 class MainAfterLogin extends Component {
   state = {
@@ -25,7 +26,8 @@ class MainAfterLogin extends Component {
   }
 
   render() {
-    if (this.state.roles.indexOf("ROLE_ADMIN") > -1) return <AdminMainPage />;
+    if (this.state.roles.includes("ROLE_ADMIN")) return <AdminMainPage />;
+    if (this.state.roles.includes("ROLE_SPEC")) return <SpecMainPage />;
 
     return (
       <h1>
