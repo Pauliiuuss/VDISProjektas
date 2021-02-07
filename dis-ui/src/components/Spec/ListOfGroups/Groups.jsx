@@ -8,7 +8,7 @@ class Groups extends Component {
   state = {
     groups: [],
     currentPage: 1,
-    pageSize: 5,
+    pageSize: 6,
     length: 0,
     searchQuery: "",
     sortColumn: { path: "name", order: "asc" },
@@ -44,17 +44,8 @@ class Groups extends Component {
 
   render() {
     const allGroups = this.props.groups;
-    const count = allGroups ? allGroups.length : 0;
     const { pageSize, currentPage, sortColumn } = this.state;
-
-    if (count === 0)
-      return (
-        <p className="m-4 mx-auto" style={{ width: "290px" }}>
-          Pasirinktam darželiui grupių nėra registruota.
-        </p>
-      );
-
-    const { data: groups } = this.getPagedData(allGroups);
+    const { totalCount, data: groups } = this.getPagedData(allGroups);
 
     return (
       <div className="row">
@@ -69,9 +60,12 @@ class Groups extends Component {
             groups={groups}
             sortColumn={sortColumn}
             onSort={this.handleSort}
+            onAddGroup={this.props.onAddGroup}
+            successful={this.props.successful}
+            message={this.props.message}
           />
           <Pagination
-            itemsCount={groups.length}
+            itemsCount={totalCount}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}

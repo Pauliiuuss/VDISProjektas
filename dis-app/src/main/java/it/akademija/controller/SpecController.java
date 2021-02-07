@@ -32,6 +32,12 @@ public class SpecController {
 		return specService.registerKindergarten(info);
 	}
 
+	@PostMapping("/create/{id}")
+	@PreAuthorize("hasRole('SPEC')")
+	public ResponseEntity<?> registerKindergartenGroup(@Valid @RequestBody GroupInfo info, @PathVariable Long id) {
+		return specService.registerKindergartenGroup(id, info);
+	}
+
 	@GetMapping("/getkindergartens")
 	@PreAuthorize("hasRole('SPEC')")
 	public Collection<KindergartenInfo> getKindergartens() {

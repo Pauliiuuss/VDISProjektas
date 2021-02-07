@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import KindergartenTable from "./KindergartenTable";
 import { paginate } from "../../utils/paginate";
 import Pagination from "../../utils/pagination";
-import SearchBox from "./SearchBox";
 import _ from "lodash";
+import SearchBox from "../../utils/SearchBox";
 
 class Kindergartens extends Component {
   state = {
@@ -38,9 +38,9 @@ class Kindergartens extends Component {
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
-    const movies = paginate(sorted, currentPage, pageSize);
+    const kindergartens = paginate(sorted, currentPage, pageSize);
 
-    return { totalCount: filtered.length, data: movies };
+    return { totalCount: filtered.length, data: kindergartens };
   };
 
   render() {
@@ -62,9 +62,8 @@ class Kindergartens extends Component {
     return (
       <div className="row">
         <div className="col">
-          <button className="btn btn-success">Prdėti</button>
           <p>
-            Duomenų bazėje {kindergartens.length} registruotų vaikų darželių.
+            Duomenų bazėje {allKindergartens.length} registruotų vaikų darželių.
             Rodomi {totalCount} pagal paieškos kriterijų.
           </p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
@@ -74,9 +73,14 @@ class Kindergartens extends Component {
             sortColumn={sortColumn}
             onSort={this.handleSort}
             onKindergartenChange={this.props.onKindergartenChange}
+            onAddKindergarten={this.props.onKindergartenAdd}
+            successful={this.props.successful}
+            message={this.props.message}
+            active={this.props.active}
           />
+
           <Pagination
-            itemsCount={kindergartens.length}
+            itemsCount={totalCount}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}

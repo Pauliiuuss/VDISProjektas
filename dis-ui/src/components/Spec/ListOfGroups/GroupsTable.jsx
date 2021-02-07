@@ -7,12 +7,19 @@ class GroupsTable extends Component {
       path: "name",
       label: "Grupės pavadinimas",
     },
-    { path: "type", label: "Amžius" },
-    { path: "lang", label: "Kalba" },
+    { path: "ageFrom", label: "Amžius nuo" },
+    { path: "ageTo", label: "Amžius iki" },
     { path: "capasity", label: "Vietų skaičius" },
   ];
   render() {
-    const { groups, onSort, sortColumn } = this.props;
+    const {
+      groups,
+      onSort,
+      sortColumn,
+      onAddGroup,
+      successful,
+      message,
+    } = this.props;
 
     return (
       <Table
@@ -20,6 +27,9 @@ class GroupsTable extends Component {
         data={groups}
         sortColumn={sortColumn}
         onSort={onSort}
+        onAddGroup={onAddGroup}
+        successful={successful}
+        message={message}
       />
     );
   }

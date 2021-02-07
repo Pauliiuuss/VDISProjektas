@@ -24,13 +24,11 @@ public class Group {
 	@Size(max = 120)
 	private String name;
 
-	@NotBlank
-	@Size(max = 120)
 	private String capasity;
 
-	@NotBlank
-	@Size(max = 30)
-	private String type;
+	private Long ageFrom;
+
+	private Long ageTo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "kindergarten_id")
@@ -39,12 +37,30 @@ public class Group {
 	public Group() {
 	}
 
-	public Group(@NotBlank @Size(max = 120) String name, @NotBlank @Size(max = 120) String capasity,
-			@NotBlank @Size(max = 30) String type, Kindergarten kindergarten) {
+	public Group(@NotBlank @Size(max = 120) String name, @NotBlank String capasity, @NotBlank Long ageFrom,
+			@NotBlank Long ageTo, Kindergarten kindergarten) {
+		super();
 		this.name = name;
 		this.capasity = capasity;
-		this.type = type;
+		this.ageFrom = ageFrom;
+		this.ageTo = ageTo;
 		this.kindergarten = kindergarten;
+	}
+
+	public Long getAgeFrom() {
+		return ageFrom;
+	}
+
+	public void setAgeFrom(Long ageFrom) {
+		this.ageFrom = ageFrom;
+	}
+
+	public Long getAgeTo() {
+		return ageTo;
+	}
+
+	public void setAgeTo(Long ageTo) {
+		this.ageTo = ageTo;
 	}
 
 	public Long getId() {
@@ -69,14 +85,6 @@ public class Group {
 
 	public void setCapasity(String capasity) {
 		this.capasity = capasity;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public Kindergarten getKindergarten() {

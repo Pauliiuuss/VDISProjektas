@@ -33,8 +33,6 @@ public class Kindergarten {
 	@Size(max = 30)
 	private String lang;
 
-	@NotBlank
-	@Size(max = 120)
 	private Long capasity;
 
 	@OneToMany(mappedBy = "kindergarten", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -44,7 +42,7 @@ public class Kindergarten {
 	}
 
 	public Kindergarten(@NotBlank @Size(max = 120) String address, @NotBlank @Size(max = 120) String name,
-			@NotBlank @Size(max = 30) String lang, @NotBlank @Size(max = 120) Long capasity, List<Group> groups) {
+			@NotBlank @Size(max = 30) String lang, Long capasity, List<Group> groups) {
 		super();
 		this.address = address;
 		this.name = name;

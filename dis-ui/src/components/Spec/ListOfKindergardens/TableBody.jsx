@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import _ from "lodash";
 
 class TableBody extends Component {
-  state = {
-    active: "",
-  };
-
   componentDidMount() {
     const { data } = this.props;
     if (data) {
@@ -20,7 +16,6 @@ class TableBody extends Component {
   };
 
   handleClick = (id) => {
-    this.setState({ active: id });
     this.props.onKindergartenChange(id);
   };
 
@@ -35,7 +30,7 @@ class TableBody extends Component {
       <tbody>
         {data.map((item) => (
           <tr
-            className={this.state.active === item.id ? "active" : ""}
+            className={this.props.active === item.id ? "active" : ""}
             onClick={() => this.handleClick(item.id)}
             key={item.id}
           >
@@ -44,7 +39,6 @@ class TableBody extends Component {
                 {this.renderCell(item, column)}
               </td>
             ))}
-            <td></td>
           </tr>
         ))}
       </tbody>

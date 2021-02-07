@@ -17,6 +17,10 @@ class KindergartenTable extends Component {
       onSort,
       sortColumn,
       onKindergartenChange,
+      onAddKindergarten,
+      successful,
+      message,
+      active,
     } = this.props;
 
     return (
@@ -26,6 +30,10 @@ class KindergartenTable extends Component {
         sortColumn={sortColumn}
         onSort={onSort}
         onKindergartenChange={onKindergartenChange}
+        onAddKindergarten={onAddKindergarten}
+        successful={successful}
+        message={message}
+        active={active}
       />
     );
   }

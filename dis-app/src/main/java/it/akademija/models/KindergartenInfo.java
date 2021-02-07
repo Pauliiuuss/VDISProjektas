@@ -31,6 +31,14 @@ public class KindergartenInfo {
 		this.capasity = capasity;
 	}
 
+	public KindergartenInfo(String address, String name, String lang, Long capasity) {
+		super();
+		this.address = address;
+		this.name = name;
+		this.lang = lang;
+		this.capasity = capasity;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -17,6 +17,15 @@ class TableBody extends Component {
 
     return (
       <tbody>
+        {data.length ? null : (
+          <tr>
+            <td colSpan="4">
+              <p className="m-4 mx-auto" style={{ width: "330px" }}>
+                Pasirinktam darželiui grupių nėra registruota.
+              </p>
+            </td>
+          </tr>
+        )}
         {data.map((item) => (
           <tr key={item.id}>
             {columns.map((column) => (
