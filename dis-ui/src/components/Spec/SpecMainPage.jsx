@@ -44,7 +44,7 @@ class SpecMainPage extends Component {
   };
 
   handleAddKindergarten = async (address, name, capasity) => {
-    if (name === '' || address === '') {
+    if (name === "" || address === "") {
       this.setState({
         successful: false,
         message: 'Laukai negali būti neužpildyti!',

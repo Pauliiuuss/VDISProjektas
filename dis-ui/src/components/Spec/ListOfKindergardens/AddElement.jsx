@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 
 const AddElement = ({ onAddKindergarten, successful, message }) => {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [lang, setLang] = useState('lietuvių');
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
   const [capasity, setCapasity] = useState(0);
   const [addForm, setAddForm] = useState(false);
 
   function hanldeClick() {
-    onAddKindergarten(address, name, lang, capasity);
+    onAddKindergarten(address, name, capasity);
     setAddForm(false);
     setAddress('');
     setCapasity(null);

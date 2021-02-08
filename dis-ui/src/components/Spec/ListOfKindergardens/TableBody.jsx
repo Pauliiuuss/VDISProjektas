@@ -15,8 +15,8 @@ class TableBody extends Component {
     return _.get(item, column.path);
   };
 
-  handleClick = (id) => {
-    this.props.onKindergartenChange(id);
+  handleClick = (item) => {
+    this.props.onKindergartenChange(item);
   };
 
   createKey = (item, column) => {
@@ -32,7 +32,7 @@ class TableBody extends Component {
           {data.map((item) => (
             <tr
               className={
-                this.props.active === item.id || +data.length === 1
+                this.props.active.id === item.id || +data.length === 1
                   ? "active"
                   : ""
               }
