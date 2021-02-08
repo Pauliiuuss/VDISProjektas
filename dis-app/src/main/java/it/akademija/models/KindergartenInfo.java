@@ -6,36 +6,30 @@ public class KindergartenInfo {
 	private Long id;
 	private String address;
 	private String name;
-	private String lang;
 	private Long capasity;
 	private List<GroupInfo> groups;
 
 	public KindergartenInfo() {
 	}
 
-	public KindergartenInfo(Long id, String address, String name, String lang, Long capasity, List<GroupInfo> groups) {
+	public KindergartenInfo(Long id, String address, String name, Long capasity, List<GroupInfo> groups) {
 		this.id = id;
 		this.address = address;
 		this.name = name;
-		this.lang = lang;
 		this.capasity = capasity;
 		this.groups = groups;
 	}
 
-	public KindergartenInfo(Long id, String address, String name, String lang, Long capasity) {
-		super();
+	public KindergartenInfo(Long id, String address, String name, Long capasity) {
 		this.id = id;
 		this.address = address;
 		this.name = name;
-		this.lang = lang;
 		this.capasity = capasity;
 	}
 
-	public KindergartenInfo(String address, String name, String lang, Long capasity) {
-		super();
+	public KindergartenInfo(String address, String name, Long capasity) {
 		this.address = address;
 		this.name = name;
-		this.lang = lang;
 		this.capasity = capasity;
 	}
 
@@ -61,14 +55,6 @@ public class KindergartenInfo {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getLang() {
-		return lang;
-	}
-
-	public void setLang(String lang) {
-		this.lang = lang;
 	}
 
 	public Long getCapasity() {

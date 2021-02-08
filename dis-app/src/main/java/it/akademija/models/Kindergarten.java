@@ -29,10 +29,6 @@ public class Kindergarten {
 	@Size(max = 120)
 	private String name;
 
-	@NotBlank
-	@Size(max = 30)
-	private String lang;
-
 	private Long capasity;
 
 	@OneToMany(mappedBy = "kindergarten", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -42,11 +38,10 @@ public class Kindergarten {
 	}
 
 	public Kindergarten(@NotBlank @Size(max = 120) String address, @NotBlank @Size(max = 120) String name,
-			@NotBlank @Size(max = 30) String lang, Long capasity, List<Group> groups) {
+			Long capasity, List<Group> groups) {
 		super();
 		this.address = address;
 		this.name = name;
-		this.lang = lang;
 		this.capasity = capasity;
 		this.groups = groups;
 	}
@@ -73,14 +68,6 @@ public class Kindergarten {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getLang() {
-		return lang;
-	}
-
-	public void setLang(String lang) {
-		this.lang = lang;
 	}
 
 	public Long getCapasity() {

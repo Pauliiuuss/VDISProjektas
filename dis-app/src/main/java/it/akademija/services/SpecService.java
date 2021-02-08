@@ -33,16 +33,17 @@ public class SpecService {
 			return ResponseEntity.badRequest().body(new MessageResponse("Toks vaikų darželis jau yra!"));
 		}
 
-		kindergartenRepository.save(new Kindergarten(info.getAddress(), info.getName(), info.getLang(),
-				info.getCapasity(), new ArrayList<>()));
+		kindergartenRepository
+				.save(new Kindergarten(info.getAddress(), info.getName(), info.getCapasity(), new ArrayList<>()));
 
 		return ResponseEntity.ok(new MessageResponse("Vaikų darželis užregistruotas!"));
 	}
 
 	@Transactional(readOnly = true)
 	public Collection<KindergartenInfo> getKindergartens() {
-		return kindergartenRepository.findAll().stream().map(isdb -> new KindergartenInfo(isdb.getId(),
-				isdb.getAddress(), isdb.getName(), isdb.getLang(), isdb.getCapasity())).collect(Collectors.toList());
+		return kindergartenRepository.findAll().stream()
+				.map(isdb -> new KindergartenInfo(isdb.getId(), isdb.getAddress(), isdb.getName(), isdb.getCapasity()))
+				.collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)

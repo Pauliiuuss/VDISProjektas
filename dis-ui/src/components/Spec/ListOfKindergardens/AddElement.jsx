@@ -13,7 +13,6 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
     setAddress("");
     setCapasity(null);
     setName("");
-    setLang("lietuvių");
   }
 
   function getButtonState() {
@@ -71,7 +70,6 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
                 setAddress("");
                 setCapasity(null);
                 setName("");
-                setLang("lietuvių");
               }}
               className="btn btn-sm btn-secondary m-3"
             >
@@ -89,20 +87,6 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
               aria-describedby="inputGroup-sizing-sm"
               placeholder="Adresas"
             />
-          </td>
-          <td
-            style={{ width: "110px", paddingRight: "4px", paddingLeft: "4px" }}
-          >
-            <select
-              onChange={(e) => setLang(e.target.value)}
-              value={lang}
-              className="form-control"
-              id="exampleFormControlSelect1"
-            >
-              <option value="lietuvių">lietuvių</option>
-              <option value="rusų">rusų</option>
-              <option value="lenkų">lenkų</option>
-            </select>
           </td>
           <td
             style={{ width: "90px", paddingRight: "4px", paddingLeft: "4px" }}

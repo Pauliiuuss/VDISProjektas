@@ -8,7 +8,6 @@ class KindergartenTable extends Component {
       label: "Darželio pavadinimas",
     },
     { path: "address", label: "Adresas" },
-    { path: "lang", label: "Kalba" },
     { path: "capasity", label: "Vietų skaičius" },
   ];
   render() {
