@@ -7,7 +7,7 @@ import Groups from "./ListOfGroups/Groups";
 class SpecMainPage extends Component {
   state = {
     groups: [],
-    selectedKindergarten: "",
+    selectedKindergarten: 1,
     currentUser: "",
     userReady: false,
     roles: "",
@@ -20,11 +20,13 @@ class SpecMainPage extends Component {
   };
 
   async componentDidMount() {
+    this.setState({ loading: true });
     const currentUser = AuthService.getCurrentUser();
     const { data } = await SpecService.getKindergartens();
-    console.log(data);
-    this.setState({ kindergartens: data, selectedKindergarten: data[0].id });
-
+    this.setState({ kindergartens: data, loading: false });
+    if (data.length > 0) {
+      this.setState({ selectedKindergarten: data[0].id });
+    }
     if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
       currentUser: currentUser,
@@ -42,13 +44,10 @@ class SpecMainPage extends Component {
   };
 
   handleAddKindergarten = async (address, name, lang, capasity) => {
-    this.setState({ loading: false });
-
     if (name === "" || address === "") {
       this.setState({
         successful: false,
         message: "Laukai negali būti neužpildyti!",
-        loading: false,
       });
       return;
     }
@@ -57,7 +56,6 @@ class SpecMainPage extends Component {
       this.setState({
         successful: false,
         message: "Vietų skaičius negali buti mažiau kaip 1!",
-        loading: false,
       });
       return;
     }
@@ -68,7 +66,6 @@ class SpecMainPage extends Component {
         this.setState({
           successful: true,
           message: response.data.message,
-          loading: false,
         });
         SpecService.getKindergartens().then((response) => {
           this.setState({
@@ -87,7 +84,6 @@ class SpecMainPage extends Component {
         this.setState({
           successful: false,
           message: resMessage,
-          loading: false,
         });
       }
     );
@@ -95,13 +91,11 @@ class SpecMainPage extends Component {
 
   handleAddGroup = async (name, ageFrom, ageTo, capasity) => {
     console.log("Now", name, ageFrom, ageTo, capasity);
-    this.setState({ loading: false });
 
     if (name === "" || ageFrom === "" || ageTo === "" || capasity === "") {
       this.setState({
         successful: false,
         message: "Laukai negali būti neužpildyti!",
-        loading: false,
       });
       return;
     }
@@ -110,7 +104,6 @@ class SpecMainPage extends Component {
       this.setState({
         successful: false,
         message: "Vietų skaičius negali buti mažiau kaip 1!",
-        loading: false,
       });
       return;
     }
@@ -126,7 +119,6 @@ class SpecMainPage extends Component {
         this.setState({
           successfulGroup: true,
           messageGroup: response.data.message,
-          loading: false,
         });
         SpecService.getGroups(this.state.selectedKindergarten).then(
           (response) => {
@@ -147,7 +139,6 @@ class SpecMainPage extends Component {
         this.setState({
           successfulGroup: false,
           messageGroup: resMessage,
-          loading: false,
         });
       }
     );
@@ -156,29 +147,41 @@ class SpecMainPage extends Component {
   render() {
     return (
       <div className="container">
-        <div className="row">
-          <div className="col-7">
-            <Kindergartens
-              active={this.state.selectedKindergarten}
-              onKindergartenChange={this.handleKindergartenChange}
-              kindergartens={this.state.kindergartens}
-              onKindergartenAdd={this.handleAddKindergarten}
-              message={this.state.message}
-              successful={this.state.successful}
-            />
-          </div>
-          {this.state.kindergartens ? (
-            <div className="col-5">
-              <Groups
-                groups={this.state.groups}
-                selectedKindergarten={this.state.selectedKindergarten}
-                onAddGroup={this.handleAddGroup}
-                successful={this.state.successfulGroup}
-                message={this.state.messageGroup}
+        {this.state.kindergartens ? (
+          <div className="row">
+            <div className="col-7">
+              <Kindergartens
+                active={this.state.selectedKindergarten}
+                onKindergartenChange={this.handleKindergartenChange}
+                kindergartens={this.state.kindergartens}
+                onKindergartenAdd={this.handleAddKindergarten}
+                message={this.state.message}
+                successful={this.state.successful}
               />
             </div>
-          ) : null}
-        </div>
+            {this.state.kindergartens.length > 0 ? (
+              <div className="col-5">
+                <Groups
+                  groups={this.state.groups}
+                  selectedKindergarten={this.state.selectedKindergarten}
+                  onAddGroup={this.handleAddGroup}
+                  successful={this.state.successfulGroup}
+                  message={this.state.messageGroup}
+                />
+              </div>
+            ) : null}
+          </div>
+        ) : (
+          <div className="d-flex justify-content-center">
+            <div
+              className="spinner-border"
+              style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
+              role="status"
+            >
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

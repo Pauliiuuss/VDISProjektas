@@ -57,7 +57,7 @@ public class SpecService {
 
 	public ResponseEntity<?> registerKindergartenGroup(Long id, GroupInfo info) {
 		if (kindergartenRepository.getOne(id).getGroups().stream()
-				.anyMatch(group -> group.getName() == info.getName())) {
+				.anyMatch(group -> group.getName().equals(info.getName()))) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Toke vaikų grupė jau yra!"));
 		}
 
@@ -69,7 +69,7 @@ public class SpecService {
 		groupRepository.save(group);
 		kindergartenRepository.getOne(id).setGroups(groups);
 
-		return ResponseEntity.ok(new MessageResponse("Vaikų gruė užregistruota!"));
+		return ResponseEntity.ok(new MessageResponse("Vaikų grupė užregistruota!"));
 	}
 
 }

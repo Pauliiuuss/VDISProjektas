@@ -48,13 +48,6 @@ class Kindergartens extends Component {
     const count = allKindergartens ? allKindergartens.length : 0;
     const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
 
-    if (count === 0)
-      return (
-        <p className="m-4 mx-auto" style={{ width: "290px" }}>
-          Duomenų bazėje vaikų darželių nėra registruota.
-        </p>
-      );
-
     const { totalCount, data: kindergartens } = this.getPagedData(
       allKindergartens
     );
@@ -63,8 +56,8 @@ class Kindergartens extends Component {
       <div className="row">
         <div className="col">
           <p>
-            Duomenų bazėje {allKindergartens.length} registruotų vaikų darželių.
-            Rodomi {totalCount} pagal paieškos kriterijų.
+            Duomenų bazėje {count} registruotų vaikų darželių. Rodomi{" "}
+            {totalCount} pagal paieškos kriterijų.
           </p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
 
