@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import SpecService from "../../services/spec.service";
-import AuthService from "../../services/auth.service";
-import Kindergartens from "./ListOfKindergardens/Kindergartens";
-import Groups from "./ListOfGroups/Groups";
+import React, { Component } from 'react';
+import SpecService from '../../services/spec.service';
+import AuthService from '../../services/auth.service';
+import Kindergartens from './ListOfKindergardens/Kindergartens';
+import Groups from './ListOfGroups/Groups';
 
 class SpecMainPage extends Component {
   state = {
     groups: [],
     selectedKindergarten: 1,
-    currentUser: "",
+    currentUser: '',
     userReady: false,
-    roles: "",
+    roles: '',
     kindergartens: null,
-    message: "",
+    message: '',
     successful: false,
     loading: false,
     successfulGroup: false,
-    messageGroup: "",
+    messageGroup: '',
   };
 
   async componentDidMount() {
@@ -27,7 +27,7 @@ class SpecMainPage extends Component {
     if (data.length > 0) {
       this.setState({ selectedKindergarten: data[0].id });
     }
-    if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    if (!currentUser) this.setState({ redirect: '/dis-app/' });
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -43,11 +43,11 @@ class SpecMainPage extends Component {
     });
   };
 
-  handleAddKindergarten = async (address, name, lang, capasity) => {
-    if (name === "" || address === "") {
+  handleAddKindergarten = async (address, name, capasity) => {
+    if (name === '' || address === '') {
       this.setState({
         successful: false,
-        message: "Laukai negali būti neužpildyti!",
+        message: 'Laukai negali būti neužpildyti!',
       });
       return;
     }
@@ -55,12 +55,12 @@ class SpecMainPage extends Component {
     if (capasity < 1) {
       this.setState({
         successful: false,
-        message: "Vietų skaičius negali buti mažiau kaip 1!",
+        message: 'Vietų skaičius negali buti mažiau kaip 1!',
       });
       return;
     }
 
-    await SpecService.create({ address, name, lang, capasity }).then(
+    await SpecService.create({ address, name, capasity }).then(
       (response) => {
         console.log(response.data.message);
         this.setState({
@@ -90,12 +90,12 @@ class SpecMainPage extends Component {
   };
 
   handleAddGroup = async (name, ageFrom, ageTo, capasity) => {
-    console.log("Now", name, ageFrom, ageTo, capasity);
+    console.log('Now', name, ageFrom, ageTo, capasity);
 
-    if (name === "" || ageFrom === "" || ageTo === "" || capasity === "") {
+    if (name === '' || ageFrom === '' || ageTo === '' || capasity === '') {
       this.setState({
         successful: false,
-        message: "Laukai negali būti neužpildyti!",
+        message: 'Laukai negali būti neužpildyti!',
       });
       return;
     }
@@ -103,7 +103,7 @@ class SpecMainPage extends Component {
     if (capasity < 1) {
       this.setState({
         successful: false,
-        message: "Vietų skaičius negali buti mažiau kaip 1!",
+        message: 'Vietų skaičius negali buti mažiau kaip 1!',
       });
       return;
     }
@@ -175,7 +175,7 @@ class SpecMainPage extends Component {
           <div className="d-flex justify-content-center">
             <div
               className="spinner-border"
-              style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
+              style={{ width: '3rem', height: '3rem', marginTop: '3rem' }}
               role="status"
             >
               <span className="sr-only">Loading...</span>

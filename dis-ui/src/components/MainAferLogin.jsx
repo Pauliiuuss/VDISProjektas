@@ -28,26 +28,28 @@ class MainAfterLogin extends Component {
   }
 
   render() {
-    if (this.state.roles.indexOf('ROLE_SPEC') > -1)
+    if (this.state.roles.includes('ROLE_SPEC'))
       return (
         <React.Fragment>
           <Navbar />
           <SpecMainPage />
         </React.Fragment>
       );
-    if (this.state.roles.indexOf('ROLE_PARENT') > -1)
+    if (this.state.roles.includes('ROLE_PARENT'))
       return (
         <React.Fragment>
           <Navbar />
           <ParentMainPage />
         </React.Fragment>
       );
-    return (
-      <React.Fragment>
-        <Navbar />
-        <AdminMainPage />
-      </React.Fragment>
-    );
+    if (this.state.roles.includes('ROLE_ADMIN'))
+      return (
+        <React.Fragment>
+          <Navbar />
+          <AdminMainPage />
+        </React.Fragment>
+      );
+    return null;
   }
 }
 

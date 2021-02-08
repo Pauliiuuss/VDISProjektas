@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const AddElement = ({ onAddKindergarten, successful, message }) => {
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [lang, setLang] = useState("lietuvių");
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
+  const [lang, setLang] = useState('lietuvių');
   const [capasity, setCapasity] = useState(0);
   const [addForm, setAddForm] = useState(false);
 
   function hanldeClick() {
     onAddKindergarten(address, name, lang, capasity);
     setAddForm(false);
-    setAddress("");
+    setAddress('');
     setCapasity(null);
-    setName("");
+    setName('');
   }
 
   function getButtonState() {
-    if (name === "" || address === "" || capasity < 1) return true;
+    if (name === '' || address === '' || capasity < 1) return true;
     return false;
   }
   if (!addForm)
@@ -36,7 +36,7 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
               <div className="form-group">
                 <div
                   className={
-                    successful ? "alert alert-success" : "alert alert-danger"
+                    successful ? 'alert alert-success' : 'alert alert-danger'
                   }
                   role="alert"
                 >
@@ -53,7 +53,7 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
     <React.Fragment>
       <tfoot>
         <tr>
-          <td style={{ paddingRight: "4px", paddingLeft: "4px" }}>
+          <td style={{ paddingRight: '4px', paddingLeft: '4px' }}>
             <input
               value={name}
               id="name"
@@ -67,16 +67,16 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
             <button
               onClick={() => {
                 setAddForm(!addForm);
-                setAddress("");
+                setAddress('');
                 setCapasity(null);
-                setName("");
+                setName('');
               }}
               className="btn btn-sm btn-secondary m-3"
             >
               <p style={{ margin: 0 }}>Atšaukti</p>
             </button>
           </td>
-          <td style={{ paddingRight: "4px", paddingLeft: "4px" }}>
+          <td style={{ paddingRight: '4px', paddingLeft: '4px' }}>
             <input
               value={address}
               id="address"
@@ -89,10 +89,10 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
             />
           </td>
           <td
-            style={{ width: "90px", paddingRight: "4px", paddingLeft: "4px" }}
+            style={{ width: '90px', paddingRight: '4px', paddingLeft: '4px' }}
           >
             <div className="row">
-              <div className="col-9" style={{ paddingRight: "4px" }}>
+              <div className="col-9" style={{ paddingRight: '4px' }}>
                 <input
                   value={capasity}
                   id="capasity"
@@ -108,7 +108,7 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
                 <button
                   disabled={getButtonState() ? true : false}
                   className="btn btn-sm btn-success"
-                  style={{ height: "95%" }}
+                  style={{ height: '95%' }}
                   onClick={() => hanldeClick()}
                 >
                   <i className="fa fa-check" aria-hidden="true"></i>
