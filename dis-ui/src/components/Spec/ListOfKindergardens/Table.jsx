@@ -13,6 +13,7 @@ const Table = ({
   successful,
   message,
   active,
+  clearMessage,
 }) => {
   return (
     <React.Fragment>

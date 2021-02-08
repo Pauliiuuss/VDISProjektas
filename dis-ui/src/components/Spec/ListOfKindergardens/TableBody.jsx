@@ -32,7 +32,7 @@ class TableBody extends Component {
           {data.map((item) => (
             <tr
               className={
-                this.props.active.id === item.id || +data.length === 1
+                this.props.active === item.id || +data.length === 1
                   ? "active"
                   : ""
               }

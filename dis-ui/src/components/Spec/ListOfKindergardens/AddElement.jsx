@@ -10,7 +10,7 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
     onAddKindergarten(address, name, capasity);
     setAddForm(false);
     setAddress("");
-    setCapasity(null);
+    setCapasity("");
     setName("");
   }
 

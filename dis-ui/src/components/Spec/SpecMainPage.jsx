@@ -8,6 +8,7 @@ class SpecMainPage extends Component {
   state = {
     groups: [],
     selectedKindergarten: 1,
+    selectedKindergartenName: "Not selected",
     currentUser: "",
     userReady: false,
     roles: "",
@@ -37,6 +38,11 @@ class SpecMainPage extends Component {
 
   handleKindergartenChange = async (id) => {
     this.setState({ selectedKindergarten: id });
+    this.setState({
+      selectedKindergartenName: this.state.kindergartens.filter(
+        (g) => g.id === id
+      )[0].name,
+    });
     await SpecService.getGroups(id).then((response) => {
       const { data } = response;
       this.setState({ groups: data });
@@ -144,9 +150,13 @@ class SpecMainPage extends Component {
     );
   };
 
+  clearMessage = () => {
+    console.log("now");
+  };
+
   render() {
     return (
-      <div className="container">
+      <div className="container" style={{ paddingTop: "1rem" }}>
         {this.state.kindergartens ? (
           <div className="row">
             <div className="col-7">
@@ -162,6 +172,7 @@ class SpecMainPage extends Component {
             {this.state.kindergartens.length > 0 ? (
               <div className="col-5">
                 <Groups
+                  activeName={this.state.selectedKindergartenName}
                   groups={this.state.groups}
                   selectedKindergarten={this.state.selectedKindergarten}
                   onAddGroup={this.handleAddGroup}
