@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import React, { Component } from "react";
+import { Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 import Login from './components/login.component';
 import MainAfterLogin from './components/MainAferLogin';
@@ -9,7 +9,7 @@ import UnderConstruction from './components/underConstruction';
 
 class App extends Component {
   render() {
-    document.title = 'DarželiųInformacinėSistema';
+    document.title = "DarželiųInformacinėSistema";
     return (
       <div>
         <Switch>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AuthService from '../services/auth.service';
 import AdminMainPage from './Admin/AdminMainPage';
-import SpecialistMainPage from './Spec/SpecMainPage';
+import SpecMainPage from './Spec/SpecMainPage';
 import ParentMainPage from './Parent/ParentMainPage';
 import Navbar from './navbar.component';
 
@@ -32,7 +32,7 @@ class MainAfterLogin extends Component {
       return (
         <React.Fragment>
           <Navbar />
-          <SpecialistMainPage />
+          <SpecMainPage />
         </React.Fragment>
       );
     if (this.state.roles.indexOf('ROLE_PARENT') > -1)
