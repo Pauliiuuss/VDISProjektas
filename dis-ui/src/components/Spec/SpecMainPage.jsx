@@ -43,7 +43,7 @@ class SpecMainPage extends Component {
     });
   };
 
-  handleAddKindergarten = async (address, name, lang, capasity) => {
+  handleAddKindergarten = async (address, name, capasity) => {
     if (name === "" || address === "") {
       this.setState({
         successful: false,
@@ -60,7 +60,7 @@ class SpecMainPage extends Component {
       return;
     }
 
-    await SpecService.create({ address, name, lang, capasity }).then(
+    await SpecService.create({ address, name, capasity }).then(
       (response) => {
         console.log(response.data.message);
         this.setState({
