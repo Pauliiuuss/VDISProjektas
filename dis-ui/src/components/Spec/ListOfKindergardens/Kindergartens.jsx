@@ -62,6 +62,7 @@ class Kindergartens extends Component {
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
 
           <KindergartenTable
+            onAmendKindergarten={this.props.onAmendKindergarten}
             kindergartens={kindergartens}
             sortColumn={sortColumn}
             onSort={this.handleSort}

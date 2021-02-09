@@ -7,7 +7,7 @@ import Groups from "./ListOfGroups/Groups";
 class SpecMainPage extends Component {
   state = {
     groups: [],
-    selectedKindergarten: 1,
+    selectedKindergarten: 0,
     selectedKindergartenName: "Not selected",
     currentUser: "",
     userReady: false,
@@ -26,7 +26,14 @@ class SpecMainPage extends Component {
     const { data } = await SpecService.getKindergartens();
     this.setState({ kindergartens: data, loading: false });
     if (data.length > 0) {
-      this.setState({ selectedKindergarten: data[0].id });
+      this.setState({
+        selectedKindergarten: data[0].id,
+        selectedKindergartenName: data[0].name,
+      });
+      SpecService.getGroups(data[0].id).then((response) => {
+        const { data } = response;
+        this.setState({ groups: data });
+      });
     }
     if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
@@ -37,7 +44,7 @@ class SpecMainPage extends Component {
   }
 
   handleKindergartenChange = async (id) => {
-    this.setState({ selectedKindergarten: id });
+    this.setState({ selectedKindergarten: id, message: "", messageGroup: "" });
     this.setState({
       selectedKindergartenName: this.state.kindergartens.filter(
         (g) => g.id === id
@@ -49,7 +56,7 @@ class SpecMainPage extends Component {
     });
   };
 
-  handleAddKindergarten = async (address, name, capasity) => {
+  handleAddKindergarten = async (address, name) => {
     if (name === "" || address === "") {
       this.setState({
         successful: false,
@@ -58,15 +65,7 @@ class SpecMainPage extends Component {
       return;
     }
 
-    if (capasity < 1) {
-      this.setState({
-        successful: false,
-        message: "Vietų skaičius negali buti mažiau kaip 1!",
-      });
-      return;
-    }
-
-    await SpecService.create({ address, name, capasity }).then(
+    await SpecService.create({ address, name }).then(
       (response) => {
         console.log(response.data.message);
         this.setState({
@@ -93,32 +92,83 @@ class SpecMainPage extends Component {
         });
       }
     );
+    this.setState({ messageGroup: "" });
   };
 
-  handleAddGroup = async (name, ageFrom, ageTo, capasity) => {
-    console.log("Now", name, ageFrom, ageTo, capasity);
+  handleAmendKindergarten = async (item) => {
+    console.log(item);
+    await SpecService.amend(item.id, item).then(
+      (response) => {
+        console.log(response.data.message);
+        this.setState({
+          successful: true,
+          message: response.data.message,
+        });
+        SpecService.getKindergartens().then((response) => {
+          this.setState({
+            kindergartens: response.data,
+          });
+        });
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
 
-    if (name === "" || ageFrom === "" || ageTo === "" || capasity === "") {
-      this.setState({
-        successful: false,
-        message: "Laukai negali būti neužpildyti!",
-      });
-      return;
-    }
+        this.setState({
+          successful: false,
+          message: resMessage,
+        });
+      }
+    );
+    this.setState({ messageGroup: "" });
+  };
+  handleAmendGroup = async (item) => {
+    console.log(item);
+    await SpecService.amendGroup(item.id, item).then(
+      (response) => {
+        console.log(response.data.message);
+        this.setState({
+          successfulGroup: true,
+          messageGroup: response.data.message,
+        });
+        SpecService.getGroups(this.state.selectedKindergarten).then(
+          (response) => {
+            this.setState({
+              groups: response.data,
+            });
+          }
+        );
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
 
-    if (capasity < 1) {
-      this.setState({
-        successful: false,
-        message: "Vietų skaičius negali buti mažiau kaip 1!",
-      });
-      return;
-    }
+        this.setState({
+          successfulGroup: false,
+          messageGroup: resMessage,
+        });
+      }
+    );
+    await SpecService.getKindergartens().then((response) =>
+      this.setState({ message: "", kindergartens: response.data })
+    );
+    console.log(this.state);
+  };
 
+  handleAddGroup = async (name, age, capasity) => {
+    console.log("Now", name, age, capasity);
     await SpecService.createGroup(this.state.selectedKindergarten, {
       name,
+      age,
       capasity,
-      ageFrom,
-      ageTo,
     }).then(
       (response) => {
         console.log(response.data.message);
@@ -148,10 +198,9 @@ class SpecMainPage extends Component {
         });
       }
     );
-  };
-
-  clearMessage = () => {
-    console.log("now");
+    await SpecService.getKindergartens().then((response) =>
+      this.setState({ message: "", kindergartens: response.data })
+    );
   };
 
   render() {
@@ -161,6 +210,7 @@ class SpecMainPage extends Component {
           <div className="row">
             <div className="col-7">
               <Kindergartens
+                onAmendKindergarten={this.handleAmendKindergarten}
                 active={this.state.selectedKindergarten}
                 onKindergartenChange={this.handleKindergartenChange}
                 kindergartens={this.state.kindergartens}
@@ -172,6 +222,7 @@ class SpecMainPage extends Component {
             {this.state.kindergartens.length > 0 ? (
               <div className="col-5">
                 <Groups
+                  onAmendGroup={this.handleAmendGroup}
                   activeName={this.state.selectedKindergartenName}
                   groups={this.state.groups}
                   selectedKindergarten={this.state.selectedKindergarten}

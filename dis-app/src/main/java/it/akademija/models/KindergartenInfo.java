@@ -33,6 +33,13 @@ public class KindergartenInfo {
 		this.capasity = capasity;
 	}
 
+	public KindergartenInfo(Long id, String address, String name) {
+		super();
+		this.id = id;
+		this.address = address;
+		this.name = name;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -11,11 +11,12 @@ const Table = ({
   onAddGroup,
   successful,
   message,
+  onAmendGroup,
 }) => {
   return (
     <table className="table">
       <TableHeader columns={columns} sortColumn={sortColumn} onSort={onSort} />
-      <TableBody columns={columns} data={data} />
+      <TableBody columns={columns} data={data} onAmendGroup={onAmendGroup} />
       <AddGroup
         onAddGroup={onAddGroup}
         successful={successful}

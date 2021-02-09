@@ -58,6 +58,7 @@ class Groups extends Component {
           </p>
 
           <GroupsTable
+            onAmendGroup={this.props.onAmendGroup}
             groups={groups}
             sortColumn={sortColumn}
             onSort={this.handleSort}

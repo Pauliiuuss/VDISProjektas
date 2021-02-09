@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,8 +35,7 @@ public class SpecService {
 			return ResponseEntity.badRequest().body(new MessageResponse("Toks vaikų darželis jau yra!"));
 		}
 
-		kindergartenRepository
-				.save(new Kindergarten(info.getAddress(), info.getName(), info.getCapasity(), new ArrayList<>()));
+		kindergartenRepository.save(new Kindergarten(info.getAddress(), info.getName(), new ArrayList<>()));
 
 		return ResponseEntity.ok(new MessageResponse("Vaikų darželis užregistruotas!"));
 	}
@@ -42,7 +43,8 @@ public class SpecService {
 	@Transactional(readOnly = true)
 	public Collection<KindergartenInfo> getKindergartens() {
 		return kindergartenRepository.findAll().stream()
-				.map(isdb -> new KindergartenInfo(isdb.getId(), isdb.getAddress(), isdb.getName(), isdb.getCapasity()))
+				.map(isdb -> new KindergartenInfo(isdb.getId(), isdb.getAddress(), isdb.getName(),
+						isdb.getGroups().stream().map(Group::getCapasity).reduce(0L, Long::sum)))
 				.collect(Collectors.toList());
 	}
 
@@ -52,7 +54,7 @@ public class SpecService {
 			return new ArrayList<>();
 		return kindergartenRepository
 				.findById(id).orElseGet(null).getGroups().stream().map(isdb -> new GroupInfo(isdb.getId(),
-						isdb.getName(), isdb.getCapasity(), isdb.getAgeFrom(), isdb.getAgeTo()))
+						isdb.getName(), isdb.getCapasity(), isdb.getAgeFrom() + " iki " + isdb.getAgeTo()))
 				.collect(Collectors.toList());
 	}
 
@@ -63,14 +65,54 @@ public class SpecService {
 		}
 
 		List<Group> groups = kindergartenRepository.getOne(id).getGroups();
-		Group group = new Group(info.getName(), info.getCapasity(), info.getAgeFrom(), info.getAgeTo(),
-				kindergartenRepository.getOne(id));
+
+		Group group = null;
+
+		if (info.getAge().equals("3 iki 6")) {
+			group = new Group(info.getName(), info.getCapasity(), 3L, 6L, kindergartenRepository.getOne(id));
+		} else {
+			group = new Group(info.getName(), info.getCapasity(), 2L, 3L, kindergartenRepository.getOne(id));
+		}
 		groups.add(group);
 
 		groupRepository.save(group);
 		kindergartenRepository.getOne(id).setGroups(groups);
 
 		return ResponseEntity.ok(new MessageResponse("Vaikų grupė užregistruota!"));
+	}
+
+	public ResponseEntity<?> amendKindergarten(Long id, @Valid KindergartenInfo info) {
+
+		Kindergarten kindergarten = kindergartenRepository.getOne(id);
+
+		if (kindergarten.getAddress().equals(info.getAddress()) && kindergarten.getName().equals(info.getName()))
+			return ResponseEntity.ok("Jokių pakeitimų neišsaugota");
+
+		kindergarten.setAddress(info.getAddress());
+		kindergarten.setName(info.getName());
+
+		kindergartenRepository.save(kindergarten);
+
+		return ResponseEntity.ok(new MessageResponse("Vaikų darželis pakeistas!"));
+	}
+
+	public ResponseEntity<?> amendGroup(Long groupId, @Valid GroupInfo info) {
+//		Kindergarten kindergarten = kindergartenRepository.getOne(gartenId);
+
+		Group group = groupRepository.getOne(groupId);
+		group.setName(info.getName());
+		group.setCapasity(info.getCapasity());
+		if (info.getAge().equals("3 iki 6")) {
+			group.setAgeFrom(3L);
+			group.setAgeTo(6L);
+		} else {
+			group.setAgeFrom(2L);
+			group.setAgeTo(3L);
+		}
+
+		groupRepository.save(group);
+
+		return ResponseEntity.ok(new MessageResponse("Vaikų darželis pakeistas!"));
 	}
 
 }
