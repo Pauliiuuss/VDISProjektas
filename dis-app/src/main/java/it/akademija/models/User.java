@@ -1,5 +1,7 @@
 package it.akademija.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,6 +34,10 @@ public class User {
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Role role;
 
+	@OneToOne(mappedBy = "userId")
+	@JsonIgnore
+	private UserData userData;
+
 	public User() {
 	}
 
@@ -39,6 +45,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
+
 
 	public Long getId() {
 		return id;
@@ -71,4 +78,8 @@ public class User {
 	public Role getRole() {
 		return role;
 	}
+
+	public UserData getUserData() { return userData; }
+
+	public void setUserData(UserData userData) { this.userData = userData; }
 }
