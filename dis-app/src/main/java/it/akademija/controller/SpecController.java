@@ -49,4 +49,16 @@ public class SpecController {
 	public Collection<GroupInfo> getGroups(@PathVariable Long id) {
 		return specService.getGroups(id);
 	}
+
+	@PostMapping("/amend/{id}")
+	@PreAuthorize("hasRole('SPEC')")
+	public ResponseEntity<?> amendKindergarten(@Valid @RequestBody KindergartenInfo info, @PathVariable Long id) {
+		return specService.amendKindergarten(id, info);
+	}
+
+	@PostMapping("/amend/group/{groupId}")
+	public ResponseEntity<?> amendGroup(@Valid @RequestBody GroupInfo info, @PathVariable Long groupId) {
+		return specService.amendGroup(groupId, info);
+	}
+
 }

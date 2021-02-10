@@ -24,7 +24,7 @@ public class Group {
 	@Size(max = 120)
 	private String name;
 
-	private String capasity;
+	private Long capasity;
 
 	private Long ageFrom;
 
@@ -37,7 +37,7 @@ public class Group {
 	public Group() {
 	}
 
-	public Group(@NotBlank @Size(max = 120) String name, @NotBlank String capasity, @NotBlank Long ageFrom,
+	public Group(@NotBlank @Size(max = 120) String name, @NotBlank Long capasity, @NotBlank Long ageFrom,
 			@NotBlank Long ageTo, Kindergarten kindergarten) {
 		super();
 		this.name = name;
@@ -79,11 +79,11 @@ public class Group {
 		this.name = name;
 	}
 
-	public String getCapasity() {
+	public Long getCapasity() {
 		return capasity;
 	}
 
-	public void setCapasity(String capasity) {
+	public void setCapasity(Long capasity) {
 		this.capasity = capasity;
 	}
 

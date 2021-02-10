@@ -7,9 +7,9 @@ class GroupsTable extends Component {
       path: "name",
       label: "Grupės pavadinimas",
     },
-    { path: "ageFrom", label: "Amžius nuo" },
-    { path: "ageTo", label: "Amžius iki" },
+    { path: "age", label: "Amžius" },
     { path: "capasity", label: "Vietų skaičius" },
+    { path: "button", label: "" },
   ];
   render() {
     const {
@@ -19,10 +19,11 @@ class GroupsTable extends Component {
       onAddGroup,
       successful,
       message,
+      onAmendGroup,
     } = this.props;
-
     return (
       <Table
+        onAmendGroup={onAmendGroup}
         columns={this.columns}
         data={groups}
         sortColumn={sortColumn}

@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import _ from "lodash";
+import TableRow from "./TableRow";
 
 class TableBody extends Component {
+  state = {
+    showInput: "",
+    name: "",
+    address: "",
+  };
+
   componentDidMount() {
     const { data } = this.props;
     if (data.length > 0) {
@@ -9,9 +16,70 @@ class TableBody extends Component {
     }
   }
 
-  renderCell = (item, column) => {
-    if (column.content) return column.content(item);
+  clickAmend = (item) => {
+    this.setState({
+      showInput: item.id,
+      name: item.name,
+      address: item.address,
+    });
+  };
 
+  onInputChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value, message: "" });
+  };
+
+  clickConfirm = (item) => {
+    let newItem = item;
+    newItem.name = this.state.name;
+    newItem.address = this.state.address;
+    this.props.onAmendKindergarten(item);
+    this.setState({ showInput: "" });
+  };
+
+  renderCell = (item, column) => {
+    if (column.path === "capasity" && item.id === this.state.showInput)
+      return (
+        <button
+          onClick={() => this.clickConfirm(item)}
+          className="btn btn-info btn-md"
+        >
+          Patvirtinti
+        </button>
+      );
+    if (column.label === "" && item.id === this.state.showInput)
+      return (
+        <button
+          onClick={() =>
+            this.setState({ showInput: "", name: "", address: "" })
+          }
+          className="btn btn-danger btn-md"
+        >
+          Atšaukti
+        </button>
+      );
+    if (column.label === "")
+      return (
+        <button
+          onClick={() => this.clickAmend(item)}
+          className="btn btn-warning btn-md"
+        >
+          Pataisyti
+        </button>
+      );
+    if (item.id === this.state.showInput && column.label !== "Vietų skaičius") {
+      const name = column.path;
+      return (
+        <input
+          onChange={this.onInputChange}
+          value={this.state[name]}
+          name={name}
+          type="text"
+          className="form-control"
+          placeholder={column.label}
+        />
+      );
+    }
+    if (column.content) return column.content(item);
     return _.get(item, column.path);
   };
 
@@ -31,11 +99,7 @@ class TableBody extends Component {
         <tbody>
           {data.map((item) => (
             <tr
-              className={
-                this.props.active.id === item.id || +data.length === 1
-                  ? "active"
-                  : ""
-              }
+              className={this.props.active === item.id ? "active" : ""}
               onClick={() => this.handleClick(item.id)}
               key={item.id}
             >

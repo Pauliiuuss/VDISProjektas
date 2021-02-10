@@ -3,19 +3,17 @@ import React, { useState } from "react";
 const AddElement = ({ onAddKindergarten, successful, message }) => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
-  const [capasity, setCapasity] = useState(0);
   const [addForm, setAddForm] = useState(false);
 
   function hanldeClick() {
-    onAddKindergarten(address, name, capasity);
+    onAddKindergarten(address, name);
     setAddForm(false);
     setAddress("");
-    setCapasity(null);
     setName("");
   }
 
   function getButtonState() {
-    if (name === "" || address === "" || capasity < 1) return true;
+    if (name === "" || address === "") return true;
     return false;
   }
   if (!addForm)
@@ -67,7 +65,6 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
               onClick={() => {
                 setAddForm(!addForm);
                 setAddress("");
-                setCapasity(null);
                 setName("");
               }}
               className="btn btn-sm btn-secondary m-3"
@@ -87,33 +84,15 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
               placeholder="Adresas"
             />
           </td>
-          <td
-            style={{ width: "90px", paddingRight: "4px", paddingLeft: "4px" }}
-          >
-            <div className="row">
-              <div className="col-9" style={{ paddingRight: "4px" }}>
-                <input
-                  value={capasity}
-                  id="capasity"
-                  onChange={(e) => setCapasity(e.target.value)}
-                  type="number"
-                  className="form-control"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-sm"
-                  placeholder="Vietos"
-                />
-              </div>
-              <div className="col-2" style={{ padding: 0 }}>
-                <button
-                  disabled={getButtonState() ? true : false}
-                  className="btn btn-sm btn-success"
-                  style={{ height: "95%" }}
-                  onClick={() => hanldeClick()}
-                >
-                  <i className="fa fa-check" aria-hidden="true"></i>
-                </button>
-              </div>
-            </div>
+          <td style={{ paddingRight: "4px", paddingLeft: "4px" }}>
+            <button
+              disabled={getButtonState() ? true : false}
+              className="btn btn-md btn-success"
+              style={{ height: "95%" }}
+              onClick={() => hanldeClick()}
+            >
+              Pridėti <i className="fa fa-check" aria-hidden="true"></i>
+            </button>
           </td>
         </tr>
       </tfoot>
