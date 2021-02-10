@@ -12,7 +12,7 @@ class Kindergartens extends Component {
     pageSize: 5,
     length: 0,
     searchQuery: "",
-    sortColumn: { path: "name", order: "asc" },
+    sortColumn: { path: "id", order: "asc" },
   };
 
   handleSearch = (query) => {

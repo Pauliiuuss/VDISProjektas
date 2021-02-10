@@ -35,7 +35,7 @@ const AddGroup = ({ onAddGroup, successful, message }) => {
             </button>
           </td>
           <td colSpan="3">
-            {message && showMessage && (
+            {message && (
               <div className="form-group">
                 <div
                   className={

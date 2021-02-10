@@ -26,6 +26,7 @@ class SpecMainPage extends Component {
     const { data } = await SpecService.getKindergartens();
     this.setState({ kindergartens: data, loading: false });
     if (data.length > 0) {
+      console.log(data);
       this.setState({
         selectedKindergarten: data[0].id,
         selectedKindergartenName: data[0].name,

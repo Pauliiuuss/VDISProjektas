@@ -37,7 +37,7 @@ public class SpecService {
 
 		kindergartenRepository.save(new Kindergarten(info.getAddress(), info.getName(), new ArrayList<>()));
 
-		return ResponseEntity.ok(new MessageResponse("Vaikų darželis užregistruotas!"));
+		return ResponseEntity.ok(new MessageResponse("Darželis įvestas sėkmingai!"));
 	}
 
 	@Transactional(readOnly = true)
@@ -100,6 +100,9 @@ public class SpecService {
 //		Kindergarten kindergarten = kindergartenRepository.getOne(gartenId);
 
 		Group group = groupRepository.getOne(groupId);
+
+		Group originalGroup = group;
+
 		group.setName(info.getName());
 		group.setCapasity(info.getCapasity());
 		if (info.getAge().equals("3 iki 6")) {
@@ -109,6 +112,9 @@ public class SpecService {
 			group.setAgeFrom(2L);
 			group.setAgeTo(3L);
 		}
+
+		if (group.equals(originalGroup))
+			return ResponseEntity.ok(new MessageResponse("Jokių pakeitimų neišsaugota"));
 
 		groupRepository.save(group);
 
