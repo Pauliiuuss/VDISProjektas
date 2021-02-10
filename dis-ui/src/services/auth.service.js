@@ -1,12 +1,7 @@
 import axios from 'axios';
 
-<<<<<<< HEAD
-const API_URL = process.env.PUBLIC_URL + '/api/auth/';
-// const API_URL = 'http://localhost:8080/api/auth/';
-=======
 // const API_URL = process.env.PUBLIC_URL + '/api/auth/';
 const API_URL = 'http://localhost:8080/api/auth/';
->>>>>>> master
 
 class AuthService {
   login(username, password) {

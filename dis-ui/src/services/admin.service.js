@@ -1,13 +1,8 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-<<<<<<< HEAD
-const API_URL = process.env.PUBLIC_URL + '/api/admin/';
-// const API_URL = 'http://localhost:8080/api/admin/';
-=======
 // const API_URL = process.env.PUBLIC_URL + '/api/admin/';
 const API_URL = 'http://localhost:8080/api/admin/';
->>>>>>> master
 
 class AdminService {
   createUser(body) {
