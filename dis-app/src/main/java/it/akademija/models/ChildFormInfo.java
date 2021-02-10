@@ -23,14 +23,13 @@ public class ChildFormInfo {
     public ChildFormInfo() {
     }
 
-    public ChildFormInfo(String name, String surename, Date birthDate, String address, String city, List<String> priorities,
+    public ChildFormInfo(String name, String surename, Date birthDate, String address, String city,
                          boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentId, Date postDate) {
         this.name = name;
         this.surename = surename;
         this.birthDate = birthDate;
         this.address = address;
         this.city = city;
-        this.priorities = priorities;
         this.inCity = inCity;
         this.adopted = adopted;
         this.threeOrMore = threeOrMore;
@@ -86,14 +85,6 @@ public class ChildFormInfo {
 
     public void setCity(String city) {
         this.city = city;
-    }
-
-    public List<String> getPriorities() {
-        return priorities;
-    }
-
-    public void setPriorities(List<String> priorities) {
-        this.priorities = priorities;
     }
 
     public boolean isInCity() {

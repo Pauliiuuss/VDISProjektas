@@ -58,7 +58,7 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 			Role adminRole = new Role(ERole.ROLE_ADMIN);
 			if (roleRepository.findByName(ERole.ROLE_ADMIN).isEmpty()) {
 				roleRepository.save(adminRole);
-				if (roleRepository.findByName(ERole.ROLE_SPEC).isEmpty()) {
+				if(roleRepository.findByName(ERole.ROLE_SPEC).isEmpty()) {
 					Role specRole = new Role(ERole.ROLE_SPEC);
 					roleRepository.save(specRole);
 				}
