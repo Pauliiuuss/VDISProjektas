@@ -58,9 +58,6 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 			Role adminRole = new Role(ERole.ROLE_ADMIN);
 			if(roleRepository.findByName(ERole.ROLE_ADMIN).isEmpty()) {
 				roleRepository.save(adminRole);
-				User userAdmin = new User("admin", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
-				userAdmin.setRole(adminRole);
-				userRepository.save(userAdmin);
 				if(roleRepository.findByName(ERole.ROLE_SPEC).isEmpty()) {
 					Role specRole = new Role(ERole.ROLE_SPEC);
 					roleRepository.save(specRole);
@@ -70,6 +67,12 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 					roleRepository.save(parentRole);
 				}
 			}
+			User userAdmin = new User("admin", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
+			Role getRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+			userAdmin.setRole(getRole);
+			userRepository.save(userAdmin);
+
 		}
 	}
 }

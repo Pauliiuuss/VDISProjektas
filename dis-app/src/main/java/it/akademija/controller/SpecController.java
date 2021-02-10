@@ -27,25 +27,25 @@ public class SpecController {
 	private SpecService specService;
 
 	@PostMapping("/create")
-	@PreAuthorize("hasRole('SPEC') or hasRole('PARENT')")
+	@PreAuthorize("hasRole('SPEC')")
 	public ResponseEntity<?> registerKindergarten(@Valid @RequestBody KindergartenInfo info) {
 		return specService.registerKindergarten(info);
 	}
 
 	@PostMapping("/create/{id}")
-	@PreAuthorize("hasRole('SPEC') or hasRole('PARENT')")
+	@PreAuthorize("hasRole('SPEC')")
 	public ResponseEntity<?> registerKindergartenGroup(@Valid @RequestBody GroupInfo info, @PathVariable Long id) {
 		return specService.registerKindergartenGroup(id, info);
 	}
 
 	@GetMapping("/getkindergartens")
-	@PreAuthorize("hasRole('SPEC') or hasRole('PARENT')")
+	@PreAuthorize("hasRole('SPEC')")
 	public Collection<KindergartenInfo> getKindergartens() {
 		return specService.getKindergartens();
 	}
 
 	@GetMapping("/getgroups/{id}")
-	@PreAuthorize("hasRole('SPEC') or hasRole('PARENT')")
+	@PreAuthorize("hasRole('SPEC')")
 	public Collection<GroupInfo> getGroups(@PathVariable Long id) {
 		return specService.getGroups(id);
 	}

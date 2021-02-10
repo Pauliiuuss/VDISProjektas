@@ -1,5 +1,7 @@
 package it.akademija.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -23,8 +25,6 @@ public class ChildForm {
     private String address;
     @NotBlank
     private String city;
-    @ElementCollection
-    private List<String> priorities;
     @NotBlank
     private boolean inCity;
     @NotBlank
@@ -40,20 +40,23 @@ public class ChildForm {
     @JoinColumn(name = "userdata_id")
     private UserData parentId;
 
+    @OneToOne(mappedBy = "childForm")
+    @JsonIgnore
+    private KindergartenPriority kindergartenPriority;
+
     @NotBlank
     private Date postDate;
 
     public ChildForm() {
     }
 
-    public ChildForm(String name, String surename, Date birthDate, String address, String city, List<String> priorities, boolean inCity,
+    public ChildForm(String name, String surename, Date birthDate, String address, String city, boolean inCity,
                      boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentId, Date postDate) {
         this.name = name;
         this.surename = surename;
         this.birthDate = birthDate;
         this.address = address;
         this.city = city;
-        this.priorities = priorities;
         this.inCity = inCity;
         this.adopted = adopted;
         this.threeOrMore = threeOrMore;
@@ -111,14 +114,6 @@ public class ChildForm {
         this.city = city;
     }
 
-    public List<String> getPriorities() {
-        return priorities;
-    }
-
-    public void setPriorities(List<String> priorities) {
-        this.priorities = priorities;
-    }
-
     public boolean isInCity() {
         return inCity;
     }
@@ -166,6 +161,10 @@ public class ChildForm {
     public void setParentId(UserData parentId) {
         this.parentId = parentId;
     }
+
+    public KindergartenPriority getKindergartenPriority() { return kindergartenPriority; }
+
+    public void setKindergartenPriority(KindergartenPriority kindergartenPriority) { this.kindergartenPriority = kindergartenPriority; }
 
     public Date getPostDate() {
         return postDate;

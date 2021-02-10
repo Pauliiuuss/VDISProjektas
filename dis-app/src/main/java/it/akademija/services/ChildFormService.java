@@ -25,7 +25,6 @@ public class ChildFormService {
                         isdb.getBirthDate(),
                         isdb.getAddress(),
                         isdb.getCity(),
-                        isdb.getPriorities(),
                         isdb.isInCity(),
                         isdb.isAdopted(),
                         isdb.isThreeOrMore(),
@@ -49,7 +48,6 @@ public class ChildFormService {
                     info.getBirthDate(),
                     info.getAddress(),
                     info.getCity(),
-                    info.getPriorities(),
                     info.isInCity(),
                     info.isAdopted(),
                     info.isThreeOrMore(),
@@ -75,7 +73,6 @@ public class ChildFormService {
                 childFormInfo.getBirthDate(),
                 childFormInfo.getAddress(),
                 childFormInfo.getCity(),
-                childFormInfo.getPriorities(),
                 childFormInfo.isInCity(),
                 childFormInfo.isAdopted(),
                 childFormInfo.isThreeOrMore(),
@@ -98,7 +95,6 @@ public class ChildFormService {
             idb.setBirthDate(childFormInfo.getBirthDate());
             idb.setAddress(childFormInfo.getAddress());
             idb.setCity(childFormInfo.getCity());
-            idb.setPriorities(childFormInfo.getPriorities());
             idb.setInCity(childFormInfo.isInCity());
             idb.setAdopted(childFormInfo.isAdopted());
             idb.setThreeOrMore(childFormInfo.isThreeOrMore());
