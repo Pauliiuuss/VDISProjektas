@@ -8,8 +8,8 @@ class SpecMainPage extends Component {
   state = {
     groups: [],
     selectedKindergarten: 0,
-    selectedKindergartenName: "Not selected",
-    currentUser: "",
+    selectedKindergartenName: 'Not selected',
+    currentUser: '',
     userReady: false,
     roles: '',
     kindergartens: null,
@@ -45,7 +45,7 @@ class SpecMainPage extends Component {
   }
 
   handleKindergartenChange = async (id) => {
-    this.setState({ selectedKindergarten: id, message: "", messageGroup: "" });
+    this.setState({ selectedKindergarten: id, message: '', messageGroup: '' });
     this.setState({
       selectedKindergartenName: this.state.kindergartens.filter(
         (g) => g.id === id
@@ -58,7 +58,7 @@ class SpecMainPage extends Component {
   };
 
   handleAddKindergarten = async (address, name) => {
-    if (name === "" || address === "") {
+    if (name === '' || address === '') {
       this.setState({
         successful: false,
         message: 'Laukai negali būti neužpildyti!',
@@ -93,7 +93,7 @@ class SpecMainPage extends Component {
         });
       }
     );
-    this.setState({ messageGroup: "" });
+    this.setState({ messageGroup: '' });
   };
 
   handleAmendKindergarten = async (item) => {
@@ -125,7 +125,7 @@ class SpecMainPage extends Component {
         });
       }
     );
-    this.setState({ messageGroup: "" });
+    this.setState({ messageGroup: '' });
   };
   handleAmendGroup = async (item) => {
     console.log(item);
@@ -159,13 +159,13 @@ class SpecMainPage extends Component {
       }
     );
     await SpecService.getKindergartens().then((response) =>
-      this.setState({ message: "", kindergartens: response.data })
+      this.setState({ message: '', kindergartens: response.data })
     );
     console.log(this.state);
   };
 
   handleAddGroup = async (name, age, capasity) => {
-    console.log("Now", name, age, capasity);
+    console.log('Now', name, age, capasity);
     await SpecService.createGroup(this.state.selectedKindergarten, {
       name,
       age,
@@ -200,13 +200,13 @@ class SpecMainPage extends Component {
       }
     );
     await SpecService.getKindergartens().then((response) =>
-      this.setState({ message: "", kindergartens: response.data })
+      this.setState({ message: '', kindergartens: response.data })
     );
   };
 
   render() {
     return (
-      <div className="container" style={{ paddingTop: "1rem" }}>
+      <div className="container" style={{ paddingTop: '1rem' }}>
         {this.state.kindergartens ? (
           <div className="row">
             <div className="col-7">
