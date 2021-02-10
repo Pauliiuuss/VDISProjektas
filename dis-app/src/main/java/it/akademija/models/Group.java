@@ -37,6 +37,17 @@ public class Group {
 	public Group() {
 	}
 
+	public Group(Long id, @NotBlank @Size(max = 120) String name, Long capasity, Long ageFrom, Long ageTo,
+			Kindergarten kindergarten) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.capasity = capasity;
+		this.ageFrom = ageFrom;
+		this.ageTo = ageTo;
+		this.kindergarten = kindergarten;
+	}
+
 	public Group(@NotBlank @Size(max = 120) String name, @NotBlank Long capasity, @NotBlank Long ageFrom,
 			@NotBlank Long ageTo, Kindergarten kindergarten) {
 		super();

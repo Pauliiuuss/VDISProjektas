@@ -1,10 +1,13 @@
 package it.akademija;
 
-import it.akademija.models.ERole;
-import it.akademija.models.Role;
-import it.akademija.models.User;
-import it.akademija.repository.RoleRepository;
-import it.akademija.repository.UserRepository;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +16,14 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
+import it.akademija.models.ERole;
+import it.akademija.models.Kindergarten;
+import it.akademija.models.Role;
+import it.akademija.models.User;
+import it.akademija.repository.GroupRepository;
+import it.akademija.repository.KindergartenRepository;
+import it.akademija.repository.RoleRepository;
+import it.akademija.repository.UserRepository;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -29,6 +40,12 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private KindergartenRepository kindergartenRepository;
+
+	@Autowired
+	private GroupRepository groupRepository;
 
 	@Bean
 	public Docket swaggerDocket() {
@@ -52,23 +69,87 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 	@Override
 	public void run(String... args) throws Exception {
 
-		if(userRepository.existsByUsername("admin")) {
+		if (userRepository.existsByUsername("admin")) {
 			System.out.println("admin already exists");
 		} else {
 			Role adminRole = new Role(ERole.ROLE_ADMIN);
-			if(roleRepository.findByName(ERole.ROLE_ADMIN).isEmpty()) {
+			if (roleRepository.findByName(ERole.ROLE_ADMIN).isEmpty()) {
 				roleRepository.save(adminRole);
 				User userAdmin = new User("admin", "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918");
 				userAdmin.setRole(adminRole);
 				userRepository.save(userAdmin);
-				if(roleRepository.findByName(ERole.ROLE_SPEC).isEmpty()) {
+				if (roleRepository.findByName(ERole.ROLE_SPEC).isEmpty()) {
 					Role specRole = new Role(ERole.ROLE_SPEC);
 					roleRepository.save(specRole);
 				}
-				if(roleRepository.findByName(ERole.ROLE_PARENT).isEmpty()) {
+				if (roleRepository.findByName(ERole.ROLE_PARENT).isEmpty()) {
 					Role parentRole = new Role(ERole.ROLE_PARENT);
 					roleRepository.save(parentRole);
 				}
+			}
+		}
+
+		if (kindergartenRepository.findAll().size() < 1) {
+			System.out.println("++++++++++++++Started");
+
+			Reader reader = Files.newBufferedReader(Paths.get("./CSV/darzeliai.csv"));
+			System.out.println("++++++++++++++Reader");
+
+			CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(';')
+					.withHeader("Id", "Address", "Name").withIgnoreHeaderCase().withTrim());
+			System.out.println("++++++++++++++Parse");
+
+			for (CSVRecord csvRecord : csvParser) {
+
+				String id = csvRecord.get("Id");
+				String address = csvRecord.get("Address");
+				String name = csvRecord.get("Name");
+
+				System.out.println("Record No - " + csvRecord.getRecordNumber());
+				System.out.println("---------------");
+				System.out.println("Name : " + name);
+				System.out.println("ID : " + id);
+				System.out.println("Phone : " + address);
+				System.out.println("---------------\n\n");
+
+				kindergartenRepository.save(new Kindergarten(Long.parseLong(id), address, name, new ArrayList<>()));
+			}
+		}
+
+		if (groupRepository.findAll().size() < 1) {
+			System.out.println("++++++++++++++Started");
+
+			Reader reader = Files.newBufferedReader(Paths.get("./CSV/grupes.csv"));
+			System.out.println("++++++++++++++Reader");
+
+			CSVParser csvParser = new CSVParser(reader,
+					CSVFormat.DEFAULT.withDelimiter(';')
+							.withHeader("Id", "Capasity", "Name", "Kindergarten_id", "Age_from", "Age_to")
+							.withIgnoreHeaderCase().withTrim());
+			System.out.println("++++++++++++++Parse");
+
+			for (CSVRecord csvRecord : csvParser) {
+
+				String id = csvRecord.get("Id");
+				String capasity = csvRecord.get("Capasity");
+				String name = csvRecord.get("Name");
+				String kindergartenId = csvRecord.get("Kindergarten_id");
+				String ageFrom = csvRecord.get("Age_from");
+				String ageTo = csvRecord.get("Age_to");
+
+				System.out.println("Record No - " + csvRecord.getRecordNumber());
+				System.out.println("---------------");
+				System.out.println("ID : " + id);
+				System.out.println("Capasity: " + capasity);
+				System.out.println("Kindergarten ID : " + kindergartenId);
+				System.out.println("AgeFrom : " + ageFrom);
+				System.out.println("AgeTo : " + ageTo);
+				System.out.println("Name : " + name);
+				System.out.println("---------------\n\n");
+
+//				groupRepository
+//						.save(new Group(Long.parseLong(id), name, Long.parseLong(capasity), Long.parseLong(ageFrom),
+//								Long.parseLong(ageTo), kindergartenRepository.getOne(Long.parseLong(kindergartenId))));
 			}
 		}
 	}
