@@ -1,16 +1,37 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
+<<<<<<< HEAD
 const API_URL = process.env.PUBLIC_URL + '/api/spec/';
 // const API_URL = 'http://localhost:8080/api/spec/';
+=======
+// const API_URL = process.env.PUBLIC_URL + '/api/spec/';
+const API_URL = 'http://localhost:8080/api/spec/';
+>>>>>>> master
 
 class SpecService {
   create(body) {
     return axios.post(API_URL + 'create', body, { headers: authHeader() });
+<<<<<<< HEAD
   }
 
   createGroup(id, body) {
     console.log(id);
+=======
+  }
+
+  amend(id, body) {
+    return axios.post(API_URL + 'amend/' + id, body, { headers: authHeader() });
+  }
+
+  amendGroup(groupId, body) {
+    return axios.post(API_URL + 'amend/group/' + groupId, body, {
+      headers: authHeader(),
+    });
+  }
+
+  createGroup(id, body) {
+>>>>>>> master
     return axios.post(API_URL + 'create/' + id, body, {
       headers: authHeader(),
     });

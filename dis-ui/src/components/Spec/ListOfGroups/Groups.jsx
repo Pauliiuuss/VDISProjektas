@@ -49,7 +49,8 @@ class Groups extends Component {
 
     return (
       <div className="row">
-        <div className="col">
+        <div className="col" style={{ textAlign: "center" }}>
+          <h4>{this.props.activeName}</h4>
           <p style={{ fontSize: "14px" }}>
             Pasirinktam darželiui yra{" "}
             {groups.length < 2 ? "registruota" : "registruotų"} {groups.length}{" "}
@@ -57,6 +58,7 @@ class Groups extends Component {
           </p>
 
           <GroupsTable
+            onAmendGroup={this.props.onAmendGroup}
             groups={groups}
             sortColumn={sortColumn}
             onSort={this.handleSort}

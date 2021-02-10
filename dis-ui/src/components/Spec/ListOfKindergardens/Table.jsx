@@ -13,6 +13,7 @@ const Table = ({
   successful,
   message,
   active,
+  onAmendKindergarten,
 }) => {
   return (
     <React.Fragment>
@@ -23,6 +24,7 @@ const Table = ({
           onSort={onSort}
         />
         <TableBody
+          onAmendKindergarten={onAmendKindergarten}
           active={active}
           columns={columns}
           data={data}

@@ -12,7 +12,7 @@ class Kindergartens extends Component {
     pageSize: 5,
     length: 0,
     searchQuery: "",
-    sortColumn: { path: "name", order: "asc" },
+    sortColumn: { path: "id", order: "asc" },
   };
 
   handleSearch = (query) => {
@@ -62,6 +62,7 @@ class Kindergartens extends Component {
           <SearchBox value={searchQuery} onChange={this.handleSearch} />
 
           <KindergartenTable
+            onAmendKindergarten={this.props.onAmendKindergarten}
             kindergartens={kindergartens}
             sortColumn={sortColumn}
             onSort={this.handleSort}

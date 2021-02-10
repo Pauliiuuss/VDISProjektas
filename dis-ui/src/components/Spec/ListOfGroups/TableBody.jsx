@@ -2,7 +2,101 @@ import React, { Component } from "react";
 import _ from "lodash";
 
 class TableBody extends Component {
+  state = {
+    showInput: "",
+    name: "",
+    capasity: "",
+    age: "",
+  };
+
+  clickAmend = (item) => {
+    this.setState({
+      showInput: item.id,
+      name: item.name,
+      capasity: item.capasity,
+      age: item.age,
+    });
+  };
+
+  onInputChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value, message: "" });
+  };
+
+  clickConfirm = (item) => {
+    let newItem = item;
+    newItem.name = this.state.name;
+    newItem.capasity = this.state.capasity;
+    newItem.age = this.state.age;
+    this.props.onAmendGroup(item);
+    this.setState({ showInput: "" });
+  };
+
   renderCell = (item, column) => {
+    if (column.label === "" && item.id === this.state.showInput)
+      return (
+        <div className="row">
+          <div className="col-5">
+            <button
+              onClick={() => this.clickConfirm(item)}
+              className="btn btn-info btn-md"
+            >
+              <i className="fa fa-check" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div className="col-5">
+            <button
+              onClick={() =>
+                this.setState({ showInput: "", name: "", address: "" })
+              }
+              className="btn btn-danger btn-md"
+            >
+              <i className="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      );
+    if (column.label === "")
+      return (
+        <button
+          onClick={() => this.clickAmend(item)}
+          className="btn btn-warning btn-md"
+        >
+          Pataisyti
+        </button>
+      );
+    if (item.id === this.state.showInput && column.path === "age") {
+      const name = column.path;
+      return (
+        <select
+          value={this.state[name]}
+          name={name}
+          onChange={this.onInputChange}
+          className="form-control"
+          id={name}
+        >
+          <option id="2 iki 3" value="2 iki 3">
+            2 iki 3
+          </option>
+          <option id="3 iki 6" value="3 iki 6">
+            3 iki 6
+          </option>
+        </select>
+      );
+    }
+
+    if (item.id === this.state.showInput) {
+      const name = column.path;
+      return (
+        <input
+          onChange={this.onInputChange}
+          value={this.state[name]}
+          name={name}
+          type="text"
+          className="form-control"
+          placeholder={column.label}
+        />
+      );
+    }
     if (column.content) return column.content(item);
 
     return _.get(item, column.path);

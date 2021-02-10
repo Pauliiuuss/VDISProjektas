@@ -2,29 +2,21 @@ import React, { useState } from "react";
 
 const AddGroup = ({ onAddGroup, successful, message }) => {
   const [name, setName] = useState("");
-  const [ageFrom, setAgeFrom] = useState("");
-  const [ageTo, setAgeTo] = useState("");
+  const [age, setAge] = useState("3 iki 6");
   const [capasity, setCapasity] = useState("");
   const [addForm, setAddForm] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   function hanldeClick() {
-    onAddGroup(name, ageFrom, ageTo, capasity);
+    onAddGroup(name, age, capasity);
     setAddForm(false);
-    setAgeFrom("");
-    setAgeTo("");
+    setAge("");
     setCapasity("");
     setName("");
   }
 
   function getButtonState() {
-    if (
-      name === "" ||
-      ageTo < 1 ||
-      ageFrom < 1 ||
-      ageFrom > ageTo ||
-      capasity < 1
-    )
-      return true;
+    if (name === "" || capasity < 1) return true;
     return false;
   }
   if (!addForm)
@@ -33,7 +25,10 @@ const AddGroup = ({ onAddGroup, successful, message }) => {
         <tr>
           <td style={{ paddingLeft: "5px", paddingRight: "5px" }}>
             <button
-              onClick={() => setAddForm(!addForm)}
+              onClick={() => {
+                setAddForm(!addForm);
+                setShowMessage(false);
+              }}
               className="btn btn-sm btn-success"
             >
               <p style={{ margin: 0 }}>Pridėti grupę</p>
@@ -75,8 +70,6 @@ const AddGroup = ({ onAddGroup, successful, message }) => {
             <button
               onClick={() => {
                 setAddForm(!addForm);
-                setAgeFrom("");
-                setAgeTo("");
                 setCapasity("");
                 setName("");
               }}
@@ -86,28 +79,19 @@ const AddGroup = ({ onAddGroup, successful, message }) => {
             </button>
           </td>
           <td style={{ paddingRight: "4px", paddingLeft: "4px" }}>
-            <input
-              value={ageFrom}
-              id="address"
-              onChange={(e) => setAgeFrom(e.target.value)}
-              type="number"
+            <select
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
               className="form-control"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-sm"
-              placeholder="Nuo"
-            />
-          </td>
-          <td style={{ paddingRight: "4px", paddingLeft: "4px" }}>
-            <input
-              value={ageTo}
-              id="address"
-              onChange={(e) => setAgeTo(e.target.value)}
-              type="number"
-              className="form-control"
-              aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-sm"
-              placeholder="Iki"
-            />
+              id="exampleFormControlSelect1"
+            >
+              <option id="2 iki 3" value="2 iki 3">
+                2 iki 3
+              </option>
+              <option id="3 iki 6" value="3 iki 6">
+                3 iki 6
+              </option>
+            </select>
           </td>
           <td
             style={{ width: "90px", paddingRight: "4px", paddingLeft: "4px" }}
@@ -130,7 +114,10 @@ const AddGroup = ({ onAddGroup, successful, message }) => {
                   disabled={getButtonState() ? true : false}
                   className="btn btn-sm btn-success"
                   style={{ height: "95%" }}
-                  onClick={() => hanldeClick()}
+                  onClick={() => {
+                    hanldeClick();
+                    setShowMessage(true);
+                  }}
                 >
                   <i className="fa fa-check" aria-hidden="true"></i>
                 </button>

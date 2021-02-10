@@ -9,6 +9,7 @@ class KindergartenTable extends Component {
     },
     { path: "address", label: "Adresas" },
     { path: "capasity", label: "Vietų skaičius" },
+    { path: "button", label: "" },
   ];
   render() {
     const {
@@ -20,10 +21,12 @@ class KindergartenTable extends Component {
       successful,
       message,
       active,
+      onAmendKindergarten,
     } = this.props;
 
     return (
       <Table
+        onAmendKindergarten={onAmendKindergarten}
         columns={this.columns}
         data={kindergartens}
         sortColumn={sortColumn}

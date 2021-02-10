@@ -4,44 +4,33 @@ public class GroupInfo {
 
 	private Long id;
 	private String name;
-	private String capasity;
-	private Long ageFrom;
-	private Long ageTo;
+	private Long capasity;
+	private String age;
 
 	public GroupInfo() {
 	}
 
-	public GroupInfo(Long id, String name, String capasity, Long ageFrom, Long ageTo) {
+	public GroupInfo(Long id, String name, Long capasity, String age) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.capasity = capasity;
-		this.ageFrom = ageFrom;
-		this.ageTo = ageTo;
+		this.age = age;
 	}
 
-	public GroupInfo(String name, String capasity, Long ageFrom, Long ageTo) {
+	public GroupInfo(String name, Long capasity, String age) {
 		super();
 		this.name = name;
 		this.capasity = capasity;
-		this.ageFrom = ageFrom;
-		this.ageTo = ageTo;
+		this.age = age;
 	}
 
-	public Long getAgeFrom() {
-		return ageFrom;
+	public String getAge() {
+		return age;
 	}
 
-	public void setAgeFrom(Long ageFrom) {
-		this.ageFrom = ageFrom;
-	}
-
-	public Long getAgeTo() {
-		return ageTo;
-	}
-
-	public void setAgeTo(Long ageTo) {
-		this.ageTo = ageTo;
+	public void setAge(String age) {
+		this.age = age;
 	}
 
 	public Long getId() {
@@ -60,11 +49,11 @@ public class GroupInfo {
 		this.name = name;
 	}
 
-	public String getCapasity() {
+	public Long getCapasity() {
 		return capasity;
 	}
 
-	public void setCapasity(String capasity) {
+	public void setCapasity(Long capasity) {
 		this.capasity = capasity;
 	}
 
