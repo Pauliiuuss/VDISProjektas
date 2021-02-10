@@ -8,11 +8,21 @@ import {
   faEnvelope,
   faBirthdayCake,
 } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+
+const API_URL = process.env.PUBLIC_URL + '/api/spec/';
+// const API_URL = 'http://localhost:8080/api/spec/';
 
 export default class RegistrationForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      kindergartens: [],
+      kindergarten1: '',
+      kindergarten2: '',
+      kindergarten3: '',
+      kindergarten4: '',
+      kindergarten5: '',
       vardasAtstovas1: '',
       pavardeAtstovas1: '',
       kodasAtstovas1: '',
@@ -33,21 +43,11 @@ export default class RegistrationForm extends Component {
       gimimoData: '',
       vaikoAdresas: '',
       vaikoMiestas: '',
-
-      //   selectKindergarten: {
-      //     prioritetas1: '',
-      //     prioritetas2: '',
-      //     prioritetas3: '',
-      //     prioritetas4: '',
-      //     prioritetas5: '',
-      //   },
-      //   selectPriorityOptions: {
-      //     deklaruota: '',
-      //     ivaikintas: '',
-      //     daugiavaike: '',
-      //     mokosiTevas: '',
-      //     nedarbingumas: '',
-      //   },
+      inCity: false,
+      adopted: false,
+      threeOrMore: false,
+      parentStudent: false,
+      handicapped: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -61,8 +61,13 @@ export default class RegistrationForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.history.push('/dis-app/application');
-
     this.setState({
+      kindergartens: [],
+      kindergarten1: '',
+      kindergarten2: '',
+      kindergarten3: '',
+      kindergarten4: '',
+      kindergarten5: '',
       vardasAtstovas1: '',
       pavardeAtstovas1: '',
       kodasAtstovas1: '',
@@ -83,16 +88,31 @@ export default class RegistrationForm extends Component {
       gimimoData: '',
       vaikoAdresas: '',
       vaikoMiestas: '',
-      kindergarten: '',
+      inCity: false,
+      adopted: false,
+      threeOrMore: false,
+      parentStudent: false,
+      handicapped: false,
     });
   };
 
   kindergartenDropdownSelect = (e) => {
     e.preventDefault();
     this.setState({
-      kindergarten: e.target.value,
+      [e.target.name]: e.target.value,
     });
   };
+
+  componentDidMount() {
+    axios
+      .get(`${API_URL}getkindergartens`)
+      .then((result) => {
+        this.setState({ kindergartens: result.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   render() {
     return (
@@ -106,6 +126,9 @@ export default class RegistrationForm extends Component {
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="vardasAtstovas1">
                   Vardas:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -128,6 +151,9 @@ export default class RegistrationForm extends Component {
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="pavardeAtstovas1">
                   Pavardė:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -150,6 +176,9 @@ export default class RegistrationForm extends Component {
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="kodasAtstovas1">
                   Asmens kodas:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -171,7 +200,10 @@ export default class RegistrationForm extends Component {
               </div>
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="adresasAtstovas1">
-                  Gyvenamosios vietos adresas:
+                  Adresas:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -194,6 +226,9 @@ export default class RegistrationForm extends Component {
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="miestasAtstovas1">
                   Miestas:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -216,6 +251,9 @@ export default class RegistrationForm extends Component {
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="telAtstovas1">
                   Telefonas:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -238,6 +276,9 @@ export default class RegistrationForm extends Component {
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="elpastasAtstovas1">
                   El.paštas:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -325,7 +366,7 @@ export default class RegistrationForm extends Component {
               </div>
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="adresasAtstovas2">
-                  Gyvenamosios vietos adresas:
+                  Adresas:
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -415,6 +456,9 @@ export default class RegistrationForm extends Component {
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="vaikoVardas">
                   Vardas:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -437,6 +481,9 @@ export default class RegistrationForm extends Component {
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="vaikoPavarde">
                   Pavardė:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -459,6 +506,9 @@ export default class RegistrationForm extends Component {
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="vaikoKodas">
                   Asmens kodas:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -481,6 +531,9 @@ export default class RegistrationForm extends Component {
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="gimimoData">
                   Gimimo data:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -502,7 +555,10 @@ export default class RegistrationForm extends Component {
               </div>
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="vaikoAdresas">
-                  Gyvenamosios vietos adresas:
+                  Adresas:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -525,6 +581,9 @@ export default class RegistrationForm extends Component {
               <div className="form-inline mb-3">
                 <label className="my-auto col-4" htmlFor="vaikoMiestas">
                   Miestas:
+                  <span className="text-danger" style={{ fontSize: 20 }}>
+                    *
+                  </span>
                 </label>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -550,6 +609,9 @@ export default class RegistrationForm extends Component {
             <div className="col-lg-12">
               <h3 className="mb-4 mt-5 text-center">
                 Pasirinkite darželį (prioriteto mažėjimo tvarka):
+                <span className="text-danger" style={{ fontSize: 25 }}>
+                  *
+                </span>
               </h3>
               <div className="form-group">
                 <div className="form-inline mb-4">
@@ -557,64 +619,89 @@ export default class RegistrationForm extends Component {
                     1 prioritetas
                   </label>
                   <select
+                    style={{ fontSize: '13px' }}
                     className="form-control col-5"
                     id="selectprior1"
-                    value={this.state.kindergarten}
+                    name="kindergarten1"
+                    value={this.state.kindergarten1}
                     onChange={this.kindergartenDropdownSelect}
                   >
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    <option>Pasirinkti darželį iš sąrašo...</option>
+                    {this.state.kindergartens.map((kind) => (
+                      <option key={kind.kindergarten_id}>{kind.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="form-inline mb-4">
                   <label className="col-2" htmlFor="prioritetas2">
                     2 prioritetas
                   </label>
-                  <select className="form-control col-5" id="prioritetas2">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                  <select
+                    style={{ fontSize: '13px' }}
+                    className="form-control col-5"
+                    id="selectprior2"
+                    name="kindergarten2"
+                    value={this.state.kindergarten2}
+                    onChange={this.kindergartenDropdownSelect}
+                  >
+                    <option>Pasirinkti darželį iš sąrašo...</option>
+                    {this.state.kindergartens.map((kind) => (
+                      <option key={kind.kindergarten_id}>{kind.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="form-inline mb-4">
                   <label className="col-2" htmlFor="prioritetas3">
                     3 prioritetas
                   </label>
-                  <select className="form-control col-5" id="prioritetas3">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                  <select
+                    style={{ fontSize: '13px' }}
+                    className="form-control col-5"
+                    id="selectprior3"
+                    name="kindergarten3"
+                    value={this.state.kindergarten3}
+                    onChange={this.kindergartenDropdownSelect}
+                  >
+                    <option>Pasirinkti darželį iš sąrašo...</option>
+                    {this.state.kindergartens.map((kind) => (
+                      <option key={kind.kindergarten_id}>{kind.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="form-inline mb-4">
                   <label className="col-2" htmlFor="prioritetas4">
                     4 prioritetas
                   </label>
-                  <select className="form-control col-5" id="prioritetas4">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                  <select
+                    style={{ fontSize: '13px' }}
+                    className="form-control col-5"
+                    id="selectprior4"
+                    name="kindergarten4"
+                    value={this.state.kindergarten4}
+                    onChange={this.kindergartenDropdownSelect}
+                  >
+                    <option>Pasirinkti darželį iš sąrašo...</option>
+                    {this.state.kindergartens.map((kind) => (
+                      <option key={kind.kindergarten_id}>{kind.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="form-inline mb-4">
                   <label className="col-2" htmlFor="prioritetas5">
                     5 prioritetas
                   </label>
-                  <select className="form-control col-5" id="prioritetas5">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                  <select
+                    style={{ fontSize: '13px' }}
+                    className="form-control col-5"
+                    id="selectprior5"
+                    name="kindergarten5"
+                    value={this.state.kindergarten5}
+                    onChange={this.kindergartenDropdownSelect}
+                  >
+                    <option>Pasirinkti darželį iš sąrašo...</option>
+                    {this.state.kindergartens.map((kind) => (
+                      <option key={kind.kindergarten_id}>{kind.name}</option>
+                    ))}
                   </select>
                 </div>
               </div>
