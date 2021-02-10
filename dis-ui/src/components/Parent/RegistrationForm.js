@@ -10,8 +10,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 
-const API_URL = process.env.PUBLIC_URL + '/api/spec/';
-// const API_URL = 'http://localhost:8080/api/spec/';
+// const API_URL = process.env.PUBLIC_URL + '/api/spec/';
+const API_URL = 'http://localhost:8080/api/spec/';
 
 export default class RegistrationForm extends Component {
   constructor(props) {
@@ -43,11 +43,15 @@ export default class RegistrationForm extends Component {
       gimimoData: '',
       vaikoAdresas: '',
       vaikoMiestas: '',
+      selectedPriority: true,
       inCity: false,
       adopted: false,
       threeOrMore: false,
       parentStudent: false,
       handicapped: false,
+      Atstovas1: {
+        name: '',
+      },
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -61,6 +65,8 @@ export default class RegistrationForm extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.history.push('/dis-app/application');
+    console.log(this.state);
+
     this.setState({
       kindergartens: [],
       kindergarten1: '',
@@ -103,6 +109,36 @@ export default class RegistrationForm extends Component {
     });
   };
 
+  inCitySelectChange = (e) => {
+    this.setState({
+      inCity: !this.state.inCity,
+    });
+  };
+
+  adoptedSelectChange = (e) => {
+    this.setState({
+      adopted: !this.state.adopted,
+    });
+  };
+
+  threeOrMoreSelectChange = (e) => {
+    this.setState({
+      threeOrMore: !this.state.threeOrMore,
+    });
+  };
+
+  parentStudentSelectChange = (e) => {
+    this.setState({
+      parentStudent: !this.state.parentStudent,
+    });
+  };
+
+  handicappedSelectChange = (e) => {
+    this.setState({
+      handicapped: !this.state.handicapped,
+    });
+  };
+
   componentDidMount() {
     axios
       .get(`${API_URL}getkindergartens`)
@@ -115,6 +151,8 @@ export default class RegistrationForm extends Component {
   }
 
   render() {
+    console.log(this.state.kindergartens);
+
     return (
       <div>
         <Navbar />
@@ -139,10 +177,10 @@ export default class RegistrationForm extends Component {
                   <input
                     type="text"
                     id="vardasAtstovas1"
-                    name="vardasAtstovas1"
+                    name="Atstovas1"
                     className="form-control"
                     placeholder="Vardas"
-                    value={this.state.vardasAtstovas1}
+                    value={this.state.Atstovas1.name}
                     onChange={this.handleChange}
                     required="required"
                   />
@@ -628,7 +666,7 @@ export default class RegistrationForm extends Component {
                   >
                     <option>Pasirinkti darželį iš sąrašo...</option>
                     {this.state.kindergartens.map((kind) => (
-                      <option key={kind.kindergarten_id}>{kind.name}</option>
+                      <option key={kind.id}>{kind.name}</option>
                     ))}
                   </select>
                 </div>
@@ -646,7 +684,7 @@ export default class RegistrationForm extends Component {
                   >
                     <option>Pasirinkti darželį iš sąrašo...</option>
                     {this.state.kindergartens.map((kind) => (
-                      <option key={kind.kindergarten_id}>{kind.name}</option>
+                      <option key={kind.id}>{kind.name}</option>
                     ))}
                   </select>
                 </div>
@@ -664,7 +702,7 @@ export default class RegistrationForm extends Component {
                   >
                     <option>Pasirinkti darželį iš sąrašo...</option>
                     {this.state.kindergartens.map((kind) => (
-                      <option key={kind.kindergarten_id}>{kind.name}</option>
+                      <option key={kind.id}>{kind.name}</option>
                     ))}
                   </select>
                 </div>
@@ -682,7 +720,7 @@ export default class RegistrationForm extends Component {
                   >
                     <option>Pasirinkti darželį iš sąrašo...</option>
                     {this.state.kindergartens.map((kind) => (
-                      <option key={kind.kindergarten_id}>{kind.name}</option>
+                      <option key={kind.id}>{kind.name}</option>
                     ))}
                   </select>
                 </div>
@@ -700,7 +738,7 @@ export default class RegistrationForm extends Component {
                   >
                     <option>Pasirinkti darželį iš sąrašo...</option>
                     {this.state.kindergartens.map((kind) => (
-                      <option key={kind.kindergarten_id}>{kind.name}</option>
+                      <option key={kind.id}>{kind.name}</option>
                     ))}
                   </select>
                 </div>
@@ -716,9 +754,10 @@ export default class RegistrationForm extends Component {
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  value=""
-                  id="deklaruota"
-                  name="deklaruota"
+                  id="inCity"
+                  name="inCity"
+                  checked={this.state.inCity}
+                  onChange={this.inCitySelectChange}
                 />
                 <label className="form-check-label" htmlFor="defaultCheck1">
                   Deklaruota gyvenomoji vieta Vilniaus m.
@@ -728,9 +767,10 @@ export default class RegistrationForm extends Component {
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  value=""
-                  id="ivaikintas"
-                  name="ivaikintas"
+                  id="adopted"
+                  name="adopted"
+                  checked={this.state.adopted}
+                  onChange={this.adoptedSelectChange}
                 />
                 <label className="form-check-label" htmlFor="defaultCheck1">
                   Vaikas įvaikintas
@@ -740,9 +780,10 @@ export default class RegistrationForm extends Component {
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  value=""
-                  id="daugiavaike"
-                  name="daugiavaike"
+                  id="threeOrMore"
+                  name="threeOrMore"
+                  checked={this.state.threeOrMore}
+                  onChange={this.threeOrMoreSelectChange}
                 />
                 <label className="form-check-label" htmlFor="defaultCheck1">
                   Šeimoje yra 3 ir daugiau vaikų, besimokančių bendro ugdymo
@@ -753,9 +794,10 @@ export default class RegistrationForm extends Component {
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  value=""
-                  id="mokosTevas"
-                  name="mokosiTevas"
+                  id="parentStudent"
+                  name="parentStudent"
+                  checked={this.state.parentStudent}
+                  onChange={this.parentStudentSelectChange}
                 />
                 <label className="form-check-label" htmlFor="defaultCheck1">
                   Vienas iš tėvų(globėjų) mokosi bendro ugdymo mokykloje
@@ -765,9 +807,10 @@ export default class RegistrationForm extends Component {
                 <input
                   className="form-check-input"
                   type="checkbox"
-                  value=""
-                  name="nedarbingumas"
-                  id="nedarbingumas"
+                  name="handicapped"
+                  id="handicapped"
+                  checked={this.state.handicapped}
+                  onChange={this.handicappedSelectChange}
                 />
                 <label className="form-check-label" htmlFor="defaultCheck1">
                   Vienas iš tėvų(globėjų) turi ne daugiau kaip 40 proc.
