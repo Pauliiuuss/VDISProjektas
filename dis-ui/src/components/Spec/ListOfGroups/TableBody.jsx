@@ -59,9 +59,9 @@ class TableBody extends Component {
       return (
         <button
           onClick={() => this.clickAmend(item)}
-          className="btn btn-warning btn-md"
+          className="btn btn-secondary btn-sm"
         >
-          Pataisyti
+          Redaguoti
         </button>
       );
     if (item.id === this.state.showInput && column.path === "age") {

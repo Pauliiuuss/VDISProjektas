@@ -17,6 +17,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.Bean;
 
 import it.akademija.models.ERole;
+import it.akademija.models.Group;
 import it.akademija.models.Kindergarten;
 import it.akademija.models.Role;
 import it.akademija.models.User;
@@ -100,19 +101,21 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 			System.out.println("++++++++++++++Parse");
 
 			for (CSVRecord csvRecord : csvParser) {
+				if (csvRecord.getRecordNumber() > 1) {
 
-				String id = csvRecord.get("Id");
-				String address = csvRecord.get("Address");
-				String name = csvRecord.get("Name");
+					String id = csvRecord.get("Id");
+					String address = csvRecord.get("Address");
+					String name = csvRecord.get("Name");
 
-				System.out.println("Record No - " + csvRecord.getRecordNumber());
-				System.out.println("---------------");
-				System.out.println("Name : " + name);
-				System.out.println("ID : " + id);
-				System.out.println("Phone : " + address);
-				System.out.println("---------------\n\n");
+					System.out.println("Record No - " + csvRecord.getRecordNumber());
+					System.out.println("---------------");
+					System.out.println("Name : " + name);
+					System.out.println("ID : " + id);
+					System.out.println("Phone : " + address);
+					System.out.println("---------------\n\n");
 
-				kindergartenRepository.save(new Kindergarten(Long.parseLong(id), address, name, new ArrayList<>()));
+					kindergartenRepository.save(new Kindergarten(address, name, new ArrayList<>()));
+				}
 			}
 		}
 
@@ -130,26 +133,27 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 
 			for (CSVRecord csvRecord : csvParser) {
 
-				String id = csvRecord.get("Id");
-				String capasity = csvRecord.get("Capasity");
-				String name = csvRecord.get("Name");
-				String kindergartenId = csvRecord.get("Kindergarten_id");
-				String ageFrom = csvRecord.get("Age_from");
-				String ageTo = csvRecord.get("Age_to");
+				if (csvRecord.getRecordNumber() > 1) {
+					String id = csvRecord.get("Id");
+					String capasity = csvRecord.get("Capasity");
+					String name = csvRecord.get("Name");
+					String kindergartenId = csvRecord.get("Kindergarten_id");
+					String ageFrom = csvRecord.get("Age_from");
+					String ageTo = csvRecord.get("Age_to");
 
-				System.out.println("Record No - " + csvRecord.getRecordNumber());
-				System.out.println("---------------");
-				System.out.println("ID : " + id);
-				System.out.println("Capasity: " + capasity);
-				System.out.println("Kindergarten ID : " + kindergartenId);
-				System.out.println("AgeFrom : " + ageFrom);
-				System.out.println("AgeTo : " + ageTo);
-				System.out.println("Name : " + name);
-				System.out.println("---------------\n\n");
+					System.out.println("Record No - " + csvRecord.getRecordNumber());
+					System.out.println("---------------");
+					System.out.println("ID : " + id);
+					System.out.println("Capasity: " + capasity);
+					System.out.println("Kindergarten ID : " + kindergartenId);
+					System.out.println("AgeFrom : " + ageFrom);
+					System.out.println("AgeTo : " + ageTo);
+					System.out.println("Name : " + name);
+					System.out.println("---------------\n\n");
 
-//				groupRepository
-//						.save(new Group(Long.parseLong(id), name, Long.parseLong(capasity), Long.parseLong(ageFrom),
-//								Long.parseLong(ageTo), kindergartenRepository.getOne(Long.parseLong(kindergartenId))));
+					groupRepository.save(new Group(name, Long.parseLong(capasity), Long.parseLong(ageFrom),
+							Long.parseLong(ageTo), kindergartenRepository.getOne(Long.parseLong(kindergartenId))));
+				}
 			}
 		}
 	}

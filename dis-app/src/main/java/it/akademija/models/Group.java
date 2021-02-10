@@ -50,7 +50,6 @@ public class Group {
 
 	public Group(@NotBlank @Size(max = 120) String name, @NotBlank Long capasity, @NotBlank Long ageFrom,
 			@NotBlank Long ageTo, Kindergarten kindergarten) {
-		super();
 		this.name = name;
 		this.capasity = capasity;
 		this.ageFrom = ageFrom;
