@@ -1,6 +1,6 @@
 package it.akademija.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -37,11 +37,10 @@ public class ChildForm {
     private boolean handicapped;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userdata_id")
-    private UserData parentId;
+    @JoinColumn(name = "userdata")
+    private UserData parentData;
 
     @OneToOne(mappedBy = "childForm")
-    @JsonIgnore
     private KindergartenPriority kindergartenPriority;
 
     @NotBlank
@@ -51,7 +50,7 @@ public class ChildForm {
     }
 
     public ChildForm(String name, String surename, Date birthDate, String address, String city, boolean inCity,
-                     boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentId, Date postDate) {
+                     boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority, Date postDate) {
         this.name = name;
         this.surename = surename;
         this.birthDate = birthDate;
@@ -62,7 +61,8 @@ public class ChildForm {
         this.threeOrMore = threeOrMore;
         this.parentStudent = parentStudent;
         this.handicapped = handicapped;
-        this.parentId = parentId;
+        this.parentData = parentData;
+        this.kindergartenPriority = kindergartenPriority;
         this.postDate = postDate;
     }
 
@@ -154,12 +154,12 @@ public class ChildForm {
         this.handicapped = handicapped;
     }
 
-    public UserData getParentId() {
-        return parentId;
+    public UserData getParentData() {
+        return parentData;
     }
 
-    public void setParentId(UserData parentId) {
-        this.parentId = parentId;
+    public void setParentData(UserData parentData) {
+        this.parentData = parentData;
     }
 
     public KindergartenPriority getKindergartenPriority() { return kindergartenPriority; }

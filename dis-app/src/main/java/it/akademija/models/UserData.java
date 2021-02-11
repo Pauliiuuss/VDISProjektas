@@ -1,8 +1,8 @@
 package it.akademija.models;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -13,33 +13,25 @@ public class UserData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotBlank
     private String name;
-    @NotBlank
     private String surename;
-    @NotBlank
     private int personId;
-    @NotBlank
     private String address;
-    @NotBlank
     private String city;
-
-    @NotBlank
     private int phoneNum;
-    @NotBlank
     private String email;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private User userId;
+    @JoinColumn(name = "user")
+    private User user;
 
-    @OneToMany(mappedBy = "parentId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parentData", fetch = FetchType.EAGER)
     private List<ChildForm> childForms;
 
     public UserData() {
     }
 
-    public UserData(String name, String surename, int personId, String address, String city, int phoneNum, String email, User userId) {
+    public UserData(String name, String surename, int personId, String address, String city, int phoneNum, String email, User user) {
         this.name = name;
         this.surename = surename;
         this.personId = personId;
@@ -47,7 +39,7 @@ public class UserData {
         this.city = city;
         this.phoneNum = phoneNum;
         this.email = email;
-        this.userId = userId;
+        this.user = user;
     }
 
     public long getId() {
@@ -114,11 +106,11 @@ public class UserData {
         this.email = email;
     }
 
-    public User getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(User username) {
-        this.userId = username;
+    public void setUser(User username) {
+        this.user = username;
     }
 }

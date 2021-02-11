@@ -11,12 +11,12 @@ public class UserDataInfo {
     private String city;
     private int phoneNum;
     private String email;
-    private User userId;
+    private User user;
 
     public UserDataInfo() {
     }
 
-    public UserDataInfo(long id, String name, String surename, int personId, String address, String city, int phoneNum, String email, User userId) {
+    public UserDataInfo(long id, String name, String surename, int personId, String address, String city, int phoneNum, String email, User user) {
         this.id = id;
         this.name = name;
         this.surename = surename;
@@ -25,7 +25,7 @@ public class UserDataInfo {
         this.city = city;
         this.phoneNum = phoneNum;
         this.email = email;
-        this.userId = userId;
+        this.user = user;
     }
 
     public long getId() {
@@ -92,8 +92,8 @@ public class UserDataInfo {
         this.email = email;
     }
 
-    public User getUserId() { return userId; }
+    public User getUser() { return user; }
 
-    public void setUserId(User username) { this.userId = username; }
+    public void setUser(User username) { this.user = username; }
 
 }
