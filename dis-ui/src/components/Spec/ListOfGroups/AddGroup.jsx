@@ -5,7 +5,6 @@ const AddGroup = ({ onAddGroup, successful, message }) => {
   const [age, setAge] = useState("3 iki 6");
   const [capasity, setCapasity] = useState("");
   const [addForm, setAddForm] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
 
   function hanldeClick() {
     onAddGroup(name, age, capasity);
@@ -27,7 +26,6 @@ const AddGroup = ({ onAddGroup, successful, message }) => {
             <button
               onClick={() => {
                 setAddForm(!addForm);
-                setShowMessage(false);
               }}
               className="btn btn-sm btn-success"
             >
@@ -116,7 +114,6 @@ const AddGroup = ({ onAddGroup, successful, message }) => {
                   style={{ height: "95%" }}
                   onClick={() => {
                     hanldeClick();
-                    setShowMessage(true);
                   }}
                 >
                   <i className="fa fa-check" aria-hidden="true"></i>

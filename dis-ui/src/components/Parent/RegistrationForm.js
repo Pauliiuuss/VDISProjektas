@@ -1,60 +1,62 @@
-import React, { Component } from 'react';
-import Navbar from '../navbar.component';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Component } from "react";
+import Navbar from "../navbar.component";
 import {
   faUser,
   faHome,
   faPhone,
   faEnvelope,
   faBirthdayCake,
-} from '@fortawesome/free-solid-svg-icons';
-import axios from 'axios';
-
-// const API_URL = process.env.PUBLIC_URL + '/api/spec/';
-const API_URL = 'http://localhost:8080/api/spec/';
+} from "@fortawesome/free-solid-svg-icons";
+import SpecService from "../../services/spec.service";
+import ParentService from "../../services/parent.service";
+import RenderInput from "./RenderInput";
+import RenderSelect from "./RenderSelect";
+import RenderCheck from "./RenderCheck";
 
 export default class RegistrationForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      kindergartens: [],
-      kindergarten1: '',
-      kindergarten2: '',
-      kindergarten3: '',
-      kindergarten4: '',
-      kindergarten5: '',
-      vardasAtstovas1: '',
-      pavardeAtstovas1: '',
-      kodasAtstovas1: '',
-      adresasAtstovas1: '',
-      miestasAtstovas1: '',
-      telAtstovas1: '',
-      elpastasAtstovas1: '',
-      vardasAtstovas2: '',
-      pavardeAtstovas2: '',
-      kodasAtstovas2: '',
-      adresasAtstovas2: '',
-      miestasAtstovas2: '',
-      telAtstovas2: '',
-      elpastasAtstovas2: '',
-      vaikoVardas: '',
-      vaikoPavarde: '',
-      vaikoKodas: '',
-      gimimoData: '',
-      vaikoAdresas: '',
-      vaikoMiestas: '',
-      selectedPriority: true,
-      inCity: false,
-      adopted: false,
-      threeOrMore: false,
-      parentStudent: false,
-      handicapped: false,
-      Atstovas1: {
-        name: '',
-      },
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  state = {
+    kindergartens: [],
+    kindergarten1: "",
+    kindergarten2: "",
+    kindergarten3: "",
+    kindergarten4: "",
+    kindergarten5: "",
+    vardasAtstovas1: "",
+    pavardeAtstovas1: "",
+    kodasAtstovas1: "",
+    adresasAtstovas1: "",
+    miestasAtstovas1: "",
+    telAtstovas1: "",
+    elpastasAtstovas1: "",
+    vardasAtstovas2: "",
+    pavardeAtstovas2: "",
+    kodasAtstovas2: "",
+    adresasAtstovas2: "",
+    miestasAtstovas2: "",
+    telAtstovas2: "",
+    elpastasAtstovas2: "",
+    vaikoVardas: "",
+    vaikoPavarde: "",
+    vaikoKodas: "",
+    gimimoData: "",
+    vaikoAdresas: "",
+    vaikoMiestas: "",
+    selectedPriority: true,
+    inCity: false,
+    adopted: false,
+    threeOrMore: false,
+    parentStudent: false,
+    handicapped: false,
+  };
+
+  componentDidMount() {
+    SpecService.getKindergartens()
+      .then((result) => {
+        this.setState({ kindergartens: result.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   handleChange = (e) => {
@@ -63,42 +65,75 @@ export default class RegistrationForm extends Component {
   };
 
   handleSubmit = (e) => {
+    const {
+      vaikoVardas,
+      vaikoPavarde,
+      gimimoData,
+      vaikoAdresas,
+      vaikoMiestas,
+      inCity,
+      adopted,
+      threeOrMore,
+      parentStudent,
+      handicapped,
+      vardasAtstovas1,
+      pavardeAtstovas1,
+      kodasAtstovas1,
+      adresasAtstovas1,
+      miestasAtstovas1,
+      telAtstovas1,
+      elpastasAtstovas1,
+      vardasAtstovas2,
+      pavardeAtstovas2,
+      kodasAtstovas2,
+      adresasAtstovas2,
+      miestasAtstovas2,
+      telAtstovas2,
+      elpastasAtstovas2,
+      kindergarten1,
+      kindergarten2,
+      kindergarten3,
+      kindergarten4,
+      kindergarten5,
+    } = this.state;
     e.preventDefault();
-    this.props.history.push('/dis-app/application');
+    // this.props.history.push("/dis-app/application");
     console.log(this.state);
-
-    this.setState({
-      kindergartens: [],
-      kindergarten1: '',
-      kindergarten2: '',
-      kindergarten3: '',
-      kindergarten4: '',
-      kindergarten5: '',
-      vardasAtstovas1: '',
-      pavardeAtstovas1: '',
-      kodasAtstovas1: '',
-      adresasAtstovas1: '',
-      miestasAtstovas1: '',
-      telAtstovas1: '',
-      elpastasAtstovas1: '',
-      vardasAtstovas2: '',
-      pavardeAtstovas2: '',
-      kodasAtstovas2: '',
-      adresasAtstovas2: '',
-      miestasAtstovas2: '',
-      telAtstovas2: '',
-      elpastasAtstovas2: '',
-      vaikoVardas: '',
-      vaikoPavarde: '',
-      vaikoKodas: '',
-      gimimoData: '',
-      vaikoAdresas: '',
-      vaikoMiestas: '',
-      inCity: false,
-      adopted: false,
-      threeOrMore: false,
-      parentStudent: false,
-      handicapped: false,
+    ParentService.sendForm({
+      name: vaikoVardas,
+      surename: vaikoPavarde,
+      birthDate: gimimoData,
+      address: vaikoAdresas,
+      city: vaikoMiestas,
+      inCity,
+      adopted,
+      threeOrMore,
+      parentStudent,
+      handicapped,
+      postDate: gimimoData,
+      parent1: {
+        adresasAtstovas: adresasAtstovas1,
+        elpastasAtstovas: elpastasAtstovas1,
+        kodasAtstovas: kodasAtstovas1,
+        miestasAtstovas: miestasAtstovas1,
+        pavardeAtstovas: pavardeAtstovas1,
+        telAtstovas: telAtstovas1,
+        vardasAtstovas: vardasAtstovas1,
+      },
+      parent2: {
+        adresasAtstovas: adresasAtstovas2,
+        elpastasAtstovas: elpastasAtstovas2,
+        kodasAtstovas: kodasAtstovas2,
+        miestasAtstovas: miestasAtstovas2,
+        pavardeAtstovas: pavardeAtstovas2,
+        telAtstovas: telAtstovas2,
+        vardasAtstovas: vardasAtstovas2,
+      },
+      kindergarten1,
+      kindergarten2,
+      kindergarten3,
+      kindergarten4,
+      kindergarten5,
     });
   };
 
@@ -109,50 +144,15 @@ export default class RegistrationForm extends Component {
     });
   };
 
-  inCitySelectChange = (e) => {
+  handleSelectChange = (e) => {
+    const value = this.state[e.target.name];
+    console.log(value);
     this.setState({
-      inCity: !this.state.inCity,
+      [e.target.name]: !value,
     });
   };
-
-  adoptedSelectChange = (e) => {
-    this.setState({
-      adopted: !this.state.adopted,
-    });
-  };
-
-  threeOrMoreSelectChange = (e) => {
-    this.setState({
-      threeOrMore: !this.state.threeOrMore,
-    });
-  };
-
-  parentStudentSelectChange = (e) => {
-    this.setState({
-      parentStudent: !this.state.parentStudent,
-    });
-  };
-
-  handicappedSelectChange = (e) => {
-    this.setState({
-      handicapped: !this.state.handicapped,
-    });
-  };
-
-  componentDidMount() {
-    axios
-      .get(`${API_URL}getkindergartens`)
-      .then((result) => {
-        this.setState({ kindergartens: result.data });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
 
   render() {
-    console.log(this.state.kindergartens);
-
     return (
       <div>
         <Navbar />
@@ -161,486 +161,174 @@ export default class RegistrationForm extends Component {
           <div className="row">
             <div className="col-lg-6">
               <h3 className="mb-4 text-center">Vaiko atstovas 1</h3>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="vardasAtstovas1">
-                  Vardas:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faUser} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="vardasAtstovas1"
-                    name="Atstovas1"
-                    className="form-control"
-                    placeholder="Vardas"
-                    value={this.state.Atstovas1.name}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="pavardeAtstovas1">
-                  Pavardė:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faUser} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="pavardeAtstovas1"
-                    name="pavardeAtstovas1"
-                    className="form-control"
-                    placeholder="Pavardė"
-                    value={this.state.pavardeAtstovas1}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="kodasAtstovas1">
-                  Asmens kodas:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faUser} />
-                    </span>
-                  </div>
-                  <input
-                    type="number"
-                    id="kodasAtstovas1"
-                    name="kodasAtstovas1"
-                    className="form-control"
-                    placeholder="Asmens kodas"
-                    value={this.state.kodasAtstovas1}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="adresasAtstovas1">
-                  Adresas:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faHome} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="adresasAtstovas1"
-                    name="adresasAtstovas1"
-                    className="form-control"
-                    placeholder="Adresas"
-                    value={this.state.adresasAtstovas1}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="miestasAtstovas1">
-                  Miestas:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faHome} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="miestasAtstovas1"
-                    name="miestasAtstovas1"
-                    className="form-control"
-                    placeholder="Miestas"
-                    value={this.state.miestasAtstovas1}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="telAtstovas1">
-                  Telefonas:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faPhone} />
-                    </span>
-                  </div>
-                  <input
-                    type="number"
-                    id="telAtstovas1"
-                    name="telAtstovas1"
-                    className="form-control"
-                    placeholder="Telefonas"
-                    value={this.state.telAtstovas1}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="elpastasAtstovas1">
-                  El.paštas:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faEnvelope} />
-                    </span>
-                  </div>
-                  <input
-                    type="email"
-                    id="elpastasAtstovas1"
-                    name="elpastasAtstovas1"
-                    className="form-control"
-                    placeholder="El.paštas"
-                    value={this.state.elpastasAtstovas1}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
+              <RenderInput
+                type={"text"}
+                forItem={"vardasAtstovas1"}
+                inputPlaceholder={"Vardas"}
+                value={this.state.vardasAtstovas1}
+                onChange={this.handleChange}
+                icon={faUser}
+              />
+              <RenderInput
+                type={"text"}
+                forItem={"pavardeAtstovas1"}
+                inputPlaceholder={"Pavardė"}
+                value={this.state.pavardeAtstovas1}
+                onChange={this.handleChange}
+                icon={faUser}
+              />
+              <RenderInput
+                type={"number"}
+                forItem={"kodasAtstovas1"}
+                inputPlaceholder={"Asmens kodas"}
+                value={this.state.kodasAtstovas1}
+                onChange={this.handleChange}
+                icon={faUser}
+              />
+              <RenderInput
+                type={"text"}
+                forItem={"adresasAtstovas1"}
+                inputPlaceholder={"Adresas"}
+                value={this.state.adresasAtstovas1}
+                onChange={this.handleChange}
+                icon={faHome}
+              />
+              <RenderInput
+                type={"text"}
+                forItem={"miestasAtstovas1"}
+                inputPlaceholder={"Miestas"}
+                value={this.state.miestasAtstovas1}
+                onChange={this.handleChange}
+                icon={faHome}
+              />
+              <RenderInput
+                type={"number"}
+                forItem={"telAtstovas1"}
+                inputPlaceholder={"Telefonas"}
+                value={this.state.telAtstovas1}
+                onChange={this.handleChange}
+                icon={faPhone}
+              />
+              <RenderInput
+                type={"email"}
+                forItem={"elpastasAtstovas1"}
+                inputPlaceholder={"El.paštas"}
+                value={this.state.elpastasAtstovas1}
+                onChange={this.handleChange}
+                icon={faEnvelope}
+              />
             </div>
             <div className="col-lg-6">
               <h3 className="mb-4 text-center">Vaiko atstovas 2</h3>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="vardasAtstovas2">
-                  Vardas:
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faUser} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="vardasAtstovas2"
-                    name="vardasAtstovas2"
-                    className="form-control"
-                    placeholder="Vardas"
-                    value={this.state.vardasAtstovas2}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="pavardeAtstovas2">
-                  Pavardė:
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faUser} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="pavardeAtstovas2"
-                    name="pavardeAtstovas2"
-                    className="form-control"
-                    placeholder="Pavardė"
-                    value={this.state.pavardeAtstovas2}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="kodasAtstovas2">
-                  Asmens kodas:
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faUser} />
-                    </span>
-                  </div>
-                  <input
-                    type="number"
-                    id="kodasAtstovas1"
-                    name="kodasAtstovas1"
-                    className="form-control"
-                    placeholder="Asmens kodas"
-                    value={this.state.kodasAtstovas2}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="adresasAtstovas2">
-                  Adresas:
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faHome} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="adresasAtstovas2"
-                    name="adresasAtstovas2"
-                    className="form-control"
-                    placeholder="Adresas"
-                    value={this.state.adresasAtstovas2}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="miestasAtstovas2">
-                  Miestas:
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faHome} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="miestasAtstovas2"
-                    name="miestasAtstovas2"
-                    className="form-control"
-                    placeholder="Miestas"
-                    value={this.state.miestasAtstovas2}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="telAtstovas2">
-                  Telefonas:
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faPhone} />
-                    </span>
-                  </div>
-                  <input
-                    type="number"
-                    id="telAtstovas2"
-                    name="telAtstovas2"
-                    className="form-control"
-                    placeholder="Telefonas"
-                    value={this.state.telAtstovas2}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="elpastasAtstovas2">
-                  El.paštas:
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faEnvelope} />
-                    </span>
-                  </div>
-                  <input
-                    type="email"
-                    id="elpastasAtstovas2"
-                    name="elpastasAtstovas2"
-                    className="form-control"
-                    placeholder="El.paštas"
-                    value={this.state.elpastasAtstovas2}
-                    onChange={this.handleChange}
-                  />
-                </div>
-              </div>
+              <RenderInput
+                type={"text"}
+                forItem={"vardasAtstovas2"}
+                inputPlaceholder={"Vardas"}
+                value={this.state.vardasAtstovas2}
+                onChange={this.handleChange}
+                icon={faUser}
+              />
+              <RenderInput
+                type={"text"}
+                forItem={"pavardeAtstovas2"}
+                inputPlaceholder={"Pavardė"}
+                value={this.state.pavardeAtstovas2}
+                onChange={this.handleChange}
+                icon={faUser}
+              />
+              <RenderInput
+                type={"number"}
+                forItem={"kodasAtstovas2"}
+                inputPlaceholder={"Asmens kodas"}
+                value={this.state.kodasAtstovas2}
+                onChange={this.handleChange}
+                icon={faUser}
+              />
+              <RenderInput
+                type={"text"}
+                forItem={"adresasAtstovas2"}
+                inputPlaceholder={"Adresas"}
+                value={this.state.adresasAtstovas2}
+                onChange={this.handleChange}
+                icon={faHome}
+              />
+              <RenderInput
+                type={"text"}
+                forItem={"miestasAtstovas2"}
+                inputPlaceholder={"Miestas"}
+                value={this.state.miestasAtstovas2}
+                onChange={this.handleChange}
+                icon={faHome}
+              />
+              <RenderInput
+                type={"number"}
+                forItem={"telAtstovas2"}
+                inputPlaceholder={"Telefonas"}
+                value={this.state.telAtstovas2}
+                onChange={this.handleChange}
+                icon={faPhone}
+              />
+              <RenderInput
+                type={"email"}
+                forItem={"elpastasAtstovas2"}
+                inputPlaceholder={"El.paštas"}
+                value={this.state.elpastasAtstovas2}
+                onChange={this.handleChange}
+                icon={faEnvelope}
+              />
             </div>
-          </div>
-          <div className="row">
             <div className="col-lg-6">
               <h3 className="mt-5 mb-4 text-center">Vaiko informacija</h3>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="vaikoVardas">
-                  Vardas:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faUser} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="vaikoVardas"
-                    name="vaikoVardas"
-                    className="form-control"
-                    placeholder="Vardas"
-                    value={this.state.vaikoVardas}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="vaikoPavarde">
-                  Pavardė:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faUser} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="vaikoPavarde"
-                    name="vaikoPavarde"
-                    className="form-control"
-                    placeholder="Pavardė"
-                    value={this.state.vaikoPavarde}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="vaikoKodas">
-                  Asmens kodas:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faUser} />
-                    </span>
-                  </div>
-                  <input
-                    type="number"
-                    id="vaikoKodas"
-                    name="vaikoKodas"
-                    className="form-control"
-                    placeholder="Asmens kodas"
-                    value={this.state.vaikoKodas}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="gimimoData">
-                  Gimimo data:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faBirthdayCake} />
-                    </span>
-                  </div>
-                  <input
-                    type="date"
-                    id="gimimoData"
-                    name="gimimoData"
-                    className="form-control"
-                    placeholder="Gimimo data"
-                    value={this.state.gimimoData}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="vaikoAdresas">
-                  Adresas:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faHome} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="vaikoAdresas"
-                    name="vaikoAdresas"
-                    className="form-control"
-                    placeholder="Adresas"
-                    value={this.state.vaikoAdresas}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
-              <div className="form-inline mb-3">
-                <label className="my-auto col-4" htmlFor="vaikoMiestas">
-                  Miestas:
-                  <span className="text-danger" style={{ fontSize: 20 }}>
-                    *
-                  </span>
-                </label>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text">
-                      <FontAwesomeIcon icon={faHome} />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    id="vaikoMiestas"
-                    name="vaikoMiestas"
-                    className="form-control"
-                    placeholder="Miestas"
-                    value={this.state.vaikoMiestas}
-                    onChange={this.handleChange}
-                    required="required"
-                  />
-                </div>
-              </div>
+              <RenderInput
+                type={"text"}
+                forItem={"vaikoVardas"}
+                inputPlaceholder={"Vardas"}
+                value={this.state.vaikoVardas}
+                onChange={this.handleChange}
+                icon={faUser}
+              />
+              <RenderInput
+                type={"text"}
+                forItem={"vaikoPavarde"}
+                inputPlaceholder={"Pavardė"}
+                value={this.state.vaikoPavarde}
+                onChange={this.handleChange}
+                icon={faUser}
+              />
+              <RenderInput
+                type={"number"}
+                forItem={"vaikoKodas"}
+                inputPlaceholder={"Asmens kodas"}
+                value={this.state.vaikoKodas}
+                onChange={this.handleChange}
+                icon={faUser}
+              />
+
+              <RenderInput
+                type={"date"}
+                forItem={"gimimoData"}
+                inputPlaceholder={"Gimimo data"}
+                value={this.state.gimimoData}
+                onChange={this.handleChange}
+                icon={faBirthdayCake}
+              />
+
+              <RenderInput
+                type={"text"}
+                forItem={"vaikoAdresas"}
+                inputPlaceholder={"Adresas"}
+                value={this.state.vaikoAdresas}
+                onChange={this.handleChange}
+                icon={faHome}
+              />
+              <RenderInput
+                type={"text"}
+                forItem={"vaikoMiestas"}
+                inputPlaceholder={"Miestas"}
+                value={this.state.vaikoMiestas}
+                onChange={this.handleChange}
+                icon={faHome}
+              />
             </div>
           </div>
           <div className="row">
@@ -652,96 +340,43 @@ export default class RegistrationForm extends Component {
                 </span>
               </h3>
               <div className="form-group">
-                <div className="form-inline mb-4">
-                  <label className="col-2" htmlFor="prioritetas1">
-                    1 prioritetas
-                  </label>
-                  <select
-                    style={{ fontSize: '13px' }}
-                    className="form-control col-5"
-                    id="selectprior1"
-                    name="kindergarten1"
-                    value={this.state.kindergarten1}
-                    onChange={this.kindergartenDropdownSelect}
-                  >
-                    <option>Pasirinkti darželį iš sąrašo...</option>
-                    {this.state.kindergartens.map((kind) => (
-                      <option key={kind.id}>{kind.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-inline mb-4">
-                  <label className="col-2" htmlFor="prioritetas2">
-                    2 prioritetas
-                  </label>
-                  <select
-                    style={{ fontSize: '13px' }}
-                    className="form-control col-5"
-                    id="selectprior2"
-                    name="kindergarten2"
-                    value={this.state.kindergarten2}
-                    onChange={this.kindergartenDropdownSelect}
-                  >
-                    <option>Pasirinkti darželį iš sąrašo...</option>
-                    {this.state.kindergartens.map((kind) => (
-                      <option key={kind.id}>{kind.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-inline mb-4">
-                  <label className="col-2" htmlFor="prioritetas3">
-                    3 prioritetas
-                  </label>
-                  <select
-                    style={{ fontSize: '13px' }}
-                    className="form-control col-5"
-                    id="selectprior3"
-                    name="kindergarten3"
-                    value={this.state.kindergarten3}
-                    onChange={this.kindergartenDropdownSelect}
-                  >
-                    <option>Pasirinkti darželį iš sąrašo...</option>
-                    {this.state.kindergartens.map((kind) => (
-                      <option key={kind.id}>{kind.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-inline mb-4">
-                  <label className="col-2" htmlFor="prioritetas4">
-                    4 prioritetas
-                  </label>
-                  <select
-                    style={{ fontSize: '13px' }}
-                    className="form-control col-5"
-                    id="selectprior4"
-                    name="kindergarten4"
-                    value={this.state.kindergarten4}
-                    onChange={this.kindergartenDropdownSelect}
-                  >
-                    <option>Pasirinkti darželį iš sąrašo...</option>
-                    {this.state.kindergartens.map((kind) => (
-                      <option key={kind.id}>{kind.name}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-inline mb-4">
-                  <label className="col-2" htmlFor="prioritetas5">
-                    5 prioritetas
-                  </label>
-                  <select
-                    style={{ fontSize: '13px' }}
-                    className="form-control col-5"
-                    id="selectprior5"
-                    name="kindergarten5"
-                    value={this.state.kindergarten5}
-                    onChange={this.kindergartenDropdownSelect}
-                  >
-                    <option>Pasirinkti darželį iš sąrašo...</option>
-                    {this.state.kindergartens.map((kind) => (
-                      <option key={kind.id}>{kind.name}</option>
-                    ))}
-                  </select>
-                </div>
+                <RenderSelect
+                  forItem={"kindergarten1"}
+                  inputPlaceholder={"1 prioritetas"}
+                  value={this.state.kindergarten1}
+                  onChange={this.kindergartenDropdownSelect}
+                  kindergartens={this.state.kindergartens}
+                />
+                <RenderSelect
+                  forItem={"kindergarten2"}
+                  inputPlaceholder={"2 prioritetas"}
+                  value={this.state.kindergarten2}
+                  onChange={this.kindergartenDropdownSelect}
+                  kindergartens={this.state.kindergartens}
+                />
+                <RenderSelect
+                  forItem={"kindergarten3"}
+                  inputPlaceholder={"3 prioritetas"}
+                  value={this.state.kindergarten3}
+                  onChange={this.kindergartenDropdownSelect}
+                  kindergartens={this.state.kindergartens}
+                />
+
+                <RenderSelect
+                  forItem={"kindergarten4"}
+                  inputPlaceholder={"4 prioritetas"}
+                  value={this.state.kindergarten4}
+                  onChange={this.kindergartenDropdownSelect}
+                  kindergartens={this.state.kindergartens}
+                />
+
+                <RenderSelect
+                  forItem={"kindergarten5"}
+                  inputPlaceholder={"5 prioritetas"}
+                  value={this.state.kindergarten5}
+                  onChange={this.kindergartenDropdownSelect}
+                  kindergartens={this.state.kindergartens}
+                />
               </div>
             </div>
           </div>
@@ -750,73 +385,42 @@ export default class RegistrationForm extends Component {
               <h3 className="mb-4 mt-5 text-center">
                 Pažymėkite visas atitinkančias sąlygas:
               </h3>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="inCity"
-                  name="inCity"
-                  checked={this.state.inCity}
-                  onChange={this.inCitySelectChange}
-                />
-                <label className="form-check-label" htmlFor="defaultCheck1">
-                  Deklaruota gyvenomoji vieta Vilniaus m.
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="adopted"
-                  name="adopted"
-                  checked={this.state.adopted}
-                  onChange={this.adoptedSelectChange}
-                />
-                <label className="form-check-label" htmlFor="defaultCheck1">
-                  Vaikas įvaikintas
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="threeOrMore"
-                  name="threeOrMore"
-                  checked={this.state.threeOrMore}
-                  onChange={this.threeOrMoreSelectChange}
-                />
-                <label className="form-check-label" htmlFor="defaultCheck1">
-                  Šeimoje yra 3 ir daugiau vaikų, besimokančių bendro ugdymo
-                  programose
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="parentStudent"
-                  name="parentStudent"
-                  checked={this.state.parentStudent}
-                  onChange={this.parentStudentSelectChange}
-                />
-                <label className="form-check-label" htmlFor="defaultCheck1">
-                  Vienas iš tėvų(globėjų) mokosi bendro ugdymo mokykloje
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  name="handicapped"
-                  id="handicapped"
-                  checked={this.state.handicapped}
-                  onChange={this.handicappedSelectChange}
-                />
-                <label className="form-check-label" htmlFor="defaultCheck1">
-                  Vienas iš tėvų(globėjų) turi ne daugiau kaip 40 proc.
-                  nedarbingumo lygio
-                </label>
-              </div>
+              <RenderCheck
+                onChange={this.handleSelectChange}
+                forItem={"inCity"}
+                checked={this.state.inCity}
+                label={"Deklaruota gyvenomoji vieta Vilniaus m."}
+              />
+              <RenderCheck
+                onChange={this.handleSelectChange}
+                forItem={"adopted"}
+                checked={this.state.adopted}
+                label={"Vaikas įvaikintas."}
+              />
+              <RenderCheck
+                onChange={this.handleSelectChange}
+                forItem={"threeOrMore"}
+                checked={this.state.threeOrMore}
+                label={
+                  "Šeimoje yra 3 ir daugiau vaikų, besimokančių bendro ugdymo programose."
+                }
+              />
+              <RenderCheck
+                onChange={this.handleSelectChange}
+                forItem={"parentStudent"}
+                checked={this.state.parentStudent}
+                label={
+                  "Vienas iš tėvų(globėjų) mokosi bendro ugdymo mokykloje."
+                }
+              />
+              <RenderCheck
+                onChange={this.handleSelectChange}
+                forItem={"handicapped"}
+                checked={this.state.handicapped}
+                label={
+                  "Vienas iš tėvų(globėjų) turi ne daugiau kaip 40 proc nedarbingumo lygio"
+                }
+              />
             </div>
           </div>
           <button type="submit" className="btn btn-success my-5">

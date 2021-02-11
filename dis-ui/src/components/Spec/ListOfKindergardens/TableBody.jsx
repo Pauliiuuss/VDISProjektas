@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import TableRow from "./TableRow";
 
 class TableBody extends Component {
   state = {
