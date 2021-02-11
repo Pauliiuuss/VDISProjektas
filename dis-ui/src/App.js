@@ -22,11 +22,11 @@ class App extends Component {
           <Route exact path="/dis-app/home" component={MainAfterLogin} />
           <Route path="/dis-app/queue" component={UnderConstruction} />
           <Route path="/dis-app/kindergarten" component={UnderConstruction} />
-          <Route
+          {/* <Route
             exact
             path="/dis-app/application"
             component={UnderConstruction}
-          />
+          /> */}
           <Route
             exact
             path="/dis-app/application/new"

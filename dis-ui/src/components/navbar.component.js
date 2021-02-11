@@ -71,7 +71,7 @@ export default class Navbar extends Component {
             ) : currentUser.roles.includes('ROLE_PARENT') ? (
               <React.Fragment>
                 <li className="nav-item my-auto">
-                  <Link to={'/dis-app/application'} className="nav-link">
+                  <Link to={'/dis-app/home'} className="nav-link">
                     Mano prašymai
                   </Link>
                 </li>
