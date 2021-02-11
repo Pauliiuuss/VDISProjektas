@@ -1,5 +1,7 @@
 package it.akademija.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,7 +19,8 @@ public class KindergartenPriority {
     private String kindergartenFive;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "child_form_id")
+    @JoinColumn(name = "child_form")
+    @JsonIgnore
     private ChildForm childForm;
 
     public KindergartenPriority() {
