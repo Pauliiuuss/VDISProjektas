@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import RenderInput from "./util/RenderInput";
-import {
-  faUser,
-  faHome,
-  faPhone,
-  faEnvelope,
-  faBirthdayCake,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const Details = ({ currentUser, userReady, roles }) => {
   const [name, setName] = useState("");
@@ -20,7 +14,7 @@ const Details = ({ currentUser, userReady, roles }) => {
     <div style={{ textAlign: "center", marginTop: "100px" }}>
       <h2 className={"m-3"}>Mano domenys</h2>
       <form>
-        <div class="form-group">
+        <div className="form-group">
           <RenderInput
             inputPlaceholder={"Vardas"}
             type={"text"}
@@ -61,7 +55,7 @@ const Details = ({ currentUser, userReady, roles }) => {
             alignItems: "center",
           }}
         >
-          <button type="submit" class="btn btn-primary mx-auto">
+          <button type="submit" className="btn btn-primary mx-auto">
             Atnaujinti
           </button>
         </div>

@@ -30,16 +30,20 @@ class UserUpdateForm extends Component {
         <Navbar />
         {userReady ? (
           <div className="container">
-            <div className="row">
-              <div className="col-6">
+            <div className="row justify-content-around">
+              <div className="col-5">
                 <Details
                   currentUser={currentUser}
                   userReady={userReady}
                   roles={roles}
                 />
               </div>
-              <div className="col-6">
-                <Password />
+              <div className="col-5">
+                <Password
+                  currentUser={currentUser}
+                  userReady={userReady}
+                  roles={roles}
+                />
               </div>
             </div>
           </div>
