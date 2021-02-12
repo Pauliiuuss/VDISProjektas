@@ -1,10 +1,14 @@
 package it.akademija;
 
-import it.akademija.models.ERole;
-import it.akademija.models.Role;
-import it.akademija.models.User;
-import it.akademija.repository.RoleRepository;
-import it.akademija.repository.UserRepository;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.ArrayList;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +17,15 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
+import it.akademija.models.ERole;
+import it.akademija.models.Group;
+import it.akademija.models.Kindergarten;
+import it.akademija.models.Role;
+import it.akademija.models.User;
+import it.akademija.repository.GroupRepository;
+import it.akademija.repository.KindergartenRepository;
+import it.akademija.repository.RoleRepository;
+import it.akademija.repository.UserRepository;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -64,7 +77,7 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 			Role adminRole = new Role(ERole.ROLE_ADMIN);
 			if (roleRepository.findByName(ERole.ROLE_ADMIN).isEmpty()) {
 				roleRepository.save(adminRole);
-				if(roleRepository.findByName(ERole.ROLE_SPEC).isEmpty()) {
+				if (roleRepository.findByName(ERole.ROLE_SPEC).isEmpty()) {
 					Role specRole = new Role(ERole.ROLE_SPEC);
 					roleRepository.save(specRole);
 				}
@@ -84,7 +97,11 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 		if (kindergartenRepository.findAll().size() < 1) {
 			System.out.println("++++++++++++++Started");
 
-			Reader reader = Files.newBufferedReader(Paths.get("./CSV/darzeliai.csv"));
+//			Reader reader = Files.newBufferedReader(Paths.get("./CSV/darzeliai.csv"));
+//			Reader reader = new FileReader("darzeliai.csv");
+
+			InputStream in = getClass().getResourceAsStream("/darzeliai.csv");
+			Reader reader = new BufferedReader(new InputStreamReader(in));
 			System.out.println("++++++++++++++Reader");
 
 			CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.withDelimiter(';')
@@ -113,12 +130,17 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 		if (groupRepository.findAll().size() < 1) {
 			System.out.println("++++++++++++++Started");
 
-			Reader reader = Files.newBufferedReader(Paths.get("./CSV/grupes.csv"));
+//			Reader reader = File(getClass().getResource("darzeliai.csv").getPath());
+//			Reader reader = new FileReader("grupes.csv");
+
+			InputStream in = getClass().getResourceAsStream("/grupes.csv");
+			Reader reader = new BufferedReader(new InputStreamReader(in));
+
 			System.out.println("++++++++++++++Reader");
 
 			CSVParser csvParser = new CSVParser(reader,
 					CSVFormat.DEFAULT.withDelimiter(';')
-							.withHeader("Id", "Capasity", "Name", "Kindergarten_id", "Age_from", "Age_to")
+							.withHeader("Id", "Age_from", "Age_to", "Capasity", "Name", "Kindergarten_id")
 							.withIgnoreHeaderCase().withTrim());
 			System.out.println("++++++++++++++Parse");
 
