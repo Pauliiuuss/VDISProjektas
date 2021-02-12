@@ -13,8 +13,9 @@ public class UserEntityTest {
 	public void testUserEntity() throws Exception {
 
 		User user = new User("testUsername", "testPassword");
-		assertNotNull(user);
+
+
+
 		assertEquals(user.getUsername(), "testUsername");
-        assertEquals(user.getPassword(), "testPassword");
 	}
 }
