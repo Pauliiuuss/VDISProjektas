@@ -27,13 +27,12 @@ public class KindergartenPriority {
     }
 
     public KindergartenPriority(String kindergartenOne, String kindergartenTwo, String kindergartenThree,
-                                String kindergartenFour, String kindergartenFive, ChildForm childForm) {
+                                String kindergartenFour, String kindergartenFive) {
         this.kindergartenOne = kindergartenOne;
         this.kindergartenTwo = kindergartenTwo;
         this.kindergartenThree = kindergartenThree;
         this.kindergartenFour = kindergartenFour;
         this.kindergartenFive = kindergartenFive;
-        this.childForm = childForm;
     }
 
     public long getId() {

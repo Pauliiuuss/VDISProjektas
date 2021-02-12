@@ -22,13 +22,11 @@ public class KindergartenPriorityService {
     public Collection<KindergartenPriorityInfo> getAllKindergartenPriorities(){
         return kindergartenPriorityRepository.findAll().stream()
                 .map(isdb -> new KindergartenPriorityInfo(
-                        isdb.getId(),
                         isdb.getKindergartenOne(),
                         isdb.getKindergartenTwo(),
                         isdb.getKindergartenThree(),
                         isdb.getKindergartenFour(),
-                        isdb.getKindergartenFive(),
-                        isdb.getChildForm()))
+                        isdb.getKindergartenFive()))
                 .collect(Collectors.toList());
     }
 
@@ -40,13 +38,11 @@ public class KindergartenPriorityService {
                 .orElse(null);
         if(info != null){
             return new KindergartenPriorityInfo(
-                    info.getId(),
                     info.getKindergartenOne(),
                     info.getKindergartenTwo(),
                     info.getKindergartenThree(),
                     info.getKindergartenFour(),
-                    info.getKindergartenFive(),
-                    info.getChildForm());
+                    info.getKindergartenFive());
         } else {
             throw new IllegalArgumentException("Darzeliu pasirinkimo prioritetai pagal duota ID neegzistuoja.");
         }
@@ -64,8 +60,7 @@ public class KindergartenPriorityService {
                 kindergartenPriorityInfo.getKindergartenTwo(),
                 kindergartenPriorityInfo.getKindergartenThree(),
                 kindergartenPriorityInfo.getKindergartenFour(),
-                kindergartenPriorityInfo.getKindergartenFive(),
-                kindergartenPriorityInfo.getChildForm());
+                kindergartenPriorityInfo.getKindergartenFive());
         kindergartenPriorityRepository.save(idb);
     }
 
@@ -82,7 +77,6 @@ public class KindergartenPriorityService {
             idb.setKindergartenFour(kindergartenPriorityInfo.getKindergartenFour());
             idb.setKindergartenFive(kindergartenPriorityInfo.getKindergartenFive());
             idb.setChildForm(kindergartenPriorityInfo.getChildForm());
-            kindergartenPriorityRepository.save(idb);
         }
     }
 }

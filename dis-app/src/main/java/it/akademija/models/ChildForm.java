@@ -5,7 +5,6 @@ import net.minidev.json.annotate.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "child_forms")
@@ -43,14 +42,13 @@ public class ChildForm {
     @OneToOne(mappedBy = "childForm")
     private KindergartenPriority kindergartenPriority;
 
-    @NotBlank
     private Date postDate;
 
     public ChildForm() {
     }
 
     public ChildForm(String name, String surename, Date birthDate, String address, String city, boolean inCity,
-                     boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority, Date postDate) {
+                     boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped) {
         this.name = name;
         this.surename = surename;
         this.birthDate = birthDate;
@@ -61,9 +59,6 @@ public class ChildForm {
         this.threeOrMore = threeOrMore;
         this.parentStudent = parentStudent;
         this.handicapped = handicapped;
-        this.parentData = parentData;
-        this.kindergartenPriority = kindergartenPriority;
-        this.postDate = postDate;
     }
 
     public long getId() {
@@ -173,4 +168,5 @@ public class ChildForm {
     public void setPostDate(Date postDate) {
         this.postDate = postDate;
     }
+
 }

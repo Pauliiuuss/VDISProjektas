@@ -2,13 +2,10 @@ package it.akademija.controller;
 
 import javax.validation.Valid;
 
+import it.akademija.models.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import it.akademija.payload.request.LoginRequest;
 import it.akademija.services.AuthService;
@@ -23,6 +20,11 @@ public class AuthController {
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 		return authService.authenticateUser(loginRequest);
+	}
+
+	@GetMapping("/{id}")
+	public UserInfo getUserById(@PathVariable("id") long id){
+		return authService.getUserById(id);
 	}
 
 }
