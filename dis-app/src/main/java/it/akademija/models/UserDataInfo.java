@@ -25,7 +25,6 @@ public class UserDataInfo {
         this.city = city;
         this.phoneNum = phoneNum;
         this.email = email;
-        this.user = user;
     }
 
     public long getId() {

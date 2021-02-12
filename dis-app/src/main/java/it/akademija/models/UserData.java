@@ -25,6 +25,7 @@ public class UserData {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user")
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "parentData", fetch = FetchType.EAGER)

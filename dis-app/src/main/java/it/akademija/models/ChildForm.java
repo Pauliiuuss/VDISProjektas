@@ -18,21 +18,15 @@ public class ChildForm {
     private String name;
     @NotBlank
     private String surename;
-    @NotBlank
     private Date birthDate;
     @NotBlank
     private String address;
     @NotBlank
     private String city;
-    @NotBlank
     private boolean inCity;
-    @NotBlank
     private boolean adopted;
-    @NotBlank
     private boolean threeOrMore;
-    @NotBlank
     private boolean parentStudent;
-    @NotBlank
     private boolean handicapped;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -48,7 +42,7 @@ public class ChildForm {
     }
 
     public ChildForm(String name, String surename, Date birthDate, String address, String city, boolean inCity,
-                     boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped) {
+                     boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentData) {
         this.name = name;
         this.surename = surename;
         this.birthDate = birthDate;
@@ -59,6 +53,7 @@ public class ChildForm {
         this.threeOrMore = threeOrMore;
         this.parentStudent = parentStudent;
         this.handicapped = handicapped;
+        this.parentData = parentData;
     }
 
     public long getId() {

@@ -18,19 +18,18 @@ public class ParentController {
     private ParentService parentService;
 
     @GetMapping("/allgartens")
-    @PreAuthorize("hasRole('PARENT')")
+
     public Collection<KindergartenInfo> getKindergartens() {
         return parentService.getKindergartens();
     }
 
     @GetMapping("/allforms")
-    @PreAuthorize("hasRole('PARENT')")
     public Collection<ChildFormInfo> getAllForms(){
         return parentService.getAllForms();
     }
 
     @PostMapping("/addform")
-    @PreAuthorize("hasRole('PARENT')")
+
     public void addForm(@RequestBody ChildFormInfo childFormInfo){
         parentService.addForm(childFormInfo);
     }

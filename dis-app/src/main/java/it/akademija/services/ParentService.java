@@ -57,15 +57,6 @@ public class ParentService {
     @Transactional
     public void addForm(ChildFormInfo childFormInfo){
 
-        UserData newUserData = new UserData(
-                childFormInfo.getParentData().getName(),
-                childFormInfo.getParentData().getSurename(),
-                childFormInfo.getParentData().getPersonId(),
-                childFormInfo.getParentData().getAddress(),
-                childFormInfo.getParentData().getCity(),
-                childFormInfo.getParentData().getPhoneNum(),
-                childFormInfo.getParentData().getEmail());
-
         ChildForm newForm = new ChildForm(
                 childFormInfo.getName(),
                 childFormInfo.getSurename(),
@@ -76,28 +67,66 @@ public class ParentService {
                 childFormInfo.isAdopted(),
                 childFormInfo.isThreeOrMore(),
                 childFormInfo.isParentStudent(),
-                childFormInfo.isHandicapped());
-
-        KindergartenPriority newKinder = new KindergartenPriority(
-                childFormInfo.getKindergartenPriority().getKindergartenOne(),
-                childFormInfo.getKindergartenPriority().getKindergartenTwo(),
-                childFormInfo.getKindergartenPriority().getKindergartenThree(),
-                childFormInfo.getKindergartenPriority().getKindergartenFour(),
-                childFormInfo.getKindergartenPriority().getKindergartenFive());
+                childFormInfo.isHandicapped(),
+                childFormInfo.getParentData());
 
         User currentUser = userRepository.findAll().stream()
                 .filter(isdb -> isdb.getId() == childFormInfo.getIdFront())
                 .findFirst()
                 .orElse(null);
+        newForm.getParentData().setUser(currentUser);
 
-        newForm.setKindergartenPriority(newKinder);
-        newForm.setParentData(newUserData);
-        newUserData.setUser(currentUser);
-        newKinder.setChildForm(newForm);
 
+        userDataRepository.save(childFormInfo.getParentData());
         childFormRepository.save(newForm);
-        userDataRepository.save(newUserData);
-        kindergartenPriorityRepository.save(newKinder);
+        childFormInfo.getKindergartenPriority().setChildForm(newForm);
+        kindergartenPriorityRepository.save(childFormInfo.getKindergartenPriority());
+
+
+
+
+
+//        UserData newUserData = new UserData(
+//                childFormInfo.getParentData().getName(),
+//                childFormInfo.getParentData().getSurename(),
+//                childFormInfo.getParentData().getPersonId(),
+//                childFormInfo.getParentData().getAddress(),
+//                childFormInfo.getParentData().getCity(),
+//                childFormInfo.getParentData().getPhoneNum(),
+//                childFormInfo.getParentData().getEmail());
+//
+//        ChildForm newForm = new ChildForm(
+//                childFormInfo.getName(),
+//                childFormInfo.getSurename(),
+//                childFormInfo.getBirthDate(),
+//                childFormInfo.getAddress(),
+//                childFormInfo.getCity(),
+//                childFormInfo.isInCity(),
+//                childFormInfo.isAdopted(),
+//                childFormInfo.isThreeOrMore(),
+//                childFormInfo.isParentStudent(),
+//                childFormInfo.isHandicapped());
+//
+//        KindergartenPriority newKinder = new KindergartenPriority(
+//                childFormInfo.getKindergartenPriority().getKindergartenOne(),
+//                childFormInfo.getKindergartenPriority().getKindergartenTwo(),
+//                childFormInfo.getKindergartenPriority().getKindergartenThree(),
+//                childFormInfo.getKindergartenPriority().getKindergartenFour(),
+//                childFormInfo.getKindergartenPriority().getKindergartenFive());
+//
+//        User currentUser = userRepository.findAll().stream()
+//                .filter(isdb -> isdb.getId() == childFormInfo.getIdFront())
+//                .findFirst()
+//                .orElse(null);
+//
+//        newForm.setKindergartenPriority(newKinder);
+//        newForm.setParentData(newUserData);
+//        newUserData.setUser(currentUser);
+//        newKinder.setChildForm(newForm);
+//
+//        childFormRepository.save(newForm);
+//        userDataRepository.save(newUserData);
+//        kindergartenPriorityRepository.save(newKinder);
     }
 
 
