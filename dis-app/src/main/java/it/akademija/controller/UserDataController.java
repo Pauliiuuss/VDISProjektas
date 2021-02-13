@@ -3,6 +3,7 @@ package it.akademija.controller;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,12 +35,17 @@ public class UserDataController {
 	}
 
 	@PostMapping("/add/{id}")
-	public void addUserData(@RequestBody UserDataInfo userDataInfo, @PathVariable long id) {
-		userDataService.addUserData(userDataInfo, id);
+	public ResponseEntity<?> addUserData(@RequestBody UserDataInfo userDataInfo, @PathVariable long id) {
+		return userDataService.addUserData(userDataInfo, id);
 	}
 
 	@PutMapping("/update")
 	public void updateUserData(UserDataInfo userDataInfo) {
 		userDataService.updateUserData(userDataInfo);
+	}
+
+	@PutMapping("/password/{id}")
+	public ResponseEntity<?> updatePassword(@PathVariable long id, @RequestBody String[] passwords) {
+		return userDataService.updatePassword(id, passwords[0], passwords[1]);
 	}
 }

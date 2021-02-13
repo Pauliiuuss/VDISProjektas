@@ -12,4 +12,6 @@ import it.akademija.models.UserData;
 public interface UserDataRepository extends JpaRepository<UserData, Long> {
 	Optional<UserData> findByUser(User user);
 
+	void deleteByUser(User user);
+
 }

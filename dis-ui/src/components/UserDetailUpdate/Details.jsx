@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import RenderInput from "./util/RenderInput";
 import { faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
-const Details = ({ userData, onSubmit }) => {
+const Details = ({ userData, onSubmit, message, successful }) => {
   const [name, setName] = useState(userData.name);
   const [surname, setSurname] = useState(userData.surename);
   const [phone, setPhone] = useState(userData.phoneNum);
@@ -57,6 +57,18 @@ const Details = ({ userData, onSubmit }) => {
             Atnaujinti
           </button>
         </div>
+        {message && (
+          <div className="form-group m-3">
+            <div
+              className={
+                successful ? "alert alert-success" : "alert alert-danger"
+              }
+              role="alert"
+            >
+              {message}
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );

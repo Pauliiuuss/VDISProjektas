@@ -16,6 +16,7 @@ class RenderPasswordInput extends Component {
             placeholder={inputPlaceholder}
             value={value}
             onChange={onChange}
+
             // required="required"
           />
         </div>

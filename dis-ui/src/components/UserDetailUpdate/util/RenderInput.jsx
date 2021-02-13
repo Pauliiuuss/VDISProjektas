@@ -27,7 +27,7 @@ class RenderInput extends Component {
             name={forItem}
             className="form-control"
             placeholder={inputPlaceholder}
-            value={value}
+            value={value ? value : ""}
             onChange={onChange}
             // required="required"
           />

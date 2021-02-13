@@ -4,18 +4,26 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.akademija.models.User;
 import it.akademija.models.UserData;
 import it.akademija.models.UserDataInfo;
+import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.UserDataRepository;
 import it.akademija.repository.UserRepository;
 
 @Service
 public class UserDataService {
 
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private PasswordEncoder encoder;
 	@Autowired
 	private UserRepository userrepo;
 
@@ -44,16 +52,25 @@ public class UserDataService {
 	}
 
 	@Transactional
-	public void addUserData(UserDataInfo userDataInfo, long id) {
+	public ResponseEntity<?> addUserData(UserDataInfo userDataInfo, long id) {
 		User user = userrepo.getOne(id);
-		System.out.println("n/n/ *******************" + user.getUsername());
-		UserData idb = userDataRepository.findAll().stream().filter(data -> data.getUser().getId() == user.getId())
-				.findFirst().orElse(null);
-		System.out.println("n/n/ *******************" + idb);
-		if (idb == null) {
-			idb = new UserData(userDataInfo.getName(), userDataInfo.getSurename(), userDataInfo.getPersonId(),
-					userDataInfo.getAddress(), userDataInfo.getCity(), userDataInfo.getPhoneNum(),
-					userDataInfo.getEmail(), user);
+
+		UserData idb = userDataRepository.findByUser(user).orElse(new UserData());
+
+		if (idb != null) {
+			idb.setName((userDataInfo.getName() != null ? userDataInfo.getName() : ""));
+			idb.setSurename((userDataInfo.getSurename() != null ? userDataInfo.getName() : ""));
+			idb.setPhoneNum((userDataInfo.getPhoneNum()));
+			idb.setEmail((userDataInfo.getEmail() != null ? userDataInfo.getEmail() : ""));
+			idb.setAddress("");
+			idb.setCity("");
+			idb.setUser(user);
+//		}
+//
+//		if (idb == null) {
+//			idb = new UserData(userDataInfo.getName(), userDataInfo.getSurename(), userDataInfo.getPersonId(),
+//					userDataInfo.getAddress(), userDataInfo.getCity(), userDataInfo.getPhoneNum(),
+//					userDataInfo.getEmail(), user);
 		} else {
 			idb.setName(userDataInfo.getName());
 			idb.setSurename(userDataInfo.getSurename());
@@ -65,6 +82,7 @@ public class UserDataService {
 			idb.setUser(user);
 		}
 		userDataRepository.save(idb);
+		return ResponseEntity.ok(new MessageResponse("Duomenys atnaujinti!"));
 	}
 
 	@Transactional
@@ -85,5 +103,20 @@ public class UserDataService {
 			throw new IllegalArgumentException("Vartotojo duomenys pagal toki ID nerasti.");
 		}
 
+	}
+
+	public ResponseEntity<?> updatePassword(long id, String oldPassword, String newPassword) {
+		User user = userrepo.getOne(id);
+
+		if (!encoder.matches(oldPassword, user.getPassword())) {
+			System.out.println("neteisingas");
+			return ResponseEntity.badRequest().body(new MessageResponse("Dabartinis slaptažodis neteisingas."));
+		} else {
+
+			user.setPassword(encoder.encode(newPassword));
+			userrepo.save(user);
+
+			return ResponseEntity.ok(new MessageResponse("Slaptažodis atnaujintas!"));
+		}
 	}
 }

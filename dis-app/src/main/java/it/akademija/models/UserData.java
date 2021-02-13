@@ -65,6 +65,16 @@ public class UserData {
 		this.user = user;
 	}
 
+	public UserData(String name, String surename, String address, String city, int phoneNum, String email, User user) {
+		this.name = name;
+		this.surename = surename;
+		this.address = address;
+		this.city = city;
+		this.phoneNum = phoneNum;
+		this.email = email;
+		this.user = user;
+	}
+
 	public long getId() {
 		return id;
 	}
