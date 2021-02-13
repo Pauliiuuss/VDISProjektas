@@ -27,8 +27,7 @@ public class UserDataService {
                         isdb.getAddress(),
                         isdb.getCity(),
                         isdb.getPhoneNum(),
-                        isdb.getEmail(),
-                        isdb.getUser()))
+                        isdb.getEmail()))
                 .collect(Collectors.toList());
     }
 
@@ -48,8 +47,7 @@ public class UserDataService {
                     info.getAddress(),
                     info.getCity(),
                     info.getPhoneNum(),
-                    info.getEmail(),
-                    info.getUser());
+                    info.getEmail());
         } else {
             throw new IllegalArgumentException("Vartotojo duomenys pagal toki ID nerasti.");
         }
@@ -65,8 +63,7 @@ public class UserDataService {
                 userDataInfo.getAddress(),
                 userDataInfo.getCity(),
                 userDataInfo.getPhoneNum(),
-                userDataInfo.getEmail(),
-                userDataInfo.getUser());
+                userDataInfo.getEmail());
         userDataRepository.save(idb);
     }
 
@@ -85,7 +82,6 @@ public class UserDataService {
             idb.setPhoneNum(userDataInfo.getPhoneNum());
             idb.setEmail(userDataInfo.getEmail());
             idb.setUser(userDataInfo.getUser());
-            userDataRepository.save(idb);
         } else {
             throw new IllegalArgumentException("Vartotojo duomenys pagal toki ID nerasti.");
         }

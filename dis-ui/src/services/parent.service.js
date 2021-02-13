@@ -7,7 +7,7 @@ const API_URL = process.env.PUBLIC_URL + "/api/spec/";
 class ParentService {
   sendForm(body) {
     console.log(body);
-    return axios.post(API_URL + "add", body, { headers: authHeader() });
+    return axios.post(API_URL + "addform", body, { headers: authHeader() });
   }
 }
 export default new ParentService();

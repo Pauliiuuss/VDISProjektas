@@ -1,6 +1,8 @@
 package it.akademija.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -23,15 +25,17 @@ public class UserData {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user")
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "parentData", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<ChildForm> childForms;
 
     public UserData() {
     }
 
-    public UserData(String name, String surename, int personId, String address, String city, int phoneNum, String email, User user) {
+    public UserData(String name, String surename, int personId, String address, String city, int phoneNum, String email) {
         this.name = name;
         this.surename = surename;
         this.personId = personId;
@@ -39,7 +43,6 @@ public class UserData {
         this.city = city;
         this.phoneNum = phoneNum;
         this.email = email;
-        this.user = user;
     }
 
     public long getId() {
@@ -113,4 +116,10 @@ public class UserData {
     public void setUser(User username) {
         this.user = username;
     }
+
+    public List<ChildForm> getChildForms() { return childForms; }
+
+    public void setChildForms(List<ChildForm> childForms) { this.childForms = childForms; }
+
+    public void addChildForms(ChildForm childForm) { this.childForms.add(childForm); }
 }

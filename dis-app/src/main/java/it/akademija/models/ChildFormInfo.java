@@ -19,12 +19,14 @@ public class ChildFormInfo {
     private UserData parentData;
     private KindergartenPriority kindergartenPriority;
     private Date postDate;
+    private long idFront;
 
     public ChildFormInfo() {
     }
 
-    public ChildFormInfo(String name, String surename, Date birthDate, String address, String city,
-                         boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority, Date postDate) {
+    public ChildFormInfo(long id, String name, String surename, Date birthDate, String address, String city,
+                         boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority, long idFront) {
+        this.id = id;
         this.name = name;
         this.surename = surename;
         this.birthDate = birthDate;
@@ -37,7 +39,24 @@ public class ChildFormInfo {
         this.handicapped = handicapped;
         this.parentData = parentData;
         this.kindergartenPriority = kindergartenPriority;
-        this.postDate = postDate;
+        this.idFront = idFront;
+    }
+
+    public ChildFormInfo(long id, String name, String surename, Date birthDate, String address, String city,
+                         boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority) {
+        this.id = id;
+        this.name = name;
+        this.surename = surename;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.city = city;
+        this.inCity = inCity;
+        this.adopted = adopted;
+        this.threeOrMore = threeOrMore;
+        this.parentStudent = parentStudent;
+        this.handicapped = handicapped;
+        this.parentData = parentData;
+        this.kindergartenPriority = kindergartenPriority;
     }
 
     public long getId() {
@@ -150,7 +169,13 @@ public class ChildFormInfo {
 
     public void setPostDate(Date postDate) {
         this.postDate = postDate;
+    }
 
+    public long getIdFront() {
+        return idFront;
+    }
 
+    public void setIdFront(long idFront) {
+        this.idFront = idFront;
     }
 }

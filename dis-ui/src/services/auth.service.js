@@ -33,6 +33,10 @@ class AuthService {
   getCurrentUser() {
     return JSON.parse(sessionStorage.getItem("user"));
   }
+
+  getUserById(id) {
+    return axios.get(API_URL + id);
+  }
 }
 
 export default new AuthService();

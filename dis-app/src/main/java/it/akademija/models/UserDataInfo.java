@@ -16,7 +16,7 @@ public class UserDataInfo {
     public UserDataInfo() {
     }
 
-    public UserDataInfo(long id, String name, String surename, int personId, String address, String city, int phoneNum, String email, User user) {
+    public UserDataInfo(long id, String name, String surename, int personId, String address, String city, int phoneNum, String email) {
         this.id = id;
         this.name = name;
         this.surename = surename;
@@ -25,7 +25,6 @@ public class UserDataInfo {
         this.city = city;
         this.phoneNum = phoneNum;
         this.email = email;
-        this.user = user;
     }
 
     public long getId() {

@@ -10,7 +10,7 @@ public class UserInfo {
 	public UserInfo() {
 	}
 
-	public UserInfo(Long id, String username, String password, Role role) {
+	public UserInfo(long id, String username, String password, Role role) {
 		this.id = id;
 		this.username = username;
 		this.password = password;

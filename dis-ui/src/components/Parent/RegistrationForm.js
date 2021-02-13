@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import Navbar from "../navbar.component";
 import {
   faUser,
@@ -12,9 +13,15 @@ import ParentService from "../../services/parent.service";
 import RenderInput from "./RenderInput";
 import RenderSelect from "./RenderSelect";
 import RenderCheck from "./RenderCheck";
+import AuthService from "../../services/auth.service";
 
 export default class RegistrationForm extends Component {
   state = {
+    currentUser: "",
+    redirect: null,
+    userReady: false,
+    roles: "",
+
     kindergartens: [],
     kindergarten1: "",
     kindergarten2: "",
@@ -50,6 +57,7 @@ export default class RegistrationForm extends Component {
   };
 
   componentDidMount() {
+    const currentUser = AuthService.getCurrentUser();
     SpecService.getKindergartens()
       .then((result) => {
         this.setState({ kindergartens: result.data });
@@ -57,6 +65,12 @@ export default class RegistrationForm extends Component {
       .catch((err) => {
         console.log(err);
       });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    this.setState({
+      currentUser: currentUser,
+      userReady: true,
+      roles: currentUser.roles,
+    });
   }
 
   handleChange = (e) => {
@@ -98,42 +112,35 @@ export default class RegistrationForm extends Component {
     } = this.state;
     e.preventDefault();
     // this.props.history.push("/dis-app/application");
-    console.log(this.state);
     ParentService.sendForm({
-      name: vaikoVardas,
-      surename: vaikoPavarde,
-      birthDate: gimimoData,
       address: vaikoAdresas,
-      city: vaikoMiestas,
-      inCity,
       adopted,
-      threeOrMore,
-      parentStudent,
+      birthDate: gimimoData,
+      city: vaikoMiestas,
       handicapped,
-      postDate: gimimoData,
-      parent1: {
-        adresasAtstovas: adresasAtstovas1,
-        elpastasAtstovas: elpastasAtstovas1,
-        kodasAtstovas: kodasAtstovas1,
-        miestasAtstovas: miestasAtstovas1,
-        pavardeAtstovas: pavardeAtstovas1,
-        telAtstovas: telAtstovas1,
-        vardasAtstovas: vardasAtstovas1,
+      idFront: this.state.currentUser.id,
+      inCity,
+      kindergartenPriority: {
+        kindergartenFive: kindergarten5,
+        kindergartenFour: kindergarten4,
+        kindergartenOne: kindergarten1,
+        kindergartenThree: kindergarten3,
+        kindergartenTwo: kindergarten2,
       },
-      parent2: {
-        adresasAtstovas: adresasAtstovas2,
-        elpastasAtstovas: elpastasAtstovas2,
-        kodasAtstovas: kodasAtstovas2,
-        miestasAtstovas: miestasAtstovas2,
-        pavardeAtstovas: pavardeAtstovas2,
-        telAtstovas: telAtstovas2,
-        vardasAtstovas: vardasAtstovas2,
+      name: vaikoVardas,
+      parentData: {
+        address: adresasAtstovas1,
+        city: miestasAtstovas1,
+        email: elpastasAtstovas1,
+        name: vardasAtstovas1,
+        personId: kodasAtstovas1,
+        phoneNum: telAtstovas1,
+        surename: pavardeAtstovas1,
       },
-      kindergarten1,
-      kindergarten2,
-      kindergarten3,
-      kindergarten4,
-      kindergarten5,
+      parentStudent,
+      postDate: "null",
+      surename: vaikoPavarde,
+      threeOrMore,
     });
   };
 
@@ -153,6 +160,7 @@ export default class RegistrationForm extends Component {
   };
 
   render() {
+    if (this.state.redirect) return <Redirect to={this.state.redirect} />;
     return (
       <div>
         <Navbar />

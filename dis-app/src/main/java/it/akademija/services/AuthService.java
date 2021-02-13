@@ -3,6 +3,8 @@ package it.akademija.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import it.akademija.models.User;
+import it.akademija.models.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,6 +50,23 @@ public class AuthService {
 				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));
+	}
+
+	@Transactional(readOnly = true)
+	public UserInfo getUserById(long id){
+		User info = userRepository.findAll().stream()
+				.filter(isdb -> isdb.getId() == id)
+				.findFirst()
+				.orElse(null);
+		if(info != null){
+			return new UserInfo(
+					info.getId(),
+					info.getUsername(),
+					info.getPassword(),
+					info.getRole());
+		} else {
+			throw new IllegalArgumentException("Vartotojas pagal duota ID nerastas.");
+		}
 	}
 
 }

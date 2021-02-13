@@ -35,7 +35,6 @@ public class User {
 	private Role role;
 
 	@OneToOne(mappedBy = "user")
-	@JsonIgnore
 	private UserData userData;
 
 	public User() {
