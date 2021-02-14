@@ -39,11 +39,6 @@ public class UserDataController {
 		return userDataService.addUserData(userDataInfo, id);
 	}
 
-	@PutMapping("/update")
-	public void updateUserData(UserDataInfo userDataInfo) {
-		userDataService.updateUserData(userDataInfo);
-	}
-
 	@PutMapping("/password/{id}")
 	public ResponseEntity<?> updatePassword(@PathVariable long id, @RequestBody String[] passwords) {
 		return userDataService.updatePassword(id, passwords[0], passwords[1]);

@@ -15,7 +15,7 @@ const Password = ({ currentUser, onPasswordSubmit, message, successful }) => {
   }, [successful]);
 
   return (
-    <div style={{ marginTop: "100px" }}>
+    <div style={{ marginTop: "50px" }}>
       <div style={{ textAlign: "center" }}>
         <h2 className={"m-3"}>Pakeisti slaptažodį</h2>
         <h6 className={"m-3"}>

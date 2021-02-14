@@ -57,50 +57,14 @@ public class UserDataService {
 
 		UserData idb = userDataRepository.findByUser(user).orElse(new UserData());
 
-		if (idb != null) {
-			idb.setName(userDataInfo.getName());
-			idb.setSurename(userDataInfo.getSurename());
-			idb.setPhoneNum((userDataInfo.getPhoneNum()));
-			idb.setEmail(userDataInfo.getEmail());
-			idb.setUser(user);
-//		}
-//
-//		if (idb == null) {
-//			idb = new UserData(userDataInfo.getName(), userDataInfo.getSurename(), userDataInfo.getPersonId(),
-//					userDataInfo.getAddress(), userDataInfo.getCity(), userDataInfo.getPhoneNum(),
-//					userDataInfo.getEmail(), user);
-		} else {
-			idb.setName(userDataInfo.getName());
-			idb.setSurename(userDataInfo.getSurename());
-			idb.setPersonId(userDataInfo.getPersonId());
-			idb.setAddress(userDataInfo.getAddress());
-			idb.setCity(userDataInfo.getCity());
-			idb.setPhoneNum(userDataInfo.getPhoneNum());
-			idb.setEmail(userDataInfo.getEmail());
-			idb.setUser(user);
-		}
-		userDataRepository.saveAndFlush(idb);
+		idb.setName(userDataInfo.getName());
+		idb.setSurename(userDataInfo.getSurename());
+		idb.setPhoneNum((userDataInfo.getPhoneNum()));
+		idb.setEmail(userDataInfo.getEmail());
+		idb.setUser(user);
+
+		userDataRepository.save(idb);
 		return ResponseEntity.ok(new MessageResponse("Duomenys atnaujinti!"));
-	}
-
-	@Transactional
-	public void updateUserData(UserDataInfo userDataInfo) {
-		UserData idb = userDataRepository.findAll().stream().filter(isdb -> isdb.getId() == userDataInfo.getId())
-				.findFirst().orElse(null);
-		if (idb != null) {
-			idb.setName(userDataInfo.getName());
-			idb.setSurename(userDataInfo.getSurename());
-			idb.setPersonId(userDataInfo.getPersonId());
-			idb.setAddress(userDataInfo.getAddress());
-			idb.setCity(userDataInfo.getCity());
-			idb.setPhoneNum(userDataInfo.getPhoneNum());
-			idb.setEmail(userDataInfo.getEmail());
-			idb.setUser(userDataInfo.getUser());
-			userDataRepository.save(idb);
-		} else {
-			throw new IllegalArgumentException("Vartotojo duomenys pagal toki ID nerasti.");
-		}
-
 	}
 
 	public ResponseEntity<?> updatePassword(long id, String oldPassword, String newPassword) {
