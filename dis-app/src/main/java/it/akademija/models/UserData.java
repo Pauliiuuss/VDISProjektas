@@ -24,7 +24,7 @@ public class UserData {
 
 	private String name;
 	private String surename;
-	private int personId;
+	private Integer personId;
 	private String address;
 	private String city;
 	private int phoneNum;
@@ -42,7 +42,7 @@ public class UserData {
 	public UserData() {
 	}
 
-	public UserData(String name, String surename, int personId, String address, String city, int phoneNum,
+	public UserData(String name, String surename, Integer personId, String address, String city, int phoneNum,
 			String email) {
 		this.name = name;
 		this.surename = surename;
@@ -77,11 +77,11 @@ public class UserData {
 		this.surename = surename;
 	}
 
-	public int getPersonId() {
+	public Integer getPersonId() {
 		return personId;
 	}
 
-	public void setPersonId(int personId) {
+	public void setPersonId(Integer personId) {
 		this.personId = personId;
 	}
 
