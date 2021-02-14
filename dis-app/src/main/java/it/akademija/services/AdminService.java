@@ -16,6 +16,7 @@ import it.akademija.models.UserInfo;
 import it.akademija.payload.request.RegisterRequest;
 import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.RoleRepository;
+import it.akademija.repository.UserDataRepository;
 import it.akademija.repository.UserRepository;
 
 @Service
@@ -27,6 +28,9 @@ public class AdminService {
 	private PasswordEncoder encoder;
 	@Autowired
 	private RoleRepository roleRepository;
+
+	@Autowired
+	private UserDataRepository userDataRepository;
 
 	@Transactional
 	public ResponseEntity<?> registerUser(RegisterRequest signUpRequest) {
@@ -69,6 +73,8 @@ public class AdminService {
 
 	@Transactional
 	public ResponseEntity<?> deleteUser(Long id) {
+		userDataRepository.deleteByUser(userRepository.getOne(id));
+
 		userRepository.deleteById(id);
 
 		return ResponseEntity.ok(new MessageResponse("Naudotojas ištrintas!"));

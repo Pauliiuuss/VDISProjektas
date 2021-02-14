@@ -27,14 +27,18 @@ class RenderInput extends Component {
       value,
       onChange,
       icon,
+      // mandatory,
     } = this.props;
     return (
       <div className="form-inline mb-3">
         <label className="my-auto col-4" htmlFor={forItem}>
-          {inputPlaceholder}:
+          {inputPlaceholder}:{/* {mandatory ? ( */}
           <span className="text-danger" style={{ fontSize: 20 }}>
             *
           </span>
+          {/* ) : (
+            ""
+          )} */}
         </label>
         <div className="input-group">
           <div className="input-group-prepend">
@@ -50,7 +54,7 @@ class RenderInput extends Component {
             placeholder={inputPlaceholder}
             value={value}
             onChange={onChange}
-            validations={[required]}
+            // required={mandatory}
           />
         </div>
       </div>

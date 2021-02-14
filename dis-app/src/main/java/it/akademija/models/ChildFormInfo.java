@@ -1,181 +1,193 @@
 package it.akademija.models;
 
 import java.util.Date;
-import java.util.List;
 
 public class ChildFormInfo {
 
-    private long id;
-    private String name;
-    private String surename;
-    private Date birthDate;
-    private String address;
-    private String city;
-    private boolean inCity;
-    private boolean adopted;
-    private boolean threeOrMore;
-    private boolean parentStudent;
-    private boolean handicapped;
-    private UserData parentData;
-    private KindergartenPriority kindergartenPriority;
-    private Date postDate;
-    private long idFront;
+	private long id;
+	private String name;
+	private String surename;
+	private Date birthDate;
+	private String address;
+	private int personId;
+	private String city;
+	private boolean inCity;
+	private boolean adopted;
+	private boolean threeOrMore;
+	private boolean parentStudent;
+	private boolean handicapped;
+	private UserData parentData;
+	private KindergartenPriority kindergartenPriority;
+	private Date postDate;
+	private long idFront;
 
-    public ChildFormInfo() {
-    }
+	public ChildFormInfo() {
+	}
 
-    public ChildFormInfo(long id, String name, String surename, Date birthDate, String address, String city,
-                         boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority, long idFront) {
-        this.id = id;
-        this.name = name;
-        this.surename = surename;
-        this.birthDate = birthDate;
-        this.address = address;
-        this.city = city;
-        this.inCity = inCity;
-        this.adopted = adopted;
-        this.threeOrMore = threeOrMore;
-        this.parentStudent = parentStudent;
-        this.handicapped = handicapped;
-        this.parentData = parentData;
-        this.kindergartenPriority = kindergartenPriority;
-        this.idFront = idFront;
-    }
+	public ChildFormInfo(long id, String name, String surename, Date birthDate, String address, String city,
+			int personId, boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent,
+			boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority, long idFront) {
+		this.id = id;
+		this.name = name;
+		this.surename = surename;
+		this.birthDate = birthDate;
+		this.address = address;
+		this.city = city;
+		this.personId = personId;
+		this.inCity = inCity;
+		this.adopted = adopted;
+		this.threeOrMore = threeOrMore;
+		this.parentStudent = parentStudent;
+		this.handicapped = handicapped;
+		this.parentData = parentData;
+		this.kindergartenPriority = kindergartenPriority;
+		this.idFront = idFront;
+	}
 
-    public ChildFormInfo(long id, String name, String surename, Date birthDate, String address, String city,
-                         boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority) {
-        this.id = id;
-        this.name = name;
-        this.surename = surename;
-        this.birthDate = birthDate;
-        this.address = address;
-        this.city = city;
-        this.inCity = inCity;
-        this.adopted = adopted;
-        this.threeOrMore = threeOrMore;
-        this.parentStudent = parentStudent;
-        this.handicapped = handicapped;
-        this.parentData = parentData;
-        this.kindergartenPriority = kindergartenPriority;
-    }
+	public ChildFormInfo(long id, String name, String surename, Date birthDate, String address, String city,
+			int personId, boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent,
+			boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority) {
+		this.id = id;
+		this.name = name;
+		this.surename = surename;
+		this.birthDate = birthDate;
+		this.address = address;
+		this.city = city;
+		this.personId = personId;
+		this.inCity = inCity;
+		this.adopted = adopted;
+		this.threeOrMore = threeOrMore;
+		this.parentStudent = parentStudent;
+		this.handicapped = handicapped;
+		this.parentData = parentData;
+		this.kindergartenPriority = kindergartenPriority;
+	}
 
-    public long getId() {
-        return id;
-    }
+	public int getPersonId() {
+		return personId;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public String getSurename() {
-        return surename;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setSurename(String surename) {
-        this.surename = surename;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
+	public String getSurename() {
+		return surename;
+	}
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
+	public void setSurename(String surename) {
+		this.surename = surename;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public Date getBirthDate() {
+		return birthDate;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public boolean isInCity() {
-        return inCity;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public void setInCity(boolean inCity) {
-        this.inCity = inCity;
-    }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    public boolean isAdopted() {
-        return adopted;
-    }
+	public boolean isInCity() {
+		return inCity;
+	}
 
-    public void setAdopted(boolean adopted) {
-        this.adopted = adopted;
-    }
+	public void setInCity(boolean inCity) {
+		this.inCity = inCity;
+	}
 
-    public boolean isThreeOrMore() {
-        return threeOrMore;
-    }
+	public boolean isAdopted() {
+		return adopted;
+	}
 
-    public void setThreeOrMore(boolean threeOrMore) {
-        this.threeOrMore = threeOrMore;
-    }
+	public void setAdopted(boolean adopted) {
+		this.adopted = adopted;
+	}
 
-    public boolean isParentStudent() {
-        return parentStudent;
-    }
+	public boolean isThreeOrMore() {
+		return threeOrMore;
+	}
 
-    public void setParentStudent(boolean parentStudent) {
-        this.parentStudent = parentStudent;
-    }
+	public void setThreeOrMore(boolean threeOrMore) {
+		this.threeOrMore = threeOrMore;
+	}
 
-    public boolean isHandicapped() {
-        return handicapped;
-    }
+	public boolean isParentStudent() {
+		return parentStudent;
+	}
 
-    public void setHandicapped(boolean handicapped) {
-        this.handicapped = handicapped;
-    }
+	public void setParentStudent(boolean parentStudent) {
+		this.parentStudent = parentStudent;
+	}
 
-    public UserData getParentData() {
-        return parentData;
-    }
+	public boolean isHandicapped() {
+		return handicapped;
+	}
 
-    public void setParentData(UserData parentData) {
-        this.parentData = parentData;
-    }
+	public void setHandicapped(boolean handicapped) {
+		this.handicapped = handicapped;
+	}
 
-    public Date getPostDate() {
-        return postDate;
-    }
+	public UserData getParentData() {
+		return parentData;
+	}
 
-    public KindergartenPriority getKindergartenPriority() {
-        return kindergartenPriority;
-    }
+	public void setParentData(UserData parentData) {
+		this.parentData = parentData;
+	}
 
-    public void setKindergartenPriority(KindergartenPriority kindergartenPriority) {
-        this.kindergartenPriority = kindergartenPriority;
-    }
+	public Date getPostDate() {
+		return postDate;
+	}
 
-    public void setPostDate(Date postDate) {
-        this.postDate = postDate;
-    }
+	public KindergartenPriority getKindergartenPriority() {
+		return kindergartenPriority;
+	}
 
-    public long getIdFront() {
-        return idFront;
-    }
+	public void setKindergartenPriority(KindergartenPriority kindergartenPriority) {
+		this.kindergartenPriority = kindergartenPriority;
+	}
 
-    public void setIdFront(long idFront) {
-        this.idFront = idFront;
-    }
+	public void setPostDate(Date postDate) {
+		this.postDate = postDate;
+	}
+
+	public long getIdFront() {
+		return idFront;
+	}
+
+	public void setIdFront(long idFront) {
+		this.idFront = idFront;
+	}
 }

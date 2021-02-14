@@ -31,7 +31,9 @@ class AuthService {
   }
 
   getCurrentUser() {
-    return JSON.parse(sessionStorage.getItem('user'));
+    return JSON.parse(sessionStorage.getItem("user"));
+<<<<<<<<< Temporary merge branch 1
+=========
   }
 
   getUserById(id) {

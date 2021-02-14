@@ -11,10 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "child_forms")
+@Table(name = "child_forms", uniqueConstraints = { @UniqueConstraint(columnNames = "personId") })
 public class ChildForm {
 
 	@Id
@@ -30,6 +31,8 @@ public class ChildForm {
 	private String address;
 	@NotBlank
 	private String city;
+	private int personId;
+
 	private boolean inCity;
 	private boolean adopted;
 	private boolean threeOrMore;
@@ -48,12 +51,14 @@ public class ChildForm {
 	public ChildForm() {
 	}
 
-	public ChildForm(String name, String surename, Date birthDate, String address, String city, boolean inCity,
-			boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped, UserData parentData) {
+	public ChildForm(int personId, String name, String surename, Date birthDate, String address, String city,
+			boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped,
+			UserData parentData) {
 		this.name = name;
 		this.surename = surename;
 		this.birthDate = birthDate;
 		this.address = address;
+		this.personId = personId;
 		this.city = city;
 		this.inCity = inCity;
 		this.adopted = adopted;
@@ -61,6 +66,14 @@ public class ChildForm {
 		this.parentStudent = parentStudent;
 		this.handicapped = handicapped;
 		this.parentData = parentData;
+	}
+
+	public int getPersonId() {
+		return personId;
+	}
+
+	public void setPersonId(int personId) {
+		this.personId = personId;
 	}
 
 	public long getId() {

@@ -1,26 +1,18 @@
 import React, { useState } from "react";
 import RenderInput from "./util/RenderInput";
-import {
-  faUser,
-  faHome,
-  faPhone,
-  faEnvelope,
-  faBirthdayCake,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
-const Details = ({ currentUser, userReady, roles }) => {
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-
-  console.log(name);
+const Details = ({ userData, onSubmit, message, successful }) => {
+  const [name, setName] = useState(userData.name);
+  const [surname, setSurname] = useState(userData.surename);
+  const [phone, setPhone] = useState(userData.phoneNum);
+  const [email, setEmail] = useState(userData.email);
 
   return (
     <div style={{ textAlign: "center", marginTop: "100px" }}>
       <h2 className={"m-3"}>Mano domenys</h2>
-      <form>
-        <div class="form-group">
+      <form onSubmit={(e) => onSubmit(e, name, surname, phone, email)}>
+        <div className="form-group">
           <RenderInput
             inputPlaceholder={"Vardas"}
             type={"text"}
@@ -61,10 +53,22 @@ const Details = ({ currentUser, userReady, roles }) => {
             alignItems: "center",
           }}
         >
-          <button type="submit" class="btn btn-primary mx-auto">
+          <button type="submit" className="btn btn-primary mx-auto">
             Atnaujinti
           </button>
         </div>
+        {message && (
+          <div className="form-group m-3">
+            <div
+              className={
+                successful ? "alert alert-success" : "alert alert-danger"
+              }
+              role="alert"
+            >
+              {message}
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );
