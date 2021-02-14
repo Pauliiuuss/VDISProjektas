@@ -1,6 +1,21 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { Component } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { Component } from 'react';
+import Input from 'react-validation/build/input';
+
+const required = (value) => {
+  if (!value) {
+    return (
+      <div
+        className="alert alert-danger text-center px-0 py-2"
+        role="alert"
+        style={{ fontSize: '9px' }}
+      >
+        Privalomas laukas turi būti užpildytas!
+      </div>
+    );
+  }
+};
 
 class RenderInput extends Component {
   state = {};
@@ -27,7 +42,7 @@ class RenderInput extends Component {
               <FontAwesomeIcon icon={icon} />
             </span>
           </div>
-          <input
+          <Input
             type={type}
             id={forItem}
             name={forItem}
@@ -35,7 +50,7 @@ class RenderInput extends Component {
             placeholder={inputPlaceholder}
             value={value}
             onChange={onChange}
-            // required="required"
+            validations={[required]}
           />
         </div>
       </div>

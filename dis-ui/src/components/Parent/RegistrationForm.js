@@ -14,9 +14,13 @@ import RenderInput from './RenderInput';
 import RenderSelect from './RenderSelect';
 import RenderCheck from './RenderCheck';
 import AuthService from '../../services/auth.service';
+import CheckButton from 'react-validation/build/button';
+import Form from 'react-validation/build/form';
 
 export default class RegistrationForm extends Component {
   state = {
+    message: '',
+    successful: false,
     currentUser: '',
     redirect: null,
     userReady: false,
@@ -111,7 +115,12 @@ export default class RegistrationForm extends Component {
       kindergarten5,
     } = this.state;
     e.preventDefault();
-    this.props.history.push('/dis-app/home');
+    this.form.validateAll();
+
+    if (this.checkBtn.context._errors.length === 0) {
+      // alert('success');
+    }
+    // this.props.history.push('/dis-app/home');
     ParentService.sendForm({
       address: vaikoAdresas,
       adopted,
@@ -165,7 +174,14 @@ export default class RegistrationForm extends Component {
       <div>
         <Navbar />
         <h2 className=" text-center text-success my-5">Naujas prašymas</h2>
-        <form className="container text-secondary" onSubmit={this.handleSubmit}>
+        {/* <form className="container text-secondary" onSubmit={this.handleSubmit}> */}
+        <Form
+          className="container text-secondary"
+          onSubmit={this.handleSubmit}
+          ref={(c) => {
+            this.form = c;
+          }}
+        >
           <div className="row">
             <div className="col-lg-6">
               <h3 className="mb-4 text-center">Vaiko atstovas 1</h3>
@@ -434,7 +450,16 @@ export default class RegistrationForm extends Component {
           <button type="submit" className="btn btn-success my-5">
             Pateikti prašymą
           </button>
-        </form>
+          {this.state.message && (
+            <div className="form-group">{this.state.message}</div>
+          )}
+          <CheckButton
+            style={{ display: 'none' }}
+            ref={(c) => {
+              this.checkBtn = c;
+            }}
+          />
+        </Form>
       </div>
     );
   }
