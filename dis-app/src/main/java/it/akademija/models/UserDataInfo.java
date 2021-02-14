@@ -1,20 +1,19 @@
 package it.akademija.models;
 
-
 public class UserDataInfo {
 
-    private long id;
-    private String name;
-    private String surename;
-    private int personId;
-    private String address;
-    private String city;
-    private int phoneNum;
-    private String email;
-    private User user;
+	private long id;
+	private String name;
+	private String surename;
+	private Integer personId;
+	private String address;
+	private String city;
+	private int phoneNum;
+	private String email;
+	private User user;
 
-    public UserDataInfo() {
-    }
+	public UserDataInfo() {
+	}
 
     public UserDataInfo(long id, String name, String surename, int personId, String address, String city, int phoneNum, String email) {
         this.id = id;
@@ -27,72 +26,89 @@ public class UserDataInfo {
         this.email = email;
     }
 
-    public long getId() {
-        return id;
-    }
+	public UserDataInfo(long id, String name, String surename, Integer personId, String address, String city,
+			int phoneNum, String email, User user) {
+		this.id = id;
+		this.name = name;
+		this.surename = surename;
+		this.personId = personId;
+		this.address = address;
+		this.city = city;
+		this.phoneNum = phoneNum;
+		this.email = email;
+		this.user = user;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getSurename() {
-        return surename;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setSurename(String surename) {
-        this.surename = surename;
-    }
+	public String getSurename() {
+		return surename;
+	}
 
-    public int getPersonId() {
-        return personId;
-    }
+	public void setSurename(String surename) {
+		this.surename = surename;
+	}
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
+	public Integer getPersonId() {
+		return personId;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public int getPhoneNum() {
-        return phoneNum;
-    }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    public void setPhoneNum(int phoneNum) {
-        this.phoneNum = phoneNum;
-    }
+	public int getPhoneNum() {
+		return phoneNum;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setPhoneNum(int phoneNum) {
+		this.phoneNum = phoneNum;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public User getUser() { return user; }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setUser(User username) { this.user = username; }
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User username) {
+		this.user = username;
+	}
 
 }

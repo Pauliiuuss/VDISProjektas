@@ -35,6 +35,15 @@ public class Kindergarten {
 	public Kindergarten() {
 	}
 
+	public Kindergarten(Long id, @NotBlank @Size(max = 120) String address, @NotBlank @Size(max = 120) String name,
+			List<Group> groups) {
+		super();
+		this.id = id;
+		this.address = address;
+		this.name = name;
+		this.groups = groups;
+	}
+
 	public Kindergarten(@NotBlank @Size(max = 120) String address, @NotBlank @Size(max = 120) String name,
 			List<Group> groups) {
 		super();

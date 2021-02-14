@@ -101,7 +101,8 @@ public class SpecService {
 
 		Group group = groupRepository.getOne(groupId);
 
-		Group originalGroup = group;
+		Group originalGroup = new Group(group.getName(), group.getCapasity(), group.getAgeFrom(), group.getAgeTo(),
+				group.getKindergarten());
 
 		group.setName(info.getName());
 		group.setCapasity(info.getCapasity());
@@ -113,7 +114,8 @@ public class SpecService {
 			group.setAgeTo(3L);
 		}
 
-		if (group.equals(originalGroup))
+		if (group.getName().equals(originalGroup.getName()) && group.getAgeFrom() == originalGroup.getAgeFrom()
+				&& group.getAgeTo() == originalGroup.getAgeTo())
 			return ResponseEntity.ok(new MessageResponse("Jokių pakeitimų neišsaugota"));
 
 		groupRepository.save(group);
