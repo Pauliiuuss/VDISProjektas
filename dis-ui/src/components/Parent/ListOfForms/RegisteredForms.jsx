@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ParentService from '../../../services/parent.service';
+import AuthService from '../../../services/auth.service';
 import RegisteredFormsTable from './RegisteredFormsTable';
 
 export default class Forms extends Component {
@@ -14,9 +15,9 @@ export default class Forms extends Component {
 
   // componentDidMount() {
   //   const currentUser = AuthService.getCurrentUser();
-  //   SpecService.getKindergartens()
+  //   ParentService.getAllForms()
   //     .then((result) => {
-  //       this.setState({ kindergartens: result.data });
+  //       this.setState({ forms: result.data });
   //     })
   //     .catch((err) => {
   //       console.log(err);
