@@ -27,7 +27,7 @@ public class UserData {
 	private Integer personId;
 	private String address;
 	private String city;
-	private int phoneNum;
+	private Integer phoneNum;
 	private String email;
 
 	@OneToOne(fetch = FetchType.EAGER)
@@ -42,7 +42,7 @@ public class UserData {
 	public UserData() {
 	}
 
-	public UserData(String name, String surename, Integer personId, String address, String city, int phoneNum,
+	public UserData(String name, String surename, Integer personId, String address, String city, Integer phoneNum,
 			String email) {
 		this.name = name;
 		this.surename = surename;
@@ -101,11 +101,11 @@ public class UserData {
 		this.city = city;
 	}
 
-	public int getPhoneNum() {
+	public Integer getPhoneNum() {
 		return phoneNum;
 	}
 
-	public void setPhoneNum(int phoneNum) {
+	public void setPhoneNum(Integer phoneNum) {
 		this.phoneNum = phoneNum;
 	}
 
@@ -136,4 +136,48 @@ public class UserData {
 	public void addChildForms(ChildForm childForm) {
 		this.childForms.add(childForm);
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((phoneNum == null) ? 0 : phoneNum.hashCode());
+		result = prime * result + ((surename == null) ? 0 : surename.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserData other = (UserData) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (phoneNum == null) {
+			if (other.phoneNum != null)
+				return false;
+		} else if (!phoneNum.equals(other.phoneNum))
+			return false;
+		if (surename == null) {
+			if (other.surename != null)
+				return false;
+		} else if (!surename.equals(other.surename))
+			return false;
+		return true;
+	}
+
 }
