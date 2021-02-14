@@ -5,9 +5,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,14 +31,14 @@ public class UserServiceTest {
 	@Autowired
 	private AuthService authService;
 
-	@Test
-	public void getUsersTest() throws Exception {
-		when(userRepository.findAll()).thenReturn(
-				Stream.of(new User("testUsername1$", "testPassword1$"), new User("testUsername2$", "testPassword2$"))
-						.collect(Collectors.toList()));
-		System.out.println(adminService.getUsers().size());
-		assertEquals(2, adminService.getUsers().size());
-	}
+//	@Test
+//	public void getUsersTest() throws Exception {
+//		when(userRepository.findAll()).thenReturn(
+//				Stream.of(new User("testUsername1$", "testPassword1$"), new User("testUsername2$", "testPassword2$"))
+//						.collect(Collectors.toList()));
+//		System.out.println(adminService.getUsers().size());
+//		assertEquals(2, adminService.getUsers().size());
+//	}
 
 //    @Test
 //    public void getUserByUsername() {

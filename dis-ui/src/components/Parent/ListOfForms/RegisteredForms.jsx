@@ -12,6 +12,23 @@ export default class Forms extends Component {
   //     this.setState({ users: data });
   //   };
 
+  // componentDidMount() {
+  //   const currentUser = AuthService.getCurrentUser();
+  //   SpecService.getKindergartens()
+  //     .then((result) => {
+  //       this.setState({ kindergartens: result.data });
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //   if (!currentUser) this.setState({ redirect: '/dis-app/' });
+  //   this.setState({
+  //     currentUser: currentUser,
+  //     userReady: true,
+  //     roles: currentUser.roles,
+  //   });
+  // }
+
   render() {
     const allForms = this.props.forms;
     const count = allForms.length;
