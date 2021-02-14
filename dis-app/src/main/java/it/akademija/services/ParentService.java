@@ -1,90 +1,86 @@
 package it.akademija.services;
 
-import it.akademija.models.*;
-import it.akademija.repository.*;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
+import it.akademija.models.ChildForm;
+import it.akademija.models.ChildFormInfo;
+import it.akademija.models.Group;
+import it.akademija.models.KindergartenInfo;
+import it.akademija.models.User;
+import it.akademija.repository.ChildFormRepository;
+import it.akademija.repository.KindergartenPriorityRepository;
+import it.akademija.repository.KindergartenRepository;
+import it.akademija.repository.UserDataRepository;
+import it.akademija.repository.UserRepository;
 
 @Service
 public class ParentService {
 
-    @Autowired
-    private KindergartenRepository kindergartenRepository;
-    @Autowired
-    private ChildFormRepository childFormRepository;
-    @Autowired
-    private UserDataRepository userDataRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private KindergartenPriorityRepository kindergartenPriorityRepository;
+	@Autowired
+	private KindergartenRepository kindergartenRepository;
+	@Autowired
+	private ChildFormRepository childFormRepository;
+	@Autowired
+	private UserDataRepository userDataRepository;
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private KindergartenPriorityRepository kindergartenPriorityRepository;
+
 //    private ChildForm newForm;
 //    private UserData newData;
 //    private KindergartenPriority newKinder;
 //
-    @Transactional(readOnly = true)
-    public Collection<KindergartenInfo> getKindergartens() {
-        return kindergartenRepository.findAll().stream()
-                .map(isdb -> new KindergartenInfo(isdb.getId(), isdb.getAddress(), isdb.getName(),
-                        isdb.getGroups().stream().map(Group::getCapasity).reduce(0L, Long::sum)))
-                .collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public Collection<KindergartenInfo> getKindergartens() {
+		return kindergartenRepository.findAll().stream()
+				.map(isdb -> new KindergartenInfo(isdb.getId(), isdb.getAddress(), isdb.getName(),
+						isdb.getGroups().stream().map(Group::getCapasity).reduce(0L, Long::sum)))
+				.collect(Collectors.toList());
+	}
 
-    @Transactional(readOnly = true)
-    public Collection<ChildFormInfo> getAllForms(){
-        return childFormRepository.findAll().stream()
-                .map(isdb -> new ChildFormInfo(
-                        isdb.getId(),
-                        isdb.getName(),
-                        isdb.getSurename(),
-                        isdb.getBirthDate(),
-                        isdb.getAddress(),
-                        isdb.getCity(),
-                        isdb.isInCity(),
-                        isdb.isAdopted(),
-                        isdb.isThreeOrMore(),
-                        isdb.isParentStudent(),
-                        isdb.isHandicapped(),
-                        isdb.getParentData(),
-                        isdb.getKindergartenPriority()))
-                .collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public Collection<ChildFormInfo> getAllForms() {
+		return childFormRepository.findAll().stream()
+				.map(isdb -> new ChildFormInfo(isdb.getId(), isdb.getName(), isdb.getSurename(), isdb.getBirthDate(),
+						isdb.getAddress(), isdb.getCity(), isdb.getPersonId(), isdb.isInCity(), isdb.isAdopted(),
+						isdb.isThreeOrMore(), isdb.isParentStudent(), isdb.isHandicapped(), isdb.getParentData(),
+						isdb.getKindergartenPriority()))
+				.collect(Collectors.toList());
+	}
 
-    @Transactional
-    public void addForm(ChildFormInfo childFormInfo){
+	@Transactional
+	public void addForm(ChildFormInfo childFormInfo) {
 
-        ChildForm newForm = new ChildForm(
-                childFormInfo.getName(),
-                childFormInfo.getSurename(),
-                childFormInfo.getBirthDate(),
-                childFormInfo.getAddress(),
-                childFormInfo.getCity(),
-                childFormInfo.isInCity(),
-                childFormInfo.isAdopted(),
-                childFormInfo.isThreeOrMore(),
-                childFormInfo.isParentStudent(),
-                childFormInfo.isHandicapped(),
-                childFormInfo.getParentData());
+		ChildForm newForm = new ChildForm(childFormInfo.getPersonId(), childFormInfo.getName(),
+				childFormInfo.getSurename(), childFormInfo.getBirthDate(), childFormInfo.getAddress(),
+				childFormInfo.getCity(), childFormInfo.isInCity(), childFormInfo.isAdopted(),
+				childFormInfo.isThreeOrMore(), childFormInfo.isParentStudent(), childFormInfo.isHandicapped(),
+				childFormInfo.getParentData());
 
-        User currentUser = userRepository.findAll().stream()
-                .filter(isdb -> isdb.getId() == childFormInfo.getIdFront())
-                .findFirst()
-                .orElse(null);
-        newForm.getParentData().setUser(currentUser);
-
-
-        userDataRepository.save(childFormInfo.getParentData());
-        childFormRepository.save(newForm);
-        childFormInfo.getKindergartenPriority().setChildForm(newForm);
-        kindergartenPriorityRepository.save(childFormInfo.getKindergartenPriority());
-
-
-
-
+		User currentUser = userRepository.findAll().stream().filter(isdb -> isdb.getId() == childFormInfo.getIdFront())
+				.findFirst().orElse(null);
+		if (currentUser != null && currentUser.getUserData() == null) {
+			newForm.getParentData().setUser(currentUser);
+		} else if (currentUser != null && currentUser.getUserData() != null) {
+			currentUser.getUserData().setName(newForm.getParentData().getName());
+			currentUser.getUserData().setSurename(newForm.getParentData().getSurename());
+			currentUser.getUserData().setPersonId(newForm.getParentData().getPersonId());
+			currentUser.getUserData().setName(newForm.getParentData().getName());
+			currentUser.getUserData().setAddress(newForm.getParentData().getAddress());
+			currentUser.getUserData().setCity(newForm.getParentData().getCity());
+			currentUser.getUserData().setPhoneNum(newForm.getParentData().getPhoneNum());
+			currentUser.getUserData().setEmail(newForm.getParentData().getEmail());
+		}
+		userDataRepository.save(childFormInfo.getParentData());
+		childFormRepository.save(newForm);
+		childFormInfo.getKindergartenPriority().setChildForm(newForm);
+		kindergartenPriorityRepository.save(childFormInfo.getKindergartenPriority());
 
 //        UserData newUserData = new UserData(
 //                childFormInfo.getParentData().getName(),
@@ -127,9 +123,7 @@ public class ParentService {
 //        childFormRepository.save(newForm);
 //        userDataRepository.save(newUserData);
 //        kindergartenPriorityRepository.save(newKinder);
-    }
-
-
+	}
 
 //
 //    @Transactional

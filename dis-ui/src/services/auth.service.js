@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// const API_URL = process.env.PUBLIC_URL + '/api/auth/';
+// const API_URL = process.env.PUBLIC_URL + "/api/auth/";
 const API_URL = "http://localhost:8080/api/auth/";
 
 class AuthService {

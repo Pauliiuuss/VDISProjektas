@@ -97,6 +97,7 @@ export default class RegistrationForm extends Component {
       miestasAtstovas1,
       telAtstovas1,
       elpastasAtstovas1,
+      vaikoKodas,
       vardasAtstovas2,
       pavardeAtstovas2,
       kodasAtstovas2,
@@ -128,6 +129,7 @@ export default class RegistrationForm extends Component {
         kindergartenTwo: kindergarten2,
       },
       name: vaikoVardas,
+      personId: vaikoKodas,
       parentData: {
         address: adresasAtstovas1,
         city: miestasAtstovas1,

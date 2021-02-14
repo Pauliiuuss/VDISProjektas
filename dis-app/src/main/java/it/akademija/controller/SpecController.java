@@ -39,7 +39,7 @@ public class SpecController {
 	}
 
 	@GetMapping("/getkindergartens")
-//	@PreAuthorize("hasRole('SPEC') or hasRole('PARENT')")
+	@PreAuthorize("hasRole('SPEC') or hasRole('PARENT')")
 	public Collection<KindergartenInfo> getKindergartens() {
 		return specService.getKindergartens();
 	}
