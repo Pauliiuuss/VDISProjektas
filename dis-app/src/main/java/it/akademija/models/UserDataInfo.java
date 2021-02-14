@@ -5,7 +5,7 @@ public class UserDataInfo {
 	private long id;
 	private String name;
 	private String surename;
-	private int personId;
+	private Integer personId;
 	private String address;
 	private String city;
 	private int phoneNum;
@@ -15,7 +15,7 @@ public class UserDataInfo {
 	public UserDataInfo() {
 	}
 
-	public UserDataInfo(String name, String surename, int personId, String address, String city, int phoneNum,
+	public UserDataInfo(String name, String surename, Integer personId, String address, String city, int phoneNum,
 			String email) {
 		super();
 		this.name = name;
@@ -27,8 +27,8 @@ public class UserDataInfo {
 		this.email = email;
 	}
 
-	public UserDataInfo(long id, String name, String surename, int personId, String address, String city, int phoneNum,
-			String email, User user) {
+	public UserDataInfo(long id, String name, String surename, Integer personId, String address, String city,
+			int phoneNum, String email, User user) {
 		this.id = id;
 		this.name = name;
 		this.surename = surename;
@@ -64,11 +64,11 @@ public class UserDataInfo {
 		this.surename = surename;
 	}
 
-	public int getPersonId() {
+	public Integer getPersonId() {
 		return personId;
 	}
 
-	public void setPersonId(int personId) {
+	public void setPersonId(Integer personId) {
 		this.personId = personId;
 	}
 

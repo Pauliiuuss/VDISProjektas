@@ -58,12 +58,10 @@ public class UserDataService {
 		UserData idb = userDataRepository.findByUser(user).orElse(new UserData());
 
 		if (idb != null) {
-			idb.setName((userDataInfo.getName() != null ? userDataInfo.getName() : ""));
-			idb.setSurename((userDataInfo.getSurename() != null ? userDataInfo.getName() : ""));
+			idb.setName(userDataInfo.getName());
+			idb.setSurename(userDataInfo.getSurename());
 			idb.setPhoneNum((userDataInfo.getPhoneNum()));
-			idb.setEmail((userDataInfo.getEmail() != null ? userDataInfo.getEmail() : ""));
-			idb.setAddress("");
-			idb.setCity("");
+			idb.setEmail(userDataInfo.getEmail());
 			idb.setUser(user);
 //		}
 //
@@ -81,7 +79,7 @@ public class UserDataService {
 			idb.setEmail(userDataInfo.getEmail());
 			idb.setUser(user);
 		}
-		userDataRepository.save(idb);
+		userDataRepository.saveAndFlush(idb);
 		return ResponseEntity.ok(new MessageResponse("Duomenys atnaujinti!"));
 	}
 
