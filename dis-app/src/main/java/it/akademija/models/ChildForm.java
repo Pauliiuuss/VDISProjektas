@@ -11,8 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "child_forms", uniqueConstraints = { @UniqueConstraint(columnNames = "personId") })
@@ -46,6 +50,8 @@ public class ChildForm {
 	@OneToOne(mappedBy = "childForm")
 	private KindergartenPriority kindergartenPriority;
 
+	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date postDate;
 
 	public ChildForm() {
@@ -53,7 +59,7 @@ public class ChildForm {
 
 	public ChildForm(int personId, String name, String surename, Date birthDate, String address, String city,
 			boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped,
-			UserData parentData) {
+			UserData parentData, Date postDate) {
 		this.name = name;
 		this.surename = surename;
 		this.birthDate = birthDate;
@@ -66,6 +72,7 @@ public class ChildForm {
 		this.parentStudent = parentStudent;
 		this.handicapped = handicapped;
 		this.parentData = parentData;
+		this.postDate = postDate;
 	}
 
 	public int getPersonId() {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const API_URL = process.env.PUBLIC_URL + "/api/auth/";
-const API_URL = 'http://localhost:8080/api/auth/';
+const API_URL = process.env.PUBLIC_URL + '/api/auth/';
+// const API_URL = 'http://localhost:8080/api/auth/';
 
 class AuthService {
   login(username, password) {
@@ -31,9 +31,7 @@ class AuthService {
   }
 
   getCurrentUser() {
-    return JSON.parse(sessionStorage.getItem("user"));
-<<<<<<<<< Temporary merge branch 1
-=========
+    return JSON.parse(sessionStorage.getItem('user'));
   }
 
   getUserById(id) {

@@ -17,8 +17,31 @@ import AuthService from '../../services/auth.service';
 import CheckButton from 'react-validation/build/button';
 import Form from 'react-validation/build/form';
 
+var today = new Date(),
+  date =
+    today.getFullYear() +
+    '-' +
+    ('0' + (today.getMonth() + 1)).slice(-2) +
+    '-' +
+    ('0' + today.getDate()).slice(-2);
+
+const required = (value) => {
+  if (!value) {
+    return (
+      <div
+        className="alert alert-danger text-center px-0 py-2"
+        role="alert"
+        style={{ fontSize: '9px' }}
+      >
+        Privalomas laukas turi būti užpildytas!
+      </div>
+    );
+  }
+};
+
 export default class RegistrationForm extends Component {
   state = {
+    date: date,
     message: '',
     successful: false,
     currentUser: '',
@@ -149,7 +172,7 @@ export default class RegistrationForm extends Component {
         surename: pavardeAtstovas1,
       },
       parentStudent,
-      postDate: 'null',
+      postDate: date,
       surename: vaikoPavarde,
       threeOrMore,
     });
@@ -176,7 +199,6 @@ export default class RegistrationForm extends Component {
       <div>
         <Navbar />
         <h2 className=" text-center text-success my-5">Naujas prašymas</h2>
-        {/* <form className="container text-secondary" onSubmit={this.handleSubmit}> */}
         <Form
           className="container text-secondary"
           onSubmit={this.handleSubmit}
@@ -194,6 +216,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.vardasAtstovas1}
                 onChange={this.handleChange}
                 icon={faUser}
+                valid={[required]}
+                mandatory={true}
               />
               <RenderInput
                 type={'text'}
@@ -202,6 +226,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.pavardeAtstovas1}
                 onChange={this.handleChange}
                 icon={faUser}
+                valid={[required]}
+                mandatory={true}
               />
               <RenderInput
                 type={'number'}
@@ -210,6 +236,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.kodasAtstovas1}
                 onChange={this.handleChange}
                 icon={faUser}
+                valid={[required]}
+                mandatory={true}
               />
               <RenderInput
                 type={'text'}
@@ -218,6 +246,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.adresasAtstovas1}
                 onChange={this.handleChange}
                 icon={faHome}
+                valid={[required]}
+                mandatory={true}
               />
               <RenderInput
                 type={'text'}
@@ -226,6 +256,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.miestasAtstovas1}
                 onChange={this.handleChange}
                 icon={faHome}
+                valid={[required]}
+                mandatory={true}
               />
               <RenderInput
                 type={'number'}
@@ -234,6 +266,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.telAtstovas1}
                 onChange={this.handleChange}
                 icon={faPhone}
+                valid={[required]}
+                mandatory={true}
               />
               <RenderInput
                 type={'email'}
@@ -242,6 +276,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.elpastasAtstovas1}
                 onChange={this.handleChange}
                 icon={faEnvelope}
+                valid={[required]}
+                mandatory={true}
               />
             </div>
             <div className="col-lg-6">
@@ -312,6 +348,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.vaikoVardas}
                 onChange={this.handleChange}
                 icon={faUser}
+                valid={[required]}
+                mandatory={true}
               />
               <RenderInput
                 type={'text'}
@@ -320,6 +358,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.vaikoPavarde}
                 onChange={this.handleChange}
                 icon={faUser}
+                valid={[required]}
+                mandatory={true}
               />
               <RenderInput
                 type={'number'}
@@ -328,6 +368,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.vaikoKodas}
                 onChange={this.handleChange}
                 icon={faUser}
+                valid={[required]}
+                mandatory={true}
               />
 
               <RenderInput
@@ -337,6 +379,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.gimimoData}
                 onChange={this.handleChange}
                 icon={faBirthdayCake}
+                valid={[required]}
+                mandatory={true}
               />
 
               <RenderInput
@@ -346,6 +390,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.vaikoAdresas}
                 onChange={this.handleChange}
                 icon={faHome}
+                valid={[required]}
+                mandatory={true}
               />
               <RenderInput
                 type={'text'}
@@ -354,6 +400,8 @@ export default class RegistrationForm extends Component {
                 value={this.state.vaikoMiestas}
                 onChange={this.handleChange}
                 icon={faHome}
+                valid={[required]}
+                mandatory={true}
               />
             </div>
           </div>

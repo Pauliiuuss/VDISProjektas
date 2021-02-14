@@ -50,7 +50,7 @@ public class ParentService {
 				.map(isdb -> new ChildFormInfo(isdb.getId(), isdb.getName(), isdb.getSurename(), isdb.getBirthDate(),
 						isdb.getAddress(), isdb.getCity(), isdb.getPersonId(), isdb.isInCity(), isdb.isAdopted(),
 						isdb.isThreeOrMore(), isdb.isParentStudent(), isdb.isHandicapped(), isdb.getParentData(),
-						isdb.getKindergartenPriority()))
+						isdb.getKindergartenPriority(), isdb.getPostDate()))
 				.collect(Collectors.toList());
 	}
 
@@ -61,7 +61,7 @@ public class ParentService {
 				childFormInfo.getSurename(), childFormInfo.getBirthDate(), childFormInfo.getAddress(),
 				childFormInfo.getCity(), childFormInfo.isInCity(), childFormInfo.isAdopted(),
 				childFormInfo.isThreeOrMore(), childFormInfo.isParentStudent(), childFormInfo.isHandicapped(),
-				childFormInfo.getParentData());
+				childFormInfo.getParentData(), childFormInfo.getPostDate());
 
 		User currentUser = userRepository.findAll().stream().filter(isdb -> isdb.getId() == childFormInfo.getIdFront())
 				.findFirst().orElse(null);

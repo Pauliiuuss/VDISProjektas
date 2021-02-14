@@ -26,7 +26,8 @@ public class ChildFormInfo {
 
 	public ChildFormInfo(long id, String name, String surename, Date birthDate, String address, String city,
 			int personId, boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent,
-			boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority, long idFront) {
+			boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority, long idFront,
+			Date postDate) {
 		this.id = id;
 		this.name = name;
 		this.surename = surename;
@@ -42,11 +43,12 @@ public class ChildFormInfo {
 		this.parentData = parentData;
 		this.kindergartenPriority = kindergartenPriority;
 		this.idFront = idFront;
+		this.postDate = postDate;
 	}
 
 	public ChildFormInfo(long id, String name, String surename, Date birthDate, String address, String city,
 			int personId, boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent,
-			boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority) {
+			boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority, Date postDate) {
 		this.id = id;
 		this.name = name;
 		this.surename = surename;
@@ -61,6 +63,7 @@ public class ChildFormInfo {
 		this.handicapped = handicapped;
 		this.parentData = parentData;
 		this.kindergartenPriority = kindergartenPriority;
+		this.postDate = postDate;
 	}
 
 	public int getPersonId() {
