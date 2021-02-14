@@ -65,6 +65,7 @@ public class UserDataService {
 
 		userDataRepository.save(idb);
 		return ResponseEntity.ok(new MessageResponse("Duomenys atnaujinti!"));
+
 	}
 
 	public ResponseEntity<?> updatePassword(long id, String oldPassword, String newPassword) {

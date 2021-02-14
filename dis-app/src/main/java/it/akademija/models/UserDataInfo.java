@@ -8,14 +8,14 @@ public class UserDataInfo {
 	private Integer personId;
 	private String address;
 	private String city;
-	private int phoneNum;
+	private Integer phoneNum;
 	private String email;
 	private User user;
 
 	public UserDataInfo() {
 	}
 
-	public UserDataInfo(String name, String surename, Integer personId, String address, String city, int phoneNum,
+	public UserDataInfo(String name, String surename, Integer personId, String address, String city, Integer phoneNum,
 			String email) {
 		this.name = name;
 		this.surename = surename;
@@ -26,8 +26,8 @@ public class UserDataInfo {
 		this.email = email;
 	}
 
-	public UserDataInfo(long id, String name, String surename, int personId, String address, String city, int phoneNum,
-			String email) {
+	public UserDataInfo(long id, String name, String surename, Integer personId, String address, String city,
+			Integer phoneNum, String email) {
 		this.id = id;
 		this.name = name;
 		this.surename = surename;
@@ -99,11 +99,11 @@ public class UserDataInfo {
 		this.city = city;
 	}
 
-	public int getPhoneNum() {
+	public Integer getPhoneNum() {
 		return phoneNum;
 	}
 
-	public void setPhoneNum(int phoneNum) {
+	public void setPhoneNum(Integer phoneNum) {
 		this.phoneNum = phoneNum;
 	}
 
