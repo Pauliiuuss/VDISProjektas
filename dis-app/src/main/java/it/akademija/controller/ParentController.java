@@ -25,6 +25,12 @@ public class ParentController {
 	@Autowired
 	private ParentService parentService;
 
+	@GetMapping("getdata/{id}")
+	@PreAuthorize("hasRole('PARENT')")
+	public ChildForm getData(@PathVariable Integer id) {
+		return parentService.getData(id);
+	}
+
 	@GetMapping("/allgartens")
 	@PreAuthorize("hasRole('PARENT')")
 	public Collection<KindergartenInfo> getKindergartens() {

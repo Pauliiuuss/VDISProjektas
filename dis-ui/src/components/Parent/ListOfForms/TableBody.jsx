@@ -1,7 +1,22 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
+import React, { Component } from "react";
+import _ from "lodash";
+import InfoModal from "../InfoModal";
+import Modal from "react-bootstrap/Modal";
 
 class TableBody extends Component {
+  state = {
+    show: false,
+    showId: "",
+  };
+
+  showModal = (showId) => {
+    this.setState({ show: true, showId });
+  };
+
+  hideModal = () => {
+    this.setState({ show: false, showId: "" });
+  };
+
   renderCell = (item, column) => {
     if (column.content) return column.content(item);
 
@@ -16,18 +31,34 @@ class TableBody extends Component {
     const { data, columns } = this.props;
 
     return (
-      <tbody>
-        {data.map((item) => (
-          <tr key={item.id}>
-            {columns.map((column) => (
-              <td key={this.createKey(item, column)}>
-                {this.renderCell(item, column)}
+      <React.Fragment>
+        <tbody>
+          <InfoModal
+            show={this.state.show}
+            handleClose={this.hideModal}
+            showId={this.state.showId}
+          />
+          {data.map((item) => (
+            <tr key={item.id}>
+              {columns.map((column) => (
+                <td key={this.createKey(item, column)}>
+                  {this.renderCell(item, column)}
+                </td>
+              ))}
+              <td>
+                <button
+                  className="btn btn-md btn-info"
+                  onClick={() => this.showModal(item.personId)}
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  Informacija
+                </button>
               </td>
-            ))}
-            <td></td>
-          </tr>
-        ))}
-      </tbody>
+            </tr>
+          ))}
+        </tbody>
+      </React.Fragment>
     );
   }
 }

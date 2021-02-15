@@ -9,11 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import it.akademija.models.ChildForm;
 import it.akademija.models.ChildFormInfo;
+import it.akademija.models.EFormStatus;
 import it.akademija.models.Group;
 import it.akademija.models.KindergartenInfo;
 import it.akademija.models.User;
 import it.akademija.models.UserData;
 import it.akademija.repository.ChildFormRepository;
+import it.akademija.repository.FormStatusRepository;
 import it.akademija.repository.KindergartenPriorityRepository;
 import it.akademija.repository.KindergartenRepository;
 import it.akademija.repository.UserDataRepository;
@@ -22,6 +24,8 @@ import it.akademija.repository.UserRepository;
 @Service
 public class ParentService {
 
+	@Autowired
+	private FormStatusRepository formrepo;
 	@Autowired
 	private KindergartenRepository kindergartenRepository;
 	@Autowired
@@ -55,6 +59,12 @@ public class ParentService {
 				.collect(Collectors.toList());
 	}
 
+	public ChildForm getData(Integer id) {
+		if (id == null)
+			return null;
+		return childFormRepository.findByPersonId(id).get();
+	}
+
 	@Transactional
 	public void addForm(ChildFormInfo childFormInfo) {
 
@@ -63,6 +73,7 @@ public class ParentService {
 				childFormInfo.getCity(), childFormInfo.isInCity(), childFormInfo.isAdopted(),
 				childFormInfo.isThreeOrMore(), childFormInfo.isParentStudent(), childFormInfo.isHandicapped(),
 				childFormInfo.getParentData(), childFormInfo.getPostDate());
+		newForm.setFormStatus(formrepo.findByName(EFormStatus.PATEIKTAS).get());
 
 		User currentUser = userRepository.findAll().stream().filter(isdb -> isdb.getId() == childFormInfo.getIdFront())
 				.findFirst().orElse(null);
@@ -131,8 +142,8 @@ public class ParentService {
 	}
 
 	public Collection<ChildForm> getForms(Long id) {
-		childFormRepository.findById(id);
-		return null;
+		return userDataRepository.findByUser(userRepository.getOne(id)).orElse(new UserData()).getChildForms();
+//		return childFormRepository.findAllByParentData(userDataRepository.getOne(id));
 	}
 
 //

@@ -10,7 +10,14 @@ class ParentService {
     return axios.post(API_URL + "addform", body, { headers: authHeader() });
   }
 
+  getAllData(id) {
+    console.log(id);
+    return axios.get(API_URL + "getdata/" + id, { headers: authHeader() });
+  }
+
   getAllForms(id) {
+    console.log(id);
+
     return axios.get(API_URL + "getforms/" + id, { headers: authHeader() });
   }
 }
