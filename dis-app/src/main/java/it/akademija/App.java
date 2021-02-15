@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 
+import it.akademija.models.*;
+import it.akademija.repository.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -17,15 +19,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
-import it.akademija.models.ERole;
-import it.akademija.models.Group;
-import it.akademija.models.Kindergarten;
-import it.akademija.models.Role;
-import it.akademija.models.User;
-import it.akademija.repository.GroupRepository;
-import it.akademija.repository.KindergartenRepository;
-import it.akademija.repository.RoleRepository;
-import it.akademija.repository.UserRepository;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -48,6 +41,9 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 
 	@Autowired
 	private GroupRepository groupRepository;
+
+	@Autowired
+	private FormStatusRepository formStatusRepository;
 
 	@Bean
 	public Docket swaggerDocket() {
@@ -169,5 +165,23 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 				}
 			}
 		}
+
+		if(formStatusRepository.findByName(EFormStatus.PATEIKTAS).isEmpty()){
+			FormStatus pateiktasStatus = new FormStatus(EFormStatus.PATEIKTAS);
+			formStatusRepository.save(pateiktasStatus);
+		}
+		if(formStatusRepository.findByName(EFormStatus.PANAIKINTAS).isEmpty()){
+			FormStatus panaikintasStatus = new FormStatus(EFormStatus.PANAIKINTAS);
+			formStatusRepository.save(panaikintasStatus);
+		}
+		if(formStatusRepository.findByName(EFormStatus.PRIIMTAS).isEmpty()){
+			FormStatus priimtasStatus = new FormStatus(EFormStatus.PRIIMTAS);
+			formStatusRepository.save(priimtasStatus);
+		}
+		if(formStatusRepository.findByName(EFormStatus.EILEJE).isEmpty()){
+			FormStatus eilejeStatus = new FormStatus(EFormStatus.EILEJE);
+			formStatusRepository.save(eilejeStatus);
+		}
+
 	}
 }
