@@ -16,6 +16,12 @@ import RenderCheck from './RenderCheck';
 import AuthService from '../../services/auth.service';
 import CheckButton from 'react-validation/build/button';
 import Form from 'react-validation/build/form';
+import {
+  required,
+  validPersonalCode,
+  validPhoneNumber,
+  validEmail,
+} from './Validation';
 
 var today = new Date(),
   date =
@@ -24,20 +30,6 @@ var today = new Date(),
     ('0' + (today.getMonth() + 1)).slice(-2) +
     '-' +
     ('0' + today.getDate()).slice(-2);
-
-const required = (value) => {
-  if (!value) {
-    return (
-      <div
-        className="alert alert-danger text-center px-0 py-2"
-        role="alert"
-        style={{ fontSize: '9px' }}
-      >
-        Privalomas laukas turi būti užpildytas!
-      </div>
-    );
-  }
-};
 
 export default class RegistrationForm extends Component {
   state = {
@@ -48,6 +40,7 @@ export default class RegistrationForm extends Component {
     redirect: null,
     userReady: false,
     roles: '',
+    checked: false,
 
     kindergartens: [],
     kindergarten1: '',
@@ -193,6 +186,12 @@ export default class RegistrationForm extends Component {
     });
   };
 
+  handleVaikoAtstovas2filling = (e) => {
+    this.setState({
+      checked: !this.state.checked,
+    });
+  };
+
   render() {
     if (this.state.redirect) return <Redirect to={this.state.redirect} />;
     return (
@@ -236,7 +235,7 @@ export default class RegistrationForm extends Component {
                 value={this.state.kodasAtstovas1}
                 onChange={this.handleChange}
                 icon={faUser}
-                valid={[required]}
+                valid={[required, validPersonalCode]}
                 mandatory={true}
               />
               <RenderInput
@@ -266,7 +265,19 @@ export default class RegistrationForm extends Component {
                 value={this.state.telAtstovas1}
                 onChange={this.handleChange}
                 icon={faPhone}
-                valid={[required]}
+                span={
+                  <span
+                    class="input-group-text"
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: 'bold',
+                      padding: 4,
+                    }}
+                  >
+                    +370
+                  </span>
+                }
+                valid={[required, validPhoneNumber]}
                 mandatory={true}
               />
               <RenderInput
@@ -276,69 +287,110 @@ export default class RegistrationForm extends Component {
                 value={this.state.elpastasAtstovas1}
                 onChange={this.handleChange}
                 icon={faEnvelope}
-                valid={[required]}
+                valid={[required, validEmail]}
                 mandatory={true}
               />
             </div>
-            <div className="col-lg-6">
+          </div>
+          <div className="row">
+            <div className="col-lg-12">
               <h3 className="mb-4 text-center">Vaiko atstovas 2</h3>
-              <RenderInput
-                type={'text'}
-                forItem={'vardasAtstovas2'}
-                inputPlaceholder={'Vardas'}
-                value={this.state.vardasAtstovas2}
-                onChange={this.handleChange}
-                icon={faUser}
-              />
-              <RenderInput
-                type={'text'}
-                forItem={'pavardeAtstovas2'}
-                inputPlaceholder={'Pavardė'}
-                value={this.state.pavardeAtstovas2}
-                onChange={this.handleChange}
-                icon={faUser}
-              />
-              <RenderInput
-                type={'number'}
-                forItem={'kodasAtstovas2'}
-                inputPlaceholder={'Asmens kodas'}
-                value={this.state.kodasAtstovas2}
-                onChange={this.handleChange}
-                icon={faUser}
-              />
-              <RenderInput
-                type={'text'}
-                forItem={'adresasAtstovas2'}
-                inputPlaceholder={'Adresas'}
-                value={this.state.adresasAtstovas2}
-                onChange={this.handleChange}
-                icon={faHome}
-              />
-              <RenderInput
-                type={'text'}
-                forItem={'miestasAtstovas2'}
-                inputPlaceholder={'Miestas'}
-                value={this.state.miestasAtstovas2}
-                onChange={this.handleChange}
-                icon={faHome}
-              />
-              <RenderInput
-                type={'number'}
-                forItem={'telAtstovas2'}
-                inputPlaceholder={'Telefonas'}
-                value={this.state.telAtstovas2}
-                onChange={this.handleChange}
-                icon={faPhone}
-              />
-              <RenderInput
-                type={'email'}
-                forItem={'elpastasAtstovas2'}
-                inputPlaceholder={'El.paštas'}
-                value={this.state.elpastasAtstovas2}
-                onChange={this.handleChange}
-                icon={faEnvelope}
-              />
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  onChange={this.handleVaikoAtstovas2filling}
+                  checked={this.state.checked}
+                />
+                <label className="form-check-label" htmlFor="vaikoAtstovas2">
+                  Pildyti informaciją
+                </label>
+              </div>
             </div>
+            {this.state.checked ? (
+              <div>
+                <RenderInput
+                  type={'text'}
+                  forItem={'vardasAtstovas2'}
+                  inputPlaceholder={'Vardas'}
+                  value={this.state.vardasAtstovas2}
+                  onChange={this.handleChange}
+                  icon={faUser}
+                  mandatory={true}
+                />
+                <RenderInput
+                  type={'text'}
+                  forItem={'pavardeAtstovas2'}
+                  inputPlaceholder={'Pavardė'}
+                  value={this.state.pavardeAtstovas2}
+                  onChange={this.handleChange}
+                  icon={faUser}
+                  mandatory={true}
+                />
+                <RenderInput
+                  type={'number'}
+                  forItem={'kodasAtstovas2'}
+                  inputPlaceholder={'Asmens kodas'}
+                  value={this.state.kodasAtstovas2}
+                  onChange={this.handleChange}
+                  icon={faUser}
+                  valid={[required, validPersonalCode]}
+                  mandatory={true}
+                />
+                <RenderInput
+                  type={'text'}
+                  forItem={'adresasAtstovas2'}
+                  inputPlaceholder={'Adresas'}
+                  value={this.state.adresasAtstovas2}
+                  onChange={this.handleChange}
+                  icon={faHome}
+                  mandatory={true}
+                />
+                <RenderInput
+                  type={'text'}
+                  forItem={'miestasAtstovas2'}
+                  inputPlaceholder={'Miestas'}
+                  value={this.state.miestasAtstovas2}
+                  onChange={this.handleChange}
+                  icon={faHome}
+                  mandatory={true}
+                />
+                <RenderInput
+                  type={'number'}
+                  forItem={'telAtstovas2'}
+                  inputPlaceholder={'Telefonas'}
+                  value={this.state.telAtstovas2}
+                  onChange={this.handleChange}
+                  icon={faPhone}
+                  span={
+                    <span
+                      class="input-group-text"
+                      style={{
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                        padding: 4,
+                      }}
+                    >
+                      +370
+                    </span>
+                  }
+                  valid={[required, validPhoneNumber]}
+                  mandatory={true}
+                />
+                <RenderInput
+                  type={'email'}
+                  forItem={'elpastasAtstovas2'}
+                  inputPlaceholder={'El.paštas'}
+                  value={this.state.elpastasAtstovas2}
+                  onChange={this.handleChange}
+                  icon={faEnvelope}
+                  valid={[required, validEmail]}
+                  mandatory={true}
+                />
+              </div>
+            ) : null}
+          </div>
+          <div className="row">
             <div className="col-lg-6">
               <h3 className="mt-5 mb-4 text-center">Vaiko informacija</h3>
               <RenderInput
@@ -368,7 +420,7 @@ export default class RegistrationForm extends Component {
                 value={this.state.vaikoKodas}
                 onChange={this.handleChange}
                 icon={faUser}
-                valid={[required]}
+                valid={[required, validPersonalCode]}
                 mandatory={true}
               />
 

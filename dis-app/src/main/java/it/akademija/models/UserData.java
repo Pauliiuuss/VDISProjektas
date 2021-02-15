@@ -24,7 +24,7 @@ public class UserData {
 
 	private String name;
 	private String surename;
-	private Integer personId;
+	private Long personId;
 	private String address;
 	private String city;
 	private Integer phoneNum;
@@ -42,7 +42,7 @@ public class UserData {
 	public UserData() {
 	}
 
-	public UserData(String name, String surename, Integer personId, String address, String city, Integer phoneNum,
+	public UserData(String name, String surename, Long personId, String address, String city, Integer phoneNum,
 			String email) {
 		this.name = name;
 		this.surename = surename;
@@ -77,11 +77,11 @@ public class UserData {
 		this.surename = surename;
 	}
 
-	public Integer getPersonId() {
+	public Long getPersonId() {
 		return personId;
 	}
 
-	public void setPersonId(Integer personId) {
+	public void setPersonId(Long personId) {
 		this.personId = personId;
 	}
 
@@ -141,10 +141,16 @@ public class UserData {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((childForms == null) ? 0 : childForms.hashCode());
+		result = prime * result + ((city == null) ? 0 : city.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((personId == null) ? 0 : personId.hashCode());
 		result = prime * result + ((phoneNum == null) ? 0 : phoneNum.hashCode());
 		result = prime * result + ((surename == null) ? 0 : surename.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -157,15 +163,37 @@ public class UserData {
 		if (getClass() != obj.getClass())
 			return false;
 		UserData other = (UserData) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (childForms == null) {
+			if (other.childForms != null)
+				return false;
+		} else if (!childForms.equals(other.childForms))
+			return false;
+		if (city == null) {
+			if (other.city != null)
+				return false;
+		} else if (!city.equals(other.city))
+			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
+		if (id != other.id)
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (personId == null) {
+			if (other.personId != null)
+				return false;
+		} else if (!personId.equals(other.personId))
 			return false;
 		if (phoneNum == null) {
 			if (other.phoneNum != null)
@@ -176,6 +204,11 @@ public class UserData {
 			if (other.surename != null)
 				return false;
 		} else if (!surename.equals(other.surename))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}

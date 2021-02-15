@@ -5,7 +5,7 @@ public class UserDataInfo {
 	private long id;
 	private String name;
 	private String surename;
-	private Integer personId;
+	private Long personId;
 	private String address;
 	private String city;
 	private Integer phoneNum;
@@ -15,7 +15,7 @@ public class UserDataInfo {
 	public UserDataInfo() {
 	}
 
-	public UserDataInfo(String name, String surename, Integer personId, String address, String city, Integer phoneNum,
+	public UserDataInfo(String name, String surename, Long personId, String address, String city, Integer phoneNum,
 			String email) {
 		this.name = name;
 		this.surename = surename;
@@ -26,7 +26,7 @@ public class UserDataInfo {
 		this.email = email;
 	}
 
-	public UserDataInfo(long id, String name, String surename, Integer personId, String address, String city,
+	public UserDataInfo(long id, String name, String surename, Long personId, String address, String city,
 			Integer phoneNum, String email) {
 		this.id = id;
 		this.name = name;
@@ -38,8 +38,8 @@ public class UserDataInfo {
 		this.email = email;
 	}
 
-	public UserDataInfo(long id, String name, String surename, Integer personId, String address, String city,
-			int phoneNum, String email, User user) {
+	public UserDataInfo(long id, String name, String surename, Long personId, String address, String city, int phoneNum,
+			String email, User user) {
 		this.id = id;
 		this.name = name;
 		this.surename = surename;
@@ -75,11 +75,11 @@ public class UserDataInfo {
 		this.surename = surename;
 	}
 
-	public Integer getPersonId() {
+	public Long getPersonId() {
 		return personId;
 	}
 
-	public void setPersonId(Integer personId) {
+	public void setPersonId(Long personId) {
 		this.personId = personId;
 	}
 
