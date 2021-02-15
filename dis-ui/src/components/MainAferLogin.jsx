@@ -39,7 +39,7 @@ class MainAfterLogin extends Component {
       return (
         <React.Fragment>
           <Navbar />
-          <ParentMainPage />
+          <ParentMainPage currentUser={this.state.currentUser} />
         </React.Fragment>
       );
     if (this.state.roles.includes("ROLE_ADMIN"))

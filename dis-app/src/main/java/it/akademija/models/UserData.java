@@ -53,6 +53,18 @@ public class UserData {
 		this.email = email;
 	}
 
+	public UserData(long id, String name, String surename, Integer personId, String address, String city,
+			Integer phoneNum, String email) {
+		this.id = id;
+		this.name = name;
+		this.surename = surename;
+		this.personId = personId;
+		this.address = address;
+		this.city = city;
+		this.phoneNum = phoneNum;
+		this.email = email;
+	}
+
 	public long getId() {
 		return id;
 	}

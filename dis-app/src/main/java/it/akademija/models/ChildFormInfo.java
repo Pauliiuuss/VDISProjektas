@@ -193,4 +193,14 @@ public class ChildFormInfo {
 	public void setIdFront(long idFront) {
 		this.idFront = idFront;
 	}
+
+	@Override
+	public String toString() {
+		return "ChildFormInfo [id=" + id + ", name=" + name + ", surename=" + surename + ", birthDate=" + birthDate
+				+ ", address=" + address + ", personId=" + personId + ", city=" + city + ", inCity=" + inCity
+				+ ", adopted=" + adopted + ", threeOrMore=" + threeOrMore + ", parentStudent=" + parentStudent
+				+ ", handicapped=" + handicapped + ", parentData=" + parentData + ", kindergartenPriority="
+				+ kindergartenPriority + ", postDate=" + postDate + ", idFront=" + idFront + "]";
+	}
+
 }
