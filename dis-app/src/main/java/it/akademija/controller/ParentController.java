@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.akademija.models.ChildForm;
 import it.akademija.models.ChildFormInfo;
 import it.akademija.models.KindergartenInfo;
 import it.akademija.services.ParentService;
@@ -39,5 +41,11 @@ public class ParentController {
 	@PreAuthorize("hasRole('PARENT')")
 	public void addForm(@RequestBody ChildFormInfo childFormInfo) {
 		parentService.addForm(childFormInfo);
+	}
+
+	@GetMapping("/getforms/{id}")
+	@PreAuthorize("hasRole('PARENT')")
+	public Collection<ChildForm> getGroups(@PathVariable Long id) {
+		return parentService.getForms(id);
 	}
 }

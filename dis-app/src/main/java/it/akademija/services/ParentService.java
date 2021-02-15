@@ -12,6 +12,7 @@ import it.akademija.models.ChildFormInfo;
 import it.akademija.models.Group;
 import it.akademija.models.KindergartenInfo;
 import it.akademija.models.User;
+import it.akademija.models.UserData;
 import it.akademija.repository.ChildFormRepository;
 import it.akademija.repository.KindergartenPriorityRepository;
 import it.akademija.repository.KindergartenRepository;
@@ -67,21 +68,25 @@ public class ParentService {
 				.findFirst().orElse(null);
 		if (currentUser != null && currentUser.getUserData() == null) {
 			newForm.getParentData().setUser(currentUser);
+			userDataRepository.save(childFormInfo.getParentData());
 		} else if (currentUser != null && currentUser.getUserData() != null) {
-			currentUser.getUserData().setName(newForm.getParentData().getName());
-			currentUser.getUserData().setSurename(newForm.getParentData().getSurename());
-			currentUser.getUserData().setPersonId(newForm.getParentData().getPersonId());
-			currentUser.getUserData().setName(newForm.getParentData().getName());
-			currentUser.getUserData().setAddress(newForm.getParentData().getAddress());
-			currentUser.getUserData().setCity(newForm.getParentData().getCity());
-			currentUser.getUserData().setPhoneNum(newForm.getParentData().getPhoneNum());
-			currentUser.getUserData().setEmail(newForm.getParentData().getEmail());
+
+			UserData newData = currentUser.getUserData();
+
+			newData.setName(newForm.getParentData().getName());
+			newData.setSurename(newForm.getParentData().getSurename());
+			newData.setPersonId(newForm.getParentData().getPersonId());
+			newData.setName(newForm.getParentData().getName());
+			newData.setAddress(newForm.getParentData().getAddress());
+			newData.setCity(newForm.getParentData().getCity());
+			newData.setPhoneNum(newForm.getParentData().getPhoneNum());
+			newData.setEmail(newForm.getParentData().getEmail());
+			userDataRepository.save(newData);
+			newForm.setParentData(newData);
 		}
-		userDataRepository.save(childFormInfo.getParentData());
 		childFormRepository.save(newForm);
 		childFormInfo.getKindergartenPriority().setChildForm(newForm);
 		kindergartenPriorityRepository.save(childFormInfo.getKindergartenPriority());
-
 //        UserData newUserData = new UserData(
 //                childFormInfo.getParentData().getName(),
 //                childFormInfo.getParentData().getSurename(),
@@ -123,6 +128,11 @@ public class ParentService {
 //        childFormRepository.save(newForm);
 //        userDataRepository.save(newUserData);
 //        kindergartenPriorityRepository.save(newKinder);
+	}
+
+	public Collection<ChildForm> getForms(Long id) {
+		childFormRepository.findById(id);
+		return null;
 	}
 
 //

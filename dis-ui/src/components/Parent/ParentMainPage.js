@@ -1,10 +1,18 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import RegisteredForms from './ListOfForms/RegisteredForms';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import RegisteredForms from "./ListOfForms/RegisteredForms";
+import ParentService from "../../services/parent.service";
 
 export default class ParentMainPage extends Component {
   state = {
     forms: [],
+  };
+
+  componentDidMount = () => {
+    console.log(this.props.currentUser);
+    ParentService.getAllForms(this.props.currentUser.id).then((response) => {
+      console.log(response.data);
+    });
   };
 
   render() {
