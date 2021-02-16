@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/dis-app/static/css/main.6a88bed0.chunk.css",
+    "main.js": "/dis-app/static/js/main.6e3907ac.chunk.js",
+    "main.js.map": "/dis-app/static/js/main.6e3907ac.chunk.js.map",
+    "runtime-main.js": "/dis-app/static/js/runtime-main.1f242d6f.js",
+    "runtime-main.js.map": "/dis-app/static/js/runtime-main.1f242d6f.js.map",
+    "static/css/2.2358bba0.chunk.css": "/dis-app/static/css/2.2358bba0.chunk.css",
+    "static/js/2.e1563cf7.chunk.js": "/dis-app/static/js/2.e1563cf7.chunk.js",
+    "static/js/2.e1563cf7.chunk.js.map": "/dis-app/static/js/2.e1563cf7.chunk.js.map",
+    "index.html": "/dis-app/index.html",
+    "precache-manifest.e1c8d39dd0b1db0170c4f09208ef24d1.js": "/dis-app/precache-manifest.e1c8d39dd0b1db0170c4f09208ef24d1.js",
+    "service-worker.js": "/dis-app/service-worker.js",
+    "static/css/2.2358bba0.chunk.css.map": "/dis-app/static/css/2.2358bba0.chunk.css.map",
+    "static/css/main.6a88bed0.chunk.css.map": "/dis-app/static/css/main.6a88bed0.chunk.css.map",
+    "static/js/2.e1563cf7.chunk.js.LICENSE.txt": "/dis-app/static/js/2.e1563cf7.chunk.js.LICENSE.txt",
+    "static/media/font-awesome.css": "/dis-app/static/media/fontawesome-webfont.fee66e71.woff",
+    "static/media/logo.png": "/dis-app/static/media/logo.86652faf.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1f242d6f.js",
+    "static/css/2.2358bba0.chunk.css",
+    "static/js/2.e1563cf7.chunk.js",
+    "static/css/main.6a88bed0.chunk.css",
+    "static/js/main.6e3907ac.chunk.js"
+  ]
+}
