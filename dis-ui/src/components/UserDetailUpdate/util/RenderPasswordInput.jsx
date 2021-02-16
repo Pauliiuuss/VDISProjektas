@@ -1,5 +1,5 @@
-import React from "react";
-import { Component } from "react";
+import React from 'react';
+import { Component } from 'react';
 
 class RenderPasswordInput extends Component {
   state = {};
@@ -7,7 +7,7 @@ class RenderPasswordInput extends Component {
     const { inputPlaceholder, type, forItem, value, onChange } = this.props;
     return (
       <div className="form-inline mb-3">
-        <div style={{ width: "500px" }} className="input-group">
+        <div style={{ width: '500px' }} className="input-group">
           <input
             type={type}
             id={inputPlaceholder}
@@ -16,7 +16,6 @@ class RenderPasswordInput extends Component {
             placeholder={inputPlaceholder}
             value={value}
             onChange={onChange}
-
             // required="required"
           />
         </div>

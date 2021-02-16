@@ -27,7 +27,7 @@ public class UserData {
 	private Long personId;
 	private String address;
 	private String city;
-	private Integer phoneNum;
+	private Long phoneNum;
 	private String email;
 
 	@OneToOne(fetch = FetchType.EAGER)
@@ -42,7 +42,7 @@ public class UserData {
 	public UserData() {
 	}
 
-	public UserData(String name, String surename, Long personId, String address, String city, Integer phoneNum,
+	public UserData(String name, String surename, Long personId, String address, String city, Long phoneNum,
 			String email) {
 		this.name = name;
 		this.surename = surename;
@@ -53,7 +53,7 @@ public class UserData {
 		this.email = email;
 	}
 
-	public UserData(long id, String name, String surename, Long personId, String address, String city, Integer phoneNum,
+	public UserData(long id, String name, String surename, Long personId, String address, String city, Long phoneNum,
 			String email) {
 		this.id = id;
 		this.name = name;
@@ -113,11 +113,11 @@ public class UserData {
 		this.city = city;
 	}
 
-	public Integer getPhoneNum() {
+	public Long getPhoneNum() {
 		return phoneNum;
 	}
 
-	public void setPhoneNum(Integer phoneNum) {
+	public void setPhoneNum(Long phoneNum) {
 		this.phoneNum = phoneNum;
 	}
 

@@ -10,7 +10,7 @@ const Details = ({ userData, onSubmit, message, successful }) => {
 
   return (
     <div style={{ textAlign: 'center', marginTop: '100px' }}>
-      <h2 className={'m-3 text-secondary'}>Mano domenys</h2>
+      <h2 className={'m-3 text-secondary'}>Mano duomenys</h2>
       <form onSubmit={(e) => onSubmit(e, name, surname, phone, email)}>
         <div className="form-group">
           <RenderInput
@@ -30,16 +30,17 @@ const Details = ({ userData, onSubmit, message, successful }) => {
             icon={faUser}
           />
           <RenderInput
-            inputPlaceholder={'Tel'}
+            inputPlaceholder={'+370'}
             type={'number'}
             forItem={phone}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             icon={faPhone}
+            phoneLength={11}
           />
           <RenderInput
             inputPlaceholder={'El.paštas'}
-            type={'email'}
+            type={'text'}
             forItem={email}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
