@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import it.akademija.models.Group;
 import it.akademija.models.KindergartenInfo;
 import it.akademija.models.User;
 import it.akademija.models.UserData;
+import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.ChildFormRepository;
 import it.akademija.repository.KindergartenPriorityRepository;
 import it.akademija.repository.KindergartenRepository;
@@ -56,7 +58,11 @@ public class ParentService {
 	}
 
 	@Transactional
-	public void addForm(ChildFormInfo childFormInfo) {
+	public ResponseEntity<?> addForm(ChildFormInfo childFormInfo) {
+		if (childFormRepository.existsByPersonId(childFormInfo.getPersonId())) {
+			return ResponseEntity.badRequest()
+					.body(new MessageResponse("Vaiko su tokiu asmens kodu prašymas jau yra registruotas!"));
+		}
 
 		ChildForm newForm = new ChildForm(childFormInfo.getPersonId(), childFormInfo.getName(),
 				childFormInfo.getSurename(), childFormInfo.getBirthDate(), childFormInfo.getAddress(),
@@ -87,6 +93,9 @@ public class ParentService {
 		childFormRepository.save(newForm);
 		childFormInfo.getKindergartenPriority().setChildForm(newForm);
 		kindergartenPriorityRepository.save(childFormInfo.getKindergartenPriority());
+
+		return ResponseEntity.ok(new MessageResponse("Prašymas užregistruotas!"));
+
 //        UserData newUserData = new UserData(
 //                childFormInfo.getParentData().getName(),
 //                childFormInfo.getParentData().getSurename(),
@@ -128,6 +137,7 @@ public class ParentService {
 //        childFormRepository.save(newForm);
 //        userDataRepository.save(newUserData);
 //        kindergartenPriorityRepository.save(newKinder);
+
 	}
 
 	public Collection<ChildForm> getForms(Long id) {

@@ -3,6 +3,7 @@ package it.akademija.controller;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,8 +40,8 @@ public class ParentController {
 
 	@PostMapping("/addform")
 	@PreAuthorize("hasRole('PARENT')")
-	public void addForm(@RequestBody ChildFormInfo childFormInfo) {
-		parentService.addForm(childFormInfo);
+	public ResponseEntity<?> addForm(@RequestBody ChildFormInfo childFormInfo) {
+		return parentService.addForm(childFormInfo);
 	}
 
 	@GetMapping("/getforms/{id}")

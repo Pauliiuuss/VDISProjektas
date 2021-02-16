@@ -8,4 +8,6 @@ public interface ChildFormRepository extends JpaRepository<ChildForm, Long> {
 
 //	Optional<Collection<ChildForm>> findAllByUser(User user);
 
+	boolean existsByPersonId(Long personId);
+
 }

@@ -15,7 +15,8 @@ export const required = (value) => {
 };
 
 export const validPersonalCode = (value) => {
-  if (value.length !== 11) {
+  var stringValue = value.toString();
+  if (stringValue.length !== 11) {
     return (
       <div
         className="alert alert-danger text-center px-0 py-2"
@@ -29,14 +30,15 @@ export const validPersonalCode = (value) => {
 };
 
 export const validPhoneNumber = (value) => {
-  if (value.length !== 8) {
+  var stringValue = value.toString();
+  if (stringValue.length !== 8) {
     return (
       <div
         className="alert alert-danger text-center px-0 py-2"
         role="alert"
         style={{ fontSize: '9px' }}
       >
-        Neteisingas telefono ilgis!
+        Neteisingas telefono numerio ilgis!
       </div>
     );
   }

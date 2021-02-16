@@ -31,7 +31,7 @@ class RenderInput extends Component {
             ''
           )}
         </label>
-        <div className="input-group">
+        <div className="input-group ">
           <div className="input-group-prepend">
             {span ? (
               span
