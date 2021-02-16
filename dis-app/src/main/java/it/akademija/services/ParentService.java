@@ -68,7 +68,11 @@ public class ParentService {
 	}
 
 	@Transactional
-	public void addForm(ChildFormInfo childFormInfo) {
+	public ResponseEntity<?> addForm(ChildFormInfo childFormInfo) {
+		if (childFormRepository.existsByPersonId(childFormInfo.getPersonId())) {
+			return ResponseEntity.badRequest()
+					.body(new MessageResponse("Vaiko su tokiu asmens kodu prašymas jau yra registruotas!"));
+		}
 
 		ChildForm newForm = new ChildForm(childFormInfo.getPersonId(), childFormInfo.getName(),
 				childFormInfo.getSurename(), childFormInfo.getBirthDate(), childFormInfo.getAddress(),
@@ -100,6 +104,9 @@ public class ParentService {
 		childFormRepository.save(newForm);
 		childFormInfo.getKindergartenPriority().setChildForm(newForm);
 		kindergartenPriorityRepository.save(childFormInfo.getKindergartenPriority());
+
+		return ResponseEntity.ok(new MessageResponse("Prašymas užregistruotas!"));
+
 //        UserData newUserData = new UserData(
 //                childFormInfo.getParentData().getName(),
 //                childFormInfo.getParentData().getSurename(),
@@ -141,6 +148,7 @@ public class ParentService {
 //        childFormRepository.save(newForm);
 //        userDataRepository.save(newUserData);
 //        kindergartenPriorityRepository.save(newKinder);
+
 	}
 
 	public Collection<ChildForm> getForms(Long id) {

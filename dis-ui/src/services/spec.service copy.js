@@ -9,6 +9,10 @@ class SpecService {
     return axios.post(API_URL + 'create', body, { headers: authHeader() });
   }
 
+  createGroup(id, body) {
+    console.log(id);
+  }
+
   amend(id, body) {
     return axios.post(API_URL + 'amend/' + id, body, { headers: authHeader() });
   }

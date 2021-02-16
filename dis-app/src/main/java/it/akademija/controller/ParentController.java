@@ -47,8 +47,8 @@ public class ParentController {
 
 	@PostMapping("/addform")
 	@PreAuthorize("hasRole('PARENT')")
-	public void addForm(@RequestBody ChildFormInfo childFormInfo) {
-		parentService.addForm(childFormInfo);
+	public ResponseEntity<?> addForm(@RequestBody ChildFormInfo childFormInfo) {
+		return parentService.addForm(childFormInfo);
 	}
 
 	@GetMapping("/getforms/{id}")

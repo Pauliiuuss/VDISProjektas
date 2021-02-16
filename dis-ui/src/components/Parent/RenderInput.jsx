@@ -17,6 +17,7 @@ class RenderInput extends Component {
       valid,
       mandatory,
       disabled,
+      span,
     } = this.props;
 
     return (
@@ -31,11 +32,15 @@ class RenderInput extends Component {
             ""
           )}
         </label>
-        <div className="input-group">
+        <div className="input-group ">
           <div className="input-group-prepend">
-            <span className="input-group-text">
-              <FontAwesomeIcon icon={icon} />
-            </span>
+            {span ? (
+              span
+            ) : (
+              <span className="input-group-text px-auto">
+                <FontAwesomeIcon icon={icon} />
+              </span>
+            )}
           </div>
           <Input
             type={type}

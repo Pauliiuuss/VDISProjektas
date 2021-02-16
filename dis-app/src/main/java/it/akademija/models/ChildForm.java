@@ -24,7 +24,7 @@ public class ChildForm {
 	private String address;
 	@NotBlank
 	private String city;
-	private int personId;
+	private Long personId;
 
 	private boolean inCity;
 	private boolean adopted;
@@ -50,7 +50,7 @@ public class ChildForm {
 	public ChildForm() {
 	}
 
-	public ChildForm(int personId, String name, String surename, Date birthDate, String address, String city,
+	public ChildForm(Long personId, String name, String surename, Date birthDate, String address, String city,
 			boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped,
 			UserData parentData, Date postDate) {
 		this.name = name;
@@ -68,11 +68,11 @@ public class ChildForm {
 		this.postDate = postDate;
 	}
 
-	public int getPersonId() {
+	public Long getPersonId() {
 		return personId;
 	}
 
-	public void setPersonId(int personId) {
+	public void setPersonId(Long personId) {
 		this.personId = personId;
 	}
 
