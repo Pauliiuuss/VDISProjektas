@@ -29,7 +29,7 @@ public class ParentController {
 
 	@GetMapping("getdata/{id}")
 	@PreAuthorize("hasRole('PARENT')")
-	public ChildForm getData(@PathVariable Integer id) {
+	public ChildForm getData(@PathVariable Long id) {
 		return parentService.getData(id);
 	}
 

@@ -61,7 +61,7 @@ public class ParentService {
 				.collect(Collectors.toList());
 	}
 
-	public ChildForm getData(Integer id) {
+	public ChildForm getData(Long id) {
 		if (id == null)
 			return null;
 		return childFormRepository.findByPersonId(id).get();

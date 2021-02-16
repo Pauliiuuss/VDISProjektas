@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component } from "react";
 import ParentService from "../../services/parent.service";
 import CheckButton from "react-validation/build/button";
 import {
@@ -85,7 +85,6 @@ class RenderInfoForm extends Component {
     SpecService.getKindergartens()
       .then((result) => {
         this.setState({ kindergartens: result.data, userData });
-        console.log(result.data);
       })
       .catch((err) => {
         console.log(err);
@@ -99,10 +98,8 @@ class RenderInfoForm extends Component {
     if (showId !== "")
       ParentService.getAllData(showId).then(
         (response) => {
-          console.log(response.data);
           const data = response.data;
           this.setState({ data });
-          console.log(this.state);
         },
         (error) => {
           console.log(error);
@@ -123,6 +120,55 @@ class RenderInfoForm extends Component {
 
   confirmForm = (e) => {
     e.preventDefault();
+    if (
+      this.state.data.name === "" ||
+      this.state.data.surename === "" ||
+      this.state.data.address === "" ||
+      this.state.data.city === "" ||
+      this.state.data.parentData.name === "" ||
+      this.state.data.parentData.surename === "" ||
+      this.state.data.parentData.address === "" ||
+      this.state.data.parentData.city === "" ||
+      this.state.data.parentData.email === ""
+    ) {
+      this.setState({
+        successful: false,
+        message: "Privalomi laukai negali būti tušti!",
+      });
+      return;
+    }
+
+    if (
+      this.state.data.personId.toString().length !== 11 ||
+      this.state.data.parentData.personId.toString().length !== 11
+    ) {
+      this.setState({
+        successful: false,
+        message: "Neteisingas asmens kodo ilgis!",
+      });
+      return;
+    }
+
+    if (this.state.data.parentData.phoneNum.toString().length !== 8) {
+      this.setState({
+        successful: false,
+        message: "Neteisingas telefono numerio ilgis!",
+      });
+      return;
+    }
+
+    if (
+      this.state.data.kindergartenPriority.kindergartenOne ===
+      "Pasirinkti darželį iš sąrašo..."
+    ) {
+      this.setState({
+        successful: false,
+        message:
+          "Privaloma pasirinkti bent vieną darželio prioritetą(1 prioritetas)!",
+      });
+      return;
+    }
+
     console.log("Confirm form");
     ParentService.updateForm(this.state.data.id, {
       ...this.state.data,
@@ -164,11 +210,10 @@ class RenderInfoForm extends Component {
         },
       },
     });
-    console.log(this.state.data.kindergartenPriority);
   };
 
   handleSelectChange = (e) => {
-    const value = this.state[e.target.name];
+    const value = this.state.data[e.target.name];
     console.log(value);
     this.setState({
       data: {
@@ -201,8 +246,6 @@ class RenderInfoForm extends Component {
   };
 
   render() {
-    console.log(this.state.data);
-
     const { disabled } = this.state;
     return (
       <Form
