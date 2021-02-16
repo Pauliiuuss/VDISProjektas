@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class RenderCheck extends Component {
   state = {};
   render() {
-    const { onChange, forItem, checked, label } = this.props;
+    const { onChange, forItem, checked, label, disabled } = this.props;
     return (
       <div className="form-check">
         <input
@@ -13,6 +13,7 @@ class RenderCheck extends Component {
           name={forItem}
           checked={checked}
           onChange={onChange}
+          disabled={disabled}
         />
         <label className="form-check-label" htmlFor="defaultCheck1">
           {label}

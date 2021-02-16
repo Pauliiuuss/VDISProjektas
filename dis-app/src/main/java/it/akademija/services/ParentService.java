@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import it.akademija.models.Group;
 import it.akademija.models.KindergartenInfo;
 import it.akademija.models.User;
 import it.akademija.models.UserData;
+import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.ChildFormRepository;
 import it.akademija.repository.FormStatusRepository;
 import it.akademija.repository.KindergartenPriorityRepository;
@@ -144,6 +146,53 @@ public class ParentService {
 	public Collection<ChildForm> getForms(Long id) {
 		return userDataRepository.findByUser(userRepository.getOne(id)).orElse(new UserData()).getChildForms();
 //		return childFormRepository.findAllByParentData(userDataRepository.getOne(id));
+	}
+
+	public ResponseEntity<?> updateForm(Long id, ChildFormInfo childFormInfo) {
+		if (childFormInfo.getKindergartenPriority().getKindergartenOne() == null
+				|| childFormInfo.getKindergartenPriority().getKindergartenOne().equals("") || childFormInfo
+						.getKindergartenPriority().getKindergartenOne().equals("Pasirinkti darželį iš sąrašo..."))
+			return ResponseEntity.badRequest().body(new MessageResponse("Privaloma pasirinkti pirma prioriteta!"));
+
+		System.out.println("++++++++++++++++++++++" + id + "form is: " + childFormInfo);
+
+		ChildForm newForm = childFormRepository.getOne(id);
+
+		newForm.setPersonId(childFormInfo.getPersonId());
+		newForm.setName(childFormInfo.getName());
+		newForm.setSurename(childFormInfo.getSurename());
+		newForm.setBirthDate(childFormInfo.getBirthDate());
+		newForm.setAddress(childFormInfo.getAddress());
+		newForm.setCity(childFormInfo.getCity());
+		newForm.setInCity(childFormInfo.isInCity());
+		newForm.setAdopted(childFormInfo.isAdopted());
+		newForm.setThreeOrMore(childFormInfo.isThreeOrMore());
+		newForm.setParentStudent(childFormInfo.isParentStudent());
+		newForm.setHandicapped(childFormInfo.isHandicapped());
+		newForm.setParentData(childFormInfo.getParentData());
+		newForm.setPostDate(childFormInfo.getPostDate());
+		newForm.setFormStatus(formrepo.findByName(EFormStatus.PATEIKTAS).get());
+
+		User currentUser = userRepository.getOne(childFormInfo.getIdFront());
+
+		UserData newData = currentUser.getUserData();
+
+		newData.setName(newForm.getParentData().getName());
+		newData.setSurename(newForm.getParentData().getSurename());
+		newData.setPersonId(newForm.getParentData().getPersonId());
+		newData.setName(newForm.getParentData().getName());
+		newData.setAddress(newForm.getParentData().getAddress());
+		newData.setCity(newForm.getParentData().getCity());
+		newData.setPhoneNum(newForm.getParentData().getPhoneNum());
+		newData.setEmail(newForm.getParentData().getEmail());
+		userDataRepository.save(newData);
+		newForm.setParentData(newData);
+
+		childFormRepository.save(newForm);
+		childFormInfo.getKindergartenPriority().setChildForm(newForm);
+		kindergartenPriorityRepository.save(childFormInfo.getKindergartenPriority());
+
+		return ResponseEntity.ok(new MessageResponse("Forma užregistruota!"));
 	}
 
 //

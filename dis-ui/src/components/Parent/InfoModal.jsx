@@ -3,14 +3,18 @@ import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ParenService from "../../services/parent.service";
+import RenderInfoForm from "./RenderInfoForm";
 
 const InfoModal = ({ handleClose, show, children, showId }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
+  const [disabled, setDisabled] = useState(false);
+  const [data, setData] = useState("");
 
   useEffect(() => {
     if (showId !== "")
       ParenService.getAllData(showId).then(
         (response) => {
+          setData(response.data);
           console.log(response);
         },
         (error) => {
@@ -23,20 +27,22 @@ const InfoModal = ({ handleClose, show, children, showId }) => {
 
   return (
     <div className={showHideClassName}>
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button onClick={handleClose} class="close">
+      <div className="modal-dialog modal-dialog-scrollable">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Vaiko forma</h5>
+            <button onClick={handleClose} className="close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
+          <div className="modal-body">
+            {showId && (
+              <RenderInfoForm disabled={disabled} showId={showId} data={data} />
+            )}
           </div>
-          <div class="modal-footer">
-            <button onClick={handleClose} class="btn btn-secondary">
-              Close
+          <div className="modal-footer">
+            <button onClick={handleClose} className="btn btn-secondary">
+              Uždaryti
             </button>
           </div>
         </div>

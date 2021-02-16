@@ -10,7 +10,7 @@ class TableBody extends Component {
   };
 
   showModal = (showId) => {
-    this.setState({ show: true, showId });
+    this.setState({ showId, show: true });
   };
 
   hideModal = () => {
@@ -32,12 +32,12 @@ class TableBody extends Component {
 
     return (
       <React.Fragment>
+        <InfoModal
+          showId={this.state.showId}
+          show={this.state.show}
+          handleClose={this.hideModal}
+        />
         <tbody>
-          <InfoModal
-            show={this.state.show}
-            handleClose={this.hideModal}
-            showId={this.state.showId}
-          />
           {data.map((item) => (
             <tr key={item.id}>
               {columns.map((column) => (
@@ -45,7 +45,7 @@ class TableBody extends Component {
                   {this.renderCell(item, column)}
                 </td>
               ))}
-              <td>
+              <td style={{ width: "100px" }}>
                 <button
                   className="btn btn-md btn-info"
                   onClick={() => this.showModal(item.personId)}

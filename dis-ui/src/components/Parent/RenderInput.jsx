@@ -1,7 +1,7 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
-import { Component } from 'react';
-import Input from 'react-validation/build/input';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
+import { Component } from "react";
+import Input from "react-validation/build/input";
 
 class RenderInput extends Component {
   state = {};
@@ -16,18 +16,19 @@ class RenderInput extends Component {
       icon,
       valid,
       mandatory,
+      disabled,
     } = this.props;
 
     return (
       <div className="form-inline mb-3">
         <label className="my-auto col-4" htmlFor={forItem}>
-          {inputPlaceholder} :{' '}
+          {inputPlaceholder} :{" "}
           {mandatory ? (
             <span className="text-danger" style={{ fontSize: 20 }}>
               *
             </span>
           ) : (
-            ''
+            ""
           )}
         </label>
         <div className="input-group">
@@ -45,6 +46,7 @@ class RenderInput extends Component {
             value={value}
             onChange={onChange}
             validations={valid}
+            disabled={disabled}
           />
         </div>
       </div>
