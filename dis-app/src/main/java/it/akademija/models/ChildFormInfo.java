@@ -17,6 +17,7 @@ public class ChildFormInfo {
 	private boolean parentStudent;
 	private boolean handicapped;
 	private UserData parentData;
+	private SecondParent secondParentData;
 	private KindergartenPriority kindergartenPriority;
 	private Date postDate;
 	private long idFront;
@@ -24,31 +25,10 @@ public class ChildFormInfo {
 	public ChildFormInfo() {
 	}
 
-	public ChildFormInfo(long id, String name, String surename, Date birthDate, String address, String city,
-			Long personId, boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent,
-			boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority, long idFront,
-			Date postDate) {
-		this.id = id;
-		this.name = name;
-		this.surename = surename;
-		this.birthDate = birthDate;
-		this.address = address;
-		this.city = city;
-		this.personId = personId;
-		this.inCity = inCity;
-		this.adopted = adopted;
-		this.threeOrMore = threeOrMore;
-		this.parentStudent = parentStudent;
-		this.handicapped = handicapped;
-		this.parentData = parentData;
-		this.kindergartenPriority = kindergartenPriority;
-		this.idFront = idFront;
-		this.postDate = postDate;
-	}
 
 	public ChildFormInfo(long id, String name, String surename, Date birthDate, String address, String city,
 			Long personId, boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent,
-			boolean handicapped, UserData parentData, KindergartenPriority kindergartenPriority, Date postDate) {
+			boolean handicapped, UserData parentData, SecondParent secondParentData, KindergartenPriority kindergartenPriority, Date postDate) {
 		this.id = id;
 		this.name = name;
 		this.surename = surename;
@@ -62,6 +42,7 @@ public class ChildFormInfo {
 		this.parentStudent = parentStudent;
 		this.handicapped = handicapped;
 		this.parentData = parentData;
+		this.secondParentData = secondParentData;
 		this.kindergartenPriority = kindergartenPriority;
 		this.postDate = postDate;
 	}
@@ -192,6 +173,14 @@ public class ChildFormInfo {
 
 	public void setIdFront(long idFront) {
 		this.idFront = idFront;
+	}
+
+	public SecondParent getSecondParentData() {
+		return secondParentData;
+	}
+
+	public void setSecondParentData(SecondParent secondParentData) {
+		this.secondParentData = secondParentData;
 	}
 
 	@Override
