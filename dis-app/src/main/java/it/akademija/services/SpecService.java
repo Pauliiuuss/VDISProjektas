@@ -115,8 +115,9 @@ public class SpecService {
 		}
 
 		if (group.getName().equals(originalGroup.getName()) && group.getAgeFrom() == originalGroup.getAgeFrom()
-				&& group.getAgeTo() == originalGroup.getAgeTo())
+				&& group.getAgeTo() == originalGroup.getAgeTo() && group.getCapasity() == originalGroup.getCapasity())
 			return ResponseEntity.ok(new MessageResponse("Jokių pakeitimų neišsaugota"));
+
 
 		groupRepository.save(group);
 

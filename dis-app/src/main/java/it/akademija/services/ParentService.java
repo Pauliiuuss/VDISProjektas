@@ -3,25 +3,14 @@ package it.akademija.services;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import it.akademija.models.*;
+import it.akademija.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.akademija.models.ChildForm;
-import it.akademija.models.ChildFormInfo;
-import it.akademija.models.EFormStatus;
-import it.akademija.models.Group;
-import it.akademija.models.KindergartenInfo;
-import it.akademija.models.User;
-import it.akademija.models.UserData;
 import it.akademija.payload.response.MessageResponse;
-import it.akademija.repository.ChildFormRepository;
-import it.akademija.repository.FormStatusRepository;
-import it.akademija.repository.KindergartenPriorityRepository;
-import it.akademija.repository.KindergartenRepository;
-import it.akademija.repository.UserDataRepository;
-import it.akademija.repository.UserRepository;
 
 @Service
 public class ParentService {
@@ -38,11 +27,10 @@ public class ParentService {
 	private UserRepository userRepository;
 	@Autowired
 	private KindergartenPriorityRepository kindergartenPriorityRepository;
+	@Autowired
+	private SecondParentRepository secondParentRepository;
 
-//    private ChildForm newForm;
-//    private UserData newData;
-//    private KindergartenPriority newKinder;
-//
+
 	@Transactional(readOnly = true)
 	public Collection<KindergartenInfo> getKindergartens() {
 		return kindergartenRepository.findAll().stream()
@@ -56,7 +44,7 @@ public class ParentService {
 		return childFormRepository.findAll().stream()
 				.map(isdb -> new ChildFormInfo(isdb.getId(), isdb.getName(), isdb.getSurename(), isdb.getBirthDate(),
 						isdb.getAddress(), isdb.getCity(), isdb.getPersonId(), isdb.isInCity(), isdb.isAdopted(),
-						isdb.isThreeOrMore(), isdb.isParentStudent(), isdb.isHandicapped(), isdb.getParentData(),
+						isdb.isThreeOrMore(), isdb.isParentStudent(), isdb.isHandicapped(), isdb.getParentData(), isdb.getSecondParentData(),
 						isdb.getKindergartenPriority(), isdb.getPostDate()))
 				.collect(Collectors.toList());
 	}
@@ -78,7 +66,7 @@ public class ParentService {
 				childFormInfo.getSurename(), childFormInfo.getBirthDate(), childFormInfo.getAddress(),
 				childFormInfo.getCity(), childFormInfo.isInCity(), childFormInfo.isAdopted(),
 				childFormInfo.isThreeOrMore(), childFormInfo.isParentStudent(), childFormInfo.isHandicapped(),
-				childFormInfo.getParentData(), childFormInfo.getPostDate());
+				childFormInfo.getParentData(), childFormInfo.getSecondParentData(), childFormInfo.getPostDate());
 		newForm.setFormStatus(formrepo.findByName(EFormStatus.PATEIKTAS).get());
 
 		User currentUser = userRepository.findAll().stream().filter(isdb -> isdb.getId() == childFormInfo.getIdFront())
@@ -101,53 +89,31 @@ public class ParentService {
 			userDataRepository.save(newData);
 			newForm.setParentData(newData);
 		}
+
+		if(childFormInfo.getSecondParentData().getPersonId() != null){
+			if(secondParentRepository.existsByPersonId(childFormInfo.getSecondParentData().getPersonId())){
+				SecondParent secondParentUpdate = secondParentRepository.findByPersonId(childFormInfo.getSecondParentData().getPersonId()).get();
+				secondParentUpdate.setName(childFormInfo.getSecondParentData().getName());
+				secondParentUpdate.setSurename(childFormInfo.getSecondParentData().getSurename());
+				secondParentUpdate.setPersonId(childFormInfo.getSecondParentData().getPersonId());
+				secondParentUpdate.setAddress(childFormInfo.getSecondParentData().getAddress());
+				secondParentUpdate.setCity(childFormInfo.getSecondParentData().getCity());
+				secondParentUpdate.setEmail(childFormInfo.getSecondParentData().getEmail());
+				secondParentUpdate.setPhoneNum(childFormInfo.getSecondParentData().getPhoneNum());
+				newForm.setSecondParentData(secondParentUpdate);
+			} else {
+				secondParentRepository.save(childFormInfo.getSecondParentData());
+				newForm.setSecondParentData(childFormInfo.getSecondParentData());
+			}
+		} else {
+			newForm.setSecondParentData(null);
+		}
+
 		childFormRepository.save(newForm);
 		childFormInfo.getKindergartenPriority().setChildForm(newForm);
 		kindergartenPriorityRepository.save(childFormInfo.getKindergartenPriority());
 
 		return ResponseEntity.ok(new MessageResponse("Prašymas užregistruotas!"));
-
-//        UserData newUserData = new UserData(
-//                childFormInfo.getParentData().getName(),
-//                childFormInfo.getParentData().getSurename(),
-//                childFormInfo.getParentData().getPersonId(),
-//                childFormInfo.getParentData().getAddress(),
-//                childFormInfo.getParentData().getCity(),
-//                childFormInfo.getParentData().getPhoneNum(),
-//                childFormInfo.getParentData().getEmail());
-//
-//        ChildForm newForm = new ChildForm(
-//                childFormInfo.getName(),
-//                childFormInfo.getSurename(),
-//                childFormInfo.getBirthDate(),
-//                childFormInfo.getAddress(),
-//                childFormInfo.getCity(),
-//                childFormInfo.isInCity(),
-//                childFormInfo.isAdopted(),
-//                childFormInfo.isThreeOrMore(),
-//                childFormInfo.isParentStudent(),
-//                childFormInfo.isHandicapped());
-//
-//        KindergartenPriority newKinder = new KindergartenPriority(
-//                childFormInfo.getKindergartenPriority().getKindergartenOne(),
-//                childFormInfo.getKindergartenPriority().getKindergartenTwo(),
-//                childFormInfo.getKindergartenPriority().getKindergartenThree(),
-//                childFormInfo.getKindergartenPriority().getKindergartenFour(),
-//                childFormInfo.getKindergartenPriority().getKindergartenFive());
-//
-//        User currentUser = userRepository.findAll().stream()
-//                .filter(isdb -> isdb.getId() == childFormInfo.getIdFront())
-//                .findFirst()
-//                .orElse(null);
-//
-//        newForm.setKindergartenPriority(newKinder);
-//        newForm.setParentData(newUserData);
-//        newUserData.setUser(currentUser);
-//        newKinder.setChildForm(newForm);
-//
-//        childFormRepository.save(newForm);
-//        userDataRepository.save(newUserData);
-//        kindergartenPriorityRepository.save(newKinder);
 
 	}
 
@@ -195,6 +161,26 @@ public class ParentService {
 		newData.setEmail(newForm.getParentData().getEmail());
 		userDataRepository.save(newData);
 		newForm.setParentData(newData);
+
+		if(childFormInfo.getSecondParentData().getPersonId() != null && newForm.getSecondParentData() != null){
+			SecondParent newSecondParent = newForm.getSecondParentData();
+
+			newSecondParent.setName(childFormInfo.getSecondParentData().getName());
+			newSecondParent.setSurename(childFormInfo.getSecondParentData().getSurename());
+			newSecondParent.setPersonId(childFormInfo.getSecondParentData().getPersonId());
+			newSecondParent.setAddress(childFormInfo.getSecondParentData().getAddress());
+			newSecondParent.setCity(childFormInfo.getSecondParentData().getCity());
+			newSecondParent.setEmail(childFormInfo.getSecondParentData().getEmail());
+			newSecondParent.setPhoneNum(childFormInfo.getSecondParentData().getPhoneNum());
+			secondParentRepository.save(newSecondParent);
+			newForm.setSecondParentData(newSecondParent);
+		} else if (childFormInfo.getSecondParentData().getPersonId() != null && newForm.getSecondParentData() == null){
+			SecondParent addSecondParent = childFormInfo.getSecondParentData();
+			secondParentRepository.save(addSecondParent);
+			newForm.setSecondParentData(addSecondParent);
+		} else {
+			newForm.setSecondParentData(null);
+		}
 
 		childFormRepository.save(newForm);
 		childFormInfo.getKindergartenPriority().setChildForm(newForm);
