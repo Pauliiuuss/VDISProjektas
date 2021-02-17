@@ -322,6 +322,18 @@ class RenderInfoForm extends Component {
             valid={[required]}
             mandatory={true}
             disabled={disabled}
+            span={
+              <span
+                className="input-group-text"
+                style={{
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  padding: 4,
+                }}
+              >
+                +370
+              </span>
+            }
           />
           <RenderInput
             type={"email"}
