@@ -1,76 +1,76 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import Navbar from '../navbar.component';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import Navbar from "../navbar.component";
 import {
   faUser,
   faHome,
   faPhone,
   faEnvelope,
   faBirthdayCake,
-} from '@fortawesome/free-solid-svg-icons';
-import SpecService from '../../services/spec.service';
-import ParentService from '../../services/parent.service';
-import UserService from '../../services/user.service';
-import RenderInput from './RenderInput';
-import RenderSelect from './RenderSelect';
-import RenderCheck from './RenderCheck';
-import AuthService from '../../services/auth.service';
-import CheckButton from 'react-validation/build/button';
-import Form from 'react-validation/build/form';
+} from "@fortawesome/free-solid-svg-icons";
+import SpecService from "../../services/spec.service";
+import ParentService from "../../services/parent.service";
+import UserService from "../../services/user.service";
+import RenderInput from "./RenderInput";
+import RenderSelect from "./RenderSelect";
+import RenderCheck from "./RenderCheck";
+import AuthService from "../../services/auth.service";
+import CheckButton from "react-validation/build/button";
+import Form from "react-validation/build/form";
 import {
   required,
   validPersonalCode,
   validPhoneNumber,
   validEmail,
-} from './Validation';
+} from "./Validation";
 
 var today = new Date(),
   date =
     today.getFullYear() +
-    '-' +
-    ('0' + (today.getMonth() + 1)).slice(-2) +
-    '-' +
-    ('0' + today.getDate()).slice(-2);
+    "-" +
+    ("0" + (today.getMonth() + 1)).slice(-2) +
+    "-" +
+    ("0" + today.getDate()).slice(-2);
 
 export default class RegistrationForm extends Component {
   state = {
     date: date,
-    message: '',
+    message: "",
     successful: false,
-    currentUser: '',
+    currentUser: "",
     redirect: null,
     userReady: false,
-    roles: '',
-    userData: '',
+    roles: "",
+    userData: "",
     checked: false,
     loading: false,
 
     kindergartens: [],
-    kindergarten1: 'Pasirinkti darželį iš sąrašo...',
-    kindergarten2: 'Pasirinkti darželį iš sąrašo...',
-    kindergarten3: 'Pasirinkti darželį iš sąrašo...',
-    kindergarten4: 'Pasirinkti darželį iš sąrašo...',
-    kindergarten5: 'Pasirinkti darželį iš sąrašo...',
-    vardasAtstovas1: '',
-    pavardeAtstovas1: '',
-    kodasAtstovas1: '',
-    adresasAtstovas1: '',
-    miestasAtstovas1: '',
-    telAtstovas1: '',
-    elpastasAtstovas1: '',
-    vardasAtstovas2: '',
-    pavardeAtstovas2: '',
-    kodasAtstovas2: '',
-    adresasAtstovas2: '',
-    miestasAtstovas2: '',
-    telAtstovas2: '',
-    elpastasAtstovas2: '',
-    vaikoVardas: '',
-    vaikoPavarde: '',
-    vaikoKodas: '',
-    gimimoData: '',
-    vaikoAdresas: '',
-    vaikoMiestas: '',
+    kindergarten1: "Pasirinkti darželį iš sąrašo...",
+    kindergarten2: "Pasirinkti darželį iš sąrašo...",
+    kindergarten3: "Pasirinkti darželį iš sąrašo...",
+    kindergarten4: "Pasirinkti darželį iš sąrašo...",
+    kindergarten5: "Pasirinkti darželį iš sąrašo...",
+    vardasAtstovas1: "",
+    pavardeAtstovas1: "",
+    kodasAtstovas1: "",
+    adresasAtstovas1: "",
+    miestasAtstovas1: "",
+    telAtstovas1: "",
+    elpastasAtstovas1: "",
+    vardasAtstovas2: "",
+    pavardeAtstovas2: "",
+    kodasAtstovas2: "",
+    adresasAtstovas2: "",
+    miestasAtstovas2: "",
+    telAtstovas2: "",
+    elpastasAtstovas2: "",
+    vaikoVardas: "",
+    vaikoPavarde: "",
+    vaikoKodas: "",
+    gimimoData: "",
+    vaikoAdresas: "",
+    vaikoMiestas: "",
     selectedPriority: true,
     inCity: false,
     adopted: false,
@@ -89,7 +89,7 @@ export default class RegistrationForm extends Component {
       .catch((err) => {
         console.log(err);
       });
-    if (!currentUser) this.setState({ redirect: '/dis-app/' });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -138,19 +138,19 @@ export default class RegistrationForm extends Component {
     } = this.state;
 
     if (
-      vaikoVardas === '' ||
-      vaikoPavarde === '' ||
-      vaikoAdresas === '' ||
-      vaikoMiestas === '' ||
-      vardasAtstovas1 === '' ||
-      pavardeAtstovas1 === '' ||
-      adresasAtstovas1 === '' ||
-      miestasAtstovas1 === '' ||
-      elpastasAtstovas1 === ''
+      vaikoVardas === "" ||
+      vaikoPavarde === "" ||
+      vaikoAdresas === "" ||
+      vaikoMiestas === "" ||
+      vardasAtstovas1 === "" ||
+      pavardeAtstovas1 === "" ||
+      adresasAtstovas1 === "" ||
+      miestasAtstovas1 === "" ||
+      elpastasAtstovas1 === ""
     ) {
       this.setState({
         successful: false,
-        message: 'Privalomi laukai negali būti tušti!',
+        message: "Privalomi laukai negali būti tušti!",
         loading: false,
       });
       return;
@@ -162,7 +162,7 @@ export default class RegistrationForm extends Component {
     ) {
       this.setState({
         successful: false,
-        message: 'Neteisingas asmens kodo ilgis!',
+        message: "Neteisingas asmens kodo ilgis!",
         loading: false,
       });
       return;
@@ -171,17 +171,17 @@ export default class RegistrationForm extends Component {
     if (telAtstovas1.toString().length !== 8) {
       this.setState({
         successful: false,
-        message: 'Neteisingas telefono numerio ilgis!',
+        message: "Neteisingas telefono numerio ilgis!",
         loading: false,
       });
       return;
     }
 
-    if (this.state.kindergarten1 === 'Pasirinkti darželį iš sąrašo...') {
+    if (this.state.kindergarten1 === "Pasirinkti darželį iš sąrašo...") {
       this.setState({
         successful: false,
         message:
-          'Privaloma pasirinkti bent vieną darželio prioritetą(1 prioritetas)!',
+          "Privaloma pasirinkti bent vieną darželio prioritetą(1 prioritetas)!",
         loading: false,
       });
       return;
@@ -252,38 +252,34 @@ export default class RegistrationForm extends Component {
         });
       }
     );
-    this.props.history.push('/dis-app/home');
-    this.resetState();
-  };
-
-  resetState = () => {
+    this.props.history.push("/dis-app/home");
     this.setState({
       kindergartens: [],
-      kindergarten1: 'Pasirinkti darželį iš sąrašo...',
-      kindergarten2: 'Pasirinkti darželį iš sąrašo...',
-      kindergarten3: 'Pasirinkti darželį iš sąrašo...',
-      kindergarten4: 'Pasirinkti darželį iš sąrašo...',
-      kindergarten5: 'Pasirinkti darželį iš sąrašo...',
-      vardasAtstovas1: '',
-      pavardeAtstovas1: '',
-      kodasAtstovas1: '',
-      adresasAtstovas1: '',
-      miestasAtstovas1: '',
-      telAtstovas1: '',
-      elpastasAtstovas1: '',
-      vardasAtstovas2: '',
-      pavardeAtstovas2: '',
-      kodasAtstovas2: '',
-      adresasAtstovas2: '',
-      miestasAtstovas2: '',
-      telAtstovas2: '',
-      elpastasAtstovas2: '',
-      vaikoVardas: '',
-      vaikoPavarde: '',
-      vaikoKodas: '',
-      gimimoData: '',
-      vaikoAdresas: '',
-      vaikoMiestas: '',
+      kindergarten1: "Pasirinkti darželį iš sąrašo...",
+      kindergarten2: "Pasirinkti darželį iš sąrašo...",
+      kindergarten3: "Pasirinkti darželį iš sąrašo...",
+      kindergarten4: "Pasirinkti darželį iš sąrašo...",
+      kindergarten5: "Pasirinkti darželį iš sąrašo...",
+      vardasAtstovas1: "",
+      pavardeAtstovas1: "",
+      kodasAtstovas1: "",
+      adresasAtstovas1: "",
+      miestasAtstovas1: "",
+      telAtstovas1: "",
+      elpastasAtstovas1: "",
+      vardasAtstovas2: "",
+      pavardeAtstovas2: "",
+      kodasAtstovas2: "",
+      adresasAtstovas2: "",
+      miestasAtstovas2: "",
+      telAtstovas2: "",
+      elpastasAtstovas2: "",
+      vaikoVardas: "",
+      vaikoPavarde: "",
+      vaikoKodas: "",
+      gimimoData: "",
+      vaikoAdresas: "",
+      vaikoMiestas: "",
       selectedPriority: true,
       inCity: false,
       adopted: false,
@@ -311,6 +307,13 @@ export default class RegistrationForm extends Component {
   handleVaikoAtstovas2filling = (e) => {
     this.setState({
       checked: !this.state.checked,
+      vardasAtstovas2: "",
+      pavardeAtstovas2: "",
+      kodasAtstovas2: "",
+      adresasAtstovas2: "",
+      miestasAtstovas2: "",
+      telAtstovas2: "",
+      elpastasAtstovas2: "",
     });
     this.setState({
       vardasAtstovas2: '',
@@ -340,9 +343,9 @@ export default class RegistrationForm extends Component {
             <div className="col-lg-6">
               <h3 className="mb-4 text-center">Vaiko atstovas</h3>
               <RenderInput
-                type={'text'}
-                forItem={'vardasAtstovas1'}
-                inputPlaceholder={'Vardas'}
+                type={"text"}
+                forItem={"vardasAtstovas1"}
+                inputPlaceholder={"Vardas"}
                 value={this.state.vardasAtstovas1}
                 onChange={this.handleChange}
                 icon={faUser}
@@ -350,9 +353,9 @@ export default class RegistrationForm extends Component {
                 mandatory={true}
               />
               <RenderInput
-                type={'text'}
-                forItem={'pavardeAtstovas1'}
-                inputPlaceholder={'Pavardė'}
+                type={"text"}
+                forItem={"pavardeAtstovas1"}
+                inputPlaceholder={"Pavardė"}
                 value={this.state.pavardeAtstovas1}
                 onChange={this.handleChange}
                 icon={faUser}
@@ -360,9 +363,9 @@ export default class RegistrationForm extends Component {
                 mandatory={true}
               />
               <RenderInput
-                type={'number'}
-                forItem={'kodasAtstovas1'}
-                inputPlaceholder={'Asmens kodas'}
+                type={"number"}
+                forItem={"kodasAtstovas1"}
+                inputPlaceholder={"Asmens kodas"}
                 value={this.state.kodasAtstovas1}
                 onChange={this.handleChange}
                 icon={faUser}
@@ -370,9 +373,9 @@ export default class RegistrationForm extends Component {
                 mandatory={true}
               />
               <RenderInput
-                type={'text'}
-                forItem={'adresasAtstovas1'}
-                inputPlaceholder={'Adresas'}
+                type={"text"}
+                forItem={"adresasAtstovas1"}
+                inputPlaceholder={"Adresas"}
                 value={this.state.adresasAtstovas1}
                 onChange={this.handleChange}
                 icon={faHome}
@@ -380,9 +383,9 @@ export default class RegistrationForm extends Component {
                 mandatory={true}
               />
               <RenderInput
-                type={'text'}
-                forItem={'miestasAtstovas1'}
-                inputPlaceholder={'Miestas'}
+                type={"text"}
+                forItem={"miestasAtstovas1"}
+                inputPlaceholder={"Miestas"}
                 value={this.state.miestasAtstovas1}
                 onChange={this.handleChange}
                 icon={faHome}
@@ -390,9 +393,9 @@ export default class RegistrationForm extends Component {
                 mandatory={true}
               />
               <RenderInput
-                type={'number'}
-                forItem={'telAtstovas1'}
-                inputPlaceholder={'Telefonas'}
+                type={"number"}
+                forItem={"telAtstovas1"}
+                inputPlaceholder={"Telefonas"}
                 value={this.state.telAtstovas1}
                 onChange={this.handleChange}
                 icon={faPhone}
@@ -400,8 +403,8 @@ export default class RegistrationForm extends Component {
                   <span
                     className="input-group-text"
                     style={{
-                      fontSize: '12px',
-                      fontWeight: 'bold',
+                      fontSize: "12px",
+                      fontWeight: "bold",
                       padding: 4,
                     }}
                   >
@@ -412,9 +415,9 @@ export default class RegistrationForm extends Component {
                 mandatory={true}
               />
               <RenderInput
-                type={'email'}
-                forItem={'elpastasAtstovas1'}
-                inputPlaceholder={'El.paštas'}
+                type={"email"}
+                forItem={"elpastasAtstovas1"}
+                inputPlaceholder={"El.paštas"}
                 value={this.state.elpastasAtstovas1}
                 onChange={this.handleChange}
                 icon={faEnvelope}
@@ -447,29 +450,31 @@ export default class RegistrationForm extends Component {
               <div className="col-lg-6">
                 <h3 className="mt-4 mb-4 text-center">Vaiko atstovas 2</h3>
                 <RenderInput
-                  type={'text'}
-                  forItem={'vardasAtstovas2'}
-                  inputPlaceholder={'Vardas'}
+                  type={"text"}
+                  forItem={"vardasAtstovas2"}
+                  inputPlaceholder={"Vardas"}
                   value={this.state.vardasAtstovas2}
                   onChange={this.handleChange}
                   icon={faUser}
+                  valid={[required]}
                   mandatory={true}
                   valid={[required]}
                 />
                 <RenderInput
-                  type={'text'}
-                  forItem={'pavardeAtstovas2'}
-                  inputPlaceholder={'Pavardė'}
+                  type={"text"}
+                  forItem={"pavardeAtstovas2"}
+                  inputPlaceholder={"Pavardė"}
                   value={this.state.pavardeAtstovas2}
                   onChange={this.handleChange}
                   icon={faUser}
+                  valid={[required]}
                   mandatory={true}
                   valid={[required]}
                 />
                 <RenderInput
-                  type={'number'}
-                  forItem={'kodasAtstovas2'}
-                  inputPlaceholder={'Asmens kodas'}
+                  type={"number"}
+                  forItem={"kodasAtstovas2"}
+                  inputPlaceholder={"Asmens kodas"}
                   value={this.state.kodasAtstovas2}
                   onChange={this.handleChange}
                   icon={faUser}
@@ -477,28 +482,30 @@ export default class RegistrationForm extends Component {
                   mandatory={true}
                 />
                 <RenderInput
-                  type={'text'}
-                  forItem={'adresasAtstovas2'}
-                  inputPlaceholder={'Adresas'}
+                  type={"text"}
+                  forItem={"adresasAtstovas2"}
+                  inputPlaceholder={"Adresas"}
                   value={this.state.adresasAtstovas2}
                   onChange={this.handleChange}
                   icon={faHome}
+                  valid={[required]}
                   mandatory={true}
                   valid={[required]}
                 />
                 <RenderInput
-                  type={'text'}
-                  forItem={'miestasAtstovas2'}
-                  inputPlaceholder={'Miestas'}
+                  type={"text"}
+                  forItem={"miestasAtstovas2"}
+                  inputPlaceholder={"Miestas"}
                   value={this.state.miestasAtstovas2}
                   onChange={this.handleChange}
                   icon={faHome}
+                  valid={[required]}
                   mandatory={true}
                 />
                 <RenderInput
-                  type={'number'}
-                  forItem={'telAtstovas2'}
-                  inputPlaceholder={'Telefonas'}
+                  type={"number"}
+                  forItem={"telAtstovas2"}
+                  inputPlaceholder={"Telefonas"}
                   value={this.state.telAtstovas2}
                   onChange={this.handleChange}
                   icon={faPhone}
@@ -506,8 +513,8 @@ export default class RegistrationForm extends Component {
                     <span
                       className="input-group-text"
                       style={{
-                        fontSize: '12px',
-                        fontWeight: 'bold',
+                        fontSize: "12px",
+                        fontWeight: "bold",
                         padding: 4,
                       }}
                     >
@@ -518,9 +525,9 @@ export default class RegistrationForm extends Component {
                   mandatory={true}
                 />
                 <RenderInput
-                  type={'email'}
-                  forItem={'elpastasAtstovas2'}
-                  inputPlaceholder={'El.paštas'}
+                  type={"email"}
+                  forItem={"elpastasAtstovas2"}
+                  inputPlaceholder={"El.paštas"}
                   value={this.state.elpastasAtstovas2}
                   onChange={this.handleChange}
                   icon={faEnvelope}
@@ -534,9 +541,9 @@ export default class RegistrationForm extends Component {
             <div className="col-lg-6">
               <h3 className="mt-5 mb-4 text-center">Vaiko informacija</h3>
               <RenderInput
-                type={'text'}
-                forItem={'vaikoVardas'}
-                inputPlaceholder={'Vardas'}
+                type={"text"}
+                forItem={"vaikoVardas"}
+                inputPlaceholder={"Vardas"}
                 value={this.state.vaikoVardas}
                 onChange={this.handleChange}
                 icon={faUser}
@@ -544,9 +551,9 @@ export default class RegistrationForm extends Component {
                 mandatory={true}
               />
               <RenderInput
-                type={'text'}
-                forItem={'vaikoPavarde'}
-                inputPlaceholder={'Pavardė'}
+                type={"text"}
+                forItem={"vaikoPavarde"}
+                inputPlaceholder={"Pavardė"}
                 value={this.state.vaikoPavarde}
                 onChange={this.handleChange}
                 icon={faUser}
@@ -554,9 +561,9 @@ export default class RegistrationForm extends Component {
                 mandatory={true}
               />
               <RenderInput
-                type={'number'}
-                forItem={'vaikoKodas'}
-                inputPlaceholder={'Asmens kodas'}
+                type={"number"}
+                forItem={"vaikoKodas"}
+                inputPlaceholder={"Asmens kodas"}
                 value={this.state.vaikoKodas}
                 onChange={this.handleChange}
                 icon={faUser}
@@ -565,9 +572,9 @@ export default class RegistrationForm extends Component {
               />
 
               <RenderInput
-                type={'date'}
-                forItem={'gimimoData'}
-                inputPlaceholder={'Gimimo data'}
+                type={"date"}
+                forItem={"gimimoData"}
+                inputPlaceholder={"Gimimo data"}
                 value={this.state.gimimoData}
                 onChange={this.handleChange}
                 icon={faBirthdayCake}
@@ -576,9 +583,9 @@ export default class RegistrationForm extends Component {
               />
 
               <RenderInput
-                type={'text'}
-                forItem={'vaikoAdresas'}
-                inputPlaceholder={'Adresas'}
+                type={"text"}
+                forItem={"vaikoAdresas"}
+                inputPlaceholder={"Adresas"}
                 value={this.state.vaikoAdresas}
                 onChange={this.handleChange}
                 icon={faHome}
@@ -586,9 +593,9 @@ export default class RegistrationForm extends Component {
                 mandatory={true}
               />
               <RenderInput
-                type={'text'}
-                forItem={'vaikoMiestas'}
-                inputPlaceholder={'Miestas'}
+                type={"text"}
+                forItem={"vaikoMiestas"}
+                inputPlaceholder={"Miestas"}
                 value={this.state.vaikoMiestas}
                 onChange={this.handleChange}
                 icon={faHome}
@@ -607,38 +614,38 @@ export default class RegistrationForm extends Component {
               </h3>
               <div className="form-group">
                 <RenderSelect
-                  forItem={'kindergarten1'}
-                  inputPlaceholder={'1 prioritetas'}
+                  forItem={"kindergarten1"}
+                  inputPlaceholder={"1 prioritetas"}
                   value={this.state.kindergarten1}
                   onChange={this.kindergartenDropdownSelect}
                   kindergartens={this.state.kindergartens}
                 />
                 <RenderSelect
-                  forItem={'kindergarten2'}
-                  inputPlaceholder={'2 prioritetas'}
+                  forItem={"kindergarten2"}
+                  inputPlaceholder={"2 prioritetas"}
                   value={this.state.kindergarten2}
                   onChange={this.kindergartenDropdownSelect}
                   kindergartens={this.state.kindergartens}
                 />
                 <RenderSelect
-                  forItem={'kindergarten3'}
-                  inputPlaceholder={'3 prioritetas'}
+                  forItem={"kindergarten3"}
+                  inputPlaceholder={"3 prioritetas"}
                   value={this.state.kindergarten3}
                   onChange={this.kindergartenDropdownSelect}
                   kindergartens={this.state.kindergartens}
                 />
 
                 <RenderSelect
-                  forItem={'kindergarten4'}
-                  inputPlaceholder={'4 prioritetas'}
+                  forItem={"kindergarten4"}
+                  inputPlaceholder={"4 prioritetas"}
                   value={this.state.kindergarten4}
                   onChange={this.kindergartenDropdownSelect}
                   kindergartens={this.state.kindergartens}
                 />
 
                 <RenderSelect
-                  forItem={'kindergarten5'}
-                  inputPlaceholder={'5 prioritetas'}
+                  forItem={"kindergarten5"}
+                  inputPlaceholder={"5 prioritetas"}
                   value={this.state.kindergarten5}
                   onChange={this.kindergartenDropdownSelect}
                   kindergartens={this.state.kindergartens}
@@ -653,38 +660,38 @@ export default class RegistrationForm extends Component {
               </h3>
               <RenderCheck
                 onChange={this.handleSelectChange}
-                forItem={'inCity'}
+                forItem={"inCity"}
                 checked={this.state.inCity}
-                label={'Deklaruota gyvenomoji vieta Vilniaus m.'}
+                label={"Deklaruota gyvenomoji vieta Vilniaus m."}
               />
               <RenderCheck
                 onChange={this.handleSelectChange}
-                forItem={'adopted'}
+                forItem={"adopted"}
                 checked={this.state.adopted}
-                label={'Vaikas įvaikintas.'}
+                label={"Vaikas įvaikintas."}
               />
               <RenderCheck
                 onChange={this.handleSelectChange}
-                forItem={'threeOrMore'}
+                forItem={"threeOrMore"}
                 checked={this.state.threeOrMore}
                 label={
-                  'Šeimoje yra 3 ir daugiau vaikų, besimokančių bendro ugdymo programose.'
+                  "Šeimoje yra 3 ir daugiau vaikų, besimokančių bendro ugdymo programose."
                 }
               />
               <RenderCheck
                 onChange={this.handleSelectChange}
-                forItem={'parentStudent'}
+                forItem={"parentStudent"}
                 checked={this.state.parentStudent}
                 label={
-                  'Vienas iš tėvų(globėjų) mokosi bendro ugdymo mokykloje.'
+                  "Vienas iš tėvų(globėjų) mokosi bendro ugdymo mokykloje."
                 }
               />
               <RenderCheck
                 onChange={this.handleSelectChange}
-                forItem={'handicapped'}
+                forItem={"handicapped"}
                 checked={this.state.handicapped}
                 label={
-                  'Vienas iš tėvų(globėjų) turi ne daugiau kaip 40 proc nedarbingumo lygio'
+                  "Vienas iš tėvų(globėjų) turi ne daugiau kaip 40 proc nedarbingumo lygio"
                 }
               />
             </div>
@@ -697,8 +704,8 @@ export default class RegistrationForm extends Component {
               <div
                 className={
                   this.state.successful
-                    ? 'alert alert-success'
-                    : 'alert alert-danger'
+                    ? "alert alert-success"
+                    : "alert alert-danger"
                 }
                 role="alert"
               >
@@ -707,7 +714,7 @@ export default class RegistrationForm extends Component {
             </div>
           )}
           <CheckButton
-            style={{ display: 'none' }}
+            style={{ display: "none" }}
             ref={(c) => {
               this.checkBtn = c;
             }}

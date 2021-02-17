@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
-import AuthService from '../../services/auth.service';
-import UserService from '../../services/user.service';
-import { vpassword } from '../Admin/Validation';
-import Navbar from '../navbar.component';
-import Details from './Details';
-import Password from './Password';
+import React, { Component } from "react";
+import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
+import { vpassword } from "../Admin/Validation";
+import Navbar from "../navbar.component";
+import Details from "./Details";
+import Password from "./Password";
 
 class UserUpdateForm extends Component {
   state = {
-    currentUser: '',
+    currentUser: "",
     userReady: false,
-    roles: '',
+    roles: "",
     userData: {
-      name: '',
-      surename: '',
-      email: '',
-      phoneNum: '',
+      name: "",
+      surename: "",
+      email: "",
+      phoneNum: "",
     },
     successfulPassword: false,
-    messagePassword: '',
+    messagePassword: "",
     successfulDetails: false,
-    messageDetails: '',
+    messageDetails: "",
   };
 
   async componentDidMount() {
@@ -34,7 +34,7 @@ class UserUpdateForm extends Component {
         console.log(error);
       }
     );
-    if (!currentUser) this.setState({ redirect: '/dis-app/' });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
       currentUser,
       userReady: true,
@@ -49,12 +49,12 @@ class UserUpdateForm extends Component {
     if (phoneNum !== null && phoneNum.length > 19) {
       this.setState({
         successfulDetails: false,
-        messageDetails: 'Neteisingas telefono numerio ilgis!',
+        messageDetails: "Neteisingas telefono numerio ilgis!",
       });
       return;
     } else {
       this.setState({
-        messageDetails: '',
+        messageDetails: "",
       });
     }
 
@@ -70,7 +70,7 @@ class UserUpdateForm extends Component {
           successfulDetails: true,
           messageDetails: response.data.message,
           successfulPassword: false,
-          messagePassword: '',
+          messagePassword: "",
         });
       },
       (error) => {
@@ -86,7 +86,7 @@ class UserUpdateForm extends Component {
           successfulDetails: false,
           messageDetails: resMessage,
           successfulPassword: false,
-          messagePassword: '',
+          messagePassword: "",
         });
       }
     );
@@ -114,7 +114,7 @@ class UserUpdateForm extends Component {
                 successfulPassword: true,
                 messagePassword: response.data.message,
                 successfulDetails: false,
-                messageDetails: '',
+                messageDetails: "",
               });
             },
             (error) => {
@@ -130,15 +130,15 @@ class UserUpdateForm extends Component {
                 successfulPassword: false,
                 messagePassword: resMessage,
                 successfulDetails: false,
-                messageDetails: '',
+                messageDetails: "",
               });
             }
           )
         : this.setState({
             successfulDetails: false,
-            messageDetails: '',
+            messageDetails: "",
             messagePassword:
-              'Nesutampa naujojo slaptažodžio laukai arba naujas slaptažodis neatitinka reikalavimų!',
+              "Nesutampa naujojo slaptažodžio laukai arba naujas slaptažodis neatitinka reikalavimų!",
             successful: false,
           });
     }
@@ -177,7 +177,7 @@ class UserUpdateForm extends Component {
           <div className="d-flex justify-content-center">
             <div
               className="spinner-border"
-              style={{ width: '3rem', height: '3rem', marginTop: '3rem' }}
+              style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
               role="status"
             >
               <span className="sr-only">Loading...</span>
