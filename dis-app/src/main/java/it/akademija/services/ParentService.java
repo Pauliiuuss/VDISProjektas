@@ -100,8 +100,10 @@ public class ParentService {
 				secondParentUpdate.setCity(childFormInfo.getSecondParentData().getCity());
 				secondParentUpdate.setEmail(childFormInfo.getSecondParentData().getEmail());
 				secondParentUpdate.setPhoneNum(childFormInfo.getSecondParentData().getPhoneNum());
+				newForm.setSecondParentData(secondParentUpdate);
 			} else {
 				secondParentRepository.save(childFormInfo.getSecondParentData());
+				newForm.setSecondParentData(childFormInfo.getSecondParentData());
 			}
 		} else {
 			newForm.setSecondParentData(null);
@@ -130,7 +132,6 @@ public class ParentService {
 
 		ChildForm newForm = childFormRepository.getOne(id);
 
-		newForm.setId(childFormInfo.getId());
 		newForm.setPersonId(childFormInfo.getPersonId());
 		newForm.setName(childFormInfo.getName());
 		newForm.setSurename(childFormInfo.getSurename());
@@ -150,7 +151,6 @@ public class ParentService {
 
 		UserData newData = currentUser.getUserData();
 
-		newData.setId(newForm.getParentData().getId());
 		newData.setName(newForm.getParentData().getName());
 		newData.setSurename(newForm.getParentData().getSurename());
 		newData.setPersonId(newForm.getParentData().getPersonId());
@@ -165,7 +165,6 @@ public class ParentService {
 		if(childFormInfo.getSecondParentData().getPersonId() != null && newForm.getSecondParentData() != null){
 			SecondParent newSecondParent = newForm.getSecondParentData();
 
-			newSecondParent.setId(childFormInfo.getSecondParentData().getId());
 			newSecondParent.setName(childFormInfo.getSecondParentData().getName());
 			newSecondParent.setSurename(childFormInfo.getSecondParentData().getSurename());
 			newSecondParent.setPersonId(childFormInfo.getSecondParentData().getPersonId());
