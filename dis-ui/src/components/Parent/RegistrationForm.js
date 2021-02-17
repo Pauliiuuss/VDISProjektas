@@ -195,8 +195,6 @@ export default class RegistrationForm extends Component {
     if (this.checkBtn.context._errors.length === 0) {
     }
 
-    this.props.history.push("/dis-app/home");
-
     await ParentService.sendForm({
       address: vaikoAdresas,
       adopted,
@@ -243,6 +241,7 @@ export default class RegistrationForm extends Component {
           message: response.data.message,
           loading: true,
         });
+        this.props.history.push("/dis-app/home");
       },
       (error) => {
         const resMessage =
