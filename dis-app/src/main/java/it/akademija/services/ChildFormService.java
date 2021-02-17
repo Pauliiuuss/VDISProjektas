@@ -22,7 +22,7 @@ public class ChildFormService {
 		return childFormRepository.findAll().stream()
 				.map(isdb -> new ChildFormInfo(isdb.getId(), isdb.getName(), isdb.getSurename(), isdb.getBirthDate(),
 						isdb.getAddress(), isdb.getCity(), isdb.getPersonId(), isdb.isInCity(), isdb.isAdopted(),
-						isdb.isThreeOrMore(), isdb.isParentStudent(), isdb.isHandicapped(), isdb.getParentData(),
+						isdb.isThreeOrMore(), isdb.isParentStudent(), isdb.isHandicapped(), isdb.getParentData(), isdb.getSecondParentData(),
 						isdb.getKindergartenPriority(), isdb.getPostDate()))
 				.collect(Collectors.toList());
 	}

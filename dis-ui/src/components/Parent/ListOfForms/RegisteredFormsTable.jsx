@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
-import Table from './Table';
+import React, { Component } from "react";
+import Table from "./Table";
 
 class FormsTable extends Component {
   columns = [
-    {
-      path: 'date',
-      label: 'Data',
-    },
-    { path: 'name', label: 'Vardas Pavardė' },
-    { path: 'kindergarten', label: 'Darželis' },
-    { path: 'status', label: 'Prašymo statusas' },
+    { path: "name", label: "Vardas" },
+    { path: "surename", label: "Pavardė" },
+    { path: "personId", label: "Asmens kodas" },
+    { path: "postDate", label: "Pateikta" },
+    { path: "formStatus.name", label: "Statusas" },
+    { path: "buttons", label: "" },
   ];
 
   render() {

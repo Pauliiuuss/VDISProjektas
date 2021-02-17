@@ -36,6 +36,10 @@ public class ChildForm {
 	@JoinColumn(name = "userdata")
 	private UserData parentData;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "secondParentData")
+	private SecondParent secondParentData;
+
 	@OneToOne(mappedBy = "childForm")
 	private KindergartenPriority kindergartenPriority;
 
@@ -52,7 +56,7 @@ public class ChildForm {
 
 	public ChildForm(Long personId, String name, String surename, Date birthDate, String address, String city,
 			boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent, boolean handicapped,
-			UserData parentData, Date postDate) {
+			UserData parentData, SecondParent secondParentData, Date postDate) {
 		this.name = name;
 		this.surename = surename;
 		this.birthDate = birthDate;
@@ -65,6 +69,7 @@ public class ChildForm {
 		this.parentStudent = parentStudent;
 		this.handicapped = handicapped;
 		this.parentData = parentData;
+		this.secondParentData = secondParentData;
 		this.postDate = postDate;
 	}
 
@@ -194,5 +199,13 @@ public class ChildForm {
 
 	public void setFormStatus(FormStatus formStatus) {
 		this.formStatus = formStatus;
+	}
+
+	public SecondParent getSecondParentData() {
+		return secondParentData;
+	}
+
+	public void setSecondParentData(SecondParent secondParentData) {
+		this.secondParentData = secondParentData;
 	}
 }

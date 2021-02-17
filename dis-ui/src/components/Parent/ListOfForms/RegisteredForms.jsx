@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import ParentService from '../../../services/parent.service';
-import AuthService from '../../../services/auth.service';
-import RegisteredFormsTable from './RegisteredFormsTable';
+import React, { Component } from "react";
+import ParentService from "../../../services/parent.service";
+import AuthService from "../../../services/auth.service";
+import RegisteredFormsTable from "./RegisteredFormsTable";
 
 export default class Forms extends Component {
   state = {
@@ -47,7 +47,7 @@ export default class Forms extends Component {
     return (
       <div className="row">
         <div className="col">
-          <RegisteredFormsTable />
+          <RegisteredFormsTable forms={allForms} />
         </div>
       </div>
     );

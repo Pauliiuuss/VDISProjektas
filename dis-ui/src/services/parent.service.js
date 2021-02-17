@@ -10,8 +10,22 @@ class ParentService {
     return axios.post(API_URL + 'addform', body, { headers: authHeader() });
   }
 
+  getAllData(id) {
+    console.log(id);
+    return axios.get(API_URL + "getdata/" + id, { headers: authHeader() });
+  }
+
+  updateForm(id, body) {
+    console.log(id);
+    return axios.put(API_URL + "updateform/" + id, body, {
+      headers: authHeader(),
+    });
+  }
+
   getAllForms(id) {
-    return axios.get(API_URL + 'getforms/' + id, { headers: authHeader() });
+    console.log(id);
+
+    return axios.get(API_URL + "getforms/" + id, { headers: authHeader() });
   }
 }
 export default new ParentService();

@@ -8,11 +8,15 @@ export default class ParentMainPage extends Component {
     forms: [],
   };
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     console.log(this.props.currentUser);
-    ParentService.getAllForms(this.props.currentUser.id).then((response) => {
-      console.log(response.data);
-    });
+    await ParentService.getAllForms(this.props.currentUser.id).then(
+      (response) => {
+        const forms = response.data;
+        this.setState({ forms });
+        console.log(forms);
+      }
+    );
   };
 
   render() {
