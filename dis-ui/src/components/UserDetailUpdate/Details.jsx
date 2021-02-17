@@ -36,7 +36,7 @@ const Details = ({ userData, onSubmit, message, successful }) => {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             icon={faPhone}
-            phoneLength={11}
+            // phoneLength={11}
           />
           <RenderInput
             inputPlaceholder={'El.paštas'}

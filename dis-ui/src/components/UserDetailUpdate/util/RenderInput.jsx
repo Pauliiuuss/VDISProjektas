@@ -12,7 +12,7 @@ class RenderInput extends Component {
       value,
       onChange,
       icon,
-      phoneLength,
+      // phoneLength,
     } = this.props;
     return (
       <div className="form-inline mb-3">
@@ -30,7 +30,7 @@ class RenderInput extends Component {
             placeholder={inputPlaceholder}
             value={value ? value : ''}
             onChange={onChange}
-            max={phoneLength}
+            // max={phoneLength}
           />
         </div>
       </div>

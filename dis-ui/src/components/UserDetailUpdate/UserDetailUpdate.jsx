@@ -46,23 +46,10 @@ class UserUpdateForm extends Component {
     e.preventDefault();
     console.log(name, surename, phoneNum, email);
 
-    if (phoneNum.length !== 11) {
+    if (phoneNum.length > 19) {
       this.setState({
         successfulDetails: false,
         messageDetails: 'Neteisingas telefono numerio ilgis!',
-      });
-      return;
-    } else {
-      this.setState({
-        messageDetails: '',
-      });
-    }
-
-    var reg = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-    if (!email.match(reg)) {
-      this.setState({
-        successfulDetails: false,
-        messageDetails: 'Neteisingas el.paštas!',
       });
       return;
     } else {

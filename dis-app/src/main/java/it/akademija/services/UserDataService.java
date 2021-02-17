@@ -53,13 +53,15 @@ public class UserDataService {
 
 	@Transactional
 	public ResponseEntity<?> addUserData(UserDataInfo userDataInfo, long id) {
-//		if (userDataInfo.getPhoneNum().toString().length() != 11) {
-//			return ResponseEntity.badRequest().body(new MessageResponse("Neteisingas telefono numerio ilgis!"));
-//		}
-//
-//		if (!userDataInfo.getEmail().matches("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$")) {
-//			return ResponseEntity.badRequest().body(new MessageResponse("Neteisingas elektroninis paštas!"));
-//		}
+
+		if (userDataInfo.getPhoneNum() != null && userDataInfo.getPhoneNum().toString().length() != 11) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Neteisingas telefono numerio ilgis!"));
+		}
+
+		if (!userDataInfo.getEmail().isEmpty()
+				&& !userDataInfo.getEmail().matches("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$")) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Neteisingas elektroninis paštas!"));
+		}
 
 		User user = userrepo.getOne(id);
 
