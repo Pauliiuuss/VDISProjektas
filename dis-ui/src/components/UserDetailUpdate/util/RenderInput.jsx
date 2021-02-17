@@ -12,15 +12,19 @@ class RenderInput extends Component {
       value,
       onChange,
       icon,
-      // phoneLength,
+      span,
     } = this.props;
     return (
       <div className="form-inline mb-3">
         <div style={{ width: '500px' }} className="input-group">
           <div className="input-group-prepend">
-            <span className="input-group-text">
-              <FontAwesomeIcon icon={icon} />
-            </span>
+            {span ? (
+              span
+            ) : (
+              <span className="input-group-text px-auto">
+                <FontAwesomeIcon icon={icon} />
+              </span>
+            )}
           </div>
           <input
             type={type}
@@ -30,7 +34,6 @@ class RenderInput extends Component {
             placeholder={inputPlaceholder}
             value={value ? value : ''}
             onChange={onChange}
-            // max={phoneLength}
           />
         </div>
       </div>

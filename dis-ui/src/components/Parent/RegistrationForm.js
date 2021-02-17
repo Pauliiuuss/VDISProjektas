@@ -102,7 +102,7 @@ export default class RegistrationForm extends Component {
     this.setState({ [name]: value });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const {
       vaikoVardas,
@@ -135,7 +135,6 @@ export default class RegistrationForm extends Component {
       kindergarten3,
       kindergarten4,
       kindergarten5,
-      userData,
     } = this.state;
 
     if (
@@ -192,9 +191,9 @@ export default class RegistrationForm extends Component {
     if (this.checkBtn.context._errors.length === 0) {
     }
 
-    // this.props.history.push('/dis-app/home');
+    this.props.history.push('/dis-app/home');
 
-    ParentService.sendForm({
+    await ParentService.sendForm({
       address: vaikoAdresas,
       adopted,
       birthDate: gimimoData,
@@ -212,7 +211,6 @@ export default class RegistrationForm extends Component {
       name: vaikoVardas,
       personId: vaikoKodas,
       parentData: {
-        id: userData.id,
         address: adresasAtstovas1,
         city: miestasAtstovas1,
         email: elpastasAtstovas1,
@@ -220,6 +218,15 @@ export default class RegistrationForm extends Component {
         personId: kodasAtstovas1,
         phoneNum: telAtstovas1,
         surename: pavardeAtstovas1,
+      },
+      secondParentData: {
+        address: adresasAtstovas2,
+        city: miestasAtstovas2,
+        email: elpastasAtstovas2,
+        name: vardasAtstovas2,
+        personId: kodasAtstovas2,
+        phoneNum: telAtstovas2,
+        surename: pavardeAtstovas2,
       },
       parentStudent,
       postDate: date,
@@ -247,6 +254,40 @@ export default class RegistrationForm extends Component {
         });
       }
     );
+    this.setState({
+      kindergartens: [],
+      kindergarten1: 'Pasirinkti darželį iš sąrašo...',
+      kindergarten2: 'Pasirinkti darželį iš sąrašo...',
+      kindergarten3: 'Pasirinkti darželį iš sąrašo...',
+      kindergarten4: 'Pasirinkti darželį iš sąrašo...',
+      kindergarten5: 'Pasirinkti darželį iš sąrašo...',
+      vardasAtstovas1: '',
+      pavardeAtstovas1: '',
+      kodasAtstovas1: '',
+      adresasAtstovas1: '',
+      miestasAtstovas1: '',
+      telAtstovas1: '',
+      elpastasAtstovas1: '',
+      vardasAtstovas2: '',
+      pavardeAtstovas2: '',
+      kodasAtstovas2: '',
+      adresasAtstovas2: '',
+      miestasAtstovas2: '',
+      telAtstovas2: '',
+      elpastasAtstovas2: '',
+      vaikoVardas: '',
+      vaikoPavarde: '',
+      vaikoKodas: '',
+      gimimoData: '',
+      vaikoAdresas: '',
+      vaikoMiestas: '',
+      selectedPriority: true,
+      inCity: false,
+      adopted: false,
+      threeOrMore: false,
+      parentStudent: false,
+      handicapped: false,
+    });
   };
 
   kindergartenDropdownSelect = (e) => {

@@ -54,7 +54,7 @@ public class UserDataService {
 	@Transactional
 	public ResponseEntity<?> addUserData(UserDataInfo userDataInfo, long id) {
 
-		if (userDataInfo.getPhoneNum() != null && userDataInfo.getPhoneNum().toString().length() != 11) {
+		if (userDataInfo.getPhoneNum() != null && userDataInfo.getPhoneNum().toString().length() != 8) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Neteisingas telefono numerio ilgis!"));
 		}
 

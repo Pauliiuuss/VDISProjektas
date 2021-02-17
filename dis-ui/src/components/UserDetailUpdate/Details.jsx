@@ -36,7 +36,18 @@ const Details = ({ userData, onSubmit, message, successful }) => {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             icon={faPhone}
-            // phoneLength={11}
+            span={
+              <span
+                className="input-group-text"
+                style={{
+                  fontSize: '12px',
+                  fontWeight: 'bold',
+                  padding: 4,
+                }}
+              >
+                +370
+              </span>
+            }
           />
           <RenderInput
             inputPlaceholder={'El.paštas'}
