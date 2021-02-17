@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
-import { Component } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
+import { Component } from 'react';
 
 class RenderInput extends Component {
   state = {};
@@ -12,14 +12,19 @@ class RenderInput extends Component {
       value,
       onChange,
       icon,
+      span,
     } = this.props;
     return (
       <div className="form-inline mb-3">
-        <div style={{ width: "500px" }} className="input-group">
+        <div style={{ width: '500px' }} className="input-group">
           <div className="input-group-prepend">
-            <span className="input-group-text">
-              <FontAwesomeIcon icon={icon} />
-            </span>
+            {span ? (
+              span
+            ) : (
+              <span className="input-group-text px-auto">
+                <FontAwesomeIcon icon={icon} />
+              </span>
+            )}
           </div>
           <input
             type={type}
@@ -27,9 +32,8 @@ class RenderInput extends Component {
             name={forItem}
             className="form-control"
             placeholder={inputPlaceholder}
-            value={value ? value : ""}
+            value={value ? value : ''}
             onChange={onChange}
-            // required="required"
           />
         </div>
       </div>

@@ -30,7 +30,7 @@ const Password = ({ currentUser, onPasswordSubmit, message, successful }) => {
       </p>
       <p className="text-secondary text-justify font-italic">
         Slaptažodis turi būti ne mažiau 8 simbolių ilgo turi būti bent viena
-        didžioji ir bent viena mažoji raidė, ir bent vieas skaičius.
+        didžioji ir bent viena mažoji raidė, ir bent vienas skaičius.
       </p>
       <form
         onSubmit={(e) =>
