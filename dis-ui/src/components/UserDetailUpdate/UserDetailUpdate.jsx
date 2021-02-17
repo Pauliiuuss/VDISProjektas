@@ -46,7 +46,7 @@ class UserUpdateForm extends Component {
     e.preventDefault();
     console.log(name, surename, phoneNum, email);
 
-    if (phoneNum.length > 19) {
+    if (phoneNum !== null && phoneNum.length > 19) {
       this.setState({
         successfulDetails: false,
         messageDetails: 'Neteisingas telefono numerio ilgis!',

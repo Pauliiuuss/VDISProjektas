@@ -30,7 +30,7 @@ const Details = ({ userData, onSubmit, message, successful }) => {
             icon={faUser}
           />
           <RenderInput
-            inputPlaceholder={'+370'}
+            inputPlaceholder={'Tel'}
             type={'number'}
             forItem={phone}
             value={phone}

@@ -191,8 +191,6 @@ export default class RegistrationForm extends Component {
     if (this.checkBtn.context._errors.length === 0) {
     }
 
-    // this.props.history.push('/dis-app/home');
-
     await ParentService.sendForm({
       address: vaikoAdresas,
       adopted,
@@ -239,7 +237,6 @@ export default class RegistrationForm extends Component {
           message: response.data.message,
           loading: true,
         });
-        this.resetState();
       },
       (error) => {
         const resMessage =
@@ -255,6 +252,8 @@ export default class RegistrationForm extends Component {
         });
       }
     );
+    this.props.history.push('/dis-app/home');
+    this.resetState();
   };
 
   resetState = () => {
@@ -313,6 +312,15 @@ export default class RegistrationForm extends Component {
     this.setState({
       checked: !this.state.checked,
     });
+    this.setState({
+      vardasAtstovas2: '',
+      pavardeAtstovas2: '',
+      kodasAtstovas2: '',
+      adresasAtstovas2: '',
+      miestasAtstovas2: '',
+      telAtstovas2: '',
+      elpastasAtstovas2: '',
+    });
   };
 
   render() {
@@ -330,7 +338,7 @@ export default class RegistrationForm extends Component {
         >
           <div className="row">
             <div className="col-lg-6">
-              <h3 className="mb-4 text-center">Vaiko atstovas 1</h3>
+              <h3 className="mb-4 text-center">Vaiko atstovas</h3>
               <RenderInput
                 type={'text'}
                 forItem={'vardasAtstovas1'}
@@ -417,7 +425,7 @@ export default class RegistrationForm extends Component {
           </div>
           <div className="row">
             <div className="col-lg-6">
-              <h3 className="mt-4 mb-2 text-center">Vaiko atstovas 2</h3>
+              {/* <h3 className="mt-4 mb-2 text-center">Vaiko atstovas 2</h3> */}
               <div className="form-check pl-5">
                 <input
                   className="form-check-input"
@@ -426,10 +434,10 @@ export default class RegistrationForm extends Component {
                   checked={this.state.checked}
                 />
                 <label
-                  className="form-check-label mb-3"
+                  className="form-check-label mt-4 mb-3"
                   htmlFor="vaikoAtstovas2"
                 >
-                  Pildyti informaciją
+                  Pildyti antro vaiko atstovo informaciją
                 </label>
               </div>
             </div>
@@ -437,6 +445,7 @@ export default class RegistrationForm extends Component {
           <div className="row">
             {this.state.checked ? (
               <div className="col-lg-6">
+                <h3 className="mt-4 mb-4 text-center">Vaiko atstovas 2</h3>
                 <RenderInput
                   type={'text'}
                   forItem={'vardasAtstovas2'}
