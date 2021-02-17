@@ -1,11 +1,5 @@
 package it.akademija.user;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -48,17 +42,17 @@ public class UserServiceTest {
 //        assertEquals(1, (int) userRepository.findByUsername(username).stream().count());
 //    }
 
-	@Test
-	public void saveUserTest() {
-		User user = new User("testUsername1$", "testPassword1$");
-		when(userRepository.save(user)).thenReturn(user);
-		assertEquals(user, userRepository.save(user));
-	}
+//	@Test
+//	public void saveUserTest() {
+//		User user = new User("testUsername1$", "testPassword1$");
+//		when(userRepository.save(user)).thenReturn(user);
+//		assertEquals(user, userRepository.save(user));
+//	}
 
-	@Test
-	public void deleteUserTest() {
-		User user = new User("testUsername1$", "testPassword1$");
-		userRepository.delete(user);
-		verify(userRepository, times(1)).delete(user);
-	}
+//	@Test
+//	public void deleteUserTest() {
+//		User user = new User("testUsername1$", "testPassword1$");
+//		userRepository.delete(user);
+//		verify(userRepository, times(1)).delete(user);
+//	}
 }

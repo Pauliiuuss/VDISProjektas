@@ -15,23 +15,11 @@ import RenderCheck from "./RenderCheck";
 import SpecService from "../../services/spec.service";
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
-
-const required = (value) => {
-  if (!value || value === "") {
-    return (
-      <div
-        className="alert alert-danger text-center px-0 py-2"
-        role="alert"
-        style={{ fontSize: "9px" }}
-      >
-        Privalomas laukas turi būti užpildytas!
-      </div>
-    );
-  }
-};
+import { required } from "./Validation";
 
 class RenderInfoForm extends Component {
   state = {
+    loading: true,
     unlockSecondParent: false,
     message: "",
     successful: false,
@@ -90,7 +78,6 @@ class RenderInfoForm extends Component {
 
   componentDidMount() {
     const { showId } = this.props;
-    // console.log(disabled, showId, data);
     const currentUser = AuthService.getCurrentUser();
     const userData = UserService.getUserData(currentUser.id);
     SpecService.getKindergartens()
@@ -116,12 +103,21 @@ class RenderInfoForm extends Component {
           console.log(error);
         }
       );
+    this.setState({ loading: false });
   }
 
   unlockForm = (e) => {
     e.preventDefault();
     const action = !this.state.disabled;
     this.setState({ disabled: action });
+    if (this.state.unlockSecondParent)
+      this.setState({
+        unlockSecondParent: false,
+        data: {
+          ...this.state.data,
+          secondParentData: null,
+        },
+      });
   };
 
   deleteForm = (e) => {
@@ -351,7 +347,18 @@ class RenderInfoForm extends Component {
   };
 
   render() {
-    console.log(this.state.data);
+    if (this.state.data.personId === "")
+      return (
+        <div className="d-flex justify-content-center">
+          <div
+            className="spinner-border"
+            style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
+            role="status"
+          >
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      );
 
     const { disabled } = this.state;
     return (
@@ -529,16 +536,18 @@ class RenderInfoForm extends Component {
                 icon={faEnvelope}
                 disabled={disabled}
               />
-              <div style={{ textAlign: "center" }}>
-                <p>
-                  <button
-                    className="btn btn-sm btn-secondary"
-                    onClick={this.lockSecondParent}
-                  >
-                    Atšaukti
-                  </button>
-                </p>
-              </div>
+              {this.state.unlockSecondParent && (
+                <div style={{ textAlign: "center" }}>
+                  <p>
+                    <button
+                      className="btn btn-sm btn-secondary"
+                      onClick={this.lockSecondParent}
+                    >
+                      Atšaukti
+                    </button>
+                  </p>
+                </div>
+              )}
             </div>
           ) : (
             <div style={{ textAlign: "center", alignContent: "center" }}>

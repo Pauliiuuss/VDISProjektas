@@ -90,6 +90,10 @@ export default class RegistrationForm extends Component {
         console.log(err);
       });
     if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    if (!currentUser.roles.includes("ROLE_PARENT")) {
+      this.props.history.push("/dis-app/");
+      window.location.reload();
+    }
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -237,6 +241,7 @@ export default class RegistrationForm extends Component {
           message: response.data.message,
           loading: true,
         });
+        this.props.history.push("/dis-app/home");
       },
       (error) => {
         const resMessage =
