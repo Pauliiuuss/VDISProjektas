@@ -33,7 +33,7 @@ class Kindergartens extends Component {
     let filtered = allKindergertens;
     if (searchQuery)
       filtered = allKindergertens.filter((m) =>
-        m.name.toLowerCase().startsWith(searchQuery.toLowerCase())
+        m.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
