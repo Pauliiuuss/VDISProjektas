@@ -32,6 +32,7 @@ const required = (value) => {
 
 class RenderInfoForm extends Component {
   state = {
+    loading: true,
     unlockSecondParent: false,
     message: "",
     successful: false,
@@ -116,12 +117,21 @@ class RenderInfoForm extends Component {
           console.log(error);
         }
       );
+    this.setState({ loading: false });
   }
 
   unlockForm = (e) => {
     e.preventDefault();
     const action = !this.state.disabled;
     this.setState({ disabled: action });
+    if (this.state.unlockSecondParent)
+      this.setState({
+        unlockSecondParent: false,
+        data: {
+          ...this.state.data,
+          secondParentData: null,
+        },
+      });
   };
 
   deleteForm = (e) => {
@@ -352,6 +362,19 @@ class RenderInfoForm extends Component {
 
   render() {
     console.log(this.state.data);
+
+    if (this.state.data.personId === "")
+      return (
+        <div className="d-flex justify-content-center">
+          <div
+            className="spinner-border"
+            style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
+            role="status"
+          >
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      );
 
     const { disabled } = this.state;
     return (

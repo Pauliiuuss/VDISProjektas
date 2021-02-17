@@ -36,7 +36,7 @@ const InfoModal = ({ handleClose, show, showId }) => {
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          {loading ? (
+          {/* {loading ? (
             <div className="d-flex justify-content-center">
               <div
                 className="spinner-border m-5"
@@ -46,17 +46,13 @@ const InfoModal = ({ handleClose, show, showId }) => {
                 <span className="sr-only">Loading...</span>
               </div>
             </div>
-          ) : (
-            <div className="modal-body">
-              {showId && (
-                <RenderInfoForm
-                  disabled={disabled}
-                  showId={showId}
-                  data={data}
-                />
-              )}
-            </div>
-          )}
+          ) : ( */}
+          <div className="modal-body">
+            {showId && (
+              <RenderInfoForm disabled={disabled} showId={showId} data={data} />
+            )}
+          </div>
+          {/* )} */}
           <div className="modal-footer">
             <button onClick={handleClose} className="btn btn-secondary">
               Uždaryti
