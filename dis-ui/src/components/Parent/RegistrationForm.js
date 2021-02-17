@@ -191,7 +191,7 @@ export default class RegistrationForm extends Component {
     if (this.checkBtn.context._errors.length === 0) {
     }
 
-    this.props.history.push('/dis-app/home');
+    // this.props.history.push('/dis-app/home');
 
     await ParentService.sendForm({
       address: vaikoAdresas,
@@ -239,6 +239,7 @@ export default class RegistrationForm extends Component {
           message: response.data.message,
           loading: true,
         });
+        this.resetState();
       },
       (error) => {
         const resMessage =
@@ -254,6 +255,9 @@ export default class RegistrationForm extends Component {
         });
       }
     );
+  };
+
+  resetState = () => {
     this.setState({
       kindergartens: [],
       kindergarten1: 'Pasirinkti darželį iš sąrašo...',
@@ -441,6 +445,7 @@ export default class RegistrationForm extends Component {
                   onChange={this.handleChange}
                   icon={faUser}
                   mandatory={true}
+                  valid={[required]}
                 />
                 <RenderInput
                   type={'text'}
@@ -450,6 +455,7 @@ export default class RegistrationForm extends Component {
                   onChange={this.handleChange}
                   icon={faUser}
                   mandatory={true}
+                  valid={[required]}
                 />
                 <RenderInput
                   type={'number'}
@@ -469,6 +475,7 @@ export default class RegistrationForm extends Component {
                   onChange={this.handleChange}
                   icon={faHome}
                   mandatory={true}
+                  valid={[required]}
                 />
                 <RenderInput
                   type={'text'}
