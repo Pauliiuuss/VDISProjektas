@@ -58,7 +58,7 @@ public class UserDataService {
 			return ResponseEntity.badRequest().body(new MessageResponse("Neteisingas telefono numerio ilgis!"));
 		}
 
-		if (!userDataInfo.getEmail().isEmpty()
+		if (userDataInfo.getEmail() != null && !userDataInfo.getEmail().isEmpty()
 				&& !userDataInfo.getEmail().matches("^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$")) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Neteisingas elektroninis paštas!"));
 		}
