@@ -3,7 +3,6 @@ import authHeader from "./auth-header";
 import { LINK } from "./LINK";
 
 const API_URL = LINK + "/api/parent/";
-// const API_URL = "http://localhost:8080/api/parent/";
 
 class ParentService {
   sendForm(body) {

@@ -2,7 +2,6 @@ import axios from "axios";
 import { LINK } from "./LINK";
 
 const API_URL = LINK + "/api/auth/";
-// const API_URL = 'http://localhost:8080/api/auth/';
 
 class AuthService {
   login(username, password) {

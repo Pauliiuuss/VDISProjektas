@@ -549,7 +549,7 @@ class RenderInfoForm extends Component {
                     className="btn btn-sm btn-info"
                     onClick={this.unlockSecondParent}
                   >
-                    Prideti
+                    Pridėti
                   </button>
                 )}
               </p>

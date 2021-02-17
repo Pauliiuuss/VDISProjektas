@@ -3,7 +3,6 @@ import authHeader from "./auth-header";
 import { LINK } from "./LINK";
 
 const API_URL = LINK + "/api/userdata/";
-// const API_URL = 'http://localhost:8080/api/userdata/';
 
 class UserService {
   getUserData(id) {
