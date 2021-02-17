@@ -21,13 +21,9 @@ class App extends Component {
             component={Login}
           />
           <Route exact path="/dis-app/home" component={MainAfterLogin} />
-          <Route path="/dis-app/queue" component={UnderConstruction} />
-          <Route
-            exact
-            path="/dis-app/application/new"
-            component={RegistrationForm}
-          />
+          <Route exact path="/dis-app/addform" component={RegistrationForm} />
           <Route path="/dis-app/mydata" component={UserUpdateForm} />
+          <Route path="/dis-app/queue" component={UnderConstruction} />
           <Route path="/dis-app/statistic" component={UnderConstruction} />
         </Switch>
       </div>

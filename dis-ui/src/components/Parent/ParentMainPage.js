@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import RegisteredForms from "./ListOfForms/RegisteredForms";
-import ParentService from "../../services/parent.service";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import RegisteredForms from './ListOfForms/RegisteredForms';
+import ParentService from '../../services/parent.service';
 
 export default class ParentMainPage extends Component {
   state = {
@@ -24,10 +24,7 @@ export default class ParentMainPage extends Component {
       <div className="container mt-5">
         <div className="row">
           <div className="col">
-            <Link
-              to="/dis-app/application/new"
-              className="btn btn-success float-right"
-            >
+            <Link to="/dis-app/addform" className="btn btn-success float-right">
               Naujas prašymas
             </Link>
           </div>
@@ -44,7 +41,7 @@ export default class ParentMainPage extends Component {
           <div className="d-flex justify-content-center">
             <div
               className="spinner-border"
-              style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
+              style={{ width: '3rem', height: '3rem', marginTop: '3rem' }}
               role="status"
             >
               <span className="sr-only">Loading...</span>
