@@ -6,17 +6,17 @@ import ParentService from "../../services/parent.service";
 export default class ParentMainPage extends Component {
   state = {
     forms: [],
+    loading: true,
   };
 
   componentDidMount = async () => {
-    console.log(this.props.currentUser);
     await ParentService.getAllForms(this.props.currentUser.id).then(
       (response) => {
         const forms = response.data;
         this.setState({ forms });
-        console.log(forms);
       }
     );
+    this.setState({ loading: false });
   };
 
   render() {
@@ -40,7 +40,19 @@ export default class ParentMainPage extends Component {
             Mano prašymai
           </h3>
         </div>
-        <RegisteredForms forms={this.state.forms} />
+        {this.state.loading ? (
+          <div className="d-flex justify-content-center">
+            <div
+              className="spinner-border"
+              style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
+              role="status"
+            >
+              <span className="sr-only">Loading...</span>
+            </div>
+          </div>
+        ) : (
+          <RegisteredForms forms={this.state.forms} />
+        )}
       </div>
     );
   }

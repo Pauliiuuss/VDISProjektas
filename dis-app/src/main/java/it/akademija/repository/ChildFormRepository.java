@@ -16,5 +16,5 @@ public interface ChildFormRepository extends JpaRepository<ChildForm, Long> {
 
 	Collection<ChildForm> findAllByParentData(UserData userData);
 
-	Optional<ChildForm> findByPersonId(Integer personId);
+	Optional<ChildForm> findByPersonId(Long personId);
 }

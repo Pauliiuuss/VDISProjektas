@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import ParentService from "../../../services/parent.service";
-import AuthService from "../../../services/auth.service";
 import RegisteredFormsTable from "./RegisteredFormsTable";
 
 export default class Forms extends Component {

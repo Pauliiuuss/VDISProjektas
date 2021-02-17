@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import InfoModal from "../InfoModal";
-import Modal from "react-bootstrap/Modal";
 
 class TableBody extends Component {
   state = {
@@ -15,6 +14,7 @@ class TableBody extends Component {
 
   hideModal = () => {
     this.setState({ show: false, showId: "" });
+    window.location.reload();
   };
 
   renderCell = (item, column) => {

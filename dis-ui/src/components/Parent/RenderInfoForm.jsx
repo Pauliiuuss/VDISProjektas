@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component } from "react";
 import ParentService from "../../services/parent.service";
 import CheckButton from "react-validation/build/button";
 import {
@@ -17,7 +17,7 @@ import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
 
 const required = (value) => {
-  if (!value) {
+  if (!value || value === "") {
     return (
       <div
         className="alert alert-danger text-center px-0 py-2"
@@ -32,6 +32,7 @@ const required = (value) => {
 
 class RenderInfoForm extends Component {
   state = {
+    unlockSecondParent: false,
     message: "",
     successful: false,
     currentUser: "",
@@ -69,6 +70,16 @@ class RenderInfoForm extends Component {
         phoneNum: "",
         surename: "",
       },
+      secondParentData: {
+        address: "",
+        city: "",
+        email: "",
+        id: "",
+        name: "",
+        personId: "",
+        phoneNum: "",
+        surename: "",
+      },
       parentStudent: false,
       personId: "",
       postDate: "",
@@ -85,7 +96,6 @@ class RenderInfoForm extends Component {
     SpecService.getKindergartens()
       .then((result) => {
         this.setState({ kindergartens: result.data, userData });
-        console.log(result.data);
       })
       .catch((err) => {
         console.log(err);
@@ -99,10 +109,8 @@ class RenderInfoForm extends Component {
     if (showId !== "")
       ParentService.getAllData(showId).then(
         (response) => {
-          console.log(response.data);
           const data = response.data;
           this.setState({ data });
-          console.log(this.state);
         },
         (error) => {
           console.log(error);
@@ -123,6 +131,104 @@ class RenderInfoForm extends Component {
 
   confirmForm = (e) => {
     e.preventDefault();
+    if (
+      this.state.data.name === "" ||
+      this.state.data.surename === "" ||
+      this.state.data.address === "" ||
+      this.state.data.city === "" ||
+      this.state.data.parentData.name === "" ||
+      this.state.data.parentData.surename === "" ||
+      this.state.data.parentData.address === "" ||
+      this.state.data.parentData.city === "" ||
+      this.state.data.parentData.email === ""
+    ) {
+      this.setState({
+        successful: false,
+        message: "Privalomi laukai negali būti tušti!",
+      });
+      return;
+    }
+    if (
+      this.state.data.name === "" ||
+      this.state.data.surename === "" ||
+      this.state.data.address === "" ||
+      this.state.data.city === "" ||
+      this.state.data.parentData.name === "" ||
+      this.state.data.parentData.surename === "" ||
+      this.state.data.parentData.address === "" ||
+      this.state.data.parentData.city === "" ||
+      this.state.data.parentData.email === ""
+    ) {
+      this.setState({
+        successful: false,
+        message: "Privalomi laukai negali būti tušti!",
+      });
+      return;
+    }
+
+    if (
+      this.state.data.personId.toString().length !== 11 ||
+      this.state.data.parentData.personId.toString().length !== 11
+    ) {
+      this.setState({
+        successful: false,
+        message: "Neteisingas asmens kodo ilgis!",
+      });
+      return;
+    }
+
+    if (this.state.data.parentData.phoneNum.toString().length !== 8) {
+      this.setState({
+        successful: false,
+        message: "Neteisingas telefono numerio ilgis!",
+      });
+      return;
+    }
+
+    if (
+      this.state.data.kindergartenPriority.kindergartenOne ===
+      "Pasirinkti darželį iš sąrašo..."
+    ) {
+      this.setState({
+        successful: false,
+        message:
+          "Privaloma pasirinkti bent vieną darželio prioritetą(1 prioritetas)!",
+      });
+      return;
+    }
+
+    if (this.state.unlockSecondParent) {
+      if (
+        this.state.data.secondParentData.name === "" ||
+        this.state.data.secondParentData.surename === "" ||
+        this.state.data.secondParentData.address === "" ||
+        this.state.data.secondParentData.city === "" ||
+        this.state.data.secondParentData.email === ""
+      ) {
+        this.setState({
+          successful: false,
+          message: "Privalomi laukai negali būti tušti!",
+        });
+        return;
+      }
+
+      if (this.state.data.secondParentData.personId.toString().length !== 11) {
+        this.setState({
+          successful: false,
+          message: "Neteisingas asmens kodo ilgis!",
+        });
+        return;
+      }
+
+      if (this.state.data.secondParentData.phoneNum.toString().length !== 8) {
+        this.setState({
+          successful: false,
+          message: "Neteisingas telefono numerio ilgis!",
+        });
+        return;
+      }
+    }
+
     console.log("Confirm form");
     ParentService.updateForm(this.state.data.id, {
       ...this.state.data,
@@ -164,11 +270,10 @@ class RenderInfoForm extends Component {
         },
       },
     });
-    console.log(this.state.data.kindergartenPriority);
   };
 
   handleSelectChange = (e) => {
-    const value = this.state[e.target.name];
+    const value = this.state.data[e.target.name];
     console.log(value);
     this.setState({
       data: {
@@ -196,6 +301,51 @@ class RenderInfoForm extends Component {
           ...this.state.data.parentData,
           [name]: value,
         },
+      },
+    });
+  };
+
+  handleChangeForSecondParent = (e) => {
+    const { name, value } = e.target;
+    this.setState({
+      data: {
+        ...this.state.data,
+        secondParentData: {
+          ...this.state.data.secondParentData,
+          [name]: value,
+        },
+      },
+    });
+    console.log(this.state.data.secondParentData);
+  };
+
+  unlockSecondParent = (e) => {
+    e.preventDefault();
+    this.setState({
+      unlockSecondParent: true,
+      data: {
+        ...this.state.data,
+        secondParentData: {
+          address: "",
+          city: "",
+          email: "",
+          id: "",
+          name: "",
+          personId: "",
+          phoneNum: "",
+          surename: "",
+        },
+      },
+    });
+  };
+
+  lockSecondParent = (e) => {
+    e.preventDefault();
+    this.setState({
+      unlockSecondParent: false,
+      data: {
+        ...this.state.data,
+        secondParentData: null,
       },
     });
   };
@@ -279,6 +429,18 @@ class RenderInfoForm extends Component {
             valid={[required]}
             mandatory={true}
             disabled={disabled}
+            span={
+              <span
+                className="input-group-text"
+                style={{
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  padding: 4,
+                }}
+              >
+                +370
+              </span>
+            }
           />
           <RenderInput
             type={"email"}
@@ -292,72 +454,108 @@ class RenderInfoForm extends Component {
             disabled={disabled}
           />
         </div>
-        {/* <div>
+        <div>
           <h3 className="mb-4 text-center">Vaiko atstovas 2</h3>
-          <RenderInput
-            type={"text"}
-            forItem={"vardasAtstovas2"}
-            inputPlaceholder={"Vardas"}
-            value={this.state.vardasAtstovas2}
-            onChange={this.handleChange}
-            icon={faUser}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"text"}
-            forItem={"pavardeAtstovas2"}
-            inputPlaceholder={"Pavardė"}
-            value={this.state.pavardeAtstovas2}
-            onChange={this.handleChange}
-            icon={faUser}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"number"}
-            forItem={"kodasAtstovas2"}
-            inputPlaceholder={"Asmens kodas"}
-            value={this.state.kodasAtstovas2}
-            onChange={this.handleChange}
-            icon={faUser}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"text"}
-            forItem={"adresasAtstovas2"}
-            inputPlaceholder={"Adresas"}
-            value={this.state.adresasAtstovas2}
-            onChange={this.handleChange}
-            icon={faHome}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"text"}
-            forItem={"miestasAtstovas2"}
-            inputPlaceholder={"Miestas"}
-            value={this.state.miestasAtstovas2}
-            onChange={this.handleChange}
-            icon={faHome}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"number"}
-            forItem={"telAtstovas2"}
-            inputPlaceholder={"Telefonas"}
-            value={this.state.telAtstovas2}
-            onChange={this.handleChange}
-            icon={faPhone}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"email"}
-            forItem={"elpastasAtstovas2"}
-            inputPlaceholder={"El.paštas"}
-            value={this.state.elpastasAtstovas2}
-            onChange={this.handleChange}
-            icon={faEnvelope}
-            disabled={disabled}
-          />
-        </div> */}
+          {this.state.unlockSecondParent || this.state.data.secondParentData ? (
+            <div>
+              <RenderInput
+                type={"text"}
+                forItem={"name"}
+                inputPlaceholder={"Vardas"}
+                value={this.state.data.secondParentData.name}
+                onChange={this.handleChangeForSecondParent}
+                icon={faUser}
+                disabled={disabled}
+                mandatory={true}
+                valid={[required]}
+              />
+              <RenderInput
+                type={"text"}
+                forItem={"surename"}
+                inputPlaceholder={"Pavardė"}
+                value={this.state.data.secondParentData.surename}
+                onChange={this.handleChangeForSecondParent}
+                icon={faUser}
+                disabled={disabled}
+                mandatory={true}
+              />
+              <RenderInput
+                type={"number"}
+                forItem={"personId"}
+                inputPlaceholder={"Asmens kodas"}
+                value={this.state.data.secondParentData.personId}
+                mandatory={true}
+                onChange={this.handleChangeForSecondParent}
+                icon={faUser}
+                disabled={disabled}
+              />
+              <RenderInput
+                type={"text"}
+                forItem={"address"}
+                mandatory={true}
+                inputPlaceholder={"Adresas"}
+                value={this.state.data.secondParentData.address}
+                onChange={this.handleChangeForSecondParent}
+                icon={faHome}
+                disabled={disabled}
+              />
+              <RenderInput
+                type={"text"}
+                forItem={"city"}
+                inputPlaceholder={"Miestas"}
+                value={this.state.data.secondParentData.city}
+                mandatory={true}
+                onChange={this.handleChangeForSecondParent}
+                icon={faHome}
+                disabled={disabled}
+              />
+              <RenderInput
+                type={"number"}
+                forItem={"phoneNum"}
+                inputPlaceholder={"Telefonas"}
+                value={this.state.data.secondParentData.phoneNum}
+                mandatory={true}
+                onChange={this.handleChangeForSecondParent}
+                icon={faPhone}
+                disabled={disabled}
+              />
+              <RenderInput
+                type={"email"}
+                forItem={"email"}
+                inputPlaceholder={"El.paštas"}
+                value={this.state.data.secondParentData.email}
+                onChange={this.handleChangeForSecondParent}
+                mandatory={true}
+                icon={faEnvelope}
+                disabled={disabled}
+              />
+              <div style={{ textAlign: "center" }}>
+                <p>
+                  <button
+                    className="btn btn-sm btn-secondary"
+                    onClick={this.lockSecondParent}
+                  >
+                    Atšaukti
+                  </button>
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div style={{ textAlign: "center", alignContent: "center" }}>
+              <p>
+                Duomenys nesuvesti{" "}
+                {!this.state.disabled && (
+                  <button
+                    className="btn btn-sm btn-info"
+                    onClick={this.unlockSecondParent}
+                  >
+                    Pridėti
+                  </button>
+                )}
+              </p>
+            </div>
+          )}
+        </div>
         <div>
           <h3 className="mt-5 mb-4 text-center">Vaiko informacija</h3>
           <RenderInput
