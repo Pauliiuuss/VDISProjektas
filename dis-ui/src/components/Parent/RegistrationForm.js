@@ -615,6 +615,10 @@ export default class RegistrationForm extends Component {
                   inputPlaceholder={"1 prioritetas"}
                   value={this.state.kindergarten1}
                   onChange={this.kindergartenDropdownSelect}
+                  isDisabled={
+                    this.state.kindergarten2 !==
+                    "Pasirinkti darželį iš sąrašo..."
+                  }
                   kindergartens={this.state.kindergartens.filter(
                     (k) =>
                       k.name !== this.state.kindergarten2 &&
@@ -623,60 +627,82 @@ export default class RegistrationForm extends Component {
                       k.name !== this.state.kindergarten5
                   )}
                 />
-                <RenderSelect
-                  forItem={"kindergarten2"}
-                  inputPlaceholder={"2 prioritetas"}
-                  value={this.state.kindergarten2}
-                  onChange={this.kindergartenDropdownSelect}
-                  kindergartens={this.state.kindergartens.filter(
-                    (k) =>
-                      k.name !== this.state.kindergarten1 &&
-                      k.name !== this.state.kindergarten3 &&
-                      k.name !== this.state.kindergarten4 &&
-                      k.name !== this.state.kindergarten5
-                  )}
-                />
-                <RenderSelect
-                  forItem={"kindergarten3"}
-                  inputPlaceholder={"3 prioritetas"}
-                  value={this.state.kindergarten3}
-                  onChange={this.kindergartenDropdownSelect}
-                  kindergartens={this.state.kindergartens.filter(
-                    (k) =>
-                      k.name !== this.state.kindergarten1 &&
-                      k.name !== this.state.kindergarten2 &&
-                      k.name !== this.state.kindergarten4 &&
-                      k.name !== this.state.kindergarten5
-                  )}
-                />
-
-                <RenderSelect
-                  forItem={"kindergarten4"}
-                  inputPlaceholder={"4 prioritetas"}
-                  value={this.state.kindergarten4}
-                  onChange={this.kindergartenDropdownSelect}
-                  kindergartens={this.state.kindergartens.filter(
-                    (k) =>
-                      k.name !== this.state.kindergarten2 &&
-                      k.name !== this.state.kindergarten3 &&
-                      k.name !== this.state.kindergarten1 &&
-                      k.name !== this.state.kindergarten5
-                  )}
-                />
-
-                <RenderSelect
-                  forItem={"kindergarten5"}
-                  inputPlaceholder={"5 prioritetas"}
-                  value={this.state.kindergarten5}
-                  onChange={this.kindergartenDropdownSelect}
-                  kindergartens={this.state.kindergartens.filter(
-                    (k) =>
-                      k.name !== this.state.kindergarten1 &&
-                      k.name !== this.state.kindergarten3 &&
-                      k.name !== this.state.kindergarten4 &&
-                      k.name !== this.state.kindergarten2
-                  )}
-                />
+                {this.state.kindergarten1 !==
+                  "Pasirinkti darželį iš sąrašo..." && (
+                  <RenderSelect
+                    forItem={"kindergarten2"}
+                    inputPlaceholder={"2 prioritetas"}
+                    value={this.state.kindergarten2}
+                    isDisabled={
+                      this.state.kindergarten3 !==
+                      "Pasirinkti darželį iš sąrašo..."
+                    }
+                    onChange={this.kindergartenDropdownSelect}
+                    kindergartens={this.state.kindergartens.filter(
+                      (k) =>
+                        k.name !== this.state.kindergarten1 &&
+                        k.name !== this.state.kindergarten3 &&
+                        k.name !== this.state.kindergarten4 &&
+                        k.name !== this.state.kindergarten5
+                    )}
+                  />
+                )}
+                {this.state.kindergarten2 !==
+                  "Pasirinkti darželį iš sąrašo..." && (
+                  <RenderSelect
+                    forItem={"kindergarten3"}
+                    inputPlaceholder={"3 prioritetas"}
+                    value={this.state.kindergarten3}
+                    isDisabled={
+                      this.state.kindergarten4 !==
+                      "Pasirinkti darželį iš sąrašo..."
+                    }
+                    onChange={this.kindergartenDropdownSelect}
+                    kindergartens={this.state.kindergartens.filter(
+                      (k) =>
+                        k.name !== this.state.kindergarten1 &&
+                        k.name !== this.state.kindergarten2 &&
+                        k.name !== this.state.kindergarten4 &&
+                        k.name !== this.state.kindergarten5
+                    )}
+                  />
+                )}
+                {this.state.kindergarten3 !==
+                  "Pasirinkti darželį iš sąrašo..." && (
+                  <RenderSelect
+                    forItem={"kindergarten4"}
+                    inputPlaceholder={"4 prioritetas"}
+                    value={this.state.kindergarten4}
+                    isDisabled={
+                      this.state.kindergarten5 !==
+                      "Pasirinkti darželį iš sąrašo..."
+                    }
+                    onChange={this.kindergartenDropdownSelect}
+                    kindergartens={this.state.kindergartens.filter(
+                      (k) =>
+                        k.name !== this.state.kindergarten2 &&
+                        k.name !== this.state.kindergarten3 &&
+                        k.name !== this.state.kindergarten1 &&
+                        k.name !== this.state.kindergarten5
+                    )}
+                  />
+                )}
+                {this.state.kindergarten4 !==
+                  "Pasirinkti darželį iš sąrašo..." && (
+                  <RenderSelect
+                    forItem={"kindergarten5"}
+                    inputPlaceholder={"5 prioritetas"}
+                    value={this.state.kindergarten5}
+                    onChange={this.kindergartenDropdownSelect}
+                    kindergartens={this.state.kindergartens.filter(
+                      (k) =>
+                        k.name !== this.state.kindergarten1 &&
+                        k.name !== this.state.kindergarten3 &&
+                        k.name !== this.state.kindergarten4 &&
+                        k.name !== this.state.kindergarten2
+                    )}
+                  />
+                )}
               </div>
             </div>
           </div>
