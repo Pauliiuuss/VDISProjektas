@@ -257,40 +257,6 @@ export default class RegistrationForm extends Component {
         });
       }
     );
-    this.setState({
-      kindergartens: [],
-      kindergarten1: "Pasirinkti darželį iš sąrašo...",
-      kindergarten2: "Pasirinkti darželį iš sąrašo...",
-      kindergarten3: "Pasirinkti darželį iš sąrašo...",
-      kindergarten4: "Pasirinkti darželį iš sąrašo...",
-      kindergarten5: "Pasirinkti darželį iš sąrašo...",
-      vardasAtstovas1: "",
-      pavardeAtstovas1: "",
-      kodasAtstovas1: "",
-      adresasAtstovas1: "",
-      miestasAtstovas1: "",
-      telAtstovas1: "",
-      elpastasAtstovas1: "",
-      vardasAtstovas2: "",
-      pavardeAtstovas2: "",
-      kodasAtstovas2: "",
-      adresasAtstovas2: "",
-      miestasAtstovas2: "",
-      telAtstovas2: "",
-      elpastasAtstovas2: "",
-      vaikoVardas: "",
-      vaikoPavarde: "",
-      vaikoKodas: "",
-      gimimoData: "",
-      vaikoAdresas: "",
-      vaikoMiestas: "",
-      selectedPriority: true,
-      inCity: false,
-      adopted: false,
-      threeOrMore: false,
-      parentStudent: false,
-      handicapped: false,
-    });
   };
 
   kindergartenDropdownSelect = (e) => {
