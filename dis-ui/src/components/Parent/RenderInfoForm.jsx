@@ -667,108 +667,101 @@ class RenderInfoForm extends Component {
               }
             />
             {this.state.data.kindergartenPriority.kindergartenOne !==
-              "Pasirinkti darželį iš sąrašo..." &&
-              !this.state.disabled && (
-                <RenderSelect
-                  forItem={"kindergartenTwo"}
-                  inputPlaceholder={"2 prioritetas"}
-                  value={this.state.data.kindergartenPriority.kindergartenTwo}
-                  onChange={this.kindergartenDropdownSelect}
-                  kindergartens={this.state.kindergartens.filter(
-                    (k) =>
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenOne &&
-                      k.name !==
-                        this.state.data.kindergartenPriority
-                          .kindergartenThree &&
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenFour &&
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenFive
-                  )}
-                  disabled={
-                    disabled ||
-                    this.state.data.kindergartenPriority.kindergartenThree !==
-                      "Pasirinkti darželį iš sąrašo..."
-                  }
-                />
-              )}
+              "Pasirinkti darželį iš sąrašo..." && (
+              <RenderSelect
+                forItem={"kindergartenTwo"}
+                inputPlaceholder={"2 prioritetas"}
+                value={this.state.data.kindergartenPriority.kindergartenTwo}
+                onChange={this.kindergartenDropdownSelect}
+                kindergartens={this.state.kindergartens.filter(
+                  (k) =>
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenOne &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenThree &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenFour &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenFive
+                )}
+                disabled={
+                  disabled ||
+                  this.state.data.kindergartenPriority.kindergartenThree !==
+                    "Pasirinkti darželį iš sąrašo..."
+                }
+              />
+            )}
             {this.state.data.kindergartenPriority.kindergartenTwo !==
-              "Pasirinkti darželį iš sąrašo..." &&
-              !this.state.disabled && (
-                <RenderSelect
-                  forItem={"kindergartenThree"}
-                  inputPlaceholder={"3 prioritetas"}
-                  value={this.state.data.kindergartenPriority.kindergartenThree}
-                  onChange={this.kindergartenDropdownSelect}
-                  kindergartens={this.state.kindergartens.filter(
-                    (k) =>
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenTwo &&
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenOne &&
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenFour &&
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenFive
-                  )}
-                  disabled={
-                    disabled ||
-                    this.state.data.kindergartenPriority.kindergartenFour !==
-                      "Pasirinkti darželį iš sąrašo..."
-                  }
-                />
-              )}
+              "Pasirinkti darželį iš sąrašo..." && (
+              <RenderSelect
+                forItem={"kindergartenThree"}
+                inputPlaceholder={"3 prioritetas"}
+                value={this.state.data.kindergartenPriority.kindergartenThree}
+                onChange={this.kindergartenDropdownSelect}
+                kindergartens={this.state.kindergartens.filter(
+                  (k) =>
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenTwo &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenOne &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenFour &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenFive
+                )}
+                disabled={
+                  disabled ||
+                  this.state.data.kindergartenPriority.kindergartenFour !==
+                    "Pasirinkti darželį iš sąrašo..."
+                }
+              />
+            )}
             {this.state.data.kindergartenPriority.kindergartenThree !==
-              "Pasirinkti darželį iš sąrašo..." &&
-              !this.state.disabled && (
-                <RenderSelect
-                  forItem={"kindergartenFour"}
-                  inputPlaceholder={"4 prioritetas"}
-                  value={this.state.data.kindergartenPriority.kindergartenFour}
-                  onChange={this.kindergartenDropdownSelect}
-                  kindergartens={this.state.kindergartens.filter(
-                    (k) =>
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenTwo &&
-                      k.name !==
-                        this.state.data.kindergartenPriority
-                          .kindergartenThree &&
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenOne &&
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenFive
-                  )}
-                  disabled={
-                    disabled ||
-                    this.state.data.kindergartenPriority.kindergartenFive !==
-                      "Pasirinkti darželį iš sąrašo..."
-                  }
-                />
-              )}
+              "Pasirinkti darželį iš sąrašo..." && (
+              <RenderSelect
+                forItem={"kindergartenFour"}
+                inputPlaceholder={"4 prioritetas"}
+                value={this.state.data.kindergartenPriority.kindergartenFour}
+                onChange={this.kindergartenDropdownSelect}
+                kindergartens={this.state.kindergartens.filter(
+                  (k) =>
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenTwo &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenThree &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenOne &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenFive
+                )}
+                disabled={
+                  disabled ||
+                  this.state.data.kindergartenPriority.kindergartenFive !==
+                    "Pasirinkti darželį iš sąrašo..."
+                }
+              />
+            )}
             {this.state.data.kindergartenPriority.kindergartenFour !==
-              "Pasirinkti darželį iš sąrašo..." &&
-              !this.state.disabled && (
-                <RenderSelect
-                  forItem={"kindergartenFive"}
-                  inputPlaceholder={"5 prioritetas"}
-                  value={this.state.data.kindergartenPriority.kindergartenFive}
-                  onChange={this.kindergartenDropdownSelect}
-                  kindergartens={this.state.kindergartens.filter(
-                    (k) =>
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenTwo &&
-                      k.name !==
-                        this.state.data.kindergartenPriority
-                          .kindergartenThree &&
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenFour &&
-                      k.name !==
-                        this.state.data.kindergartenPriority.kindergartenOne
-                  )}
-                  disabled={disabled}
-                />
-              )}
+              "Pasirinkti darželį iš sąrašo..." && (
+              <RenderSelect
+                forItem={"kindergartenFive"}
+                inputPlaceholder={"5 prioritetas"}
+                value={this.state.data.kindergartenPriority.kindergartenFive}
+                onChange={this.kindergartenDropdownSelect}
+                kindergartens={this.state.kindergartens.filter(
+                  (k) =>
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenTwo &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenThree &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenFour &&
+                    k.name !==
+                      this.state.data.kindergartenPriority.kindergartenOne
+                )}
+                disabled={disabled}
+              />
+            )}
           </div>
         </div>
         <div className="row">
