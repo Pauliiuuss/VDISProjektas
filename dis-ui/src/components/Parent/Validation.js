@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const required = (value) => {
   if (!value) {
@@ -6,9 +6,23 @@ export const required = (value) => {
       <div
         className="alert alert-danger text-center px-0 py-2"
         role="alert"
-        style={{ fontSize: '9px' }}
+        style={{ fontSize: "9px" }}
       >
         Privalomas laukas turi būti užpildytas!
+      </div>
+    );
+  }
+};
+
+export const noNumbers = (value) => {
+  if (/\d/.test(value)) {
+    return (
+      <div
+        className="alert alert-danger text-center px-0 py-2"
+        role="alert"
+        style={{ fontSize: "9px" }}
+      >
+        Skaičiai negalimi
       </div>
     );
   }
@@ -21,7 +35,7 @@ export const validPersonalCode = (value) => {
       <div
         className="alert alert-danger text-center px-0 py-2"
         role="alert"
-        style={{ fontSize: '9px' }}
+        style={{ fontSize: "9px" }}
       >
         Neteisingas asmens kodo ilgis!
       </div>
@@ -36,7 +50,7 @@ export const validPhoneNumber = (value) => {
       <div
         className="alert alert-danger text-center px-0 py-2"
         role="alert"
-        style={{ fontSize: '9px' }}
+        style={{ fontSize: "9px" }}
       >
         Neteisingas telefono numerio ilgis!
       </div>
@@ -51,7 +65,7 @@ export const validEmail = (value) => {
       <div
         className="alert alert-danger text-center px-0 py-2"
         role="alert"
-        style={{ fontSize: '9px' }}
+        style={{ fontSize: "9px" }}
       >
         Neteisingas elektroninio pašto formatas!
       </div>

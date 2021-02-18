@@ -15,7 +15,7 @@ import RenderCheck from "./RenderCheck";
 import SpecService from "../../services/spec.service";
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
-import { required } from "./Validation";
+import { noNumbers, required } from "./Validation";
 
 class RenderInfoForm extends Component {
   state = {
@@ -97,6 +97,21 @@ class RenderInfoForm extends Component {
       ParentService.getAllData(showId).then(
         (response) => {
           const data = response.data;
+          if (data.kindergartenPriority.kindergartenFive === null)
+            data.kindergartenPriority.kindergartenFive =
+              "Pasirinkti darželį iš sąrašo...";
+
+          if (data.kindergartenPriority.kindergartenFour === null)
+            data.kindergartenPriority.kindergartenFour =
+              "Pasirinkti darželį iš sąrašo...";
+
+          if (data.kindergartenPriority.kindergartenThree === null)
+            data.kindergartenPriority.kindergartenThree =
+              "Pasirinkti darželį iš sąrašo...";
+
+          if (data.kindergartenPriority.kindergartenTwo === null)
+            data.kindergartenPriority.kindergartenTwo =
+              "Pasirinkti darželį iš sąrašo...";
           this.setState({ data });
         },
         (error) => {
@@ -378,7 +393,7 @@ class RenderInfoForm extends Component {
             value={this.state.data.parentData.name}
             onChange={this.handleChange}
             icon={faUser}
-            valid={[required]}
+            valid={[noNumbers, required]}
             mandatory={true}
             disabled={disabled}
           />
@@ -389,7 +404,7 @@ class RenderInfoForm extends Component {
             value={this.state.data.parentData.surename}
             onChange={this.handleChange}
             icon={faUser}
-            valid={[required]}
+            valid={[noNumbers, required]}
             mandatory={true}
             disabled={disabled}
           />
@@ -474,7 +489,7 @@ class RenderInfoForm extends Component {
                 icon={faUser}
                 disabled={disabled}
                 mandatory={true}
-                valid={[required]}
+                valid={[noNumbers, required]}
               />
               <RenderInput
                 type={"text"}
@@ -485,6 +500,7 @@ class RenderInfoForm extends Component {
                 icon={faUser}
                 disabled={disabled}
                 mandatory={true}
+                valid={[noNumbers, required]}
               />
               <RenderInput
                 type={"number"}
@@ -495,6 +511,7 @@ class RenderInfoForm extends Component {
                 onChange={this.handleChangeForSecondParent}
                 icon={faUser}
                 disabled={disabled}
+                valid={[required]}
               />
               <RenderInput
                 type={"text"}
@@ -505,6 +522,7 @@ class RenderInfoForm extends Component {
                 onChange={this.handleChangeForSecondParent}
                 icon={faHome}
                 disabled={disabled}
+                valid={[required]}
               />
               <RenderInput
                 type={"text"}
@@ -515,6 +533,7 @@ class RenderInfoForm extends Component {
                 onChange={this.handleChangeForSecondParent}
                 icon={faHome}
                 disabled={disabled}
+                valid={[required]}
               />
               <RenderInput
                 type={"number"}
@@ -525,6 +544,7 @@ class RenderInfoForm extends Component {
                 onChange={this.handleChangeForSecondParent}
                 icon={faPhone}
                 disabled={disabled}
+                valid={[required]}
               />
               <RenderInput
                 type={"email"}
@@ -535,6 +555,7 @@ class RenderInfoForm extends Component {
                 mandatory={true}
                 icon={faEnvelope}
                 disabled={disabled}
+                valid={[required]}
               />
               {this.state.unlockSecondParent && (
                 <div style={{ textAlign: "center" }}>
@@ -574,7 +595,7 @@ class RenderInfoForm extends Component {
             value={this.state.data.name}
             onChange={this.handleChangeForChild}
             icon={faUser}
-            valid={[required]}
+            valid={[noNumbers, required]}
             mandatory={true}
             disabled={disabled}
           />
@@ -585,7 +606,7 @@ class RenderInfoForm extends Component {
             value={this.state.data.surename}
             onChange={this.handleChangeForChild}
             icon={faUser}
-            valid={[required]}
+            valid={[noNumbers, required]}
             mandatory={true}
             disabled={disabled}
           />
