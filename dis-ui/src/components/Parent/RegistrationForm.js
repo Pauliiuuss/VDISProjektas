@@ -152,6 +152,22 @@ export default class RegistrationForm extends Component {
     }
 
     if (
+      this.state.checked &&
+      (vardasAtstovas2 === '' ||
+        pavardeAtstovas2 === '' ||
+        adresasAtstovas2 === '' ||
+        miestasAtstovas2 === '' ||
+        elpastasAtstovas2 === '')
+    ) {
+      this.setState({
+        successful: false,
+        message: 'Privalomi laukai negali būti tušti!',
+        loading: false,
+      });
+      return;
+    }
+
+    if (
       vaikoKodas.toString().length !== 11 ||
       kodasAtstovas1.toString().length !== 11
     ) {
@@ -163,7 +179,25 @@ export default class RegistrationForm extends Component {
       return;
     }
 
+    if (this.state.checked && kodasAtstovas2.toString().length !== 11) {
+      this.setState({
+        successful: false,
+        message: 'Neteisingas asmens kodo ilgis!',
+        loading: false,
+      });
+      return;
+    }
+
     if (telAtstovas1.toString().length !== 8) {
+      this.setState({
+        successful: false,
+        message: 'Neteisingas telefono numerio ilgis!',
+        loading: false,
+      });
+      return;
+    }
+
+    if (this.state.checked && telAtstovas2.toString().length !== 8) {
       this.setState({
         successful: false,
         message: 'Neteisingas telefono numerio ilgis!',

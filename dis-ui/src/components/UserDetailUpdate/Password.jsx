@@ -29,7 +29,7 @@ const Password = ({ currentUser, onPasswordSubmit, message, successful }) => {
         Reikalavimai keičiamam slaptažodžiui:
       </p>
       <p className="text-secondary text-justify font-italic">
-        Slaptažodis turi būti ne mažiau 8 simbolių ilgo turi būti bent viena
+        Slaptažodis turi būti ne mažiau 8 simbolių ilgio turi būti bent viena
         didžioji ir bent viena mažoji raidė, ir bent vienas skaičius.
       </p>
       <form
