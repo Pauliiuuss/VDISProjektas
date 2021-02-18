@@ -17,8 +17,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Entity
 @Table(name = "child_forms", uniqueConstraints = { @UniqueConstraint(columnNames = "personId") })
 public class ChildForm {
@@ -56,7 +54,6 @@ public class ChildForm {
 	private KindergartenPriority kindergartenPriority;
 
 	@Temporal(TemporalType.DATE)
-	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date postDate;
 
 	@OneToOne(fetch = FetchType.EAGER)

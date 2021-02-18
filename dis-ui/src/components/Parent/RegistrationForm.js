@@ -24,17 +24,8 @@ import {
   validEmail,
 } from './Validation';
 
-var today = new Date(),
-  date =
-    today.getFullYear() +
-    '-' +
-    ('0' + (today.getMonth() + 1)).slice(-2) +
-    '-' +
-    ('0' + today.getDate()).slice(-2);
-
 export default class RegistrationForm extends Component {
   state = {
-    date: date,
     message: '',
     successful: false,
     currentUser: '',
@@ -231,7 +222,7 @@ export default class RegistrationForm extends Component {
         surename: pavardeAtstovas2,
       },
       parentStudent,
-      postDate: date,
+      postDate: new Date(),
       surename: vaikoPavarde,
       threeOrMore,
     }).then(
@@ -643,7 +634,7 @@ export default class RegistrationForm extends Component {
                   *
                 </span>
               </h3>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <RenderSelect
                   forItem={'kindergarten1'}
                   inputPlaceholder={'1 prioritetas'}
@@ -680,6 +671,76 @@ export default class RegistrationForm extends Component {
                   value={this.state.kindergarten5}
                   onChange={this.kindergartenDropdownSelect}
                   kindergartens={this.state.kindergartens}
+                />
+              </div> */}
+
+              <div className="form-group">
+                <RenderSelect
+                  forItem={'kindergarten1'}
+                  inputPlaceholder={'1 prioritetas'}
+                  value={this.state.kindergarten1}
+                  onChange={this.kindergartenDropdownSelect}
+                  kindergartens={this.state.kindergartens.filter(
+                    (k) =>
+                      k.name !== this.state.kindergarten2 &&
+                      k.name !== this.state.kindergarten3 &&
+                      k.name !== this.state.kindergarten4 &&
+                      k.name !== this.state.kindergarten5
+                  )}
+                />
+                <RenderSelect
+                  forItem={'kindergarten2'}
+                  inputPlaceholder={'2 prioritetas'}
+                  value={this.state.kindergarten2}
+                  onChange={this.kindergartenDropdownSelect}
+                  kindergartens={this.state.kindergartens.filter(
+                    (k) =>
+                      k.name !== this.state.kindergarten1 &&
+                      k.name !== this.state.kindergarten3 &&
+                      k.name !== this.state.kindergarten4 &&
+                      k.name !== this.state.kindergarten5
+                  )}
+                />
+                <RenderSelect
+                  forItem={'kindergarten3'}
+                  inputPlaceholder={'3 prioritetas'}
+                  value={this.state.kindergarten3}
+                  onChange={this.kindergartenDropdownSelect}
+                  kindergartens={this.state.kindergartens.filter(
+                    (k) =>
+                      k.name !== this.state.kindergarten1 &&
+                      k.name !== this.state.kindergarten2 &&
+                      k.name !== this.state.kindergarten4 &&
+                      k.name !== this.state.kindergarten5
+                  )}
+                />
+
+                <RenderSelect
+                  forItem={'kindergarten4'}
+                  inputPlaceholder={'4 prioritetas'}
+                  value={this.state.kindergarten4}
+                  onChange={this.kindergartenDropdownSelect}
+                  kindergartens={this.state.kindergartens.filter(
+                    (k) =>
+                      k.name !== this.state.kindergarten2 &&
+                      k.name !== this.state.kindergarten3 &&
+                      k.name !== this.state.kindergarten1 &&
+                      k.name !== this.state.kindergarten5
+                  )}
+                />
+
+                <RenderSelect
+                  forItem={'kindergarten5'}
+                  inputPlaceholder={'5 prioritetas'}
+                  value={this.state.kindergarten5}
+                  onChange={this.kindergartenDropdownSelect}
+                  kindergartens={this.state.kindergartens.filter(
+                    (k) =>
+                      k.name !== this.state.kindergarten1 &&
+                      k.name !== this.state.kindergarten3 &&
+                      k.name !== this.state.kindergarten4 &&
+                      k.name !== this.state.kindergarten2
+                  )}
                 />
               </div>
             </div>
