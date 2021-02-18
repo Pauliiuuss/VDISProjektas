@@ -1,6 +1,7 @@
 {
   "files": {
     "main.css": "/dis-app/static/css/main.1dc783b7.chunk.css",
+<<<<<<< Updated upstream
     "main.js": "/dis-app/static/js/main.f1eef473.chunk.js",
     "main.js.map": "/dis-app/static/js/main.f1eef473.chunk.js.map",
     "runtime-main.js": "/dis-app/static/js/runtime-main.1f242d6f.js",
@@ -14,14 +15,35 @@
     "static/css/2.2358bba0.chunk.css.map": "/dis-app/static/css/2.2358bba0.chunk.css.map",
     "static/css/main.1dc783b7.chunk.css.map": "/dis-app/static/css/main.1dc783b7.chunk.css.map",
     "static/js/2.939879f1.chunk.js.LICENSE.txt": "/dis-app/static/js/2.939879f1.chunk.js.LICENSE.txt",
+=======
+    "main.js": "/dis-app/static/js/main.5a46f9eb.chunk.js",
+    "main.js.map": "/dis-app/static/js/main.5a46f9eb.chunk.js.map",
+    "runtime-main.js": "/dis-app/static/js/runtime-main.1f242d6f.js",
+    "runtime-main.js.map": "/dis-app/static/js/runtime-main.1f242d6f.js.map",
+    "static/css/2.2358bba0.chunk.css": "/dis-app/static/css/2.2358bba0.chunk.css",
+    "static/js/2.116fae55.chunk.js": "/dis-app/static/js/2.116fae55.chunk.js",
+    "static/js/2.116fae55.chunk.js.map": "/dis-app/static/js/2.116fae55.chunk.js.map",
+    "index.html": "/dis-app/index.html",
+    "precache-manifest.a21fc969da743014e999f9aa511f4ab0.js": "/dis-app/precache-manifest.a21fc969da743014e999f9aa511f4ab0.js",
+    "service-worker.js": "/dis-app/service-worker.js",
+    "static/css/2.2358bba0.chunk.css.map": "/dis-app/static/css/2.2358bba0.chunk.css.map",
+    "static/css/main.1dc783b7.chunk.css.map": "/dis-app/static/css/main.1dc783b7.chunk.css.map",
+    "static/js/2.116fae55.chunk.js.LICENSE.txt": "/dis-app/static/js/2.116fae55.chunk.js.LICENSE.txt",
+>>>>>>> Stashed changes
     "static/media/font-awesome.css": "/dis-app/static/media/fontawesome-webfont.fee66e71.woff",
     "static/media/logo.png": "/dis-app/static/media/logo.86652faf.png"
   },
   "entrypoints": [
     "static/js/runtime-main.1f242d6f.js",
     "static/css/2.2358bba0.chunk.css",
+<<<<<<< Updated upstream
     "static/js/2.939879f1.chunk.js",
     "static/css/main.1dc783b7.chunk.css",
     "static/js/main.f1eef473.chunk.js"
+=======
+    "static/js/2.116fae55.chunk.js",
+    "static/css/main.1dc783b7.chunk.css",
+    "static/js/main.5a46f9eb.chunk.js"
+>>>>>>> Stashed changes
   ]
 }
