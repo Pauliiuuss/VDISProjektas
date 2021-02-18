@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class RenderSelect extends Component {
   render() {
@@ -8,6 +8,7 @@ class RenderSelect extends Component {
       value,
       onChange,
       kindergartens,
+      isDisabled,
     } = this.props;
     return (
       <div className="form-inline mb-4">
@@ -15,12 +16,13 @@ class RenderSelect extends Component {
           {inputPlaceholder}
         </label>
         <select
-          style={{ fontSize: '13px' }}
+          style={{ fontSize: "13px" }}
           className="form-control col-12 col-sm-12 col-md-5 col-lg-5"
           id={forItem}
           name={forItem}
           value={value}
           onChange={onChange}
+          disabled={isDisabled}
         >
           <option>Pasirinkti darželį iš sąrašo...</option>
           {kindergartens.map((kind) => (
