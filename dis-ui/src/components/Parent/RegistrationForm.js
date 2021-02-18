@@ -366,6 +366,14 @@ export default class RegistrationForm extends Component {
                 icon={faUser}
                 valid={[required, validPersonalCode]}
                 mandatory={true}
+                disNumInputSymbols={(evt) =>
+                  (evt.key === 'e' && evt.preventDefault()) ||
+                  (evt.key === 'E' && evt.preventDefault()) ||
+                  (evt.key === ',' && evt.preventDefault()) ||
+                  (evt.key === '=' && evt.preventDefault()) ||
+                  (evt.key === '-' && evt.preventDefault()) ||
+                  (evt.key === '.' && evt.preventDefault())
+                }
               />
               <RenderInput
                 type={'text'}
@@ -394,6 +402,14 @@ export default class RegistrationForm extends Component {
                 value={this.state.telAtstovas1}
                 onChange={this.handleChange}
                 icon={faPhone}
+                disNumInputSymbols={(evt) =>
+                  (evt.key === 'e' && evt.preventDefault()) ||
+                  (evt.key === 'E' && evt.preventDefault()) ||
+                  (evt.key === ',' && evt.preventDefault()) ||
+                  (evt.key === '=' && evt.preventDefault()) ||
+                  (evt.key === '-' && evt.preventDefault()) ||
+                  (evt.key === '.' && evt.preventDefault())
+                }
                 span={
                   <span
                     className="input-group-text"
@@ -469,6 +485,14 @@ export default class RegistrationForm extends Component {
                   inputPlaceholder={'Asmens kodas'}
                   value={this.state.kodasAtstovas2}
                   onChange={this.handleChange}
+                  disNumInputSymbols={(evt) =>
+                    (evt.key === 'e' && evt.preventDefault()) ||
+                    (evt.key === 'E' && evt.preventDefault()) ||
+                    (evt.key === ',' && evt.preventDefault()) ||
+                    (evt.key === '=' && evt.preventDefault()) ||
+                    (evt.key === '-' && evt.preventDefault()) ||
+                    (evt.key === '.' && evt.preventDefault())
+                  }
                   icon={faUser}
                   valid={[required, validPersonalCode]}
                   mandatory={true}
@@ -500,6 +524,14 @@ export default class RegistrationForm extends Component {
                   value={this.state.telAtstovas2}
                   onChange={this.handleChange}
                   icon={faPhone}
+                  disNumInputSymbols={(evt) =>
+                    (evt.key === 'e' && evt.preventDefault()) ||
+                    (evt.key === 'E' && evt.preventDefault()) ||
+                    (evt.key === ',' && evt.preventDefault()) ||
+                    (evt.key === '=' && evt.preventDefault()) ||
+                    (evt.key === '-' && evt.preventDefault()) ||
+                    (evt.key === '.' && evt.preventDefault())
+                  }
                   span={
                     <span
                       className="input-group-text"
@@ -557,6 +589,14 @@ export default class RegistrationForm extends Component {
                 inputPlaceholder={'Asmens kodas'}
                 value={this.state.vaikoKodas}
                 onChange={this.handleChange}
+                disNumInputSymbols={(evt) =>
+                  (evt.key === 'e' && evt.preventDefault()) ||
+                  (evt.key === 'E' && evt.preventDefault()) ||
+                  (evt.key === ',' && evt.preventDefault()) ||
+                  (evt.key === '=' && evt.preventDefault()) ||
+                  (evt.key === '-' && evt.preventDefault()) ||
+                  (evt.key === '.' && evt.preventDefault())
+                }
                 icon={faUser}
                 valid={[required, validPersonalCode]}
                 mandatory={true}

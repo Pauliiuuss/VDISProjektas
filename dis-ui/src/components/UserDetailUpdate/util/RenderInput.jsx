@@ -13,6 +13,7 @@ class RenderInput extends Component {
       onChange,
       icon,
       span,
+      disNumInputSymbols,
     } = this.props;
     return (
       <div className="form-inline mb-3">
@@ -34,6 +35,7 @@ class RenderInput extends Component {
             placeholder={inputPlaceholder}
             value={value ? value : ''}
             onChange={onChange}
+            onKeyDown={disNumInputSymbols}
           />
         </div>
       </div>
