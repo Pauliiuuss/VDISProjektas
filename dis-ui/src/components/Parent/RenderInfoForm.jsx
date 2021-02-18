@@ -648,41 +648,91 @@ class RenderInfoForm extends Component {
               inputPlaceholder={'1 prioritetas'}
               value={this.state.data.kindergartenPriority.kindergartenOne}
               onChange={this.kindergartenDropdownSelect}
-              kindergartens={this.state.kindergartens}
+              kindergartens={this.state.kindergartens.filter(
+                (k) =>
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenTwo &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenThree &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenFour &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenFive
+              )}
               disabled={disabled}
             />
             <RenderSelect
-              forItem={'kindergartenTwo'}
-              inputPlaceholder={'2 prioritetas'}
-              value={this.state.kindergartens.kindergartenTwo}
+              forItem={"kindergartenTwo"}
+              inputPlaceholder={"2 prioritetas"}
+              value={this.state.data.kindergartenPriority.kindergartenTwo}
               onChange={this.kindergartenDropdownSelect}
-              kindergartens={this.state.kindergartens}
+              kindergartens={this.state.kindergartens.filter(
+                (k) =>
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenOne &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenThree &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenFour &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenFive
+              )}
               disabled={disabled}
             />
             <RenderSelect
-              forItem={'kindergartenThree'}
-              inputPlaceholder={'3 prioritetas'}
-              value={this.state.kindergartens.kindergartenThree}
+              forItem={"kindergartenThree"}
+              inputPlaceholder={"3 prioritetas"}
+              value={this.state.data.kindergartenPriority.kindergartenThree}
               onChange={this.kindergartenDropdownSelect}
-              kindergartens={this.state.kindergartens}
+              kindergartens={this.state.kindergartens.filter(
+                (k) =>
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenTwo &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenOne &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenFour &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenFive
+              )}
               disabled={disabled}
             />
 
             <RenderSelect
-              forItem={'kindergartenFour'}
-              inputPlaceholder={'4 prioritetas'}
-              value={this.state.kindergartens.kindergartenFour}
+              forItem={"kindergartenFour"}
+              inputPlaceholder={"4 prioritetas"}
+              value={this.state.data.kindergartenPriority.kindergartenFour}
               onChange={this.kindergartenDropdownSelect}
-              kindergartens={this.state.kindergartens}
+              kindergartens={this.state.kindergartens.filter(
+                (k) =>
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenTwo &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenThree &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenOne &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenFive
+              )}
               disabled={disabled}
             />
 
             <RenderSelect
-              forItem={'kindergartenFive'}
-              inputPlaceholder={'5 prioritetas'}
-              value={this.state.kindergartens.kindergartenFive}
+              forItem={"kindergartenFive"}
+              inputPlaceholder={"5 prioritetas"}
+              value={this.state.data.kindergartenPriority.kindergartenFive}
               onChange={this.kindergartenDropdownSelect}
-              kindergartens={this.state.kindergartens}
+              kindergartens={this.state.kindergartens.filter(
+                (k) =>
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenTwo &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenThree &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenFour &&
+                  k.name !==
+                    this.state.data.kindergartenPriority.kindergartenOne
+              )}
               disabled={disabled}
             />
           </div>
