@@ -24,7 +24,9 @@ class RenderSelect extends Component {
           onChange={onChange}
           disabled={disabled}
         >
-          <option>Pasirinkti darželį iš sąrašo...</option>
+          {forItem !== "kindergartenOne" && (
+            <option>Pasirinkti darželį iš sąrašo...</option>
+          )}
           {kindergartens.map((kind) => (
             <option key={kind.id}>{kind.name}</option>
           ))}
