@@ -13,6 +13,7 @@ import it.akademija.models.ChildFormInfo;
 import it.akademija.models.EFormStatus;
 import it.akademija.models.Group;
 import it.akademija.models.KindergartenInfo;
+import it.akademija.models.KindergartenPriority;
 import it.akademija.models.SecondParent;
 import it.akademija.models.User;
 import it.akademija.models.UserData;
@@ -123,8 +124,26 @@ public class ParentService {
 		}
 
 		childFormRepository.save(newForm);
-		childFormInfo.getKindergartenPriority().setChildForm(newForm);
-		kindergartenPriorityRepository.save(childFormInfo.getKindergartenPriority());
+
+		KindergartenPriority kinderSelection = childFormInfo.getKindergartenPriority();
+		if (kinderSelection.getKindergartenOne().equals("Pasirinkti darželį iš sąrašo...")) {
+			kinderSelection.setKindergartenOne(null);
+		}
+		if (kinderSelection.getKindergartenTwo().equals("Pasirinkti darželį iš sąrašo...")) {
+			kinderSelection.setKindergartenTwo(null);
+		}
+		if (kinderSelection.getKindergartenThree().equals("Pasirinkti darželį iš sąrašo...")) {
+			kinderSelection.setKindergartenThree(null);
+		}
+		if (kinderSelection.getKindergartenFour().equals("Pasirinkti darželį iš sąrašo...")) {
+			kinderSelection.setKindergartenFour(null);
+		}
+		if (kinderSelection.getKindergartenFive().equals("Pasirinkti darželį iš sąrašo...")) {
+			kinderSelection.setKindergartenFive(null);
+		}
+
+		kinderSelection.setChildForm(newForm);
+		kindergartenPriorityRepository.save(kinderSelection);
 
 		return ResponseEntity.ok(new MessageResponse("Prašymas užregistruotas!"));
 
@@ -198,8 +217,25 @@ public class ParentService {
 		}
 
 		childFormRepository.save(newForm);
-		childFormInfo.getKindergartenPriority().setChildForm(newForm);
-		kindergartenPriorityRepository.save(childFormInfo.getKindergartenPriority());
+		KindergartenPriority kinderSelection = childFormInfo.getKindergartenPriority();
+		if (kinderSelection.getKindergartenOne().equals("Pasirinkti darželį iš sąrašo...")) {
+			kinderSelection.setKindergartenOne(null);
+		}
+		if (kinderSelection.getKindergartenTwo().equals("Pasirinkti darželį iš sąrašo...")) {
+			kinderSelection.setKindergartenTwo(null);
+		}
+		if (kinderSelection.getKindergartenThree().equals("Pasirinkti darželį iš sąrašo...")) {
+			kinderSelection.setKindergartenThree(null);
+		}
+		if (kinderSelection.getKindergartenFour().equals("Pasirinkti darželį iš sąrašo...")) {
+			kinderSelection.setKindergartenFour(null);
+		}
+		if (kinderSelection.getKindergartenFive().equals("Pasirinkti darželį iš sąrašo...")) {
+			kinderSelection.setKindergartenFive(null);
+		}
+
+		kinderSelection.setChildForm(newForm);
+		kindergartenPriorityRepository.save(kinderSelection);
 
 		return ResponseEntity.ok(new MessageResponse("Forma užregistruota!"));
 	}
