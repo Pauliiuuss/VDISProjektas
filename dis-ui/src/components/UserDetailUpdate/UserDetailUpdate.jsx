@@ -80,6 +80,14 @@ class UserUpdateForm extends Component {
           successfulPassword: false,
           messagePassword: "",
         });
+        UserService.getUserData(this.state.currentUser.id).then(
+          (response) => {
+            this.setState({ userData: response.data });
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       },
       (error) => {
         const resMessage =
@@ -162,7 +170,7 @@ class UserUpdateForm extends Component {
             <div className="row justify-content-around">
               <div className="col-5">
                 <Details
-                  userData={userData}
+                  userData={this.state.userData}
                   onSubmit={this.handleSubmit}
                   message={this.state.messageDetails}
                   successful={this.state.successfulDetails}
