@@ -159,6 +159,10 @@ class UserUpdateForm extends Component {
     }
   };
 
+  clearUpdateFormMessage = () => {
+    this.setState({ messageDetails: "" });
+  };
+
   render() {
     const { currentUser, userReady, roles, userData } = this.state;
 
@@ -170,6 +174,7 @@ class UserUpdateForm extends Component {
             <div className="row justify-content-around">
               <div className="col-5">
                 <Details
+                  clearUpdateFormMessage={this.clearUpdateFormMessage}
                   userData={this.state.userData}
                   onSubmit={this.handleSubmit}
                   message={this.state.messageDetails}

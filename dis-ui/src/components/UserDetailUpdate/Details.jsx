@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import RenderInput from "./util/RenderInput";
 import { faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
-const Details = ({ userData, onSubmit, message, successful }) => {
+const Details = ({
+  userData,
+  onSubmit,
+  message,
+  successful,
+  clearUpdateFormMessage,
+}) => {
   const [name, setName] = useState(userData.name);
   const [surname, setSurname] = useState(userData.surename);
   const [phone, setPhone] = useState(userData.phoneNum);
@@ -10,6 +16,7 @@ const Details = ({ userData, onSubmit, message, successful }) => {
   const [initialValue, setInitialValue] = useState(userData);
 
   function handleCancel() {
+    clearUpdateFormMessage();
     setName(initialValue.name);
     setSurname(initialValue.surename);
     setPhone(initialValue.phoneNum);
