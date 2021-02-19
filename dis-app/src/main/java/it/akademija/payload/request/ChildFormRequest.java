@@ -1,8 +1,12 @@
-package it.akademija.models;
+package it.akademija.payload.request;
+
+import it.akademija.models.KindergartenPriority;
+import it.akademija.models.SecondParent;
+import it.akademija.models.UserData;
 
 import java.util.Date;
 
-public class ChildFormInfo {
+public class ChildFormRequest {
 
 	private long id;
 	private String name;
@@ -22,13 +26,13 @@ public class ChildFormInfo {
 	private Date postDate;
 	private long idFront;
 
-	public ChildFormInfo() {
+	public ChildFormRequest() {
 	}
 
 
-	public ChildFormInfo(long id, String name, String surename, Date birthDate, String address, String city,
-			Long personId, boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent,
-			boolean handicapped, UserData parentData, SecondParent secondParentData, KindergartenPriority kindergartenPriority, Date postDate) {
+	public ChildFormRequest(long id, String name, String surename, Date birthDate, String address, String city,
+							Long personId, boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent,
+							boolean handicapped, UserData parentData, SecondParent secondParentData, KindergartenPriority kindergartenPriority, Date postDate) {
 		this.id = id;
 		this.name = name;
 		this.surename = surename;
@@ -185,7 +189,7 @@ public class ChildFormInfo {
 
 	@Override
 	public String toString() {
-		return "ChildFormInfo [id=" + id + ", name=" + name + ", surename=" + surename + ", birthDate=" + birthDate
+		return "ChildFormRequest [id=" + id + ", name=" + name + ", surename=" + surename + ", birthDate=" + birthDate
 				+ ", address=" + address + ", personId=" + personId + ", city=" + city + ", inCity=" + inCity
 				+ ", adopted=" + adopted + ", threeOrMore=" + threeOrMore + ", parentStudent=" + parentStudent
 				+ ", handicapped=" + handicapped + ", parentData=" + parentData + ", kindergartenPriority="

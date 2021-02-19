@@ -1,18 +1,18 @@
-package it.akademija.models;
+package it.akademija.payload.request;
 
 import java.util.List;
 
-public class KindergartenInfo {
+public class KindergartenRequest {
 	private Long id;
 	private String address;
 	private String name;
 	private Long capasity;
-	private List<GroupInfo> groups;
+	private List<GroupRequest> groups;
 
-	public KindergartenInfo() {
+	public KindergartenRequest() {
 	}
 
-	public KindergartenInfo(Long id, String address, String name, Long capasity, List<GroupInfo> groups) {
+	public KindergartenRequest(Long id, String address, String name, Long capasity, List<GroupRequest> groups) {
 		this.id = id;
 		this.address = address;
 		this.name = name;
@@ -20,20 +20,20 @@ public class KindergartenInfo {
 		this.groups = groups;
 	}
 
-	public KindergartenInfo(Long id, String address, String name, Long capasity) {
+	public KindergartenRequest(Long id, String address, String name, Long capasity) {
 		this.id = id;
 		this.address = address;
 		this.name = name;
 		this.capasity = capasity;
 	}
 
-	public KindergartenInfo(String address, String name, Long capasity) {
+	public KindergartenRequest(String address, String name, Long capasity) {
 		this.address = address;
 		this.name = name;
 		this.capasity = capasity;
 	}
 
-	public KindergartenInfo(Long id, String address, String name) {
+	public KindergartenRequest(Long id, String address, String name) {
 		super();
 		this.id = id;
 		this.address = address;
@@ -72,11 +72,11 @@ public class KindergartenInfo {
 		this.capasity = capasity;
 	}
 
-	public List<GroupInfo> getGroups() {
+	public List<GroupRequest> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(List<GroupInfo> groups) {
+	public void setGroups(List<GroupRequest> groups) {
 		this.groups = groups;
 	}
 

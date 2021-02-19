@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.akademija.models.GroupInfo;
-import it.akademija.models.KindergartenInfo;
+import it.akademija.payload.request.GroupRequest;
+import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.services.SpecService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -28,36 +28,36 @@ public class SpecController {
 
 	@PostMapping("/create")
 	@PreAuthorize("hasRole('SPEC')")
-	public ResponseEntity<?> registerKindergarten(@Valid @RequestBody KindergartenInfo info) {
+	public ResponseEntity<?> registerKindergarten(@Valid @RequestBody KindergartenRequest info) {
 		return specService.registerKindergarten(info);
 	}
 
 	@PostMapping("/create/{id}")
 	@PreAuthorize("hasRole('SPEC')")
-	public ResponseEntity<?> registerKindergartenGroup(@Valid @RequestBody GroupInfo info, @PathVariable Long id) {
+	public ResponseEntity<?> registerKindergartenGroup(@Valid @RequestBody GroupRequest info, @PathVariable Long id) {
 		return specService.registerKindergartenGroup(id, info);
 	}
 
 	@GetMapping("/getkindergartens")
 	@PreAuthorize("hasRole('SPEC') or hasRole('PARENT')")
-	public Collection<KindergartenInfo> getKindergartens() {
+	public Collection<KindergartenRequest> getKindergartens() {
 		return specService.getKindergartens();
 	}
 
 	@GetMapping("/getgroups/{id}")
 	@PreAuthorize("hasRole('SPEC')")
-	public Collection<GroupInfo> getGroups(@PathVariable Long id) {
+	public Collection<GroupRequest> getGroups(@PathVariable Long id) {
 		return specService.getGroups(id);
 	}
 
 	@PostMapping("/amend/{id}")
 	@PreAuthorize("hasRole('SPEC')")
-	public ResponseEntity<?> amendKindergarten(@Valid @RequestBody KindergartenInfo info, @PathVariable Long id) {
+	public ResponseEntity<?> amendKindergarten(@Valid @RequestBody KindergartenRequest info, @PathVariable Long id) {
 		return specService.amendKindergarten(id, info);
 	}
 
 	@PostMapping("/amend/group/{groupId}")
-	public ResponseEntity<?> amendGroup(@Valid @RequestBody GroupInfo info, @PathVariable Long groupId) {
+	public ResponseEntity<?> amendGroup(@Valid @RequestBody GroupRequest info, @PathVariable Long groupId) {
 		return specService.amendGroup(groupId, info);
 	}
 

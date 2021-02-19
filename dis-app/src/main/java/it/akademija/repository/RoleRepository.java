@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import it.akademija.models.ERole;
+import it.akademija.models.enums.ERole;
 import it.akademija.models.Role;
 
 @Repository

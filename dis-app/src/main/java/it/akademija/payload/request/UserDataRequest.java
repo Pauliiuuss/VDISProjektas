@@ -1,6 +1,8 @@
-package it.akademija.models;
+package it.akademija.payload.request;
 
-public class UserDataInfo {
+import it.akademija.models.User;
+
+public class UserDataRequest {
 
 	private long id;
 	private String name;
@@ -12,11 +14,11 @@ public class UserDataInfo {
 	private String email;
 	private User user;
 
-	public UserDataInfo() {
+	public UserDataRequest() {
 	}
 
-	public UserDataInfo(String name, String surename, Long personId, String address, String city, Long phoneNum,
-			String email) {
+	public UserDataRequest(String name, String surename, Long personId, String address, String city, Long phoneNum,
+						   String email) {
 		this.name = name;
 		this.surename = surename;
 		this.personId = personId;
@@ -26,8 +28,8 @@ public class UserDataInfo {
 		this.email = email;
 	}
 
-	public UserDataInfo(long id, String name, String surename, Long personId, String address, String city,
-			Long phoneNum, String email) {
+	public UserDataRequest(long id, String name, String surename, Long personId, String address, String city,
+						   Long phoneNum, String email) {
 		this.id = id;
 		this.name = name;
 		this.surename = surename;
@@ -38,8 +40,8 @@ public class UserDataInfo {
 		this.email = email;
 	}
 
-	public UserDataInfo(long id, String name, String surename, Long personId, String address, String city,
-			Long phoneNum, String email, User user) {
+	public UserDataRequest(long id, String name, String surename, Long personId, String address, String city,
+						   Long phoneNum, String email, User user) {
 		this.id = id;
 		this.name = name;
 		this.surename = surename;

@@ -13,9 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.akademija.models.Group;
-import it.akademija.models.GroupInfo;
+import it.akademija.payload.request.GroupRequest;
 import it.akademija.models.Kindergarten;
-import it.akademija.models.KindergartenInfo;
+import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.GroupRepository;
 import it.akademija.repository.KindergartenRepository;
@@ -30,7 +30,7 @@ public class SpecService {
 	private GroupRepository groupRepository;
 
 	@Transactional
-	public ResponseEntity<?> registerKindergarten(KindergartenInfo info) {
+	public ResponseEntity<?> registerKindergarten(KindergartenRequest info) {
 		if (kindergartenRepository.existsByName(info.getName())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Toks vaikų darželis jau yra!"));
 		}
@@ -41,24 +41,24 @@ public class SpecService {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<KindergartenInfo> getKindergartens() {
+	public Collection<KindergartenRequest> getKindergartens() {
 		return kindergartenRepository.findAll().stream()
-				.map(isdb -> new KindergartenInfo(isdb.getId(), isdb.getAddress(), isdb.getName(),
+				.map(isdb -> new KindergartenRequest(isdb.getId(), isdb.getAddress(), isdb.getName(),
 						isdb.getGroups().stream().map(Group::getCapasity).reduce(0L, Long::sum)))
 				.collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<GroupInfo> getGroups(Long id) {
+	public Collection<GroupRequest> getGroups(Long id) {
 		if (!kindergartenRepository.existsById(id))
 			return new ArrayList<>();
 		return kindergartenRepository
-				.findById(id).orElseGet(null).getGroups().stream().map(isdb -> new GroupInfo(isdb.getId(),
+				.findById(id).orElseGet(null).getGroups().stream().map(isdb -> new GroupRequest(isdb.getId(),
 						isdb.getName(), isdb.getCapasity(), isdb.getAgeFrom() + " iki " + isdb.getAgeTo()))
 				.collect(Collectors.toList());
 	}
 
-	public ResponseEntity<?> registerKindergartenGroup(Long id, GroupInfo info) {
+	public ResponseEntity<?> registerKindergartenGroup(Long id, GroupRequest info) {
 		if (kindergartenRepository.getOne(id).getGroups().stream()
 				.anyMatch(group -> group.getName().equals(info.getName()))) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Toke vaikų grupė jau yra!"));
@@ -81,7 +81,7 @@ public class SpecService {
 		return ResponseEntity.ok(new MessageResponse("Vaikų grupė užregistruota!"));
 	}
 
-	public ResponseEntity<?> amendKindergarten(Long id, @Valid KindergartenInfo info) {
+	public ResponseEntity<?> amendKindergarten(Long id, @Valid KindergartenRequest info) {
 
 		Kindergarten kindergarten = kindergartenRepository.getOne(id);
 
@@ -96,7 +96,7 @@ public class SpecService {
 		return ResponseEntity.ok(new MessageResponse("Vaikų darželis pakeistas!"));
 	}
 
-	public ResponseEntity<?> amendGroup(Long groupId, @Valid GroupInfo info) {
+	public ResponseEntity<?> amendGroup(Long groupId, @Valid GroupRequest info) {
 //		Kindergarten kindergarten = kindergartenRepository.getOne(gartenId);
 
 		Group group = groupRepository.getOne(groupId);
