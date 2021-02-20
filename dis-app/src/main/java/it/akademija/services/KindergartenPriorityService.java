@@ -1,15 +1,13 @@
 package it.akademija.services;
 
-import it.akademija.models.ChildForm;
 import it.akademija.models.KindergartenPriority;
-import it.akademija.models.KindergartenPriorityInfo;
+import it.akademija.payload.request.KindergartenPriorityRequest;
 import it.akademija.repository.KindergartenPriorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,9 +17,9 @@ public class KindergartenPriorityService {
     private KindergartenPriorityRepository kindergartenPriorityRepository;
 
     @Transactional(readOnly = true)
-    public Collection<KindergartenPriorityInfo> getAllKindergartenPriorities(){
+    public Collection<KindergartenPriorityRequest> getAllKindergartenPriorities(){
         return kindergartenPriorityRepository.findAll().stream()
-                .map(isdb -> new KindergartenPriorityInfo(
+                .map(isdb -> new KindergartenPriorityRequest(
                         isdb.getKindergartenOne(),
                         isdb.getKindergartenTwo(),
                         isdb.getKindergartenThree(),
@@ -31,13 +29,13 @@ public class KindergartenPriorityService {
     }
 
     @Transactional(readOnly = true)
-    public KindergartenPriorityInfo getKindergartenPrioritiesById(long id){
+    public KindergartenPriorityRequest getKindergartenPrioritiesById(long id){
         KindergartenPriority info = kindergartenPriorityRepository.findAll().stream()
                 .filter(isdb -> isdb.getId() == id)
                 .findFirst()
                 .orElse(null);
         if(info != null){
-            return new KindergartenPriorityInfo(
+            return new KindergartenPriorityRequest(
                     info.getKindergartenOne(),
                     info.getKindergartenTwo(),
                     info.getKindergartenThree(),
@@ -54,29 +52,29 @@ public class KindergartenPriorityService {
     }
 
     @Transactional
-    public void addKindergartenPriority(KindergartenPriorityInfo kindergartenPriorityInfo){
+    public void addKindergartenPriority(KindergartenPriorityRequest kindergartenPriorityRequest){
         KindergartenPriority idb = new KindergartenPriority(
-                kindergartenPriorityInfo.getKindergartenOne(),
-                kindergartenPriorityInfo.getKindergartenTwo(),
-                kindergartenPriorityInfo.getKindergartenThree(),
-                kindergartenPriorityInfo.getKindergartenFour(),
-                kindergartenPriorityInfo.getKindergartenFive());
+                kindergartenPriorityRequest.getKindergartenOne(),
+                kindergartenPriorityRequest.getKindergartenTwo(),
+                kindergartenPriorityRequest.getKindergartenThree(),
+                kindergartenPriorityRequest.getKindergartenFour(),
+                kindergartenPriorityRequest.getKindergartenFive());
         kindergartenPriorityRepository.save(idb);
     }
 
     @Transactional
-    public void updateKindergartenPriority(KindergartenPriorityInfo kindergartenPriorityInfo){
+    public void updateKindergartenPriority(KindergartenPriorityRequest kindergartenPriorityRequest){
         KindergartenPriority idb = kindergartenPriorityRepository.findAll().stream()
-                .filter(isdb -> isdb.getId() == kindergartenPriorityInfo.getId())
+                .filter(isdb -> isdb.getId() == kindergartenPriorityRequest.getId())
                 .findFirst()
                 .orElse(null);
         if(idb != null){
-            idb.setKindergartenOne(kindergartenPriorityInfo.getKindergartenOne());
-            idb.setKindergartenTwo(kindergartenPriorityInfo.getKindergartenTwo());
-            idb.setKindergartenThree(kindergartenPriorityInfo.getKindergartenThree());
-            idb.setKindergartenFour(kindergartenPriorityInfo.getKindergartenFour());
-            idb.setKindergartenFive(kindergartenPriorityInfo.getKindergartenFive());
-            idb.setChildForm(kindergartenPriorityInfo.getChildForm());
+            idb.setKindergartenOne(kindergartenPriorityRequest.getKindergartenOne());
+            idb.setKindergartenTwo(kindergartenPriorityRequest.getKindergartenTwo());
+            idb.setKindergartenThree(kindergartenPriorityRequest.getKindergartenThree());
+            idb.setKindergartenFour(kindergartenPriorityRequest.getKindergartenFour());
+            idb.setKindergartenFive(kindergartenPriorityRequest.getKindergartenFive());
+            idb.setChildForm(kindergartenPriorityRequest.getChildForm());
         }
     }
 }

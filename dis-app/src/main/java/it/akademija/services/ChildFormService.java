@@ -3,12 +3,12 @@ package it.akademija.services;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import it.akademija.payload.request.ChildFormRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.akademija.models.ChildForm;
-import it.akademija.models.ChildFormInfo;
 import it.akademija.repository.ChildFormRepository;
 
 @Service
@@ -18,9 +18,9 @@ public class ChildFormService {
 	private ChildFormRepository childFormRepository;
 
 	@Transactional(readOnly = true)
-	public Collection<ChildFormInfo> getAllForms() {
+	public Collection<ChildFormRequest> getAllForms() {
 		return childFormRepository.findAll().stream()
-				.map(isdb -> new ChildFormInfo(isdb.getId(), isdb.getName(), isdb.getSurename(), isdb.getBirthDate(),
+				.map(isdb -> new ChildFormRequest(isdb.getId(), isdb.getName(), isdb.getSurename(), isdb.getBirthDate(),
 						isdb.getAddress(), isdb.getCity(), isdb.getPersonId(), isdb.isInCity(), isdb.isAdopted(),
 						isdb.isThreeOrMore(), isdb.isParentStudent(), isdb.isHandicapped(), isdb.getParentData(), isdb.getSecondParentData(),
 						isdb.getKindergartenPriority(), isdb.getPostDate()))
@@ -28,21 +28,21 @@ public class ChildFormService {
 	}
 
 	@Transactional
-	public void updateForm(long id, ChildFormInfo childFormInfo) {
+	public void updateForm(long id, ChildFormRequest childFormRequest) {
 		ChildForm isdb = childFormRepository.findById(id).get();
-		isdb.setPersonId(childFormInfo.getPersonId());
-		isdb.setName(childFormInfo.getName());
-		isdb.setSurename(childFormInfo.getSurename());
-		isdb.setBirthDate(childFormInfo.getBirthDate());
-		isdb.setAddress(childFormInfo.getAddress());
-		isdb.setCity(childFormInfo.getCity());
-		isdb.setInCity(childFormInfo.isInCity());
-		isdb.setAdopted(childFormInfo.isAdopted());
-		isdb.setThreeOrMore(childFormInfo.isThreeOrMore());
-		isdb.setParentStudent(childFormInfo.isParentStudent());
-		isdb.setHandicapped(childFormInfo.isHandicapped());
-		isdb.setParentData(childFormInfo.getParentData());
-		isdb.setPostDate(childFormInfo.getPostDate());
+		isdb.setPersonId(childFormRequest.getPersonId());
+		isdb.setName(childFormRequest.getName());
+		isdb.setSurename(childFormRequest.getSurename());
+		isdb.setBirthDate(childFormRequest.getBirthDate());
+		isdb.setAddress(childFormRequest.getAddress());
+		isdb.setCity(childFormRequest.getCity());
+		isdb.setInCity(childFormRequest.isInCity());
+		isdb.setAdopted(childFormRequest.isAdopted());
+		isdb.setThreeOrMore(childFormRequest.isThreeOrMore());
+		isdb.setParentStudent(childFormRequest.isParentStudent());
+		isdb.setHandicapped(childFormRequest.isHandicapped());
+		isdb.setParentData(childFormRequest.getParentData());
+		isdb.setPostDate(childFormRequest.getPostDate());
 
 		childFormRepository.save(isdb);
 

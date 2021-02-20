@@ -2,7 +2,7 @@ package it.akademija.controller;
 
 import javax.validation.Valid;
 
-import it.akademija.models.UserInfo;
+import it.akademija.payload.request.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ public class AuthController {
 	}
 
 	@GetMapping("/{id}")
-	public UserInfo getUserById(@PathVariable("id") long id){
+	public UserRequest getUserById(@PathVariable("id") long id){
 		return authService.getUserById(id);
 	}
 

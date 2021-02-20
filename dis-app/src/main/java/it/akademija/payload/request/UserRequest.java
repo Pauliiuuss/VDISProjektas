@@ -1,16 +1,18 @@
-package it.akademija.models;
+package it.akademija.payload.request;
 
-public class UserInfo {
+import it.akademija.models.Role;
+
+public class UserRequest {
 
 	private Long id;
 	private String username;
 	private String password;
 	private Role role;
 
-	public UserInfo() {
+	public UserRequest() {
 	}
 
-	public UserInfo(long id, String username, String password, Role role) {
+	public UserRequest(long id, String username, String password, Role role) {
 		this.id = id;
 		this.username = username;
 		this.password = password;

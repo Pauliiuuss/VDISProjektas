@@ -1,16 +1,16 @@
-package it.akademija.models;
+package it.akademija.payload.request;
 
-public class GroupInfo {
+public class GroupRequest {
 
 	private Long id;
 	private String name;
 	private Long capasity;
 	private String age;
 
-	public GroupInfo() {
+	public GroupRequest() {
 	}
 
-	public GroupInfo(Long id, String name, Long capasity, String age) {
+	public GroupRequest(Long id, String name, Long capasity, String age) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -18,7 +18,7 @@ public class GroupInfo {
 		this.age = age;
 	}
 
-	public GroupInfo(String name, Long capasity, String age) {
+	public GroupRequest(String name, Long capasity, String age) {
 		super();
 		this.name = name;
 		this.capasity = capasity;
