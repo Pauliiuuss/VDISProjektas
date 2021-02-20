@@ -8,20 +8,27 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.akademija.models.ChildForm;
 import it.akademija.models.Group;
-import it.akademija.payload.request.GroupRequest;
 import it.akademija.models.Kindergarten;
+import it.akademija.payload.request.GroupRequest;
 import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.payload.response.MessageResponse;
+import it.akademija.repository.ChildFormRepository;
 import it.akademija.repository.GroupRepository;
 import it.akademija.repository.KindergartenRepository;
 
 @Service
 public class SpecService {
+
+	@Autowired
+	private ChildFormRepository formRepo;
 
 	@Autowired
 	private KindergartenRepository kindergartenRepository;
@@ -58,6 +65,7 @@ public class SpecService {
 				.collect(Collectors.toList());
 	}
 
+	@Transactional
 	public ResponseEntity<?> registerKindergartenGroup(Long id, GroupRequest info) {
 		if (kindergartenRepository.getOne(id).getGroups().stream()
 				.anyMatch(group -> group.getName().equals(info.getName()))) {
@@ -81,6 +89,7 @@ public class SpecService {
 		return ResponseEntity.ok(new MessageResponse("Vaikų grupė užregistruota!"));
 	}
 
+	@Transactional
 	public ResponseEntity<?> amendKindergarten(Long id, @Valid KindergartenRequest info) {
 
 		Kindergarten kindergarten = kindergartenRepository.getOne(id);
@@ -96,6 +105,7 @@ public class SpecService {
 		return ResponseEntity.ok(new MessageResponse("Vaikų darželis pakeistas!"));
 	}
 
+	@Transactional
 	public ResponseEntity<?> amendGroup(Long groupId, @Valid GroupRequest info) {
 //		Kindergarten kindergarten = kindergartenRepository.getOne(gartenId);
 
@@ -118,10 +128,21 @@ public class SpecService {
 				&& group.getAgeTo() == originalGroup.getAgeTo() && group.getCapasity() == originalGroup.getCapasity())
 			return ResponseEntity.ok(new MessageResponse("Jokių pakeitimų neišsaugota"));
 
-
 		groupRepository.save(group);
 
 		return ResponseEntity.ok(new MessageResponse("Vaikų darželis pakeistas!"));
+	}
+
+	@Transactional
+	public Collection<ChildForm> getForms(Long id) {
+		Collection<ChildForm> forms;
+		if (id == null || id == 0)
+			forms = formRepo.findAll(Sort.by(Direction.ASC, "address"));
+		else {
+			String kinderGartenName = kindergartenRepository.getOne(id).getName();
+			forms = formRepo.findAllByKindergartenName(kinderGartenName);
+		}
+		return forms;
 	}
 
 }

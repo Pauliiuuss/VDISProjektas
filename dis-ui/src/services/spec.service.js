@@ -33,6 +33,10 @@ class SpecService {
   getGroups(id) {
     return axios.get(API_URL + "getgroups/" + id, { headers: authHeader() });
   }
+
+  getForms(id) {
+    return axios.get(API_URL + "getforms/" + id, { headers: authHeader() });
+  }
 }
 
 export default new SpecService();

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.akademija.models.ChildForm;
 import it.akademija.payload.request.GroupRequest;
 import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.services.SpecService;
@@ -48,6 +49,12 @@ public class SpecController {
 	@PreAuthorize("hasRole('SPEC')")
 	public Collection<GroupRequest> getGroups(@PathVariable Long id) {
 		return specService.getGroups(id);
+	}
+
+	@GetMapping("/getforms/{id}")
+//	@PreAuthorize("hasRole('SPEC')")
+	public Collection<ChildForm> getForms(@PathVariable Long id) {
+		return specService.getForms(id);
 	}
 
 	@PostMapping("/amend/{id}")
