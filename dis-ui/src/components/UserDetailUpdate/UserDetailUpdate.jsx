@@ -116,46 +116,46 @@ class UserUpdateForm extends Component {
     newPassword2
   ) => {
     e.preventDefault();
-    {
-      newPassword1 === newPassword2 && vpassword(newPassword1)
-        ? await UserService.updatePassword(
-            currentUser.id,
-            oldPassword,
-            newPassword1
-          ).then(
-            (response) => {
-              console.log(response);
-              this.setState({
-                successfulPassword: true,
-                messagePassword: response.data.message,
-                successfulDetails: false,
-                messageDetails: "",
-              });
-            },
-            (error) => {
-              const resMessage =
-                (error.response &&
-                  error.response.data &&
-                  error.response.data.message) ||
-                error.message ||
-                error.toString();
-              console.log(resMessage);
-
-              this.setState({
-                successfulPassword: false,
-                messagePassword: resMessage,
-                successfulDetails: false,
-                messageDetails: "",
-              });
-            }
-          )
-        : this.setState({
+    if (newPassword1 === newPassword2 && vpassword(newPassword1)) {
+      await UserService.updatePassword(
+        currentUser.id,
+        oldPassword,
+        newPassword1
+      ).then(
+        (response) => {
+          console.log(response);
+          this.setState({
+            successfulPassword: true,
+            messagePassword: response.data.message,
             successfulDetails: false,
             messageDetails: "",
-            messagePassword:
-              "Nesutampa naujojo slaptažodžio laukai arba naujas slaptažodis neatitinka reikalavimų!",
-            successful: false,
           });
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          console.log(resMessage);
+
+          this.setState({
+            successfulPassword: false,
+            messagePassword: resMessage,
+            successfulDetails: false,
+            messageDetails: "",
+          });
+        }
+      );
+    } else {
+      this.setState({
+        successfulDetails: false,
+        messageDetails: "",
+        messagePassword:
+          "Nesutampa naujojo slaptažodžio laukai arba naujas slaptažodis neatitinka reikalavimų!",
+        successfulPassword: false,
+      });
     }
   };
 
