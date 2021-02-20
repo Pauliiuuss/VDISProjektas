@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -137,11 +135,12 @@ public class SpecService {
 	public Collection<ChildForm> getForms(Long id) {
 		Collection<ChildForm> forms;
 		if (id == null || id == 0)
-			forms = formRepo.findAll(Sort.by(Direction.ASC, "address"));
+			forms = formRepo.findAll();
 		else {
 			String kinderGartenName = kindergartenRepository.getOne(id).getName();
 			forms = formRepo.findAllByKindergartenName(kinderGartenName);
 		}
+		System.out.println(forms);
 		return forms;
 	}
 

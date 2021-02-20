@@ -38,11 +38,19 @@ public interface ChildFormRepository extends JpaRepository<ChildForm, Long> {
 //			, nativeQuery = true)
 //	Collection<ChildForm> findAllByKindergartenName(@Param(value = "name") String name);
 
+//	@Modifying
+//	@Transactional
+//	@Query("SELECT c FROM ChildForm c JOIN c.kindergartenPriority x WHERE" + " x.kindergartenOne = :name OR\n"
+//			+ "x.kindergartenTwo  = :name OR\n" + "x.kindergartenThree  = :name OR\n"
+//			+ "x.kindergartenFour  = :name OR\n" + "x.kindergartenFive  = :name")
+//	Collection<ChildForm> findAllByKindergartenName(@Param(value = "name") String name);
+
 	@Modifying
 	@Transactional
 	@Query("SELECT c FROM ChildForm c JOIN c.kindergartenPriority x WHERE" + " x.kindergartenOne = :name OR\n"
 			+ "x.kindergartenTwo  = :name OR\n" + "x.kindergartenThree  = :name OR\n"
-			+ "x.kindergartenFour  = :name OR\n" + "x.kindergartenFive  = :name")
+			+ "x.kindergartenFour  = :name OR\n" + "x.kindergartenFive  = :name\n"
+			+ "ORDER BY (city, 'Vilnius'), c.adopted desc,c.threeOrMore desc,c.parentStudent desc,c.handicapped desc")
 	Collection<ChildForm> findAllByKindergartenName(@Param(value = "name") String name);
 
 }

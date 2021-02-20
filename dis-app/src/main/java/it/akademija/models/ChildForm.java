@@ -217,4 +217,11 @@ public class ChildForm {
 	public void setSecondParentData(SecondParent secondParentData) {
 		this.secondParentData = secondParentData;
 	}
+
+	@Override
+	public String toString() {
+		return "ChildForm [address=" + address + " adopted=" + adopted + ", threeOrMore=" + threeOrMore
+				+ ", parentStudent=" + parentStudent + ", handicapped=" + handicapped + "]";
+	}
+
 }

@@ -57,7 +57,6 @@ class TableBody extends Component {
           {data.map((item) => (
             <tr
               className={this.props.active === item.id ? "active" : ""}
-              onClick={() => this.handleClick(item.id)}
               key={item.id}
             >
               {columns.map((column) => (

@@ -13,7 +13,6 @@ class Forms extends Component {
     pageSize: 5,
     length: 0,
     searchQuery: "",
-    sortColumn: { path: "id", order: "asc" },
   };
 
   handleSearch = (query) => {
@@ -37,9 +36,7 @@ class Forms extends Component {
         m.name.toLowerCase().includes(searchQuery.toLowerCase())
       );
 
-    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
-
-    const forms = paginate(sorted, currentPage, pageSize);
+    const forms = paginate(filtered, currentPage, pageSize);
 
     return { totalCount: filtered.length, data: forms };
   };
@@ -48,7 +45,7 @@ class Forms extends Component {
     const { handleChange } = this.props;
     const allForms = this.props.forms;
     const count = allForms ? allForms.length : 0;
-    const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
+    const { pageSize, currentPage, searchQuery } = this.state;
 
     const { totalCount, data: forms } = this.getPagedData(allForms);
 
@@ -57,6 +54,9 @@ class Forms extends Component {
         <div className="row">
           <div className="col-6">
             <DropdownOfKindergartens handleChange={handleChange} />
+            <button className="btn btn-md btn-success">
+              Preliminarus eiles sudarymas
+            </button>
           </div>
           <div className="col-6">
             <p>
@@ -67,11 +67,7 @@ class Forms extends Component {
           </div>
         </div>
 
-        <FormsTable
-          forms={forms}
-          sortColumn={sortColumn}
-          onSort={this.handleSort}
-        />
+        <FormsTable forms={forms} onSort={this.handleSort} />
         <Pagination
           itemsCount={totalCount}
           pageSize={pageSize}
