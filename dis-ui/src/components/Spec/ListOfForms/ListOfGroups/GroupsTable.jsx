@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Table from "./Table";
 
-class FormsTable extends Component {
+class GroupsTable extends Component {
   columns = [
     {
       path: "name",
@@ -30,4 +30,4 @@ class FormsTable extends Component {
   }
 }
 
-export default FormsTable;
+export default GroupsTable;

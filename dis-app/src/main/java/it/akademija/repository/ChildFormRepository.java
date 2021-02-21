@@ -25,32 +25,12 @@ public interface ChildFormRepository extends JpaRepository<ChildForm, Long> {
 
 	Optional<ChildForm> findByPersonId(Long personId);
 
-//	@Modifying
-//	@Transactional
-//	@Query(value = "SELECT * FROM child_forms"
-//			+ "\n" + "LEFT JOIN KINDERGARTEN_PRIORITIES \n"
-//			+ "ON CHILD_FORMS.ID = KINDERGARTEN_PRIORITIES.CHILD_FORM\n"
-//			+ "WHERE KINDERGARTEN_PRIORITIES.KINDERGARTEN_FIVE = :name OR\n"
-//			+ "KINDERGARTEN_PRIORITIES.KINDERGARTEN_FOUR  = :name OR\n"
-//			+ "KINDERGARTEN_PRIORITIES.KINDERGARTEN_THREE  = :name OR\n"
-//			+ "KINDERGARTEN_PRIORITIES.KINDERGARTEN_TWO  = :name OR\n"
-//			+ "KINDERGARTEN_PRIORITIES.KINDERGARTEN_ONE  = :name"
-//			, nativeQuery = true)
-//	Collection<ChildForm> findAllByKindergartenName(@Param(value = "name") String name);
-
-//	@Modifying
-//	@Transactional
-//	@Query("SELECT c FROM ChildForm c JOIN c.kindergartenPriority x WHERE" + " x.kindergartenOne = :name OR\n"
-//			+ "x.kindergartenTwo  = :name OR\n" + "x.kindergartenThree  = :name OR\n"
-//			+ "x.kindergartenFour  = :name OR\n" + "x.kindergartenFive  = :name")
-//	Collection<ChildForm> findAllByKindergartenName(@Param(value = "name") String name);
-
 	@Modifying
 	@Transactional
 	@Query("SELECT c FROM ChildForm c JOIN c.kindergartenPriority x WHERE" + " x.kindergartenOne = :name OR\n"
 			+ "x.kindergartenTwo  = :name OR\n" + "x.kindergartenThree  = :name OR\n"
 			+ "x.kindergartenFour  = :name OR\n" + "x.kindergartenFive  = :name\n"
-			+ "ORDER BY (city, 'Vilnius'), c.adopted desc,c.threeOrMore desc,c.parentStudent desc,c.handicapped desc")
+			+ "ORDER BY c.inCity desc, c.adopted desc,c.threeOrMore desc,c.parentStudent desc,c.handicapped desc")
 	Collection<ChildForm> findAllByKindergartenName(@Param(value = "name") String name);
 
 }

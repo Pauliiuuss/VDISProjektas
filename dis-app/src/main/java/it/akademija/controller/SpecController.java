@@ -45,6 +45,12 @@ public class SpecController {
 		return specService.getKindergartens();
 	}
 
+	@GetMapping("/getkindergarten/{id}")
+	@PreAuthorize("hasRole('SPEC') or hasRole('PARENT')")
+	public KindergartenRequest getKindergarten(@PathVariable Long id) {
+		return specService.getKindergarten(id);
+	}
+
 	@GetMapping("/getgroups/{id}")
 	@PreAuthorize("hasRole('SPEC')")
 	public Collection<GroupRequest> getGroups(@PathVariable Long id) {

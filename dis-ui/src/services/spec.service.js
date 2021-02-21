@@ -37,6 +37,12 @@ class SpecService {
   getForms(id) {
     return axios.get(API_URL + "getforms/" + id, { headers: authHeader() });
   }
+
+  getKindergarten(id) {
+    return axios.get(API_URL + "getkindergarten/" + id, {
+      headers: authHeader(),
+    });
+  }
 }
 
 export default new SpecService();

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -134,14 +135,27 @@ public class SpecService {
 	@Transactional
 	public Collection<ChildForm> getForms(Long id) {
 		Collection<ChildForm> forms;
-		if (id == null || id == 0)
-			forms = formRepo.findAll();
-		else {
+		if (id == null || id == 0) {
+			Sort sort = Sort.by(Sort.Order.desc("inCity"), Sort.Order.desc("adopted"), Sort.Order.desc("threeOrMore"),
+					Sort.Order.desc("parentStudent"), Sort.Order.desc("handicapped"));
+			forms = formRepo.findAll(sort);
+		} else {
 			String kinderGartenName = kindergartenRepository.getOne(id).getName();
 			forms = formRepo.findAllByKindergartenName(kinderGartenName);
 		}
 		System.out.println(forms);
 		return forms;
+	}
+
+	public KindergartenRequest getKindergarten(Long id) {
+		Kindergarten kindergarten = kindergartenRepository.getOne(id);
+		Long capasity = kindergarten.getGroups().stream().map(g -> g.getCapasity()).reduce(0L, Long::sum);
+		List<GroupRequest> groupRequests = kindergarten.getGroups().stream().map(
+				k -> new GroupRequest(k.getId(), k.getName(), k.getCapasity(), k.getAgeFrom() + " iki " + k.getAgeTo()))
+				.collect(Collectors.toList());
+		KindergartenRequest request = new KindergartenRequest(kindergarten.getId(), kindergarten.getAddress(),
+				kindergarten.getName(), capasity, groupRequests);
+		return request;
 	}
 
 }

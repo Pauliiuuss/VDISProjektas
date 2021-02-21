@@ -13,14 +13,15 @@ class Forms extends Component {
     pageSize: 5,
     length: 0,
     searchQuery: "",
+    buttonDisabled: true,
   };
 
   handleSearch = (query) => {
     this.setState({ searchQuery: query, currentPage: 1 });
   };
 
-  handleSort = (sortColumn) => {
-    this.setState({ sortColumn });
+  handleQueueBuild = () => {
+    this.props.handleQueueBuild();
   };
 
   handlePageChange = (page) => {
@@ -28,7 +29,7 @@ class Forms extends Component {
   };
 
   getPagedData = (allForms) => {
-    const { pageSize, currentPage, searchQuery, sortColumn } = this.state;
+    const { pageSize, currentPage, searchQuery } = this.state;
 
     let filtered = allForms;
     if (searchQuery)
@@ -41,8 +42,13 @@ class Forms extends Component {
     return { totalCount: filtered.length, data: forms };
   };
 
+  handleChange = (e) => {
+    this.props.handleChange(e);
+    if (+e === 0) this.setState({ buttonDisabled: true });
+    else this.setState({ buttonDisabled: false });
+  };
+
   render() {
-    const { handleChange } = this.props;
     const allForms = this.props.forms;
     const count = allForms ? allForms.length : 0;
     const { pageSize, currentPage, searchQuery } = this.state;
@@ -53,10 +59,16 @@ class Forms extends Component {
       <div className="row" style={{ marginTop: "20px" }}>
         <div className="row">
           <div className="col-6">
-            <DropdownOfKindergartens handleChange={handleChange} />
-            <button className="btn btn-md btn-success">
-              Preliminarus eiles sudarymas
-            </button>
+            <DropdownOfKindergartens handleChange={this.handleChange} />
+            {count !== 0 && (
+              <button
+                disabled={this.state.buttonDisabled}
+                onClick={this.handleQueueBuild}
+                className="btn btn-md btn-success"
+              >
+                Preliminarus eiles sudarymas
+              </button>
+            )}
           </div>
           <div className="col-6">
             <p>
@@ -67,7 +79,7 @@ class Forms extends Component {
           </div>
         </div>
 
-        <FormsTable forms={forms} onSort={this.handleSort} />
+        <FormsTable forms={forms} />
         <Pagination
           itemsCount={totalCount}
           pageSize={pageSize}
