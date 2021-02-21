@@ -63,6 +63,12 @@ public class SpecController {
 		return specService.getForms(id);
 	}
 
+	@GetMapping("/getformsbykindergarten/{id}")
+//	@PreAuthorize("hasRole('SPEC')")
+	public Collection<Collection<ChildForm>> getFormsByKindergarten(@PathVariable Long id) {
+		return specService.getFormsByKindergarten(id);
+	}
+
 	@PostMapping("/amend/{id}")
 	@PreAuthorize("hasRole('SPEC')")
 	public ResponseEntity<?> amendKindergarten(@Valid @RequestBody KindergartenRequest info, @PathVariable Long id) {

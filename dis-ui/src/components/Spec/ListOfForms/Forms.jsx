@@ -65,12 +65,13 @@ class Forms extends Component {
                 disabled={this.state.buttonDisabled}
                 onClick={this.handleQueueBuild}
                 className="btn btn-md btn-success"
+                style={{ marginBottom: "10px" }}
               >
-                Preliminarus eiles sudarymas
+                Preliminarus eiles sudarymas pasirinktam darželiui
               </button>
             )}
           </div>
-          <div className="col-6">
+          <div className="col">
             <p>
               Pasirinktas vaikų darželis turi {count} registruotų vaikų formas.
               Rodoma {totalCount} pagal paieškos kriterijų.

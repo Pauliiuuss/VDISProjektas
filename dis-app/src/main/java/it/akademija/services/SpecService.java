@@ -1,7 +1,10 @@
 package it.akademija.services;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -156,6 +159,37 @@ public class SpecService {
 		KindergartenRequest request = new KindergartenRequest(kindergarten.getId(), kindergarten.getAddress(),
 				kindergarten.getName(), capasity, groupRequests);
 		return request;
+	}
+
+	public boolean ageBetween2and3(Date birthDate) {
+		// validate inputs ...
+		DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		int d1 = Integer.parseInt(formatter.format(birthDate));
+		int d2 = Integer.parseInt(formatter.format(new Date()));
+		int age = (d2 - d1) / 10000;
+		return age >= 2 && age <= 3;
+	}
+
+	public boolean ageBetween3and6(Date birthDate) {
+		// validate inputs ...
+		DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+		int d1 = Integer.parseInt(formatter.format(birthDate));
+		int d2 = Integer.parseInt(formatter.format(new Date()));
+		int age = (d2 - d1) / 10000;
+		return age >= 3 && age <= 6;
+	}
+
+	public Collection<Collection<ChildForm>> getFormsByKindergarten(Long id) {
+		Collection<ChildForm> all = formRepo.findAllByKindergartenName(kindergartenRepository.getOne(id).getName());
+		Collection<ChildForm> young = all.stream().filter(f -> ageBetween2and3(f.getBirthDate()))
+				.collect(Collectors.toList());
+		Collection<ChildForm> old = all.stream().filter(f -> ageBetween3and6(f.getBirthDate()))
+				.collect(Collectors.toList());
+		Collection<Collection<ChildForm>> collection = new ArrayList<Collection<ChildForm>>();
+		collection.add(young);
+		collection.add(old);
+
+		return collection;
 	}
 
 }

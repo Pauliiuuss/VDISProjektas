@@ -14,7 +14,6 @@ class GroupsTable extends Component {
     { path: "address", label: "Adresas" },
     { path: "city", label: "Miestas" },
     { path: "birthDate", label: "Amžius" },
-    { path: "formStatus.name", label: "Statusas" },
   ];
   render() {
     const { forms, onSort, sortColumn } = this.props;
