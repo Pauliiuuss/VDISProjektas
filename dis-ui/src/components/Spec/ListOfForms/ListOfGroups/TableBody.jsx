@@ -17,6 +17,11 @@ class TableBody extends Component {
   };
 
   renderCell = (item, column) => {
+    if (column.path === "birthDate") {
+      return Math.round(
+        (new Date() - new Date(item.birthDate)) / (1000 * 60 * 60 * 24 * 365)
+      );
+    }
     if (column.content) return column.content(item);
     return _.get(item, column.path);
   };
@@ -50,8 +55,8 @@ class TableBody extends Component {
       <tbody>
         <tr>
           <td colSpan="6">
-            <p className="m-4 mx-auto" style={{ width: "500px" }}>
-              Duomenų bazėje pasinktam darželiui vaikų formų nėra registruota.
+            <p className="m-4 mx-auto" style={{ width: "120px" }}>
+              Sąrašas tuščias.
             </p>
           </td>
         </tr>

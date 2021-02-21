@@ -38,8 +38,8 @@ class Groups extends Component {
     const { totalCount, data: forms } = this.getPagedData(allForms);
 
     return (
-      <div className="row" style={{ marginTop: "20px" }}>
-        <p>
+      <div className="row m-2" style={{ paddingBottom: "100px" }}>
+        <p className="m-2">
           <b>{group.name}</b> amžiaus grupė nuo {group.age} turi{" "}
           {group.capasity} lasivas vietas.
         </p>
