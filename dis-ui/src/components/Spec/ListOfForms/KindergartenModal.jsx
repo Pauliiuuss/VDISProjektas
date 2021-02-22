@@ -7,12 +7,23 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
   const [disabled] = useState(false);
   const [data, setData] = useState([]);
+  const [waitingList, setWaitingList] = useState([]);
 
   useEffect(() => {
     SpecService.getFormsByKindergarten(kindergarten.id).then(
       (response) => {
         console.log(response.data);
         setData(response.data);
+        setWaitingList(
+          response.data["Laukiantys null"].filter(
+            (g) =>
+              g.kindergartenPriority.kindergartenOne === kindergarten.name ||
+              g.kindergartenPriority.kindergartenTwo === kindergarten.name ||
+              g.kindergartenPriority.kindergartenThree === kindergarten.name ||
+              g.kindergartenPriority.kindergartenFour === kindergarten.name ||
+              g.kindergartenPriority.kindergartenFive === kindergarten.name
+          )
+        );
       },
       (error) => {
         console.log(error);
@@ -20,8 +31,17 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
     );
   }, [kindergarten]);
 
-  console.log(kindergarten.groups);
-  console.log(data["VIJURKAI Vilniaus darželis-mokykla „Lokiukas“"]);
+  function handleConfirm() {
+    if (
+      window.confirm(
+        "Vaikų registracijų formu statusai bus pakiesti į PRIIMTAS ar eilėje"
+      )
+    ) {
+      console.log("Confirmed");
+    }
+
+    console.log("Approved");
+  }
 
   return (
     <div className={showHideClassName}>
@@ -44,8 +64,20 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
                   />
                 </div>
               ))}
+            {waitingList.length !== 0 && (
+              <div key="waiting">
+                <Groups
+                  kindergarten={kindergarten}
+                  forms={waitingList}
+                  group={null}
+                />
+              </div>
+            )}
           </div>
           <div className="modal-footer">
+            <button onClick={handleConfirm} className="btn btn-info">
+              Patvirtinti
+            </button>
             <button onClick={handleClose} className="btn btn-secondary">
               Uždaryti
             </button>

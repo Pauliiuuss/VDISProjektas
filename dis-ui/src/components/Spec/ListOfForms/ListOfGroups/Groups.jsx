@@ -3,6 +3,7 @@ import GroupsTable from "./GroupsTable";
 import { paginate } from "../../../utils/paginate";
 import Pagination from "../../../utils/pagination";
 import _ from "lodash";
+import Forms from "../Forms";
 
 class Groups extends Component {
   state = {
@@ -37,12 +38,22 @@ class Groups extends Component {
 
     const { totalCount, data: forms } = this.getPagedData(allForms);
 
+    if (group === "Laukiantys null") {
+      console.log(group);
+    }
+
     return (
       <div className="row m-2" style={{ paddingBottom: "100px" }}>
-        <p className="m-2">
-          <b>{group.name}</b> amžiaus grupė nuo {group.age} turi{" "}
-          {group.capasity} lasivas vietas.
-        </p>
+        {group !== null ? (
+          <p className="m-2">
+            <b>{group.name}</b> amžiaus grupė nuo {group.age} turi{" "}
+            {group.capasity} lasivas vietas.
+          </p>
+        ) : (
+          <p className="m-2">
+            <b>Laukiantys eilėje.</b>
+          </p>
+        )}
 
         <GroupsTable forms={forms} />
         <Pagination

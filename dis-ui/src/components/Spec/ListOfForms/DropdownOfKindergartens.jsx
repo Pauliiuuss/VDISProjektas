@@ -20,12 +20,12 @@ const DropdownOfKindergartens = ({ handleChange }) => {
   return (
     <React.Fragment>
       <div className="form-group row">
-        <label className="col-6 col-sm-12 col-md-6 col-lg-6">
+        <label className="col-5 col-sm-12 col-md-5 col-lg-5">
           Pasirinkti darželį iš sąrašo...
         </label>
         <select
           style={{ fontSize: "13px" }}
-          className="form-control col-6 col-sm-12 col-md-6 col-lg-6"
+          className="form-control col-7 col-sm-12 col-md-7 col-lg-7"
           value={current}
           onChange={onChange}
         >

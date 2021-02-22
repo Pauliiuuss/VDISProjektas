@@ -67,7 +67,7 @@ class Forms extends Component {
                 className="btn btn-md btn-success"
                 style={{ marginBottom: "10px" }}
               >
-                Preliminarus eiles sudarymas pasirinktam darželiui
+                Eilės sudarymas
               </button>
             )}
           </div>

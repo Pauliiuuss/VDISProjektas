@@ -202,44 +202,55 @@ public class SpecService {
 
 		Map<Group, List<ChildForm>> collection = new HashMap<>();
 		groups.forEach(g -> collection.put(g, new ArrayList<>()));
+		Group waitingGroup = new Group(0L, "Laukiantys", 99999L, 0L, 99L, null);
+		collection.put(waitingGroup, new ArrayList<>());
 
 		for (ChildForm form : all) {
+			System.out.println(form.getName() + " " + form.getSurename() + "******************************");
 			Kindergarten one = kindergartenRepository.findByName(form.getKindergartenPriority().getKindergartenOne())
 					.get();
 			Kindergarten two = kindergartenRepository.findByName(form.getKindergartenPriority().getKindergartenTwo())
-					.get();
+					.orElse(null);
+			System.out.println(two + " TWO **************************");
 			Kindergarten three = kindergartenRepository
-					.findByName(form.getKindergartenPriority().getKindergartenThree()).get();
+					.findByName(form.getKindergartenPriority().getKindergartenThree()).orElse(null);
+			System.out.println(three + " THREE **************************");
 			Kindergarten four = kindergartenRepository.findByName(form.getKindergartenPriority().getKindergartenFour())
-					.get();
+					.orElse(null);
+			System.out.println(four + " FOUR **************************");
 			Kindergarten five = kindergartenRepository.findByName(form.getKindergartenPriority().getKindergartenFive())
-					.get();
+					.orElse(null);
+			System.out.println(five + " FIVE **************************");
 
 			List<Kindergarten> kindergartens = new ArrayList<>();
 			kindergartens.add(one);
-			kindergartens.add(two);
-			kindergartens.add(three);
-			kindergartens.add(four);
-			kindergartens.add(five);
+			if (two != null)
+				kindergartens.add(two);
+			if (three != null)
+				kindergartens.add(three);
+			if (four != null)
+				kindergartens.add(four);
+			if (five != null)
+				kindergartens.add(five);
 
 			boolean approved = false;
 
 			for (Kindergarten kindergarten : kindergartens) {
 				if (approved)
 					break;
+				List<Group> kindergartenGroups = kindergarten.getGroups();
+				kindergartenGroups.add(new Group("Laukiantys", 999999L, 0L, 100L, kindergarten));
 				for (Group group : kindergarten.getGroups()) {
 					if (approved)
 						break;
-					if (group.getAgeFrom() == 2 && ageBetween2and3(form.getBirthDate())
+					if (group.getAgeFrom() == 2L && ageBetween2and3(form.getBirthDate())
 							&& collection.get(group).size() < group.getCapasity()) {
-						System.out.println(group.getCapasity() + "  capasity --------------------------");
-						System.out.println(collection.get(group).size() + "  size in map --------------------------");
 						List<ChildForm> groupsForMap = collection.get(group);
 						groupsForMap.add(form);
 						collection.put(group, groupsForMap);
 						approved = true;
 						break;
-					} else if (group.getAgeFrom() == 3 && ageBetween3and6(form.getBirthDate())
+					} else if (group.getAgeFrom() == 3L && ageBetween3and6(form.getBirthDate())
 							&& collection.get(group).size() < group.getCapasity()) {
 						List<ChildForm> groupsForMap = collection.get(group);
 						groupsForMap.add(form);
@@ -249,8 +260,14 @@ public class SpecService {
 					}
 				}
 			}
+			if (!approved) {
+				System.out.println("*************************** ELSE");
+				List<ChildForm> groupsForMap = collection.get(waitingGroup);
+				groupsForMap.add(form);
+				collection.put(waitingGroup, groupsForMap);
+				approved = true;
+			}
 		}
-
 		return collection;
 	}
 
