@@ -1,11 +1,12 @@
-import React, { Component } from "react";
-import _ from "lodash";
-import InfoModal from "../InfoModal";
+import React, { Component } from 'react';
+import _ from 'lodash';
+import InfoModal from '../InfoModal';
+import FileUpload from '../FileUpload';
 
 class TableBody extends Component {
   state = {
     show: false,
-    showId: "",
+    showId: '',
   };
 
   showModal = (showId) => {
@@ -13,7 +14,7 @@ class TableBody extends Component {
   };
 
   hideModal = () => {
-    this.setState({ show: false, showId: "" });
+    this.setState({ show: false, showId: '' });
     window.location.reload();
   };
 
@@ -45,7 +46,7 @@ class TableBody extends Component {
                   {this.renderCell(item, column)}
                 </td>
               ))}
-              <td style={{ width: "100px" }}>
+              <td style={{ width: '100px' }}>
                 <button
                   className="btn btn-md btn-info"
                   onClick={() => this.showModal(item.personId)}
@@ -54,6 +55,9 @@ class TableBody extends Component {
                 >
                   Informacija
                 </button>
+              </td>
+              <td style={{ width: '200px' }}>
+                <FileUpload />
               </td>
             </tr>
           ))}
