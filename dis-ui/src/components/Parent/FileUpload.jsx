@@ -1,31 +1,42 @@
-import React, { Component } from 'react';
-import UploadService from '../../services/upload-files.service';
+import React, { Component } from "react";
+import UploadService from "../../services/upload-files.service";
+import AuthService from "../../services/auth.service";
 
 class FileUpload extends Component {
   state = {
-    selectedFile: null,
+    currentUser: "",
+    roles: "",
+    selectedFiles: null,
     currentFile: null,
-    fileName: '',
+    fileName: "",
     progress: 0,
-    message: '',
+    message: "",
   };
+
+  componentDidMount() {
+    const currentUser = AuthService.getCurrentUser();
+    this.setState({
+      currentUser: currentUser,
+      roles: currentUser.roles,
+    });
+  }
 
   fileSelectHandler = (e) => {
     this.setState({
-      selectedFile: e.target.files[0],
-      fileName: e.target.files[0].name,
+      selectedFiles: e.target.files,
+      fileName: e.target.files.name,
     });
   };
 
   fileUploadHandler = () => {
-    let currentFile = this.state.selectedFile[0];
+    let currentFile = this.state.selectedFiles[0];
 
     this.setState({
       progress: 0,
       currentFile: currentFile,
     });
-
-    UploadService.upload(currentFile, (event) => {
+    console.log(currentFile);
+    UploadService.upload(this.state.currentUser.id, currentFile, (event) => {
       this.setState({
         progress: Math.round((100 * event.loaded) / event.total),
       });
@@ -39,12 +50,12 @@ class FileUpload extends Component {
       .catch(() => {
         this.setState({
           progress: 0,
-          message: 'Nepavyko prisegti failo!',
+          message: "Nepavyko prisegti failo!",
           currentFile: null,
         });
       });
     this.setState({
-      selectedFile: null,
+      selectedFiles: null,
     });
   };
 
@@ -61,14 +72,14 @@ class FileUpload extends Component {
               aria-valuenow={progress}
               aria-valuemin="0"
               aria-valuemax="100"
-              style={{ width: progress + '%' }}
+              style={{ width: progress + "%" }}
             >
               {progress}%
             </div>
           </div>
         )}
         <input
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           accept="application/pdf"
           id="files"
           type="file"

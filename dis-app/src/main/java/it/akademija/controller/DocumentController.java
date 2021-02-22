@@ -29,7 +29,7 @@ public class DocumentController {
     private DocumentService documentService;
 
     @PostMapping("/add/{id}")
-    public ResponseEntity<?> addDocument(@RequestParam("doc") MultipartFile document, @PathVariable Long id){
+    public ResponseEntity<?> addDocument(@RequestParam("file") MultipartFile document, @PathVariable Long id){
         return documentService.addDocument(document, id);
     }
 
