@@ -5,7 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -179,15 +181,75 @@ public class SpecService {
 		return age >= 3 && age <= 6;
 	}
 
-	public Collection<Collection<ChildForm>> getFormsByKindergarten(Long id) {
-		Collection<ChildForm> all = formRepo.findAllByKindergartenName(kindergartenRepository.getOne(id).getName());
-		Collection<ChildForm> young = all.stream().filter(f -> ageBetween2and3(f.getBirthDate()))
-				.collect(Collectors.toList());
-		Collection<ChildForm> old = all.stream().filter(f -> ageBetween3and6(f.getBirthDate()))
-				.collect(Collectors.toList());
-		Collection<Collection<ChildForm>> collection = new ArrayList<Collection<ChildForm>>();
-		collection.add(young);
-		collection.add(old);
+//	public Collection<Collection<ChildForm>> getFormsByKindergarten(Long id) {
+//		Collection<ChildForm> all = formRepo.findAllByKindergartenName(kindergartenRepository.getOne(id).getName());
+//		Collection<ChildForm> young = all.stream().filter(f -> ageBetween2and3(f.getBirthDate()))
+//				.collect(Collectors.toList());
+//		Collection<ChildForm> old = all.stream().filter(f -> ageBetween3and6(f.getBirthDate()))
+//				.collect(Collectors.toList());
+//		Collection<Collection<ChildForm>> collection = new ArrayList<Collection<ChildForm>>();
+//		collection.add(young);
+//		collection.add(old);
+//
+//		return collection;
+//	}
+
+	public Map<Group, List<ChildForm>> getFormsByKindergarten(Long id) {
+
+		Collection<ChildForm> all = formRepo.findAll();
+
+		Collection<Group> groups = groupRepository.findAll();
+
+		Map<Group, List<ChildForm>> collection = new HashMap<>();
+		groups.forEach(g -> collection.put(g, new ArrayList<>()));
+
+		for (ChildForm form : all) {
+			Kindergarten one = kindergartenRepository.findByName(form.getKindergartenPriority().getKindergartenOne())
+					.get();
+			Kindergarten two = kindergartenRepository.findByName(form.getKindergartenPriority().getKindergartenTwo())
+					.get();
+			Kindergarten three = kindergartenRepository
+					.findByName(form.getKindergartenPriority().getKindergartenThree()).get();
+			Kindergarten four = kindergartenRepository.findByName(form.getKindergartenPriority().getKindergartenFour())
+					.get();
+			Kindergarten five = kindergartenRepository.findByName(form.getKindergartenPriority().getKindergartenFive())
+					.get();
+
+			List<Kindergarten> kindergartens = new ArrayList<>();
+			kindergartens.add(one);
+			kindergartens.add(two);
+			kindergartens.add(three);
+			kindergartens.add(four);
+			kindergartens.add(five);
+
+			boolean approved = false;
+
+			for (Kindergarten kindergarten : kindergartens) {
+				if (approved)
+					break;
+				for (Group group : kindergarten.getGroups()) {
+					if (approved)
+						break;
+					if (group.getAgeFrom() == 2 && ageBetween2and3(form.getBirthDate())
+							&& collection.get(group).size() < group.getCapasity()) {
+						System.out.println(group.getCapasity() + "  capasity --------------------------");
+						System.out.println(collection.get(group).size() + "  size in map --------------------------");
+						List<ChildForm> groupsForMap = collection.get(group);
+						groupsForMap.add(form);
+						collection.put(group, groupsForMap);
+						approved = true;
+						break;
+					} else if (group.getAgeFrom() == 3 && ageBetween3and6(form.getBirthDate())
+							&& collection.get(group).size() < group.getCapasity()) {
+						List<ChildForm> groupsForMap = collection.get(group);
+						groupsForMap.add(form);
+						collection.put(group, groupsForMap);
+						approved = true;
+						break;
+					}
+				}
+			}
+		}
 
 		return collection;
 	}

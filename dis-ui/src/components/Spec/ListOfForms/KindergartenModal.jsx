@@ -6,15 +6,13 @@ import Groups from "./ListOfGroups/Groups";
 const KindergartenModal = ({ kindergarten, handleClose, show }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
   const [disabled] = useState(false);
-  const [dataYoung, setDataYoung] = useState("");
-  const [dataOld, setDataOld] = useState("");
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     SpecService.getFormsByKindergarten(kindergarten.id).then(
       (response) => {
-        console.log(response.data[0]);
-        setDataOld(response.data[0]);
-        setDataYoung(response.data[1]);
+        console.log(response.data);
+        setData(response.data);
       },
       (error) => {
         console.log(error);
@@ -23,6 +21,7 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
   }, [kindergarten]);
 
   console.log(kindergarten.groups);
+  console.log(data["VIJURKAI Vilniaus darželis-mokykla „Lokiukas“"]);
 
   return (
     <div className={showHideClassName}>
@@ -37,9 +36,10 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
           <div className="modal-body container">
             {kindergarten.groups &&
               kindergarten.groups.map((g) => (
-                <div key={g.name}>
+                <div key={g.name + " " + g.age + " " + g.capasity}>
                   <Groups
-                    forms={g.age === "2 iki 3" ? dataYoung : dataOld}
+                    kindergarten={kindergarten}
+                    forms={data[`${g.name} ${kindergarten.name}`]}
                     group={g}
                   />
                 </div>

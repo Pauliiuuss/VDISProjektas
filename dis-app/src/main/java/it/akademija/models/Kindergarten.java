@@ -84,4 +84,9 @@ public class Kindergarten {
 		this.groups = groups;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
+
 }

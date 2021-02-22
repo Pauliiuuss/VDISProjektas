@@ -105,4 +105,9 @@ public class Group {
 		this.kindergarten = kindergarten;
 	}
 
+	@Override
+	public String toString() {
+		return name + " " + kindergarten;
+	}
+
 }
