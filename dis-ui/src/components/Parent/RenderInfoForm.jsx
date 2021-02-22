@@ -874,7 +874,11 @@ class RenderInfoForm extends Component {
             </button>
             <button
               className="btn btn-danger my-5 m-1"
-              onClick={(e) => this.deleteForm(e)}
+              onClick={(e) => {
+                if (window.confirm(`Ištrinti formą?`)) {
+                  this.deleteForm(e);
+                }
+              }}
             >
               Ištrinti
             </button>
