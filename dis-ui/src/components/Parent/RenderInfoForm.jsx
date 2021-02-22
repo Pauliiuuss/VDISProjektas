@@ -135,8 +135,20 @@ class RenderInfoForm extends Component {
       });
   };
 
-  deleteForm = (e) => {
+  deleteForm = async (e) => {
     e.preventDefault();
+
+    await ParentService.deleteFormById(this.state.data.id).then((response) => {
+      console.log(response);
+
+      +response.status < 400 && alert("Forma ištrinta");
+
+      window.location.replace('/dis-app/home');
+
+    },
+    (error) => {
+      +error.response.status > 400 && alert("Ivyko klaida");
+    })
     console.log('Delete form');
   };
 
