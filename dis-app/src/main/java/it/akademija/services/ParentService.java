@@ -240,6 +240,12 @@ public class ParentService {
 		return ResponseEntity.ok(new MessageResponse("Forma užregistruota!"));
 	}
 
+	@Transactional
+	public ResponseEntity<?> deleteFormById(Long id) {
+		childFormRepository.deleteById(id);
+
+		return ResponseEntity.ok(new MessageResponse("Forma ištrinta!"));
+	}
 //
 //    @Transactional
 //    public void addForm(ChildFormRequest childFormInfo){
