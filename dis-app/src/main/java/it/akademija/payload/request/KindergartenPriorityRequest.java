@@ -1,8 +1,10 @@
-package it.akademija.models;
+package it.akademija.payload.request;
+
+import it.akademija.models.ChildForm;
 
 import javax.persistence.*;
 
-public class KindergartenPriorityInfo {
+public class KindergartenPriorityRequest {
 
     private long id;
 
@@ -14,11 +16,11 @@ public class KindergartenPriorityInfo {
 
     private ChildForm childForm;
 
-    public KindergartenPriorityInfo() {
+    public KindergartenPriorityRequest() {
     }
 
-    public KindergartenPriorityInfo(String kindergartenOne, String kindergartenTwo, String kindergartenThree,
-                                    String kindergartenFour, String kindergartenFive) {
+    public KindergartenPriorityRequest(String kindergartenOne, String kindergartenTwo, String kindergartenThree,
+                                       String kindergartenFour, String kindergartenFive) {
         this.kindergartenOne = kindergartenOne;
         this.kindergartenTwo = kindergartenTwo;
         this.kindergartenThree = kindergartenThree;

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.akademija.models.UserInfo;
+import it.akademija.payload.request.UserRequest;
 import it.akademija.payload.request.RegisterRequest;
 import it.akademija.services.AdminService;
 
@@ -35,7 +35,7 @@ public class AdminController {
 
 	@GetMapping("/getusers")
 	@PreAuthorize("hasRole('ADMIN')")
-	public Collection<UserInfo> getUsers() {
+	public Collection<UserRequest> getUsers() {
 		return adminService.getUsers();
 	}
 

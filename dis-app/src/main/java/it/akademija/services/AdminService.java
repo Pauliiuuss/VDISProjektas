@@ -9,10 +9,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.akademija.models.ERole;
+import it.akademija.models.enums.ERole;
 import it.akademija.models.Role;
 import it.akademija.models.User;
-import it.akademija.models.UserInfo;
+import it.akademija.payload.request.UserRequest;
 import it.akademija.payload.request.RegisterRequest;
 import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.RoleRepository;
@@ -65,9 +65,9 @@ public class AdminService {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<UserInfo> getUsers() {
+	public Collection<UserRequest> getUsers() {
 		return userRepository.findAll().stream().filter(user -> !user.getUsername().equals("admin"))
-				.map(isdb -> new UserInfo(isdb.getId(), isdb.getUsername(), isdb.getPassword(), isdb.getRole()))
+				.map(isdb -> new UserRequest(isdb.getId(), isdb.getUsername(), isdb.getPassword(), isdb.getRole()))
 				.collect(Collectors.toList());
 	}
 

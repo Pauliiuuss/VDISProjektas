@@ -1,6 +1,6 @@
 package it.akademija.controller;
 
-import it.akademija.models.KindergartenPriorityInfo;
+import it.akademija.payload.request.KindergartenPriorityRequest;
 import it.akademija.services.KindergartenPriorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +16,12 @@ public class KindergartenPriorityController {
     private KindergartenPriorityService kindergartenPriorityService;
 
     @GetMapping("/all")
-    public Collection<KindergartenPriorityInfo> getAllKindergartenPriorities(){
+    public Collection<KindergartenPriorityRequest> getAllKindergartenPriorities(){
         return kindergartenPriorityService.getAllKindergartenPriorities();
     }
 
     @GetMapping("/get/{id}")
-    public KindergartenPriorityInfo getKindergartenPrioritiesById (@PathVariable("id") long id){
+    public KindergartenPriorityRequest getKindergartenPrioritiesById (@PathVariable("id") long id){
         return kindergartenPriorityService.getKindergartenPrioritiesById(id);
     }
 
@@ -30,12 +30,12 @@ public class KindergartenPriorityController {
         kindergartenPriorityService.deleteKindergartenPriorityById(id);
     }
     @PostMapping("/add")
-    public void addKindergartenPriority(@RequestBody KindergartenPriorityInfo kindergartenPriorityInfo){
-        kindergartenPriorityService.addKindergartenPriority(kindergartenPriorityInfo);
+    public void addKindergartenPriority(@RequestBody KindergartenPriorityRequest kindergartenPriorityRequest){
+        kindergartenPriorityService.addKindergartenPriority(kindergartenPriorityRequest);
     }
 
     @PutMapping("/update")
-    public void updateKindergartenPriority(KindergartenPriorityInfo kindergartenPriorityInfo){
-        kindergartenPriorityService.updateKindergartenPriority(kindergartenPriorityInfo);
+    public void updateKindergartenPriority(KindergartenPriorityRequest kindergartenPriorityRequest){
+        kindergartenPriorityService.updateKindergartenPriority(kindergartenPriorityRequest);
     }
 }

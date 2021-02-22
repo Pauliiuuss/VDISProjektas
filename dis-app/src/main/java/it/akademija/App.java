@@ -7,6 +7,8 @@ import java.io.Reader;
 import java.util.ArrayList;
 
 import it.akademija.models.*;
+import it.akademija.models.enums.EFormStatus;
+import it.akademija.models.enums.ERole;
 import it.akademija.repository.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;

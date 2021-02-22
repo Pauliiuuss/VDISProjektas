@@ -2,6 +2,7 @@ package it.akademija.controller;
 
 import java.util.Collection;
 
+import it.akademija.payload.request.UserDataRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.akademija.models.UserDataInfo;
 import it.akademija.services.UserDataService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -25,18 +25,18 @@ public class UserDataController {
 	private UserDataService userDataService;
 
 	@GetMapping("/all")
-	public Collection<UserDataInfo> getAllUserData() {
+	public Collection<UserDataRequest> getAllUserData() {
 		return userDataService.getAllUserData();
 	}
 
 	@GetMapping("/get/{id}")
-	public UserDataInfo getUserDataById(@PathVariable long id) {
+	public UserDataRequest getUserDataById(@PathVariable long id) {
 		return userDataService.getUserDataById(id);
 	}
 
 	@PostMapping("/add/{id}")
-	public ResponseEntity<?> addUserData(@RequestBody UserDataInfo userDataInfo, @PathVariable long id) {
-		return userDataService.addUserData(userDataInfo, id);
+	public ResponseEntity<?> addUserData(@RequestBody UserDataRequest userDataRequest, @PathVariable long id) {
+		return userDataService.addUserData(userDataRequest, id);
 	}
 
 	@PutMapping("/password/{id}")

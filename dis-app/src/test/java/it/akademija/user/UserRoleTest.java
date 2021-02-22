@@ -1,6 +1,6 @@
 package it.akademija.user;
 
-import it.akademija.models.ERole;
+import it.akademija.models.enums.ERole;
 import it.akademija.models.Role;
 import it.akademija.models.User;
 import org.junit.jupiter.api.Test;
