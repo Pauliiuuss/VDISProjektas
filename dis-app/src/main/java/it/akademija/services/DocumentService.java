@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -25,28 +26,40 @@ public class DocumentService {
     private UserRepository userRepository;
 
     @Transactional
-    public ResponseEntity<?> addDocument(MultipartFile document, Long id) {
+    public ResponseEntity<?> addDocument(MultipartFile document, Long id) throws IOException {
         User currentUser = userRepository.findById(id).get();
-        if (document != null) {
-            try {
-                Document doc = new Document(document.getOriginalFilename(),
-                        document.getContentType(),
-                        document.getBytes());
-                doc.setUser(currentUser);
-                documentRepository.save(doc);
-            } catch (Exception e) {
-                return ResponseEntity.badRequest()
-                        .body(new MessageResponse("Įvyko klaida įkeliant failą! Bandykite dar kartą."));
-            }
-            return ResponseEntity.ok()
-                    .body(new MessageResponse("Failas įkeltas sėkmingai!"));
 
-        } else {
+        if (document != null) {
+            if (!document.getContentType().equals("application/pdf")) {
+                return ResponseEntity.badRequest()
+                        .body(new MessageResponse("Galimas tik PDF failų įkėlimas."));
+            }
+        }else {
             return ResponseEntity.badRequest()
                     .body(new MessageResponse("Negalima įkelti tuščio failo!"));
-        }
 
-    }
+        }
+            if (currentUser.getDocument() == null) {
+                    Document doc = new Document(document.getOriginalFilename(),
+                            document.getContentType(),
+                            document.getBytes());
+                    doc.setUser(currentUser);
+                    documentRepository.save(doc);
+
+                return ResponseEntity.ok()
+                        .body(new MessageResponse("Failas įkeltas sėkmingai!"));
+
+            } else {
+                Document currentDoc = currentUser.getDocument();
+                    currentDoc.setDocData(document.getBytes());
+                    currentDoc.setDocName(document.getOriginalFilename());
+                    currentDoc.setDocType(document.getContentType());
+                    documentRepository.save(currentDoc);
+
+                return ResponseEntity.ok()
+                        .body(new MessageResponse("Failas įkeltas sėkmingai!"));
+            }
+        }
 
     @Transactional(readOnly = true)
     public Collection<DocumentRequest> getDocuments(){

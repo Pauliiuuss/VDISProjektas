@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class DocumentController {
     private DocumentService documentService;
 
     @PostMapping("/add/{id}")
-    public ResponseEntity<?> addDocument(@RequestParam("file") MultipartFile document, @PathVariable Long id){
+    public ResponseEntity<?> addDocument(@RequestParam("file") MultipartFile document, @PathVariable Long id) throws IOException {
         return documentService.addDocument(document, id);
     }
 
