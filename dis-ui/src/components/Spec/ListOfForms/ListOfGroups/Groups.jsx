@@ -25,9 +25,8 @@ class Groups extends Component {
 
     const forms = paginate(filtered, currentPage, pageSize);
 
-    // return { totalCount: filtered.length, data: forms };
-
-    return { totalCount: 0, data: forms };
+    if (filtered) return { totalCount: filtered.length, data: forms };
+    else return { totalCount: 0, data: forms };
   };
 
   render() {
@@ -47,7 +46,9 @@ class Groups extends Component {
         {group !== null ? (
           <p className="m-2">
             <b>{group.name}</b> amžiaus grupė nuo {group.age} turi{" "}
-            {group.capasity} lasivas vietas.
+            {group.capasity} lasivas vietas. Po eilių sudarimo bus{" "}
+            {totalCount === 1 ? "užimta" : "užimtos"} {totalCount}{" "}
+            {totalCount === 1 ? "vieta" : "vietos"}.
           </p>
         ) : (
           <p className="m-2">

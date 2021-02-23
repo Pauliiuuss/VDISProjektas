@@ -109,14 +109,14 @@ class Forms extends Component {
               <div className="row">
                 <button
                   onClick={this.handleConfirm}
-                  className="col-5 btn btn-lg btn-success"
+                  className="col-5 btn btn-md btn-success"
                   style={{ marginLeft: "15px" }}
                 >
                   Eilės sudarymas
                 </button>
                 <button
                   onClick={this.handleCancel}
-                  className="col-5 btn btn-lg btn-success"
+                  className="col-1 btn btn-sm btn-secondary"
                   style={{ marginLeft: "15px" }}
                 >
                   X

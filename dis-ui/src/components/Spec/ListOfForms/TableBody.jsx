@@ -1,11 +1,15 @@
 import React, { Component } from "react";
 import _ from "lodash";
+import InfoModal from "../../Parent/InfoModal";
 
 class TableBody extends Component {
   state = {
     showInput: "",
     name: "",
     address: "",
+    showId: "",
+    show: "",
+    hideModal: true,
   };
 
   componentDidMount() {
@@ -36,18 +40,19 @@ class TableBody extends Component {
   };
 
   renderCell = (item, column) => {
+    console.log(item.id);
     if (column.path === "buttons") {
       return (
         <>
           <button
             style={{ marginRight: "5px" }}
-            className="btn btn-info"
-            onClick={() => console.log("Info has not been implemented yet")}
+            className="btn btn-sm btn-info"
+            onClick={() => this.showModal(item.id)}
           >
             Informacija
           </button>
           <button
-            className="btn btn-secondary"
+            className="btn btn-sm btn-secondary"
             onClick={() => console.log("Delete has not been implemented yet")}
           >
             Ištrinti
@@ -72,25 +77,41 @@ class TableBody extends Component {
     return item.id + (column.path || column.key);
   };
 
+  showModal = (showId) => {
+    this.setState({ showId, show: true });
+  };
+
+  hideModal = () => {
+    this.setState({ show: false, showId: "" });
+    window.location.reload();
+  };
+
   render() {
     const { data, columns } = this.props;
 
     if (data.length > 0)
       return (
-        <tbody>
-          {data.map((item) => (
-            <tr
-              className={this.props.active === item.id ? "active" : ""}
-              key={item.id}
-            >
-              {columns.map((column) => (
-                <td key={this.createKey(item, column)}>
-                  {this.renderCell(item, column)}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
+        <>
+          <InfoModal
+            showId={this.state.showId}
+            show={this.state.show}
+            handleClose={this.hideModal}
+          />
+          <tbody>
+            {data.map((item) => (
+              <tr
+                className={this.props.active === item.id ? "active" : ""}
+                key={item.id}
+              >
+                {columns.map((column) => (
+                  <td key={this.createKey(item, column)}>
+                    {this.renderCell(item, column)}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </>
       );
 
     return (

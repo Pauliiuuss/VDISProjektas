@@ -47,7 +47,9 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
       <div className="modal-dialog modal-xl modal-dialog-scrollable">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">{kindergarten.name}</h5>
+            <h5 className="modal-title">
+              Preliminarios grupės darželiui: {kindergarten.name}
+            </h5>
             <button onClick={handleClose} className="close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -86,9 +88,6 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
             )}
           </div>
           <div className="modal-footer">
-            <button onClick={handleConfirm} className="btn btn-info">
-              Patvirtinti
-            </button>
             <button onClick={handleClose} className="btn btn-secondary">
               Uždaryti
             </button>
