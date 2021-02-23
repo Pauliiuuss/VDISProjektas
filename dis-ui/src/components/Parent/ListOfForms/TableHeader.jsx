@@ -8,6 +8,8 @@ export default class TableHeader extends Component {
           {this.props.columns.map((column) => (
             <th key={column.path || column.key}>{column.label}</th>
           ))}
+          <th className="text-center">Prašymas</th>
+          <th className="text-center">Medicininė pažyma</th>
         </tr>
       </thead>
     );

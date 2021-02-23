@@ -8,7 +8,6 @@ class FormsTable extends Component {
     { path: 'personId', label: 'Asmens kodas' },
     { path: 'postDate', label: 'Pateikta' },
     { path: 'formStatus.name', label: 'Statusas' },
-    { path: 'buttons', label: '' },
   ];
 
   render() {

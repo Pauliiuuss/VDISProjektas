@@ -1,17 +1,20 @@
 package it.akademija.services;
 
-import antlr.StringUtils;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 import it.akademija.models.Document;
 import it.akademija.models.User;
 import it.akademija.payload.request.DocumentRequest;
 import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.DocumentRepository;
 import it.akademija.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -21,10 +24,10 @@ import java.util.stream.Collectors;
 @Service
 public class DocumentService {
 
-    @Autowired
-    private DocumentRepository documentRepository;
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private DocumentRepository documentRepository;
+	@Autowired
+	private UserRepository userRepository;
 
     @Transactional
     public ResponseEntity<?> addDocument(MultipartFile document, Long id) throws IOException {
@@ -68,11 +71,11 @@ public class DocumentService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
-    public DocumentRequest getDocumentById(String id){
-        Document isdb = documentRepository.findById(id).get();
-        return new DocumentRequest(isdb.getId(),isdb.getDocName(),isdb.getDocType(),isdb.getDocData(),isdb.getUser());
-    }
-
+	@Transactional(readOnly = true)
+	public DocumentRequest getDocumentById(String id) {
+		Document isdb = documentRepository.findById(id).get();
+		return new DocumentRequest(isdb.getId(), isdb.getDocName(), isdb.getDocType(), isdb.getDocData(),
+				isdb.getUser());
+	}
 
 }
