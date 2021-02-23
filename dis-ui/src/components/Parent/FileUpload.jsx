@@ -84,7 +84,7 @@ class FileUpload extends Component {
           onChange={this.fileSelectHandler}
           ref={(fileInput) => (this.fileInput = fileInput)}
         />
-        <div class="btn-group" role="group" aria-label="Third group">
+        <div className="btn-group" role="group" aria-label="Third group">
           <button
             className="btn btn-secondary"
             onClick={() => {

@@ -1,74 +1,97 @@
 package it.akademija.models;
 
-import org.hibernate.annotations.GenericGenerator;
+import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "docs")
 public class Document {
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+	@Id
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid2")
+	private String id;
 
-    private String docName;
-    private String docType;
+	private String docName;
+	private String docType;
 
-    @Lob
-    private byte[] docData;
+	@Temporal(TemporalType.DATE)
+	private Date uploadDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user")
-    private User user;
+	@Lob
+	private byte[] docData;
 
-    public Document() {
-    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user")
+	private User user;
 
-    public Document(String docName, String docType, byte[] docData) {
-        this.docName = docName;
-        this.docType = docType;
-        this.docData = docData;
-    }
+	public Document() {
+	}
 
-    public String getId() {
-        return id;
-    }
+	public Document(String docName, String docType, byte[] docData) {
+		this.docName = docName;
+		this.docType = docType;
+		this.docData = docData;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getDocName() {
-        return docName;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setDocName(String docName) {
-        this.docName = docName;
-    }
+	public String getDocName() {
+		return docName;
+	}
 
-    public String getDocType() {
-        return docType;
-    }
+	public void setDocName(String docName) {
+		this.docName = docName;
+	}
 
-    public void setDocType(String docType) {
-        this.docType = docType;
-    }
+	public String getDocType() {
+		return docType;
+	}
 
-    public byte[] getDocData() {
-        return docData;
-    }
+	public void setDocType(String docType) {
+		this.docType = docType;
+	}
 
-    public void setDocData(byte[] docData) {
-        this.docData = docData;
-    }
+	public byte[] getDocData() {
+		return docData;
+	}
 
-    public User getUser() {
-        return user;
-    }
+	public void setDocData(byte[] docData) {
+		this.docData = docData;
+	}
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }
