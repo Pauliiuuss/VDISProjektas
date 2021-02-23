@@ -2,19 +2,7 @@ package it.akademija.models;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -42,15 +30,15 @@ public class ChildForm {
 	private boolean parentStudent;
 	private boolean handicapped;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "userdata")
 	private UserData parentData;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "secondParentData")
 	private SecondParent secondParentData;
 
-	@OneToOne(mappedBy = "childForm")
+	@OneToOne(cascade = CascadeType.REMOVE, mappedBy = "childForm")
 	private KindergartenPriority kindergartenPriority;
 
 	@Temporal(TemporalType.DATE)
@@ -59,6 +47,7 @@ public class ChildForm {
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "form_status", joinColumns = @JoinColumn(name = "child_form_id"), inverseJoinColumns = @JoinColumn(name = "form_status_id"))
 	private FormStatus formStatus;
+
 
 	public ChildForm() {
 	}
