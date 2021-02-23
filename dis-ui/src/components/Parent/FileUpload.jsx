@@ -25,10 +25,12 @@ class FileUpload extends Component {
   }
 
   fileSelectHandler = (e) => {
-    this.setState({
-      selectedFiles: e.target.files,
-      fileName: e.target.files[0].name,
-    });
+    if (e.target.value.length > 0) {
+      this.setState({
+        selectedFiles: e.target.files,
+        fileName: e.target.files[0].name,
+      });
+    }
   };
 
   fileUploadHandler = () => {
@@ -109,10 +111,20 @@ class FileUpload extends Component {
           <div className="form-group">
             <div
               className={
-                successful ? 'alert alert-success' : 'alert alert-danger'
+                successful
+                  ? 'alert alert-success alert-dismissible fade show'
+                  : 'alert alert-danger alert-dismissible fade show'
               }
               role="alert"
             >
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
               {message}
             </div>
           </div>
