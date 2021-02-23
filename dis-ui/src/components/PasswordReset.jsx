@@ -9,13 +9,13 @@ import AuthService from '../services/auth.service'
 class PasswordReset extends Component {
     state = {
         username: "",
+        errorMessage: "",
         message: "",
     }
 
     onChangeEmail = (e) => {
-        console.log(e.target.value);
         this.setState({
-          email: e.target.value,
+          username: e.target.value,
         });
       };
  
@@ -33,19 +33,14 @@ class PasswordReset extends Component {
             (response) => {
               console.log(response.data.message);
               this.setState({
-                message: response.data.message,
+                message: "Slaptažodis atstatytas į pradinį"
               });
             },
             (error) => {
-              const resMessage =
-                (error.response &&
-                  error.response.data &&
-                  error.response.data.message) ||
-                error.message ||
-                error.toString();
+              const resMessage = "neteisingas vardas!";
       
               this.setState({
-                message: resMessage,
+                errorMessage: resMessage,
               });
             }
           );
@@ -79,11 +74,11 @@ class PasswordReset extends Component {
                 >
                   <div
                     className="form-group mx-auto mt-3"
-                    style={{ width: "10rem" }}
+                    style={{ width: "11rem" }}
                   >
                     <label htmlFor="email">Slaptažodžio atkūrimas</label>
                     <Input
-                    placeholder="Įveskite el. paštą"
+                    placeholder="Prisijungimo vardas"
                       type="text"
                       className="form-control"
                       name="email"
@@ -107,6 +102,23 @@ class PasswordReset extends Component {
                   <div className="form-group text-center mt-1">
                     <Link to={"/dis-app/"}>Atgal</Link>
                   </div>
+
+
+                  {this.state.errorMessage && (
+                <div className="form-group">
+                  <div className="alert alert-danger" role="alert">
+                    {this.state.errorMessage}
+                  </div>
+                </div>
+              )}
+
+              {this.state.message && (
+                <div className="form-group">
+                  <div className="alert alert-success" role="alert">
+                    {this.state.message}
+                  </div>
+                </div>
+              )}
 {/* 
                   <CheckButton
                     style={{ display: "none" }}
