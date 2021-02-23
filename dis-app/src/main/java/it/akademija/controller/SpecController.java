@@ -83,4 +83,14 @@ public class SpecController {
 		return specService.amendGroup(groupId, info);
 	}
 
+	@RequestMapping("/confirmqueue")
+	public ResponseEntity<?> confirmQueue() {
+		return specService.confirmQueue();
+	}
+
+	@RequestMapping("/cancelqueue")
+	public ResponseEntity<?> cancelQueue() {
+		return specService.cancelQueue();
+	}
+
 }

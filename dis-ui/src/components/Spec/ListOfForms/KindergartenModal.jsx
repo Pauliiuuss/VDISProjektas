@@ -34,12 +34,11 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
   function handleConfirm() {
     if (
       window.confirm(
-        "Vaikų registracijų formu statusai bus pakiesti į PRIIMTAS ar eilėje"
+        "Vaikų registracijų formu statusai bus pakiesti į PRIIMTAS arba EILĖJE negryštamai"
       )
     ) {
       console.log("Confirmed");
     }
-
     console.log("Approved");
   }
 
@@ -56,7 +55,19 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
           <div className="modal-body container">
             {kindergarten.groups &&
               kindergarten.groups.map((g) => (
-                <div key={g.name + " " + g.age + " " + g.capasity}>
+                <div
+                  key={
+                    g.name +
+                    " " +
+                    g.age +
+                    " " +
+                    g.capasity +
+                    " " +
+                    g.kindergarten +
+                    " " +
+                    g.id
+                  }
+                >
                   <Groups
                     kindergarten={kindergarten}
                     forms={data[`${g.name} ${kindergarten.name}`]}

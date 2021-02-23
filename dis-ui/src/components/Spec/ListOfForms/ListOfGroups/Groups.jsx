@@ -38,8 +38,8 @@ class Groups extends Component {
 
     const { totalCount, data: forms } = this.getPagedData(allForms);
 
-    if (group === "Laukiantys null") {
-      console.log(group);
+    if (group && group.name === "Laukiantys") {
+      return null;
     }
 
     return (

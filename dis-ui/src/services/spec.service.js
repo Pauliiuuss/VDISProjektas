@@ -48,6 +48,18 @@ class SpecService {
       headers: authHeader(),
     });
   }
+
+  confirmQueue() {
+    return axios.request(API_URL + "confirmqueue", {
+      headers: authHeader(),
+    });
+  }
+
+  cancelQueue() {
+    return axios.request(API_URL + "cancelqueue", {
+      headers: authHeader(),
+    });
+  }
 }
 
 export default new SpecService();

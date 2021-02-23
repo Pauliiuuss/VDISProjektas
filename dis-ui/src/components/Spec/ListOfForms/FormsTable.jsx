@@ -15,6 +15,7 @@ class FormsTable extends Component {
     { path: "city", label: "Miestas" },
     { path: "birthDate", label: "Amžius" },
     { path: "formStatus.name", label: "Statusas" },
+    { path: "buttons", label: "Veiksmai" },
   ];
   render() {
     const { forms, onSort, sortColumn } = this.props;

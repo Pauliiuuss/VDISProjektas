@@ -5,6 +5,7 @@ import Pagination from "../../utils/pagination";
 import _ from "lodash";
 import SearchBox from "../../utils/SearchBox";
 import DropdownOfKindergartens from "./DropdownOfKindergartens";
+import SpecService from "../../../services/spec.service";
 
 class Forms extends Component {
   state = {
@@ -33,8 +34,10 @@ class Forms extends Component {
 
     let filtered = allForms;
     if (searchQuery)
-      filtered = allForms.filter((m) =>
-        m.name.toLowerCase().includes(searchQuery.toLowerCase())
+      filtered = allForms.filter(
+        (m) =>
+          m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          m.surename.toLowerCase().includes(searchQuery.toLowerCase())
       );
 
     const forms = paginate(filtered, currentPage, pageSize);
@@ -48,6 +51,35 @@ class Forms extends Component {
     else this.setState({ buttonDisabled: false });
   };
 
+  handleConfirm = () => {
+    if (
+      window.confirm(
+        "Vaikų registracijų formu statusai bus pakiesti į PRIIMTAS arba EILĖJE negryštamai! Tai gali užtrukti."
+      )
+    ) {
+      console.log("Confirmed");
+      SpecService.confirmQueue().then(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    } else console.log("Canceled");
+  };
+
+  handleCancel = () => {
+    SpecService.cancelQueue().then(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   render() {
     const allForms = this.props.forms;
     const count = allForms ? allForms.length : 0;
@@ -56,24 +88,50 @@ class Forms extends Component {
     const { totalCount, data: forms } = this.getPagedData(allForms);
 
     return (
-      <div className="row" style={{ marginTop: "20px" }}>
+      <div className="container" style={{ marginTop: "20px" }}>
         <div className="row">
           <div className="col-6">
-            <DropdownOfKindergartens handleChange={this.handleChange} />
+            <div className="row">
+              <div className="col-9">
+                <DropdownOfKindergartens handleChange={this.handleChange} />
+              </div>
+              <div className="col-1">
+                <button
+                  disabled={this.state.buttonDisabled}
+                  onClick={this.handleQueueBuild}
+                  className="btn btn-md btn-success"
+                >
+                  Peržiurėti
+                </button>
+              </div>
+            </div>
             {count !== 0 && (
-              <button
-                disabled={this.state.buttonDisabled}
-                onClick={this.handleQueueBuild}
-                className="btn btn-md btn-success"
-                style={{ marginBottom: "10px" }}
-              >
-                Eilės sudarymas
-              </button>
+              <div className="row">
+                <button
+                  onClick={this.handleConfirm}
+                  className="col-5 btn btn-lg btn-success"
+                  style={{ marginLeft: "15px" }}
+                >
+                  Eilės sudarymas
+                </button>
+                <button
+                  onClick={this.handleCancel}
+                  className="col-5 btn btn-lg btn-success"
+                  style={{ marginLeft: "15px" }}
+                >
+                  X
+                </button>
+
+                <p style={{ fontSize: "1.2rem" }} className="col-5">
+                  Viso registruota: <b>{count}</b>
+                </p>
+              </div>
             )}
           </div>
-          <div className="col">
+          <div className="col-6">
             <p>
-              Pasirinktas vaikų darželis turi {count} registruotų vaikų formas.
+              Paieška pagal vaiko vardą arba pavardę.
+              <br />
               Rodoma {totalCount} pagal paieškos kriterijų.
             </p>
             <SearchBox value={searchQuery} onChange={this.handleSearch} />

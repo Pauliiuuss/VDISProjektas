@@ -36,6 +36,25 @@ class TableBody extends Component {
   };
 
   renderCell = (item, column) => {
+    if (column.path === "buttons") {
+      return (
+        <>
+          <button
+            style={{ marginRight: "5px" }}
+            className="btn btn-info"
+            onClick={() => console.log("Info has not been implemented yet")}
+          >
+            Informacija
+          </button>
+          <button
+            className="btn btn-secondary"
+            onClick={() => console.log("Delete has not been implemented yet")}
+          >
+            Ištrinti
+          </button>
+        </>
+      );
+    }
     if (column.path === "birthDate") {
       return Math.round(
         (new Date() - new Date(item.birthDate)) / (1000 * 60 * 60 * 24 * 365)

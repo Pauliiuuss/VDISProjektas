@@ -11,8 +11,6 @@ class GroupsTable extends Component {
       path: "surename",
       label: "Pavardė",
     },
-    { path: "address", label: "Adresas" },
-    { path: "city", label: "Miestas" },
     { path: "birthDate", label: "Amžius" },
   ];
   render() {

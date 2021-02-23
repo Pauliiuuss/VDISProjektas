@@ -19,17 +19,20 @@ const DropdownOfKindergartens = ({ handleChange }) => {
 
   return (
     <React.Fragment>
-      <div className="form-group row">
-        <label className="col-5 col-sm-12 col-md-5 col-lg-5">
-          Pasirinkti darželį iš sąrašo...
-        </label>
+      <div className="form-group">
+        {/* <label
+          style={{ fontSize: "0.8rem" }}
+          className="col-6 col-sm-12 col-md-6 col-lg-6"
+        >
+          Pasirinkti darželį...
+        </label> */}
         <select
           style={{ fontSize: "13px" }}
-          className="form-control col-7 col-sm-12 col-md-7 col-lg-7"
+          className="form-control"
           value={current}
           onChange={onChange}
         >
-          <option value="0">Visi darželiai...</option>
+          <option value="0">Pasirinkti darželį iš sąrašo...</option>
           {kindergartens.map((kind) => (
             <option value={kind.id} key={kind.id}>
               {kind.name}

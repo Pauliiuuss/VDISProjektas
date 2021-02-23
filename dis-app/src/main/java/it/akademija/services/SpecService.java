@@ -4,10 +4,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -19,17 +22,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.akademija.models.ChildForm;
+import it.akademija.models.FormStatus;
 import it.akademija.models.Group;
 import it.akademija.models.Kindergarten;
+import it.akademija.models.enums.EFormStatus;
 import it.akademija.payload.request.GroupRequest;
 import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.ChildFormRepository;
+import it.akademija.repository.FormStatusRepository;
 import it.akademija.repository.GroupRepository;
 import it.akademija.repository.KindergartenRepository;
 
 @Service
 public class SpecService {
+
+	@Autowired
+	private FormStatusRepository statusRepo;
 
 	@Autowired
 	private ChildFormRepository formRepo;
@@ -194,9 +203,36 @@ public class SpecService {
 //		return collection;
 //	}
 
+	private int getPoints(ChildForm form) {
+		int result = 0;
+		if (form.isAdopted())
+			result += 1;
+		if (form.isHandicapped())
+			result += 1;
+		if (form.isParentStudent())
+			result += 1;
+		if (form.isThreeOrMore())
+			result += 1;
+		return result;
+
+	}
+
+	Comparator<ChildForm> comparator = new Comparator<ChildForm>() {
+
+		@Override
+		public int compare(ChildForm o1, ChildForm o2) {
+			if (o1.isInCity() && !o2.isInCity())
+				return 1;
+			if (!o1.isInCity() && o2.isInCity())
+				return -1;
+			return getPoints(o1) - getPoints(o2);
+		}
+	};
+
 	public Map<Group, List<ChildForm>> getFormsByKindergarten(Long id) {
 
 		Collection<ChildForm> all = formRepo.findAll();
+		Collections.sort(formRepo.findAll(), comparator);
 
 		Collection<Group> groups = groupRepository.findAll();
 
@@ -269,6 +305,41 @@ public class SpecService {
 			}
 		}
 		return collection;
+	}
+
+	public ResponseEntity<?> confirmQueue() {
+		Map<Group, List<ChildForm>> forms = getFormsByKindergarten(0L);
+
+		Set<Group> groups = forms.keySet();
+
+		for (Group group : groups) {
+			for (ChildForm form : forms.get(group)) {
+				FormStatus statusPriimtas = statusRepo.findByName(EFormStatus.PRIIMTAS).get();
+				FormStatus statusEileje = statusRepo.findByName(EFormStatus.EILEJE).get();
+				if (group.getName().equals("Laukiantys"))
+					form.setFormStatus(statusEileje);
+				else
+					form.setFormStatus(statusPriimtas);
+				formRepo.save(form);
+			}
+		}
+
+		return ResponseEntity.ok(new MessageResponse("Vaikų eilė sudaryta!"));
+	}
+
+	public ResponseEntity<?> cancelQueue() {
+		Map<Group, List<ChildForm>> forms = getFormsByKindergarten(0L);
+
+		Set<Group> groups = forms.keySet();
+
+		for (Group group : groups) {
+			for (ChildForm form : forms.get(group)) {
+				FormStatus status = statusRepo.findByName(EFormStatus.PATEIKTAS).get();
+				form.setFormStatus(status);
+				formRepo.save(form);
+			}
+		}
+		return ResponseEntity.ok(new MessageResponse("Vaikų eilė atšaukta!"));
 	}
 
 }
