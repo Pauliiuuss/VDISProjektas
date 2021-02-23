@@ -1,5 +1,7 @@
 package it.akademija.models;
 
+import it.akademija.models.enums.ERole;
+
 import javax.persistence.*;
 
 @Entity

@@ -37,6 +37,10 @@ public class User {
 	@OneToOne(mappedBy = "user")
 	private UserData userData;
 
+	@OneToOne(mappedBy = "user")
+	@JsonIgnore
+	private Document document;
+
 	public User() {
 	}
 
@@ -75,6 +79,14 @@ public class User {
 
 	public Role getRole() {
 		return role;
+	}
+
+	public Document getDocument() {
+		return document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
 	}
 
 	@Override

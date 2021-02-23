@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import it.akademija.models.User;
-import it.akademija.models.UserInfo;
+import it.akademija.payload.request.UserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,13 +53,13 @@ public class AuthService {
 	}
 
 	@Transactional(readOnly = true)
-	public UserInfo getUserById(long id){
+	public UserRequest getUserById(long id){
 		User info = userRepository.findAll().stream()
 				.filter(isdb -> isdb.getId() == id)
 				.findFirst()
 				.orElse(null);
 		if(info != null){
-			return new UserInfo(
+			return new UserRequest(
 					info.getId(),
 					info.getUsername(),
 					info.getPassword(),

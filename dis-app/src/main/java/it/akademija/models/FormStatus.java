@@ -1,5 +1,7 @@
 package it.akademija.models;
 
+import it.akademija.models.enums.EFormStatus;
+
 import javax.persistence.*;
 
 @Entity

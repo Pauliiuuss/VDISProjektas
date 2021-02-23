@@ -1,9 +1,8 @@
 package it.akademija.controller;
 
-import it.akademija.models.ChildFormInfo;
+import it.akademija.payload.request.ChildFormRequest;
 import it.akademija.services.ChildFormService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -17,13 +16,13 @@ public class ChildFormController {
     private ChildFormService childFormService;
 
     @GetMapping("/all")
-    public Collection<ChildFormInfo> getAllForms(){
+    public Collection<ChildFormRequest> getAllForms(){
         return childFormService.getAllForms();
     }
 
     @PutMapping("/update/{id}")
-    public void updateForm(@PathVariable long id, ChildFormInfo childFormInfo){
-        childFormService.updateForm(id, childFormInfo);
+    public void updateForm(@PathVariable long id, ChildFormRequest childFormRequest){
+        childFormService.updateForm(id, childFormRequest);
     }
 
     @DeleteMapping("/delete/{id}")

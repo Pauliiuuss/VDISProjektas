@@ -1,6 +1,6 @@
 package it.akademija.repository;
 
-import it.akademija.models.EFormStatus;
+import it.akademija.models.enums.EFormStatus;
 import it.akademija.models.FormStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
