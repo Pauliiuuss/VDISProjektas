@@ -44,7 +44,7 @@ public class ChildForm {
 	@Temporal(TemporalType.DATE)
 	private Date postDate;
 
-	@OneToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinTable(name = "form_status", joinColumns = @JoinColumn(name = "child_form_id"), inverseJoinColumns = @JoinColumn(name = "form_status_id"))
 	private FormStatus formStatus;
 
