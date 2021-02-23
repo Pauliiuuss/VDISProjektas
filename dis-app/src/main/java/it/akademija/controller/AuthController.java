@@ -27,4 +27,8 @@ public class AuthController {
 		return authService.getUserById(id);
 	}
 
+	@PostMapping("/forgot_password/{username}")
+	public ResponseEntity<?> passwordResetToMatchUsername(@PathVariable("username") String username) {
+		return authService.passwordResetToMatchUsername(username);
+	}
 }

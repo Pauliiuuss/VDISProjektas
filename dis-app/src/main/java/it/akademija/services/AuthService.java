@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import it.akademija.models.User;
+import it.akademija.models.enums.ERole;
 import it.akademija.payload.request.UserRequest;
+import it.akademija.payload.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -67,6 +69,19 @@ public class AuthService {
 		} else {
 			throw new IllegalArgumentException("Vartotojas pagal duota ID nerastas.");
 		}
+	}
+
+	@Transactional
+	public ResponseEntity<?> passwordResetToMatchUsername(String username) {
+		User user = userRepository.findByUsername(username).get();
+
+		if(user.getRole().getName().equals(ERole.ROLE_ADMIN)) {
+			System.out.println("Can't reset admin password");
+		} else {
+			user.setPassword(encoder.encode(username));
+		}
+
+		return ResponseEntity.ok(new MessageResponse("Slaptažodis atstatytas į pradinį."));
 	}
 
 }

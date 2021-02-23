@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import logo from "../img/logo.png";
+import { Link } from "react-router-dom";
 
 import AuthService from "../services/auth.service";
 import { Redirect } from "react-router-dom";
@@ -140,6 +141,10 @@ export default class Login extends Component {
                   )}
                   <span>Prisijungti</span>
                 </button>
+              </div>
+
+              <div className="form-group text-center mt-1">
+                <Link to={"/dis-app/forgot"}>Užmiršote slaptažodį</Link>
               </div>
 
               {this.state.message && (
