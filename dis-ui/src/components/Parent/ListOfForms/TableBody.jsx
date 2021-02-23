@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import InfoModal from '../InfoModal';
 import FileUpload from '../FileUpload';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class TableBody extends Component {
   state = {
@@ -46,17 +48,17 @@ class TableBody extends Component {
                   {this.renderCell(item, column)}
                 </td>
               ))}
-              <td style={{ width: '100px' }}>
+              <td className="text-center">
                 <button
-                  className="btn btn-md btn-info"
+                  className="btn btn-info "
                   onClick={() => this.showModal(item.personId)}
                   data-toggle="modal"
                   data-target="#exampleModal"
                 >
-                  Informacija
+                  <FontAwesomeIcon icon={faEye} />
                 </button>
               </td>
-              <td style={{ width: '200px' }}>
+              <td className="text-center">
                 <FileUpload />
               </td>
             </tr>
