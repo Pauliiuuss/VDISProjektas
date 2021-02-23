@@ -30,7 +30,7 @@ public class ChildForm {
 	private boolean parentStudent;
 	private boolean handicapped;
 
-	@ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "userdata")
 	private UserData parentData;
 

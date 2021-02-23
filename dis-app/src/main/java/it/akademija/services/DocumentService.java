@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -32,14 +33,23 @@ public class DocumentService {
         if (document != null) {
             if (!document.getContentType().equals("application/pdf")) {
                 return ResponseEntity.badRequest()
-                        .body(new MessageResponse("Galimas tik PDF failų įkėlimas."));
+                        .body(new MessageResponse("Dokumentas netinkamo formato. Pažyma turi būti PDF formato."));
             }
-        }else {
+            if (document.getSize() > 6000000){
+                return ResponseEntity.badRequest()
+                        .body(new MessageResponse("Failas per didelis, maksimalus failo dydis - 6 MB"));
+            }
+            byte[] docData = document.getBytes();
+            Document ifDocExists = currentUser.getDocuments().stream().filter(isdb -> Arrays.equals(isdb.getDocData(), docData))
+                    .findFirst().orElse(null);
+            if (ifDocExists != null) {
+                return ResponseEntity.badRequest()
+                        .body(new MessageResponse("Toks dokumentas jūsų sistemoje jau egzistuoja!"));
+            }
+        } else {
             return ResponseEntity.badRequest()
                     .body(new MessageResponse("Negalima įkelti tuščio failo!"));
-
         }
-            if (currentUser.getDocument() == null) {
                     Document doc = new Document(document.getOriginalFilename(),
                             document.getContentType(),
                             document.getBytes());
@@ -49,16 +59,6 @@ public class DocumentService {
                 return ResponseEntity.ok()
                         .body(new MessageResponse("Failas įkeltas sėkmingai!"));
 
-            } else {
-                Document currentDoc = currentUser.getDocument();
-                    currentDoc.setDocData(document.getBytes());
-                    currentDoc.setDocName(document.getOriginalFilename());
-                    currentDoc.setDocType(document.getContentType());
-                    documentRepository.save(currentDoc);
-
-                return ResponseEntity.ok()
-                        .body(new MessageResponse("Failas įkeltas sėkmingai!"));
-            }
         }
 
     @Transactional(readOnly = true)

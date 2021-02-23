@@ -19,7 +19,7 @@ public class Document {
     @Lob
     private byte[] docData;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user")
     private User user;
 

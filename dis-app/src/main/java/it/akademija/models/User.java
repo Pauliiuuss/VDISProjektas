@@ -1,19 +1,12 @@
 package it.akademija.models;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.List;
 
 @Entity
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"), })
@@ -37,9 +30,9 @@ public class User {
 	@OneToOne(mappedBy = "user")
 	private UserData userData;
 
-	@OneToOne(mappedBy = "user")
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonIgnore
-	private Document document;
+	private List<Document> documents;
 
 	public User() {
 	}
@@ -81,12 +74,12 @@ public class User {
 		return role;
 	}
 
-	public Document getDocument() {
-		return document;
+	public List<Document> getDocuments() {
+		return documents;
 	}
 
-	public void setDocument(Document document) {
-		this.document = document;
+	public void setDocuments(List<Document> documents) {
+		this.documents = documents;
 	}
 
 	@Override
