@@ -2,6 +2,8 @@ package it.akademija.payload.request;
 
 import it.akademija.models.User;
 
+import java.util.Date;
+
 public class DocumentRequest {
 
     private String id;
@@ -9,27 +11,16 @@ public class DocumentRequest {
 
     private String docName;
     private String docType;
-    private byte[] docData;
-    private User user;
+    private Date uploadDate;
 
     public DocumentRequest() {
     }
 
-    public DocumentRequest(String id, String docName, String docType, byte[] docData, User user) {
+    public DocumentRequest(String id, String docName, String docType, Date uploadDate) {
         this.id = id;
         this.docName = docName;
         this.docType = docType;
-        this.docData = docData;
-        this.user = user;
-    }
-
-    public DocumentRequest(String id, String url, String docName, String docType, byte[] docData, User user) {
-        this.id = id;
-        this.url = url;
-        this.docName = docName;
-        this.docType = docType;
-        this.docData = docData;
-        this.user = user;
+        this.uploadDate = uploadDate;
     }
 
     public String getId() {
@@ -64,19 +55,11 @@ public class DocumentRequest {
         this.docType = docType;
     }
 
-    public byte[] getDocData() {
-        return docData;
+    public Date getUploadDate() {
+        return uploadDate;
     }
 
-    public void setDocData(byte[] docData) {
-        this.docData = docData;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
     }
 }

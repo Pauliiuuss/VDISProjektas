@@ -21,6 +21,7 @@ public class User {
 
 	@NotBlank
 	@Size(max = 120)
+	@JsonIgnore
 	private String password;
 
 	@OneToOne(fetch = FetchType.EAGER)
