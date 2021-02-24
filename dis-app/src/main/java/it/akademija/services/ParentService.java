@@ -3,20 +3,20 @@ package it.akademija.services;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import it.akademija.payload.request.ChildFormRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.akademija.models.ChildForm;
-import it.akademija.models.enums.EFormStatus;
 import it.akademija.models.Group;
-import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.models.KindergartenPriority;
 import it.akademija.models.SecondParent;
 import it.akademija.models.User;
 import it.akademija.models.UserData;
+import it.akademija.models.enums.EFormStatus;
+import it.akademija.payload.request.ChildFormRequest;
+import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.ChildFormRepository;
 import it.akademija.repository.FormStatusRepository;
@@ -63,8 +63,10 @@ public class ParentService {
 	}
 
 	public ChildForm getData(Long id) {
+		System.out.println("************************ Inside getData in service");
 		if (id == null)
 			return null;
+		System.out.println("************************ Inside getData in service after if");
 		return childFormRepository.findByPersonId(id).get();
 	}
 
@@ -79,11 +81,12 @@ public class ParentService {
 				childFormRequest.getSurename(), childFormRequest.getBirthDate(), childFormRequest.getAddress(),
 				childFormRequest.getCity(), childFormRequest.isInCity(), childFormRequest.isAdopted(),
 				childFormRequest.isThreeOrMore(), childFormRequest.isParentStudent(), childFormRequest.isHandicapped(),
-				childFormRequest.getParentData(), childFormRequest.getSecondParentData(), childFormRequest.getPostDate());
+				childFormRequest.getParentData(), childFormRequest.getSecondParentData(),
+				childFormRequest.getPostDate());
 		newForm.setFormStatus(formrepo.findByName(EFormStatus.PATEIKTAS).get());
 
-		User currentUser = userRepository.findAll().stream().filter(isdb -> isdb.getId() == childFormRequest.getIdFront())
-				.findFirst().orElse(null);
+		User currentUser = userRepository.findAll().stream()
+				.filter(isdb -> isdb.getId() == childFormRequest.getIdFront()).findFirst().orElse(null);
 		if (currentUser != null && currentUser.getUserData() == null) {
 			newForm.getParentData().setUser(currentUser);
 			userDataRepository.save(childFormRequest.getParentData());
@@ -103,7 +106,8 @@ public class ParentService {
 			newForm.setParentData(newData);
 		}
 
-		if (childFormRequest.getSecondParentData() != null && childFormRequest.getSecondParentData().getPersonId() != null) {
+		if (childFormRequest.getSecondParentData() != null
+				&& childFormRequest.getSecondParentData().getPersonId() != null) {
 			if (secondParentRepository.existsByPersonId(childFormRequest.getSecondParentData().getPersonId())) {
 				SecondParent secondParentUpdate = secondParentRepository
 						.findByPersonId(childFormRequest.getSecondParentData().getPersonId()).get();
@@ -194,7 +198,8 @@ public class ParentService {
 		userDataRepository.save(newData);
 		newForm.setParentData(newData);
 
-		if (childFormRequest.getSecondParentData() != null && childFormRequest.getSecondParentData().getPersonId() != null
+		if (childFormRequest.getSecondParentData() != null
+				&& childFormRequest.getSecondParentData().getPersonId() != null
 				&& newForm.getSecondParentData() != null) {
 			SecondParent newSecondParent = newForm.getSecondParentData();
 
@@ -208,7 +213,8 @@ public class ParentService {
 			secondParentRepository.save(newSecondParent);
 			newForm.setSecondParentData(newSecondParent);
 		} else if (childFormRequest.getSecondParentData() != null
-				&& childFormRequest.getSecondParentData().getPersonId() != null && newForm.getSecondParentData() == null) {
+				&& childFormRequest.getSecondParentData().getPersonId() != null
+				&& newForm.getSecondParentData() == null) {
 			SecondParent addSecondParent = childFormRequest.getSecondParentData();
 			secondParentRepository.save(addSecondParent);
 			newForm.setSecondParentData(addSecondParent);

@@ -342,4 +342,11 @@ public class SpecService {
 		return ResponseEntity.ok(new MessageResponse("Vaikų eilė atšaukta!"));
 	}
 
+	public Long freeSpaces() {
+		Long spaces = groupRepository.findAll().stream().filter(g -> !g.getName().equals("Laukiantys"))
+				.map(g -> g.getCapasity()).reduce(0L, Long::sum);
+		System.out.println("******************************** Free spaces:" + spaces);
+		return spaces;
+	}
+
 }

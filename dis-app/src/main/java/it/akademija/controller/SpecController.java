@@ -93,4 +93,9 @@ public class SpecController {
 		return specService.cancelQueue();
 	}
 
+	@GetMapping("/freespaces")
+	public Long freeSpaces() {
+		return specService.freeSpaces();
+	}
+
 }

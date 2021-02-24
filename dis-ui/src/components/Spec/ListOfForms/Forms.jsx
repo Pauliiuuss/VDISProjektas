@@ -11,10 +11,22 @@ class Forms extends Component {
   state = {
     forms: [],
     currentPage: 1,
-    pageSize: 5,
+    pageSize: 10,
     length: 0,
     searchQuery: "",
     buttonDisabled: true,
+    freeSpaces: 0,
+  };
+
+  componentDidMount = () => {
+    SpecService.freeSpaces().then(
+      (response) => {
+        this.setState({ freeSpaces: response.data });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
 
   handleSearch = (query) => {
@@ -54,7 +66,7 @@ class Forms extends Component {
   handleConfirm = () => {
     if (
       window.confirm(
-        "Vaikų registracijų formu statusai bus pakiesti į PRIIMTAS arba EILĖJE negryštamai! Tai gali užtrukti."
+        "Vaikų registracijų formų statusai bus pakeisti į PRIIMTAS arba EILĖJE negryštamai! Tai gali užtrukti."
       )
     ) {
       console.log("Confirmed");
@@ -107,24 +119,29 @@ class Forms extends Component {
             </div>
             {count !== 0 && (
               <div className="row">
-                <button
-                  onClick={this.handleConfirm}
-                  className="col-5 btn btn-md btn-success"
-                  style={{ marginLeft: "15px" }}
-                >
-                  Eilės sudarymas
-                </button>
-                <button
-                  onClick={this.handleCancel}
-                  className="col-1 btn btn-sm btn-secondary"
-                  style={{ marginLeft: "15px" }}
-                >
-                  X
-                </button>
-
-                <p style={{ fontSize: "1.2rem" }} className="col-5">
-                  Viso registruota: <b>{count}</b>
-                </p>
+                <div className="col-6">
+                  <button
+                    onClick={this.handleConfirm}
+                    className="col-12 btn btn-md btn-success m-1"
+                  >
+                    Eilės sudarymas
+                  </button>
+                  <button
+                    hidden={true}
+                    onClick={this.handleCancel}
+                    className="col-1 btn btn-sm btn-secondary"
+                  >
+                    X
+                  </button>
+                </div>
+                <div className="col-5">
+                  <p>
+                    Viso registruota: <b>{count}</b>
+                  </p>
+                  <p>
+                    Viso laisvų vietų: <b>{this.state.freeSpaces}</b>
+                  </p>
+                </div>
               </div>
             )}
           </div>

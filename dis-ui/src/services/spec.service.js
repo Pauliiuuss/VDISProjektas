@@ -60,6 +60,12 @@ class SpecService {
       headers: authHeader(),
     });
   }
+
+  freeSpaces() {
+    return axios.get(API_URL + "freespaces", {
+      headers: authHeader(),
+    });
+  }
 }
 
 export default new SpecService();

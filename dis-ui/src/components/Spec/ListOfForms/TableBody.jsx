@@ -40,14 +40,13 @@ class TableBody extends Component {
   };
 
   renderCell = (item, column) => {
-    console.log(item.id);
     if (column.path === "buttons") {
       return (
         <>
           <button
             style={{ marginRight: "5px" }}
             className="btn btn-sm btn-info"
-            onClick={() => this.showModal(item.id)}
+            onClick={() => this.showModal(item.personId)}
           >
             Informacija
           </button>
@@ -91,11 +90,12 @@ class TableBody extends Component {
 
     if (data.length > 0)
       return (
-        <>
+        <React.Fragment>
           <InfoModal
             showId={this.state.showId}
             show={this.state.show}
             handleClose={this.hideModal}
+            spec={true}
           />
           <tbody>
             {data.map((item) => (
@@ -111,7 +111,7 @@ class TableBody extends Component {
               </tr>
             ))}
           </tbody>
-        </>
+        </React.Fragment>
       );
 
     return (

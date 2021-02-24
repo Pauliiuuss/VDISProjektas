@@ -1,77 +1,77 @@
-import React, { Component } from 'react';
-import ParentService from '../../services/parent.service';
-import CheckButton from 'react-validation/build/button';
+import React, { Component } from "react";
+import ParentService from "../../services/parent.service";
+import CheckButton from "react-validation/build/button";
 import {
   faUser,
   faHome,
   faPhone,
   faEnvelope,
   faBirthdayCake,
-} from '@fortawesome/free-solid-svg-icons';
-import Form from 'react-validation/build/form';
-import RenderInput from './RenderInput';
-import RenderSelect from './RenderSelectForModal';
-import RenderCheck from './RenderCheck';
-import SpecService from '../../services/spec.service';
-import AuthService from '../../services/auth.service';
-import UserService from '../../services/user.service';
-import { noNumbers, required } from './Validation';
+} from "@fortawesome/free-solid-svg-icons";
+import Form from "react-validation/build/form";
+import RenderInput from "./RenderInput";
+import RenderSelect from "./RenderSelectForModal";
+import RenderCheck from "./RenderCheck";
+import SpecService from "../../services/spec.service";
+import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
+import { noNumbers, required } from "./Validation";
 
 class RenderInfoForm extends Component {
   state = {
     loading: true,
     unlockSecondParent: false,
-    message: '',
+    message: "",
     successful: false,
-    currentUser: '',
+    currentUser: "",
     kindergartens: [],
     disabled: true,
-    showId: '',
+    showId: "",
     data: {
-      address: '',
+      address: "",
       adopted: false,
-      birthDate: '',
-      city: '',
+      birthDate: "",
+      city: "",
       formStatus: {
-        id: '',
-        name: '',
+        id: "",
+        name: "",
       },
       handicapped: false,
-      id: '',
+      id: "",
       inCity: false,
       kindergartenPriority: {
-        id: '',
-        kindergartenFive: 'Pasirinkti darželį iš sąrašo...',
-        kindergartenFour: 'Pasirinkti darželį iš sąrašo...',
-        kindergartenOne: 'Pasirinkti darželį iš sąrašo...',
-        kindergartenThree: 'Pasirinkti darželį iš sąrašo...',
-        kindergartenTwo: 'Pasirinkti darželį iš sąrašo...',
+        id: "",
+        kindergartenFive: "Pasirinkti darželį iš sąrašo...",
+        kindergartenFour: "Pasirinkti darželį iš sąrašo...",
+        kindergartenOne: "Pasirinkti darželį iš sąrašo...",
+        kindergartenThree: "Pasirinkti darželį iš sąrašo...",
+        kindergartenTwo: "Pasirinkti darželį iš sąrašo...",
       },
-      name: '',
+      name: "",
       parentData: {
-        address: '',
-        city: '',
-        email: '',
-        id: '',
-        name: '',
-        personId: '',
-        phoneNum: '',
-        surename: '',
+        address: "",
+        city: "",
+        email: "",
+        id: "",
+        name: "",
+        personId: "",
+        phoneNum: "",
+        surename: "",
       },
       secondParentData: {
-        address: '',
-        city: '',
-        email: '',
-        id: '',
-        name: '',
-        personId: '',
-        phoneNum: '',
-        surename: '',
+        address: "",
+        city: "",
+        email: "",
+        id: "",
+        name: "",
+        personId: "",
+        phoneNum: "",
+        surename: "",
       },
       parentStudent: false,
-      personId: '',
-      postDate: '',
-      surename: '',
+      personId: "",
+      postDate: "",
+      surename: "",
       threeOrMore: true,
     },
   };
@@ -87,31 +87,31 @@ class RenderInfoForm extends Component {
       .catch((err) => {
         console.log(err);
       });
-    if (!currentUser) this.setState({ redirect: '/dis-app/' });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
       currentUser: currentUser,
       userReady: true,
       roles: currentUser.roles,
     });
-    if (showId !== '')
+    if (showId !== "")
       ParentService.getAllData(showId).then(
         (response) => {
           const data = response.data;
           if (data.kindergartenPriority.kindergartenFive === null)
             data.kindergartenPriority.kindergartenFive =
-              'Pasirinkti darželį iš sąrašo...';
+              "Pasirinkti darželį iš sąrašo...";
 
           if (data.kindergartenPriority.kindergartenFour === null)
             data.kindergartenPriority.kindergartenFour =
-              'Pasirinkti darželį iš sąrašo...';
+              "Pasirinkti darželį iš sąrašo...";
 
           if (data.kindergartenPriority.kindergartenThree === null)
             data.kindergartenPriority.kindergartenThree =
-              'Pasirinkti darželį iš sąrašo...';
+              "Pasirinkti darželį iš sąrašo...";
 
           if (data.kindergartenPriority.kindergartenTwo === null)
             data.kindergartenPriority.kindergartenTwo =
-              'Pasirinkti darželį iš sąrašo...';
+              "Pasirinkti darželį iš sąrašo...";
           this.setState({ data });
         },
         (error) => {
@@ -137,12 +137,12 @@ class RenderInfoForm extends Component {
 
   deleteForm = (e) => {
     e.preventDefault();
-    console.log('Delete form');
+    console.log("Delete form");
   };
 
   confirmForm = (e) => {
     e.preventDefault();
-    this.setState({ message: '' });
+    this.setState({ message: "" });
     this.form.validateAll();
     if (this.checkBtn.context._errors.length === 0) {
       if (
@@ -155,42 +155,42 @@ class RenderInfoForm extends Component {
       ) {
         this.setState({
           successful: false,
-          message: 'Skaičiai negalimi vardo ir pavardės laukuose!',
+          message: "Skaičiai negalimi vardo ir pavardės laukuose!",
         });
         return;
       }
 
       if (
-        this.state.data.name === '' ||
-        this.state.data.surename === '' ||
-        this.state.data.address === '' ||
-        this.state.data.city === '' ||
-        this.state.data.parentData.name === '' ||
-        this.state.data.parentData.surename === '' ||
-        this.state.data.parentData.address === '' ||
-        this.state.data.parentData.city === '' ||
-        this.state.data.parentData.email === ''
+        this.state.data.name === "" ||
+        this.state.data.surename === "" ||
+        this.state.data.address === "" ||
+        this.state.data.city === "" ||
+        this.state.data.parentData.name === "" ||
+        this.state.data.parentData.surename === "" ||
+        this.state.data.parentData.address === "" ||
+        this.state.data.parentData.city === "" ||
+        this.state.data.parentData.email === ""
       ) {
         this.setState({
           successful: false,
-          message: 'Privalomi laukai negali būti tušti!',
+          message: "Privalomi laukai negali būti tušti!",
         });
         return;
       }
       if (
-        this.state.data.name === '' ||
-        this.state.data.surename === '' ||
-        this.state.data.address === '' ||
-        this.state.data.city === '' ||
-        this.state.data.parentData.name === '' ||
-        this.state.data.parentData.surename === '' ||
-        this.state.data.parentData.address === '' ||
-        this.state.data.parentData.city === '' ||
-        this.state.data.parentData.email === ''
+        this.state.data.name === "" ||
+        this.state.data.surename === "" ||
+        this.state.data.address === "" ||
+        this.state.data.city === "" ||
+        this.state.data.parentData.name === "" ||
+        this.state.data.parentData.surename === "" ||
+        this.state.data.parentData.address === "" ||
+        this.state.data.parentData.city === "" ||
+        this.state.data.parentData.email === ""
       ) {
         this.setState({
           successful: false,
-          message: 'Privalomi laukai negali būti tušti!',
+          message: "Privalomi laukai negali būti tušti!",
         });
         return;
       }
@@ -201,7 +201,7 @@ class RenderInfoForm extends Component {
       ) {
         this.setState({
           successful: false,
-          message: 'Neteisingas asmens kodo ilgis!',
+          message: "Neteisingas asmens kodo ilgis!",
         });
         return;
       }
@@ -209,34 +209,34 @@ class RenderInfoForm extends Component {
       if (this.state.data.parentData.phoneNum.toString().length !== 8) {
         this.setState({
           successful: false,
-          message: 'Neteisingas telefono numerio ilgis!',
+          message: "Neteisingas telefono numerio ilgis!",
         });
         return;
       }
 
       if (
         this.state.data.kindergartenPriority.kindergartenOne ===
-        'Pasirinkti darželį iš sąrašo...'
+        "Pasirinkti darželį iš sąrašo..."
       ) {
         this.setState({
           successful: false,
           message:
-            'Privaloma pasirinkti bent vieną darželio prioritetą(1 prioritetas)!',
+            "Privaloma pasirinkti bent vieną darželio prioritetą(1 prioritetas)!",
         });
         return;
       }
 
       if (this.state.unlockSecondParent) {
         if (
-          this.state.data.secondParentData.name === '' ||
-          this.state.data.secondParentData.surename === '' ||
-          this.state.data.secondParentData.address === '' ||
-          this.state.data.secondParentData.city === '' ||
-          this.state.data.secondParentData.email === ''
+          this.state.data.secondParentData.name === "" ||
+          this.state.data.secondParentData.surename === "" ||
+          this.state.data.secondParentData.address === "" ||
+          this.state.data.secondParentData.city === "" ||
+          this.state.data.secondParentData.email === ""
         ) {
           this.setState({
             successful: false,
-            message: 'Privalomi laukai negali būti tušti!',
+            message: "Privalomi laukai negali būti tušti!",
           });
           return;
         }
@@ -246,7 +246,7 @@ class RenderInfoForm extends Component {
         ) {
           this.setState({
             successful: false,
-            message: 'Neteisingas asmens kodo ilgis!',
+            message: "Neteisingas asmens kodo ilgis!",
           });
           return;
         }
@@ -254,13 +254,13 @@ class RenderInfoForm extends Component {
         if (this.state.data.secondParentData.phoneNum.toString().length !== 8) {
           this.setState({
             successful: false,
-            message: 'Neteisingas telefono numerio ilgis!',
+            message: "Neteisingas telefono numerio ilgis!",
           });
           return;
         }
       }
 
-      console.log('Confirm form');
+      console.log("Confirm form");
       ParentService.updateForm(this.state.data.id, {
         ...this.state.data,
         idFront: this.state.currentUser.id,
@@ -358,14 +358,14 @@ class RenderInfoForm extends Component {
       data: {
         ...this.state.data,
         secondParentData: {
-          address: '',
-          city: '',
-          email: '',
-          id: '',
-          name: '',
-          personId: '',
-          phoneNum: '',
-          surename: '',
+          address: "",
+          city: "",
+          email: "",
+          id: "",
+          name: "",
+          personId: "",
+          phoneNum: "",
+          surename: "",
         },
       },
     });
@@ -383,12 +383,12 @@ class RenderInfoForm extends Component {
   };
 
   render() {
-    if (this.state.data.personId === '')
+    if (this.state.data.personId === "")
       return (
         <div className="d-flex justify-content-center">
           <div
             className="spinner-border"
-            style={{ width: '3rem', height: '3rem', marginTop: '3rem' }}
+            style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
             role="status"
           >
             <span className="sr-only">Loading...</span>
@@ -408,9 +408,9 @@ class RenderInfoForm extends Component {
         <div>
           <h3 className="mb-4 text-center">Vaiko atstovas 1</h3>
           <RenderInput
-            type={'text'}
-            forItem={'name'}
-            inputPlaceholder={'Vardas'}
+            type={"text"}
+            forItem={"name"}
+            inputPlaceholder={"Vardas"}
             value={this.state.data.parentData.name}
             onChange={this.handleChange}
             icon={faUser}
@@ -419,9 +419,9 @@ class RenderInfoForm extends Component {
             disabled={disabled}
           />
           <RenderInput
-            type={'text'}
-            forItem={'surename'}
-            inputPlaceholder={'Pavardė'}
+            type={"text"}
+            forItem={"surename"}
+            inputPlaceholder={"Pavardė"}
             value={this.state.data.parentData.surename}
             onChange={this.handleChange}
             icon={faUser}
@@ -430,9 +430,9 @@ class RenderInfoForm extends Component {
             disabled={disabled}
           />
           <RenderInput
-            type={'number'}
-            forItem={'personId'}
-            inputPlaceholder={'Asmens kodas'}
+            type={"number"}
+            forItem={"personId"}
+            inputPlaceholder={"Asmens kodas"}
             value={this.state.data.parentData.personId}
             onChange={this.handleChange}
             icon={faUser}
@@ -441,9 +441,9 @@ class RenderInfoForm extends Component {
             disabled={disabled}
           />
           <RenderInput
-            type={'text'}
-            forItem={'address'}
-            inputPlaceholder={'Adresas'}
+            type={"text"}
+            forItem={"address"}
+            inputPlaceholder={"Adresas"}
             value={this.state.data.parentData.address}
             onChange={this.handleChange}
             icon={faHome}
@@ -452,9 +452,9 @@ class RenderInfoForm extends Component {
             disabled={disabled}
           />
           <RenderInput
-            type={'text'}
-            forItem={'city'}
-            inputPlaceholder={'Miestas'}
+            type={"text"}
+            forItem={"city"}
+            inputPlaceholder={"Miestas"}
             value={this.state.data.parentData.city}
             onChange={this.handleChange}
             icon={faHome}
@@ -463,9 +463,9 @@ class RenderInfoForm extends Component {
             disabled={disabled}
           />
           <RenderInput
-            type={'number'}
-            forItem={'phoneNum'}
-            inputPlaceholder={'Telefonas'}
+            type={"number"}
+            forItem={"phoneNum"}
+            inputPlaceholder={"Telefonas"}
             value={this.state.data.parentData.phoneNum}
             onChange={this.handleChange}
             icon={faPhone}
@@ -476,8 +476,8 @@ class RenderInfoForm extends Component {
               <span
                 className="input-group-text"
                 style={{
-                  fontSize: '12px',
-                  fontWeight: 'bold',
+                  fontSize: "12px",
+                  fontWeight: "bold",
                   padding: 4,
                 }}
               >
@@ -486,9 +486,9 @@ class RenderInfoForm extends Component {
             }
           />
           <RenderInput
-            type={'email'}
-            forItem={'email'}
-            inputPlaceholder={'El.paštas'}
+            type={"email"}
+            forItem={"email"}
+            inputPlaceholder={"El.paštas"}
             value={this.state.data.parentData.email}
             onChange={this.handleChange}
             icon={faEnvelope}
@@ -502,9 +502,9 @@ class RenderInfoForm extends Component {
           {this.state.unlockSecondParent || this.state.data.secondParentData ? (
             <div>
               <RenderInput
-                type={'text'}
-                forItem={'name'}
-                inputPlaceholder={'Vardas'}
+                type={"text"}
+                forItem={"name"}
+                inputPlaceholder={"Vardas"}
                 value={this.state.data.secondParentData.name}
                 onChange={this.handleChangeForSecondParent}
                 icon={faUser}
@@ -513,9 +513,9 @@ class RenderInfoForm extends Component {
                 valid={[noNumbers, required]}
               />
               <RenderInput
-                type={'text'}
-                forItem={'surename'}
-                inputPlaceholder={'Pavardė'}
+                type={"text"}
+                forItem={"surename"}
+                inputPlaceholder={"Pavardė"}
                 value={this.state.data.secondParentData.surename}
                 onChange={this.handleChangeForSecondParent}
                 icon={faUser}
@@ -524,9 +524,9 @@ class RenderInfoForm extends Component {
                 valid={[noNumbers, required]}
               />
               <RenderInput
-                type={'number'}
-                forItem={'personId'}
-                inputPlaceholder={'Asmens kodas'}
+                type={"number"}
+                forItem={"personId"}
+                inputPlaceholder={"Asmens kodas"}
                 value={this.state.data.secondParentData.personId}
                 mandatory={true}
                 onChange={this.handleChangeForSecondParent}
@@ -535,10 +535,10 @@ class RenderInfoForm extends Component {
                 valid={[required]}
               />
               <RenderInput
-                type={'text'}
-                forItem={'address'}
+                type={"text"}
+                forItem={"address"}
                 mandatory={true}
-                inputPlaceholder={'Adresas'}
+                inputPlaceholder={"Adresas"}
                 value={this.state.data.secondParentData.address}
                 onChange={this.handleChangeForSecondParent}
                 icon={faHome}
@@ -546,9 +546,9 @@ class RenderInfoForm extends Component {
                 valid={[required]}
               />
               <RenderInput
-                type={'text'}
-                forItem={'city'}
-                inputPlaceholder={'Miestas'}
+                type={"text"}
+                forItem={"city"}
+                inputPlaceholder={"Miestas"}
                 value={this.state.data.secondParentData.city}
                 mandatory={true}
                 onChange={this.handleChangeForSecondParent}
@@ -557,9 +557,9 @@ class RenderInfoForm extends Component {
                 valid={[noNumbers, required]}
               />
               <RenderInput
-                type={'number'}
-                forItem={'phoneNum'}
-                inputPlaceholder={'Telefonas'}
+                type={"number"}
+                forItem={"phoneNum"}
+                inputPlaceholder={"Telefonas"}
                 value={this.state.data.secondParentData.phoneNum}
                 mandatory={true}
                 onChange={this.handleChangeForSecondParent}
@@ -568,9 +568,9 @@ class RenderInfoForm extends Component {
                 valid={[required]}
               />
               <RenderInput
-                type={'email'}
-                forItem={'email'}
-                inputPlaceholder={'El.paštas'}
+                type={"email"}
+                forItem={"email"}
+                inputPlaceholder={"El.paštas"}
                 value={this.state.data.secondParentData.email}
                 onChange={this.handleChangeForSecondParent}
                 mandatory={true}
@@ -579,7 +579,7 @@ class RenderInfoForm extends Component {
                 valid={[required]}
               />
               {this.state.unlockSecondParent && (
-                <div style={{ textAlign: 'center' }}>
+                <div style={{ textAlign: "center" }}>
                   <p>
                     <button
                       className="btn btn-sm btn-secondary"
@@ -592,9 +592,9 @@ class RenderInfoForm extends Component {
               )}
             </div>
           ) : (
-            <div style={{ textAlign: 'center', alignContent: 'center' }}>
+            <div style={{ textAlign: "center", alignContent: "center" }}>
               <p>
-                Duomenys nesuvesti{' '}
+                Duomenys nesuvesti{" "}
                 {!this.state.disabled && (
                   <button
                     className="btn btn-sm btn-info"
@@ -610,9 +610,9 @@ class RenderInfoForm extends Component {
         <div>
           <h3 className="mt-5 mb-4 text-center">Vaiko informacija</h3>
           <RenderInput
-            type={'text'}
-            forItem={'name'}
-            inputPlaceholder={'Vardas'}
+            type={"text"}
+            forItem={"name"}
+            inputPlaceholder={"Vardas"}
             value={this.state.data.name}
             onChange={this.handleChangeForChild}
             icon={faUser}
@@ -621,9 +621,9 @@ class RenderInfoForm extends Component {
             disabled={disabled}
           />
           <RenderInput
-            type={'text'}
-            forItem={'surename'}
-            inputPlaceholder={'Pavardė'}
+            type={"text"}
+            forItem={"surename"}
+            inputPlaceholder={"Pavardė"}
             value={this.state.data.surename}
             onChange={this.handleChangeForChild}
             icon={faUser}
@@ -632,9 +632,9 @@ class RenderInfoForm extends Component {
             disabled={disabled}
           />
           <RenderInput
-            type={'number'}
-            forItem={'personId'}
-            inputPlaceholder={'Asmens kodas'}
+            type={"number"}
+            forItem={"personId"}
+            inputPlaceholder={"Asmens kodas"}
             value={this.state.data.personId}
             onChange={this.handleChangeForChild}
             icon={faUser}
@@ -643,9 +643,9 @@ class RenderInfoForm extends Component {
             disabled={disabled}
           />
           <RenderInput
-            type={'date'}
-            forItem={'birthDate'}
-            inputPlaceholder={'Gimimo data'}
+            type={"date"}
+            forItem={"birthDate"}
+            inputPlaceholder={"Gimimo data"}
             value={this.state.data.birthDate.substr(0, 10)}
             onChange={this.handleChangeForChild}
             icon={faBirthdayCake}
@@ -655,9 +655,9 @@ class RenderInfoForm extends Component {
           />
 
           <RenderInput
-            type={'text'}
-            forItem={'address'}
-            inputPlaceholder={'Adresas'}
+            type={"text"}
+            forItem={"address"}
+            inputPlaceholder={"Adresas"}
             value={this.state.data.address}
             onChange={this.handleChangeForChild}
             icon={faHome}
@@ -666,9 +666,9 @@ class RenderInfoForm extends Component {
             disabled={disabled}
           />
           <RenderInput
-            type={'text'}
-            forItem={'city'}
-            inputPlaceholder={'Miestas'}
+            type={"text"}
+            forItem={"city"}
+            inputPlaceholder={"Miestas"}
             value={this.state.data.city}
             onChange={this.handleChangeForChild}
             icon={faHome}
@@ -686,8 +686,8 @@ class RenderInfoForm extends Component {
           </h3>
           <div className="form-group">
             <RenderSelect
-              forItem={'kindergartenOne'}
-              inputPlaceholder={'1 prioritetas'}
+              forItem={"kindergartenOne"}
+              inputPlaceholder={"1 prioritetas"}
               value={this.state.data.kindergartenPriority.kindergartenOne}
               onChange={this.kindergartenDropdownSelect}
               kindergartens={this.state.kindergartens.filter(
@@ -700,19 +700,19 @@ class RenderInfoForm extends Component {
                     this.state.data.kindergartenPriority.kindergartenFour &&
                   k.name !==
                     this.state.data.kindergartenPriority.kindergartenFive &&
-                  k !== 'Pasirinkti darželį iš sąrašo...'
+                  k !== "Pasirinkti darželį iš sąrašo..."
               )}
               disabled={
                 disabled ||
                 this.state.data.kindergartenPriority.kindergartenTwo !==
-                  'Pasirinkti darželį iš sąrašo...'
+                  "Pasirinkti darželį iš sąrašo..."
               }
             />
             {this.state.data.kindergartenPriority.kindergartenOne !==
-              'Pasirinkti darželį iš sąrašo...' && (
+              "Pasirinkti darželį iš sąrašo..." && (
               <RenderSelect
-                forItem={'kindergartenTwo'}
-                inputPlaceholder={'2 prioritetas'}
+                forItem={"kindergartenTwo"}
+                inputPlaceholder={"2 prioritetas"}
                 value={this.state.data.kindergartenPriority.kindergartenTwo}
                 onChange={this.kindergartenDropdownSelect}
                 kindergartens={this.state.kindergartens.filter(
@@ -729,15 +729,15 @@ class RenderInfoForm extends Component {
                 disabled={
                   disabled ||
                   this.state.data.kindergartenPriority.kindergartenThree !==
-                    'Pasirinkti darželį iš sąrašo...'
+                    "Pasirinkti darželį iš sąrašo..."
                 }
               />
             )}
             {this.state.data.kindergartenPriority.kindergartenTwo !==
-              'Pasirinkti darželį iš sąrašo...' && (
+              "Pasirinkti darželį iš sąrašo..." && (
               <RenderSelect
-                forItem={'kindergartenThree'}
-                inputPlaceholder={'3 prioritetas'}
+                forItem={"kindergartenThree"}
+                inputPlaceholder={"3 prioritetas"}
                 value={this.state.data.kindergartenPriority.kindergartenThree}
                 onChange={this.kindergartenDropdownSelect}
                 kindergartens={this.state.kindergartens.filter(
@@ -754,15 +754,15 @@ class RenderInfoForm extends Component {
                 disabled={
                   disabled ||
                   this.state.data.kindergartenPriority.kindergartenFour !==
-                    'Pasirinkti darželį iš sąrašo...'
+                    "Pasirinkti darželį iš sąrašo..."
                 }
               />
             )}
             {this.state.data.kindergartenPriority.kindergartenThree !==
-              'Pasirinkti darželį iš sąrašo...' && (
+              "Pasirinkti darželį iš sąrašo..." && (
               <RenderSelect
-                forItem={'kindergartenFour'}
-                inputPlaceholder={'4 prioritetas'}
+                forItem={"kindergartenFour"}
+                inputPlaceholder={"4 prioritetas"}
                 value={this.state.data.kindergartenPriority.kindergartenFour}
                 onChange={this.kindergartenDropdownSelect}
                 kindergartens={this.state.kindergartens.filter(
@@ -779,15 +779,15 @@ class RenderInfoForm extends Component {
                 disabled={
                   disabled ||
                   this.state.data.kindergartenPriority.kindergartenFive !==
-                    'Pasirinkti darželį iš sąrašo...'
+                    "Pasirinkti darželį iš sąrašo..."
                 }
               />
             )}
             {this.state.data.kindergartenPriority.kindergartenFour !==
-              'Pasirinkti darželį iš sąrašo...' && (
+              "Pasirinkti darželį iš sąrašo..." && (
               <RenderSelect
-                forItem={'kindergartenFive'}
-                inputPlaceholder={'5 prioritetas'}
+                forItem={"kindergartenFive"}
+                inputPlaceholder={"5 prioritetas"}
                 value={this.state.data.kindergartenPriority.kindergartenFive}
                 onChange={this.kindergartenDropdownSelect}
                 kindergartens={this.state.kindergartens.filter(
@@ -813,46 +813,46 @@ class RenderInfoForm extends Component {
             </h3>
             <RenderCheck
               onChange={this.handleSelectChange}
-              forItem={'inCity'}
+              forItem={"inCity"}
               checked={this.state.data.inCity}
-              label={'Deklaruota gyvenomoji vieta Vilniaus m.'}
+              label={"Deklaruota gyvenomoji vieta Vilniaus m."}
               disabled={disabled}
             />
             <RenderCheck
               onChange={this.handleSelectChange}
-              forItem={'adopted'}
+              forItem={"adopted"}
               checked={this.state.data.adopted}
-              label={'Vaikas įvaikintas.'}
+              label={"Vaikas įvaikintas."}
               disabled={disabled}
             />
             <RenderCheck
               onChange={this.handleSelectChange}
-              forItem={'threeOrMore'}
+              forItem={"threeOrMore"}
               checked={this.state.data.threeOrMore}
               label={
-                'Šeimoje yra 3 ir daugiau vaikų, besimokančių bendro ugdymo programose.'
+                "Šeimoje yra 3 ir daugiau vaikų, besimokančių bendro ugdymo programose."
               }
               disabled={disabled}
             />
             <RenderCheck
               onChange={this.handleSelectChange}
-              forItem={'parentStudent'}
+              forItem={"parentStudent"}
               checked={this.state.data.parentStudent}
-              label={'Vienas iš tėvų(globėjų) mokosi bendro ugdymo mokykloje.'}
+              label={"Vienas iš tėvų(globėjų) mokosi bendro ugdymo mokykloje."}
               disabled={disabled}
             />
             <RenderCheck
               onChange={this.handleSelectChange}
-              forItem={'handicapped'}
+              forItem={"handicapped"}
               checked={this.state.data.handicapped}
               label={
-                'Vienas iš tėvų(globėjų) turi ne daugiau kaip 40 proc nedarbingumo lygio'
+                "Vienas iš tėvų(globėjų) turi ne daugiau kaip 40 proc nedarbingumo lygio"
               }
               disabled={disabled}
             />
           </div>
         </div>
-        {disabled ? (
+        {disabled && !this.props.spec ? (
           <div>
             <button
               className="btn btn-info my-5"
@@ -868,7 +868,7 @@ class RenderInfoForm extends Component {
             </button>
           </div>
         ) : (
-          <div>
+          <div hidden={this.props.spec}>
             <button
               className="btn btn-success my-5"
               onClick={(e) => this.confirmForm(e)}
@@ -879,7 +879,7 @@ class RenderInfoForm extends Component {
               className="btn btn-secondary my-5 m-1"
               onClick={(e) => this.unlockForm(e)}
             >
-              Atšaukti{' '}
+              Atšaukti{" "}
             </button>
           </div>
         )}
@@ -888,8 +888,8 @@ class RenderInfoForm extends Component {
             <div
               className={
                 this.state.successful
-                  ? 'alert alert-success'
-                  : 'alert alert-danger'
+                  ? "alert alert-success"
+                  : "alert alert-danger"
               }
               role="alert"
             >
@@ -898,7 +898,7 @@ class RenderInfoForm extends Component {
           </div>
         )}
         <CheckButton
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           ref={(c) => {
             this.checkBtn = c;
           }}

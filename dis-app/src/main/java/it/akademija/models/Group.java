@@ -57,6 +57,49 @@ public class Group {
 		this.kindergarten = kindergarten;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ageFrom == null) ? 0 : ageFrom.hashCode());
+		result = prime * result + ((ageTo == null) ? 0 : ageTo.hashCode());
+		result = prime * result + ((kindergarten == null) ? 0 : kindergarten.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Group other = (Group) obj;
+		if (ageFrom == null) {
+			if (other.ageFrom != null)
+				return false;
+		} else if (!ageFrom.equals(other.ageFrom))
+			return false;
+		if (ageTo == null) {
+			if (other.ageTo != null)
+				return false;
+		} else if (!ageTo.equals(other.ageTo))
+			return false;
+		if (kindergarten == null) {
+			if (other.kindergarten != null)
+				return false;
+		} else if (!kindergarten.equals(other.kindergarten))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
 	public Long getAgeFrom() {
 		return ageFrom;
 	}

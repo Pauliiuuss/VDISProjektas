@@ -30,35 +30,36 @@ public class ParentController {
 	@GetMapping("getdata/{id}")
 	@PreAuthorize("hasRole('PARENT') or hasRole('SPEC')")
 	public ChildForm getData(@PathVariable Long id) {
+		System.out.println("Called getData ****************************************************");
 		return parentService.getData(id);
 	}
 
 	@GetMapping("/allgartens")
-	@PreAuthorize("hasRole('PARENT')")
+	@PreAuthorize("hasRole('PARENT') or hasRole('SPEC')")
 	public Collection<KindergartenRequest> getKindergartens() {
 		return parentService.getKindergartens();
 	}
 
 	@GetMapping("/allforms")
-	@PreAuthorize("hasRole('PARENT')")
+	@PreAuthorize("hasRole('PARENT') or hasRole('SPEC')")
 	public Collection<ChildFormRequest> getAllForms() {
 		return parentService.getAllForms();
 	}
 
 	@PostMapping("/addform")
-	@PreAuthorize("hasRole('PARENT')")
+	@PreAuthorize("hasRole('PARENT') or hasRole('SPEC')")
 	public ResponseEntity<?> addForm(@RequestBody ChildFormRequest childFormRequest) {
 		return parentService.addForm(childFormRequest);
 	}
 
 	@GetMapping("/getforms/{id}")
-	@PreAuthorize("hasRole('PARENT')")
+	@PreAuthorize("hasRole('PARENT') or hasRole('SPEC')")
 	public Collection<ChildForm> getGroups(@PathVariable Long id) {
 		return parentService.getForms(id);
 	}
 
 	@PutMapping("/updateform/{id}")
-	@PreAuthorize("hasRole('PARENT')")
+	@PreAuthorize("hasRole('PARENT') or hasRole('SPEC')")
 	public ResponseEntity<?> updateForm(@PathVariable Long id, @RequestBody ChildFormRequest childFormRequest) {
 		return parentService.updateForm(id, childFormRequest);
 	}

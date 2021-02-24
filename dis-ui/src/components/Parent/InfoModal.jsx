@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import ParenService from "../../services/parent.service";
 import RenderInfoForm from "./RenderInfoForm";
 
-const InfoModal = ({ handleClose, show, showId }) => {
+const InfoModal = ({ handleClose, show, showId, spec }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
   const [disabled] = useState(false);
   const [data, setData] = useState("");
@@ -33,10 +33,14 @@ const InfoModal = ({ handleClose, show, showId }) => {
           </div>
           <div className="modal-body">
             {showId && (
-              <RenderInfoForm disabled={disabled} showId={showId} data={data} />
+              <RenderInfoForm
+                disabled={disabled}
+                showId={showId}
+                data={data}
+                spec={spec}
+              />
             )}
           </div>
-          {/* )} */}
           <div className="modal-footer">
             <button onClick={handleClose} className="btn btn-secondary">
               Uždaryti
