@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import it.akademija.payload.request.DocumentDownloadRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -63,14 +64,13 @@ public class DocumentService {
 	@Transactional(readOnly = true)
 	public Collection<DocumentRequest> getDocuments() {
 		return documentRepository.findAll().stream().map(isdb -> new DocumentRequest(isdb.getId(), isdb.getDocName(),
-				isdb.getDocType(), isdb.getDocData(), isdb.getUser())).collect(Collectors.toList());
+				isdb.getDocType(), isdb.getUploadDate())).collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)
-	public DocumentRequest getDocumentById(String id) {
+	public DocumentDownloadRequest getDocumentById(String id) {
 		Document isdb = documentRepository.findById(id).get();
-		return new DocumentRequest(isdb.getId(), isdb.getDocName(), isdb.getDocType(), isdb.getDocData(),
-				isdb.getUser());
+		return new DocumentDownloadRequest(isdb.getId(), isdb.getDocName(), isdb.getDocData());
 	}
 
 }

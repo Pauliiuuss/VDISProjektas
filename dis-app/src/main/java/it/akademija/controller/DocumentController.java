@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import it.akademija.models.Document;
+import it.akademija.payload.request.DocumentDownloadRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +49,7 @@ public class DocumentController {
 
 	@GetMapping("/doc/{id}")
 	public ResponseEntity<byte[]> getDocument(@PathVariable String id) {
-		DocumentRequest isdb = documentService.getDocumentById(id);
+		DocumentDownloadRequest isdb = documentService.getDocumentById(id);
 
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + isdb.getDocName() + "\"")
