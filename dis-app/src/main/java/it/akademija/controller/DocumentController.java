@@ -39,7 +39,7 @@ public class DocumentController {
 	@GetMapping("/all")
 	public Collection<DocumentRequest> getDocuments() {
 		return documentService.getDocuments().stream().map(isdb -> {
-			String downloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/doc/").path(isdb.getId())
+			String downloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/documents/doc/").path(isdb.getId())
 					.toUriString();
 
 			isdb.setUrl(downloadUri);
