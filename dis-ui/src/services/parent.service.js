@@ -22,5 +22,9 @@ class ParentService {
   getAllForms(id) {
     return axios.get(API_URL + "getforms/" + id, { headers: authHeader() });
   }
+
+  deleteFormById(id) {
+    return axios.delete(API_URL + "delete/" + id, { headers: authHeader() });
+  }
 }
 export default new ParentService();

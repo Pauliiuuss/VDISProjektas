@@ -135,9 +135,21 @@ class RenderInfoForm extends Component {
       });
   };
 
-  deleteForm = (e) => {
+  deleteForm = async (e) => {
     e.preventDefault();
-    console.log("Delete form");
+
+    await ParentService.deleteFormById(this.state.data.id).then((response) => {
+      console.log(response);
+
+      +response.status < 400 && alert("Forma ištrinta");
+
+      window.location.replace('/dis-app/home');
+
+    },
+    (error) => {
+      +error.response.status > 400 && alert("Ivyko klaida");
+    })
+    console.log('Delete form');
   };
 
   confirmForm = (e) => {
@@ -862,7 +874,11 @@ class RenderInfoForm extends Component {
             </button>
             <button
               className="btn btn-danger my-5 m-1"
-              onClick={(e) => this.deleteForm(e)}
+              onClick={(e) => {
+                if (window.confirm(`Ištrinti formą?`)) {
+                  this.deleteForm(e);
+                }
+              }}
             >
               Ištrinti
             </button>
