@@ -3,10 +3,9 @@ import Table from './Table';
 
 export default class DocumentsTable extends Component {
   columns = [
-    { path: 'username', label: 'Vardas' },
-    { path: 'uploadDate', label: 'Data' },
-    { path: 'docName', label: 'Dokumentas' },
-    { path: 'url', label: 'Perziureti' },
+    { path: 'uploadDate', label: 'Įkėlimo data' },
+    { path: 'userName', label: 'Prisijungimo vardas' },
+    { path: 'url', label: 'Medicininė pažyma' },
   ];
 
   render() {

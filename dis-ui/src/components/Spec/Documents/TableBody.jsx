@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class TableBody extends Component {
   renderCell = (item, column) => {
@@ -19,12 +21,25 @@ class TableBody extends Component {
       <tbody>
         {data.map((item) => (
           <tr key={item.id}>
-            {columns.map((column) => (
+            {/* {columns.map((column) => (
               <td key={this.createKey(item, column)}>
                 {this.renderCell(item, column)}
               </td>
             ))}
-            <td></td>
+            <td>
+              <FontAwesomeIcon icon={faEye} />
+              <a href={url}>Linkas</a>
+            </td> */}
+
+            <td>{item.uploadDate}</td>
+            <td>{item.userName}</td>
+            <td>
+              {' '}
+              <a href={item.url}>
+                {' '}
+                <FontAwesomeIcon icon={faEye} />
+              </a>
+            </td>
           </tr>
         ))}
       </tbody>

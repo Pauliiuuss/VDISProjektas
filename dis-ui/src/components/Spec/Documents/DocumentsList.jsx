@@ -19,7 +19,7 @@ export default class DocumentsList extends Component {
     return (
       <React.Fragment>
         <Navbar />
-        <div className="container">
+        <div className="container mt-5 text-secondary">
           <DocumentsTable docs={this.state.docs} />
         </div>
       </React.Fragment>
