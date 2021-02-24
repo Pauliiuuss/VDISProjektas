@@ -64,7 +64,7 @@ public class DocumentService {
 	@Transactional(readOnly = true)
 	public Collection<DocumentRequest> getDocuments() {
 		return documentRepository.findAll().stream().map(isdb -> new DocumentRequest(isdb.getId(), isdb.getDocName(),
-				isdb.getDocType(), isdb.getUploadDate())).collect(Collectors.toList());
+				isdb.getDocType(), isdb.getUploadDate(), isdb.getUser().getUsername())).collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)

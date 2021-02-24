@@ -1,6 +1,5 @@
 package it.akademija.payload.request;
 
-import it.akademija.models.User;
 
 import java.util.Date;
 
@@ -12,15 +11,17 @@ public class DocumentRequest {
     private String docName;
     private String docType;
     private Date uploadDate;
+    private String userName;
 
     public DocumentRequest() {
     }
 
-    public DocumentRequest(String id, String docName, String docType, Date uploadDate) {
+    public DocumentRequest(String id, String docName, String docType, Date uploadDate, String userName) {
         this.id = id;
         this.docName = docName;
         this.docType = docType;
         this.uploadDate = uploadDate;
+        this.userName = userName;
     }
 
     public String getId() {
@@ -61,5 +62,13 @@ public class DocumentRequest {
 
     public void setUploadDate(Date uploadDate) {
         this.uploadDate = uploadDate;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
