@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import Navbar from '../navbar.component';
+import Navbar from '../../navbar.component';
 import {
   faUser,
   faHome,
@@ -8,13 +8,13 @@ import {
   faEnvelope,
   faBirthdayCake,
 } from '@fortawesome/free-solid-svg-icons';
-import SpecService from '../../services/spec.service';
-import ParentService from '../../services/parent.service';
-import UserService from '../../services/user.service';
+import SpecService from '../../../services/spec.service';
+import ParentService from '../../../services/parent.service';
+import UserService from '../../../services/user.service';
 import RenderInput from './RenderInput';
 import RenderSelect from './RenderSelect';
 import RenderCheck from './RenderCheck';
-import AuthService from '../../services/auth.service';
+import AuthService from '../../../services/auth.service';
 import CheckButton from 'react-validation/build/button';
 import Form from 'react-validation/build/form';
 import {
@@ -24,7 +24,7 @@ import {
   validEmail,
   noNumbers,
   validDate,
-} from './Validation';
+} from '../Validation';
 
 export default class RegistrationForm extends Component {
   state = {

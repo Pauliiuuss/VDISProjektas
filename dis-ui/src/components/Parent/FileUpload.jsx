@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import UploadService from "../../services/upload-files.service";
-import AuthService from "../../services/auth.service";
-import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { Component } from 'react';
+import UploadService from '../../services/upload-files.service';
+import AuthService from '../../services/auth.service';
+import { faPaperclip, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class FileUpload extends Component {
   state = {
-    currentUser: "",
-    roles: "",
+    currentUser: '',
+    roles: '',
     selectedFiles: null,
     currentFile: null,
-    fileName: "",
+    fileName: '',
     progress: 0,
-    message: "",
+    message: '',
     successful: false,
   };
 
@@ -66,9 +66,9 @@ class FileUpload extends Component {
       }
     );
     this.setState({
-      message: "",
+      message: '',
       selectedFiles: null,
-      fileName: "",
+      fileName: '',
       successful: false,
     });
   };
@@ -79,7 +79,7 @@ class FileUpload extends Component {
     return (
       <React.Fragment>
         <input
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
           accept="application/pdf"
           id="files"
           type="file"
@@ -112,8 +112,8 @@ class FileUpload extends Component {
             <div
               className={
                 successful
-                  ? "alert alert-success alert-dismissible fade show"
-                  : "alert alert-danger alert-dismissible fade show"
+                  ? 'alert alert-success alert-dismissible fade show'
+                  : 'alert alert-danger alert-dismissible fade show'
               }
               role="alert"
             >
