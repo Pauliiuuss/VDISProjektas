@@ -23,7 +23,13 @@ class FormsTable extends Component {
       onSort,
       sortColumn,
     } = this.props;
-    if (forms.filter((f) => f.formStatus.name !== "PATEIKTAS").length > 0)
+    if (
+      forms.filter(
+        (f) =>
+          f.formStatus.name !== "PATEIKTAS" &&
+          f.formStatus.name !== "PANAIKINTAS"
+      ).length > 0
+    )
       this.columns = [
         {
           path: "name",

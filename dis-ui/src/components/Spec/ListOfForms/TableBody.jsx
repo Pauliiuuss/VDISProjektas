@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import InfoModal from "../../Parent/InfoModal";
-import specService from "../../../services/spec.service";
 import LoadingSpan from "../../utils/LoadingSpan";
 
 class TableBody extends Component {
@@ -67,6 +66,10 @@ class TableBody extends Component {
             </button>
           ) : (
             <button
+              hidden={
+                this.props.columns.filter((c) => c.path === "groupName")
+                  .length > 0
+              }
               className="btn btn-sm btn-success"
               onClick={() => this.props.enableForm(item.id)}
             >
@@ -138,7 +141,7 @@ class TableBody extends Component {
         <tr>
           <td colSpan="7">
             <p className="m-4 mx-auto" style={{ width: "500px" }}>
-              Duomenų bazėje pasinktam darželiui vaikų formų nėra registruota.
+              Duomenų bazėje pagal paiešką vaikų formų nėra registruota.
             </p>
           </td>
         </tr>

@@ -245,7 +245,8 @@ public class SpecService {
 
 	public Map<Group, List<ChildForm>> getFormsByKindergartenAndGroup() {
 
-		Collection<ChildForm> all = formRepo.findAll();
+		Collection<ChildForm> all = formRepo.findAll().stream()
+				.filter(f -> !f.getFormStatus().getName().equals(EFormStatus.PANAIKINTAS)).collect(Collectors.toList());
 		Collections.sort(formRepo.findAll(), comparator);
 
 		Collection<Group> groups = groupRepository.findAll();
