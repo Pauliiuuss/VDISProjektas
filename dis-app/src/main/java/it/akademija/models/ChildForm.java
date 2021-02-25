@@ -47,6 +47,9 @@ public class ChildForm {
 	@JoinColumn(name = "group_id")
 	private Group group;
 
+	private String groupName;
+	private String kindergartenName;
+
 	@ManyToOne(cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "userdata")
 	private UserData parentData;
@@ -93,6 +96,22 @@ public class ChildForm {
 		this.parentData = parentData;
 		this.secondParentData = secondParentData;
 		this.postDate = postDate;
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+	public String getKindergartenName() {
+		return kindergartenName;
+	}
+
+	public void setKindergartenName(String kindergartenName) {
+		this.kindergartenName = kindergartenName;
 	}
 
 	public Long getPersonId() {

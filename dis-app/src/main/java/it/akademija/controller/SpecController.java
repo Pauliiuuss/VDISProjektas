@@ -2,7 +2,6 @@ package it.akademija.controller;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.akademija.models.ChildForm;
-import it.akademija.models.Group;
+import it.akademija.payload.request.ChildFormRequest;
 import it.akademija.payload.request.GroupRequest;
 import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.services.SpecService;
@@ -66,10 +65,10 @@ public class SpecController {
 		return specService.getForms(id);
 	}
 
-	@GetMapping("/getformsbykindergarten/{id}")
+	@GetMapping("/getformsbykindergarten")
 //	@PreAuthorize("hasRole('SPEC')")
-	public Map<Group, List<ChildForm>> getFormsByKindergarten(@PathVariable Long id) {
-		return specService.getFormsByKindergarten(id);
+	public List<ChildFormRequest> getFormsByKindergarten() {
+		return specService.getFormsByKindergarten();
 	}
 
 	@PostMapping("/amend/{id}")

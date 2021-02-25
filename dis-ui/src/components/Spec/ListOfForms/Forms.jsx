@@ -10,7 +10,7 @@ class Forms extends Component {
   state = {
     forms: [],
     currentPage: 1,
-    pageSize: 10,
+    pageSize: 5,
     length: 0,
     searchQuery: "",
     buttonDisabled: true,

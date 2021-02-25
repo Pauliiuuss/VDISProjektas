@@ -16,6 +16,7 @@ const ChildFormsQueue = () => {
     SpecService.getForms(current).then((response) => {
       setForms(response.data);
       setFromsLoading(false);
+      console.log(response);
     });
   }, [current]);
 
@@ -102,11 +103,6 @@ const ChildFormsQueue = () => {
       <div className="container">
         <h3 style={{ paddingLeft: "3%", paddingTop: "3%" }}>Darželių eilės</h3>
         <div>
-          <KindergartenModal
-            kindergarten={kindergarten}
-            show={showModal}
-            handleClose={hideModal}
-          />
           <Forms
             cancelForm={cancelForm}
             enableForm={enableForm}

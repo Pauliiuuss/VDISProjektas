@@ -1,10 +1,12 @@
 package it.akademija.payload.request;
 
+import java.util.Date;
+
+import it.akademija.models.FormStatus;
+import it.akademija.models.Group;
 import it.akademija.models.KindergartenPriority;
 import it.akademija.models.SecondParent;
 import it.akademija.models.UserData;
-
-import java.util.Date;
 
 public class ChildFormRequest {
 
@@ -25,14 +27,24 @@ public class ChildFormRequest {
 	private KindergartenPriority kindergartenPriority;
 	private Date postDate;
 	private long idFront;
+	private Group group;
+	private FormStatus formStatus;
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
+	}
 
 	public ChildFormRequest() {
 	}
 
-
 	public ChildFormRequest(long id, String name, String surename, Date birthDate, String address, String city,
-							Long personId, boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent,
-							boolean handicapped, UserData parentData, SecondParent secondParentData, KindergartenPriority kindergartenPriority, Date postDate) {
+			Long personId, boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent,
+			boolean handicapped, UserData parentData, SecondParent secondParentData,
+			KindergartenPriority kindergartenPriority, Date postDate) {
 		this.id = id;
 		this.name = name;
 		this.surename = surename;
@@ -49,6 +61,38 @@ public class ChildFormRequest {
 		this.secondParentData = secondParentData;
 		this.kindergartenPriority = kindergartenPriority;
 		this.postDate = postDate;
+	}
+
+	public ChildFormRequest(long id, String name, String surename, Date birthDate, String address, String city,
+			Long personId, boolean inCity, boolean adopted, boolean threeOrMore, boolean parentStudent,
+			boolean handicapped, UserData parentData, SecondParent secondParentData,
+			KindergartenPriority kindergartenPriority, Date postDate, Group group, FormStatus formStatus) {
+		this.id = id;
+		this.name = name;
+		this.surename = surename;
+		this.birthDate = birthDate;
+		this.address = address;
+		this.city = city;
+		this.personId = personId;
+		this.inCity = inCity;
+		this.adopted = adopted;
+		this.threeOrMore = threeOrMore;
+		this.parentStudent = parentStudent;
+		this.handicapped = handicapped;
+		this.parentData = parentData;
+		this.secondParentData = secondParentData;
+		this.kindergartenPriority = kindergartenPriority;
+		this.postDate = postDate;
+		this.group = group;
+		this.formStatus = formStatus;
+	}
+
+	public FormStatus getFormStatus() {
+		return formStatus;
+	}
+
+	public void setFormStatus(FormStatus formStatus) {
+		this.formStatus = formStatus;
 	}
 
 	public Long getPersonId() {

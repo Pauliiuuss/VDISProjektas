@@ -56,6 +56,10 @@ class TableBody extends Component {
           </button>
           {item.formStatus.name !== "PANAIKINTAS" ? (
             <button
+              hidden={
+                item.formStatus.name === "PRIIMTAS" ||
+                item.formStatus.name === "EILEJE"
+              }
               className="btn btn-sm btn-secondary"
               onClick={() => this.props.cancelForm(item.id)}
             >

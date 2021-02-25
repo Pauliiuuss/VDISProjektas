@@ -22,10 +22,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.akademija.models.ChildForm;
-import it.akademija.models.FormStatus;
 import it.akademija.models.Group;
 import it.akademija.models.Kindergarten;
 import it.akademija.models.enums.EFormStatus;
+import it.akademija.payload.request.ChildFormRequest;
 import it.akademija.payload.request.GroupRequest;
 import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.payload.response.MessageResponse;
@@ -229,7 +229,21 @@ public class SpecService {
 		}
 	};
 
-	public Map<Group, List<ChildForm>> getFormsByKindergarten(Long id) {
+	public List<ChildFormRequest> getFormsByKindergarten() {
+		List<ChildFormRequest> requests = formRepo.findAll().stream()
+				.map(f -> new ChildFormRequest(f.getId(), f.getName(), f.getSurename(), f.getBirthDate(),
+						f.getAddress(), f.getCity(), f.getPersonId(), f.isInCity(), f.isAdopted(), f.isThreeOrMore(),
+						f.isParentStudent(), f.isHandicapped(), f.getParentData(), f.getSecondParentData(),
+						f.getKindergartenPriority(), f.getPostDate(), f.getGroup(), f.getFormStatus()))
+				.collect(Collectors.toList());
+		for (ChildFormRequest childFormRequest : requests) {
+			System.out
+					.println("***************************" + childFormRequest.getFormStatus() + " " + childFormRequest);
+		}
+		return requests;
+	};
+
+	public Map<Group, List<ChildForm>> getFormsByKindergartenAndGroup() {
 
 		Collection<ChildForm> all = formRepo.findAll();
 		Collections.sort(formRepo.findAll(), comparator);
@@ -238,8 +252,6 @@ public class SpecService {
 
 		Map<Group, List<ChildForm>> collection = new HashMap<>();
 		groups.forEach(g -> collection.put(g, new ArrayList<>()));
-		Group waitingGroup = new Group(0L, "Laukiantys", 99999L, 0L, 99L, null);
-		collection.put(waitingGroup, new ArrayList<>());
 
 		for (ChildForm form : all) {
 			System.out.println(form.getName() + " " + form.getSurename() + "******************************");
@@ -275,7 +287,6 @@ public class SpecService {
 				if (approved)
 					break;
 				List<Group> kindergartenGroups = kindergarten.getGroups();
-				kindergartenGroups.add(new Group("Laukiantys", 999999L, 0L, 100L, kindergarten));
 				for (Group group : kindergarten.getGroups()) {
 					if (approved)
 						break;
@@ -296,32 +307,23 @@ public class SpecService {
 					}
 				}
 			}
-			if (!approved) {
-				System.out.println("*************************** ELSE");
-				List<ChildForm> groupsForMap = collection.get(waitingGroup);
-				groupsForMap.add(form);
-				collection.put(waitingGroup, groupsForMap);
-				approved = true;
-			}
+			form.setFormStatus(statusRepo.findByName(EFormStatus.EILEJE).get());
 		}
 		return collection;
 	}
 
+	@Transactional
 	public ResponseEntity<?> confirmQueue() {
 
-		Map<Group, List<ChildForm>> forms = getFormsByKindergarten(0L);
+		Map<Group, List<ChildForm>> forms = getFormsByKindergartenAndGroup();
 
 		Set<Group> groups = forms.keySet();
 
 		for (Group group : groups) {
 			for (ChildForm form : forms.get(group)) {
-				FormStatus statusPriimtas = statusRepo.findByName(EFormStatus.PRIIMTAS).get();
-				FormStatus statusEileje = statusRepo.findByName(EFormStatus.EILEJE).get();
-				if (group.getName().equals("Laukiantys"))
-					form.setFormStatus(statusEileje);
-				else {
-					form.setFormStatus(statusPriimtas);
-				}
+				form.setFormStatus(statusRepo.findByName(EFormStatus.PRIIMTAS).get());
+				form.setGroupName(group.getName());
+				form.setKindergartenName(group.getKindergarten().getName());
 				formRepo.save(form);
 			}
 		}
@@ -330,18 +332,14 @@ public class SpecService {
 	}
 
 	public ResponseEntity<?> cancelQueue() {
-		Map<Group, List<ChildForm>> forms = getFormsByKindergarten(0L);
 
-		Set<Group> groups = forms.keySet();
+		List<ChildForm> forms = formRepo.findAll();
+		forms.forEach(f -> f.setFormStatus(statusRepo.findByName(EFormStatus.PATEIKTAS).get()));
+		forms.forEach(f -> f.setGroup(null));
+		forms.forEach(f -> f.setGroupName(null));
+		forms.forEach(f -> f.setKindergartenName(null));
+		formRepo.saveAll(forms);
 
-		for (Group group : groups) {
-			for (ChildForm form : forms.get(group)) {
-				FormStatus status = statusRepo.findByName(EFormStatus.PATEIKTAS).get();
-				form.setFormStatus(status);
-				form.setGroup(null);
-				formRepo.save(form);
-			}
-		}
 		return ResponseEntity.ok(new MessageResponse("Vaikų eilė atšaukta!"));
 	}
 

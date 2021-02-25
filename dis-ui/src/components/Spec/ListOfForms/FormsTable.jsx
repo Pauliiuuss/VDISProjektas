@@ -12,7 +12,6 @@ class FormsTable extends Component {
       label: "Pavardė",
     },
     { path: "formStatus.name", label: "Statusas" },
-    { path: "kindergarten", label: "Darželis" },
     { path: "buttons", label: "Veiksmai" },
   ];
   render() {
@@ -24,6 +23,21 @@ class FormsTable extends Component {
       onSort,
       sortColumn,
     } = this.props;
+    if (forms.filter((f) => f.formStatus.name !== "PATEIKTAS").length > 0)
+      this.columns = [
+        {
+          path: "name",
+          label: "Vardas",
+        },
+        {
+          path: "surename",
+          label: "Pavardė",
+        },
+        { path: "formStatus.name", label: "Statusas" },
+        { path: "kindergartenName", label: "Darželis" },
+        { path: "groupName", label: "Grupė" },
+        { path: "buttons", label: "Veiksmai" },
+      ];
 
     return (
       <Table
