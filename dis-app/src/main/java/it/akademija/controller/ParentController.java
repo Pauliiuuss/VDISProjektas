@@ -20,7 +20,7 @@ public class ParentController {
 	@Autowired
 	private ParentService parentService;
 
-	@GetMapping("getdata/{id}")
+	@GetMapping("/getdata/{id}")
 	@PreAuthorize("hasRole('PARENT')")
 	public ChildForm getData(@PathVariable Long id) {
 		return parentService.getData(id);
