@@ -11,17 +11,25 @@ class FormsTable extends Component {
       path: "surename",
       label: "Pavardė",
     },
-    { path: "address", label: "Adresas" },
-    { path: "city", label: "Miestas" },
-    { path: "birthDate", label: "Amžius" },
     { path: "formStatus.name", label: "Statusas" },
+    { path: "kindergarten", label: "Darželis" },
     { path: "buttons", label: "Veiksmai" },
   ];
   render() {
-    const { forms, onSort, sortColumn } = this.props;
+    const {
+      loading,
+      enableForm,
+      cancelForm,
+      forms,
+      onSort,
+      sortColumn,
+    } = this.props;
 
     return (
       <Table
+        enableForm={enableForm}
+        cancelForm={cancelForm}
+        loading={loading}
         columns={this.columns}
         data={forms}
         sortColumn={sortColumn}

@@ -308,6 +308,7 @@ public class SpecService {
 	}
 
 	public ResponseEntity<?> confirmQueue() {
+
 		Map<Group, List<ChildForm>> forms = getFormsByKindergarten(0L);
 
 		Set<Group> groups = forms.keySet();
@@ -318,8 +319,9 @@ public class SpecService {
 				FormStatus statusEileje = statusRepo.findByName(EFormStatus.EILEJE).get();
 				if (group.getName().equals("Laukiantys"))
 					form.setFormStatus(statusEileje);
-				else
+				else {
 					form.setFormStatus(statusPriimtas);
+				}
 				formRepo.save(form);
 			}
 		}
@@ -336,6 +338,7 @@ public class SpecService {
 			for (ChildForm form : forms.get(group)) {
 				FormStatus status = statusRepo.findByName(EFormStatus.PATEIKTAS).get();
 				form.setFormStatus(status);
+				form.setGroup(null);
 				formRepo.save(form);
 			}
 		}
@@ -349,4 +352,21 @@ public class SpecService {
 		return spaces;
 	}
 
+	public ResponseEntity<?> cancelForm(Long id) {
+		ChildForm form = formRepo.getOne(id);
+		if (form.getFormStatus().getName().equals(EFormStatus.PANAIKINTAS))
+			return ResponseEntity.badRequest().body(new MessageResponse("Forma jau panaikinta!"));
+		form.setFormStatus(statusRepo.findByName(EFormStatus.PANAIKINTAS).get());
+		formRepo.save(form);
+		return ResponseEntity.ok(new MessageResponse("Vaiko forma atšaukta!"));
+	}
+
+	public ResponseEntity<?> enableForm(Long id) {
+		ChildForm form = formRepo.getOne(id);
+		if (form.getFormStatus().getName().equals(EFormStatus.PATEIKTAS))
+			return ResponseEntity.badRequest().body(new MessageResponse("Forma jau aktyvi!"));
+		form.setFormStatus(statusRepo.findByName(EFormStatus.PATEIKTAS).get());
+		formRepo.save(form);
+		return ResponseEntity.ok(new MessageResponse("Vaiko forma aktyvuota!"));
+	}
 }

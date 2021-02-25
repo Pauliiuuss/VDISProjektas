@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import _ from "lodash";
 import InfoModal from "../../Parent/InfoModal";
+import specService from "../../../services/spec.service";
+import LoadingSpan from "../../utils/LoadingSpan";
 
 class TableBody extends Component {
   state = {
@@ -19,25 +21,27 @@ class TableBody extends Component {
     }
   }
 
-  clickAmend = (item) => {
-    this.setState({
-      showInput: item.id,
-      name: item.name,
-      address: item.address,
-    });
-  };
+  // cancelForm = async (id) => {
+  //   await specService.cancelForm(id).then(
+  //     (response) => {
+  //       console.log(response);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // };
 
-  onInputChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value, message: "" });
-  };
-
-  clickConfirm = (item) => {
-    let newItem = item;
-    newItem.name = this.state.name;
-    newItem.address = this.state.address;
-    this.props.onAmendKindergarten(item);
-    this.setState({ showInput: "" });
-  };
+  // enableForm = async (id) => {
+  //   await specService.enableForm(id).then(
+  //     (response) => {
+  //       console.log(response);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     }
+  //   );
+  // };
 
   renderCell = (item, column) => {
     if (column.path === "buttons") {
@@ -48,18 +52,27 @@ class TableBody extends Component {
             className="btn btn-sm btn-info"
             onClick={() => this.showModal(item.personId)}
           >
-            Informacija
+            Peržiurėti
           </button>
-          <button
-            className="btn btn-sm btn-secondary"
-            onClick={() => console.log("Delete has not been implemented yet")}
-          >
-            Ištrinti
-          </button>
+          {item.formStatus.name !== "PANAIKINTAS" ? (
+            <button
+              className="btn btn-sm btn-secondary"
+              onClick={() => this.props.cancelForm(item.id)}
+            >
+              Panaikinti
+            </button>
+          ) : (
+            <button
+              className="btn btn-sm btn-success"
+              onClick={() => this.props.enableForm(item.id)}
+            >
+              Aktyvinti
+            </button>
+          )}
         </>
       );
     }
-    if (column.path === "birthDate") {
+    if (column.path === "kindergarten") {
       return Math.round(
         (new Date() - new Date(item.birthDate)) / (1000 * 60 * 60 * 24 * 365)
       );
@@ -86,7 +99,9 @@ class TableBody extends Component {
   };
 
   render() {
-    const { data, columns } = this.props;
+    const { data, columns, loading } = this.props;
+    console.log(loading);
+    if (loading) return <LoadingSpan />;
 
     if (data.length > 0)
       return (
@@ -117,7 +132,7 @@ class TableBody extends Component {
     return (
       <tbody>
         <tr>
-          <td colSpan="6">
+          <td colSpan="7">
             <p className="m-4 mx-auto" style={{ width: "500px" }}>
               Duomenų bazėje pasinktam darželiui vaikų formų nėra registruota.
             </p>

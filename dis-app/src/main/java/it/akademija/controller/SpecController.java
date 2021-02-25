@@ -98,4 +98,13 @@ public class SpecController {
 		return specService.freeSpaces();
 	}
 
+	@RequestMapping("/cancel/{id}")
+	public ResponseEntity<?> cancelForm(@PathVariable Long id) {
+		return specService.cancelForm(id);
+	}
+
+	@RequestMapping("/enable/{id}")
+	public ResponseEntity<?> enableForm(@PathVariable Long id) {
+		return specService.enableForm(id);
+	}
 }

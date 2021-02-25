@@ -66,6 +66,18 @@ class SpecService {
       headers: authHeader(),
     });
   }
+
+  cancelForm(id) {
+    return axios.get(API_URL + "cancel/" + id, {
+      headers: authHeader(),
+    });
+  }
+
+  enableForm(id) {
+    return axios.get(API_URL + "enable/" + id, {
+      headers: authHeader(),
+    });
+  }
 }
 
 export default new SpecService();
