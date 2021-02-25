@@ -35,15 +35,15 @@ class TableBody extends Component {
             <td>{item.userName}</td>
             <td>
               <button
-                className="btn btn-info mx-3"
+                className="btn btn-info mx-2"
                 onClick={(e) => this.handleClick(e, item.id)}
               >
                 <FontAwesomeIcon icon={faEye} />
                 {this.state.isClicked === item.id ? (
-                  <DocumentModal id={item.id} />
+                  <DocumentModal id={item.id} showModal={true} />
                 ) : null}
               </button>
-              <button className="btn btn-success mx-3">
+              <button className="btn btn-success mx-2">
                 <a className="text-light" href={item.url}>
                   <FontAwesomeIcon icon={faFileDownload} />
                 </a>

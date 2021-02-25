@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ParentService from '../../services/parent.service';
+import ParentService from '../../../services/parent.service';
 import CheckButton from 'react-validation/build/button';
 import {
   faUser,
@@ -9,13 +9,13 @@ import {
   faBirthdayCake,
 } from '@fortawesome/free-solid-svg-icons';
 import Form from 'react-validation/build/form';
-import RenderInput from './RenderInput';
+import RenderInput from '../ChildRegistration/RenderInput';
 import RenderSelect from './RenderSelectForModal';
-import RenderCheck from './RenderCheck';
-import SpecService from '../../services/spec.service';
-import AuthService from '../../services/auth.service';
-import UserService from '../../services/user.service';
-import { noNumbers, required } from './Validation';
+import RenderCheck from '../ChildRegistration/RenderCheck';
+import SpecService from '../../../services/spec.service';
+import AuthService from '../../../services/auth.service';
+import UserService from '../../../services/user.service';
+import { noNumbers, required } from '../Validation';
 
 class RenderInfoForm extends Component {
   state = {
@@ -138,17 +138,18 @@ class RenderInfoForm extends Component {
   deleteForm = async (e) => {
     e.preventDefault();
 
-    await ParentService.deleteFormById(this.state.data.id).then((response) => {
-      console.log(response);
+    await ParentService.deleteFormById(this.state.data.id).then(
+      (response) => {
+        console.log(response);
 
-      +response.status < 400 && alert("Forma ištrinta");
+        +response.status < 400 && alert('Forma ištrinta');
 
-      window.location.replace('/dis-app/home');
-
-    },
-    (error) => {
-      +error.response.status > 400 && alert("Ivyko klaida");
-    })
+        window.location.replace('/dis-app/home');
+      },
+      (error) => {
+        +error.response.status > 400 && alert('Ivyko klaida');
+      }
+    );
     console.log('Delete form');
   };
 

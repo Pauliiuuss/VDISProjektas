@@ -6,9 +6,9 @@ import './App.css';
 import Login from './components/login.component';
 import MainAfterLogin from './components/MainAferLogin';
 import UnderConstruction from './components/underConstruction';
-import RegistrationForm from './components/Parent/RegistrationForm';
+import RegistrationForm from './components/Parent/ChildRegistration/RegistrationForm';
 import UserUpdateForm from './components/UserDetailUpdate/UserDetailUpdate';
-import DocumentsList from './components/Spec/Documents/DocumentsList';
+import Documents from './components/Spec/ListOfDocuments/Documents';
 
 class App extends Component {
   render() {
@@ -23,7 +23,7 @@ class App extends Component {
           />
           <Route exact path="/dis-app/home" component={MainAfterLogin} />
           <Route exact path="/dis-app/addform" component={RegistrationForm} />
-          <Route path="/dis-app/docs" component={DocumentsList} />
+          <Route path="/dis-app/docs" component={Documents} />
           <Route path="/dis-app/mydata" component={UserUpdateForm} />
           <Route path="/dis-app/queue" component={UnderConstruction} />
           <Route path="/dis-app/statistic" component={UnderConstruction} />

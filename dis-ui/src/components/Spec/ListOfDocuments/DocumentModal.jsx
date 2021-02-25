@@ -5,11 +5,10 @@ import { Button, Modal } from 'react-bootstrap';
 
 const API_URL = LINK + '/api/documents/';
 
-export default function DocumentModal({ id }) {
-  const [show, setShow] = useState(false);
+export default function DocumentModal({ id, showModal }) {
+  const [show, setShow] = useState(showModal);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -32,7 +31,6 @@ export default function DocumentModal({ id }) {
 
   return (
     <React.Fragment>
-      <Button variant="info" onClick={handleShow}></Button>
       <Modal
         className="modalDocuments"
         show={show}
