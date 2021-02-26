@@ -206,12 +206,14 @@ class Forms extends Component {
           loading={this.props.loading}
           forms={forms}
         />
-        <Pagination
-          itemsCount={totalCount}
-          pageSize={pageSize}
-          currentPage={currentPage}
-          onPageChange={this.handlePageChange}
-        />
+        {forms && !this.props.loading && (
+          <Pagination
+            itemsCount={totalCount}
+            pageSize={pageSize}
+            currentPage={currentPage}
+            onPageChange={this.handlePageChange}
+          />
+        )}
       </div>
     );
   }

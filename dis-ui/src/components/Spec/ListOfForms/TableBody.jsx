@@ -107,7 +107,6 @@ class TableBody extends Component {
 
   render() {
     const { data, columns, loading } = this.props;
-    console.log(loading);
     if (loading) return <LoadingSpan />;
 
     if (data.length > 0)

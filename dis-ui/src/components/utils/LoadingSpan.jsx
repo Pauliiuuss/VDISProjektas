@@ -3,7 +3,7 @@ import React from "react";
 const LoadingSpan = () => {
   return (
     <div
-      className="d-flex justify-content-center"
+      className="d-flex justify-content-center m-5"
       style={{
         position: "fixed",
         top: "50%",

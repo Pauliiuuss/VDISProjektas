@@ -20,29 +20,6 @@ const ChildFormsQueue = () => {
     });
   }, [current]);
 
-  function handleChange(value) {
-    console.log(current);
-    setCurrent(value);
-  }
-
-  async function handleQueueBuild() {
-    setShowModal(true);
-    console.log("jep");
-    console.log(current);
-    await SpecService.getKindergarten(current).then(
-      (response) => {
-        setKindergarten(response.data);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
-
-  function hideModal() {
-    setShowModal(false);
-  }
-
   function handleConfirm() {
     setFromsLoading(true);
     console.log(fromsLoading);
@@ -73,7 +50,10 @@ const ChildFormsQueue = () => {
     await specService.cancelForm(id).then(
       (response) => {
         console.log(response);
-        setFromsLoading(false);
+        SpecService.getForms(current).then((response) => {
+          setForms(response.data);
+          setFromsLoading(false);
+        });
       },
       (error) => {
         console.log(error);
@@ -87,7 +67,10 @@ const ChildFormsQueue = () => {
     await specService.enableForm(id).then(
       (response) => {
         console.log(response);
-        setFromsLoading(false);
+        SpecService.getForms(current).then((response) => {
+          setForms(response.data);
+          setFromsLoading(false);
+        });
       },
       (error) => {
         console.log(error);
@@ -108,9 +91,7 @@ const ChildFormsQueue = () => {
             enableForm={enableForm}
             loading={fromsLoading}
             handleConfirm={handleConfirm}
-            handleQueueBuild={handleQueueBuild}
             forms={forms}
-            handleChange={handleChange}
           />
         </div>
       </div>
