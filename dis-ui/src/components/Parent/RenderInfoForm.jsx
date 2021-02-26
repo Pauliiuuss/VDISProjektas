@@ -1,13 +1,6 @@
 import React, { Component } from "react";
 import ParentService from "../../services/parent.service";
 import CheckButton from "react-validation/build/button";
-import {
-  faUser,
-  faHome,
-  faPhone,
-  faEnvelope,
-  faBirthdayCake,
-} from "@fortawesome/free-solid-svg-icons";
 import Form from "react-validation/build/form";
 import RenderInput from "./RenderInput";
 import RenderSelect from "./RenderSelectForModal";
@@ -681,12 +674,21 @@ class RenderInfoForm extends Component {
           </div>
           <div className="col-6">
             <div>
-              <h3 className="mb-4 text-center">
-                Pasirinkite darželį (prioriteto mažėjimo tvarka):
-                <span className="text-danger" style={{ fontSize: 25 }}>
-                  *
-                </span>
-              </h3>
+              {this.props.spec ? (
+                <h3 className="mb-4 text-center">
+                  Pasirinkiti darželiai:
+                  <span className="text-danger" style={{ fontSize: 25 }}>
+                    *
+                  </span>
+                </h3>
+              ) : (
+                <h3 className="mb-4 text-center">
+                  Pasirinkite darželį (prioriteto mažėjimo tvarka):
+                  <span className="text-danger" style={{ fontSize: 25 }}>
+                    *
+                  </span>
+                </h3>
+              )}
               <div className="form-group">
                 <RenderSelect
                   forItem={"kindergartenOne"}
@@ -715,6 +717,10 @@ class RenderInfoForm extends Component {
                 {this.state.data.kindergartenPriority.kindergartenOne !==
                   "Pasirinkti darželį iš sąrašo..." && (
                   <RenderSelect
+                    hidden={
+                      this.state.data.kindergartenPriority.kindergartenTwo ===
+                        "Pasirinkti darželį iš sąrašo..." && this.props.spec
+                    }
                     forItem={"kindergartenTwo"}
                     inputPlaceholder={"2 prioritetas"}
                     value={this.state.data.kindergartenPriority.kindergartenTwo}
@@ -743,6 +749,10 @@ class RenderInfoForm extends Component {
                 {this.state.data.kindergartenPriority.kindergartenTwo !==
                   "Pasirinkti darželį iš sąrašo..." && (
                   <RenderSelect
+                    hidden={
+                      this.state.data.kindergartenPriority.kindergartenThree ===
+                        "Pasirinkti darželį iš sąrašo..." && this.props.spec
+                    }
                     forItem={"kindergartenThree"}
                     inputPlaceholder={"3 prioritetas"}
                     value={
@@ -773,6 +783,10 @@ class RenderInfoForm extends Component {
                 {this.state.data.kindergartenPriority.kindergartenThree !==
                   "Pasirinkti darželį iš sąrašo..." && (
                   <RenderSelect
+                    hidden={
+                      this.state.data.kindergartenPriority.kindergartenFour ===
+                        "Pasirinkti darželį iš sąrašo..." && this.props.spec
+                    }
                     forItem={"kindergartenFour"}
                     inputPlaceholder={"4 prioritetas"}
                     value={
@@ -803,6 +817,10 @@ class RenderInfoForm extends Component {
                 {this.state.data.kindergartenPriority.kindergartenFour !==
                   "Pasirinkti darželį iš sąrašo..." && (
                   <RenderSelect
+                    hidden={
+                      this.state.data.kindergartenPriority.kindergartenFive ===
+                        "Pasirinkti darželį iš sąrašo..." && this.props.spec
+                    }
                     forItem={"kindergartenFive"}
                     inputPlaceholder={"5 prioritetas"}
                     value={
@@ -833,9 +851,13 @@ class RenderInfoForm extends Component {
 
         <div className="row">
           <div className="col-lg-12">
-            <h3 className="mb-4 mt-5 text-center">
-              Pažymėkite visas atitinkančias sąlygas:
-            </h3>
+            {this.props.spec ? (
+              <h3 className="mb-4 mt-5 text-center">Pasirinktos sąlygas:</h3>
+            ) : (
+              <h3 className="mb-4 mt-5 text-center">
+                Pažymėkite visas atitinkančias sąlygas:
+              </h3>
+            )}
             <RenderCheck
               onChange={this.handleSelectChange}
               forItem={"inCity"}

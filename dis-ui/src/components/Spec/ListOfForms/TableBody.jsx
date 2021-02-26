@@ -114,10 +114,10 @@ class TableBody extends Component {
       return (
         <React.Fragment>
           <InfoModal
+            spec={true}
             showId={this.state.showId}
             show={this.state.show}
             handleClose={this.hideModal}
-            spec={true}
           />
           <tbody>
             {data.map((item) => (

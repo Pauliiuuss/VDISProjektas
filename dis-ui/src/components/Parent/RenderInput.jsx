@@ -38,15 +38,7 @@ class RenderInput extends Component {
           )}
         </label>
         <div className="input-group ">
-          <div className="input-group-prepend">
-            {span ? (
-              span
-            ) : (
-              <span hidden={!icon} className="input-group-text px-auto">
-                <FontAwesomeIcon icon={icon} />
-              </span>
-            )}
-          </div>
+          {span && <div className="input-group-prepend">{span}</div>}
           <Input
             type={type}
             id={forItem}
