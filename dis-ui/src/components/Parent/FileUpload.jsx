@@ -20,11 +20,11 @@ class FileUpload extends Component {
 
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
       currentUser: currentUser,
       roles: currentUser.roles,
     });
-    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     if (!currentUser.roles.includes("ROLE_PARENT")) {
       this.props.history.push("/dis-app/");
       window.location.reload();
@@ -81,8 +81,8 @@ class FileUpload extends Component {
   };
 
   render() {
-    const { selectedFiles, message, successful, fileName } = this.state;
     if (this.state.redirect) return <Redirect to={this.state.redirect} />;
+    const { selectedFiles, message, successful, fileName } = this.state;
 
     return (
       <React.Fragment>

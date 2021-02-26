@@ -24,11 +24,11 @@ export default class DocumentsList extends Component {
 
   componentDidMount = async () => {
     const currentUser = AuthService.getCurrentUser();
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
       currentUser: currentUser,
       roles: currentUser.roles,
     });
-    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     if (!currentUser.roles.includes("ROLE_SPEC")) {
       this.props.history.push("/dis-app/");
       window.location.reload();
