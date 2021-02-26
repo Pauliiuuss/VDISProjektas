@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import InfoModal from "../InfoModal";
+import InfoModal from "../ListOfForms/InfoModal";
 import FileUpload from "../FileUpload";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
-import { LINK } from '../../../services/LINK';
-import { Button, Modal } from 'react-bootstrap';
-import AuthService from '../../../services/auth.service';
+import React, { useState } from "react";
+import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
+import { LINK } from "../../../services/LINK";
+import { Button, Modal } from "react-bootstrap";
+import AuthService from "../../../services/auth.service";
 
-const API_URL = LINK + '/api/documents/';
+const API_URL = LINK + "/api/documents/";
 
 export default function DocumentModal({ id, showModal }) {
   const [show, setShow] = useState(showModal);
@@ -54,8 +54,8 @@ export default function DocumentModal({ id, showModal }) {
           </Document>
           <div>
             <p className="text-secondary">
-              Puslapis {pageNumber || (numPages ? 1 : '--')} of{' '}
-              {numPages || '--'}
+              Puslapis {pageNumber || (numPages ? 1 : "--")} of{" "}
+              {numPages || "--"}
             </p>
             <button
               type="button"

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import _ from "lodash";
-import InfoModal from "../../Parent/InfoModal";
+import InfoModal from "../../Parent/ListOfForms/InfoModal";
 import LoadingSpan from "../../utils/LoadingSpan";
 
 class TableBody extends Component {

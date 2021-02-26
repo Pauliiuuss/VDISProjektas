@@ -141,7 +141,7 @@ class Forms extends Component {
                       Panaikintų formų skaičius:{" "}
                       <b>
                         {
-                          forms.filter(
+                          allForms.filter(
                             (f) => f.formStatus.name === "PANAIKINTAS"
                           ).length
                         }
@@ -151,7 +151,7 @@ class Forms extends Component {
                       Eilėje laukiančių vaikų skaičius:{" "}
                       <b>
                         {
-                          forms.filter((f) => f.formStatus.name === "EILEJE")
+                          allForms.filter((f) => f.formStatus.name === "EILEJE")
                             .length
                         }
                       </b>
@@ -160,8 +160,9 @@ class Forms extends Component {
                       Priimtų vaikų skaičius:{" "}
                       <b>
                         {
-                          forms.filter((f) => f.formStatus.name === "PRIIMTAS")
-                            .length
+                          allForms.filter(
+                            (f) => f.formStatus.name === "PRIIMTAS"
+                          ).length
                         }
                       </b>
                     </p>
