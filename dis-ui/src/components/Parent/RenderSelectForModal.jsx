@@ -12,7 +12,7 @@ class RenderSelect extends Component {
     } = this.props;
     return (
       <div className="form-inline mb-4">
-        <label className="col-4" htmlFor={forItem}>
+        <label style={{ padding: "10px" }} className="col-4" htmlFor={forItem}>
           {inputPlaceholder}
         </label>
         <select

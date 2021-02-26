@@ -138,18 +138,19 @@ class RenderInfoForm extends Component {
   deleteForm = async (e) => {
     e.preventDefault();
 
-    await ParentService.deleteFormById(this.state.data.id).then((response) => {
-      console.log(response);
+    await ParentService.deleteFormById(this.state.data.id).then(
+      (response) => {
+        console.log(response);
 
-      +response.status < 400 && alert("Forma ištrinta");
+        +response.status < 400 && alert("Forma ištrinta");
 
-      window.location.replace('/dis-app/home');
-
-    },
-    (error) => {
-      +error.response.status > 400 && alert("Ivyko klaida");
-    })
-    console.log('Delete form');
+        window.location.replace("/dis-app/home");
+      },
+      (error) => {
+        +error.response.status > 400 && alert("Ivyko klaida");
+      }
+    );
+    console.log("Delete form");
   };
 
   confirmForm = (e) => {
@@ -418,406 +419,418 @@ class RenderInfoForm extends Component {
         }}
       >
         <div>
-          <h3 className="mb-4 text-center">Vaiko atstovas 1</h3>
-          <RenderInput
-            type={"text"}
-            forItem={"name"}
-            inputPlaceholder={"Vardas"}
-            value={this.state.data.parentData.name}
-            onChange={this.handleChange}
-            icon={faUser}
-            valid={[noNumbers, required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"text"}
-            forItem={"surename"}
-            inputPlaceholder={"Pavardė"}
-            value={this.state.data.parentData.surename}
-            onChange={this.handleChange}
-            icon={faUser}
-            valid={[noNumbers, required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"number"}
-            forItem={"personId"}
-            inputPlaceholder={"Asmens kodas"}
-            value={this.state.data.parentData.personId}
-            onChange={this.handleChange}
-            icon={faUser}
-            valid={[required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"text"}
-            forItem={"address"}
-            inputPlaceholder={"Adresas"}
-            value={this.state.data.parentData.address}
-            onChange={this.handleChange}
-            icon={faHome}
-            valid={[required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"text"}
-            forItem={"city"}
-            inputPlaceholder={"Miestas"}
-            value={this.state.data.parentData.city}
-            onChange={this.handleChange}
-            icon={faHome}
-            valid={[noNumbers, required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"number"}
-            forItem={"phoneNum"}
-            inputPlaceholder={"Telefonas"}
-            value={this.state.data.parentData.phoneNum}
-            onChange={this.handleChange}
-            icon={faPhone}
-            valid={[required]}
-            mandatory={true}
-            disabled={disabled}
-            span={
-              <span
-                className="input-group-text"
-                style={{
-                  fontSize: "12px",
-                  fontWeight: "bold",
-                  padding: 4,
-                }}
-              >
-                +370
-              </span>
-            }
-          />
-          <RenderInput
-            type={"email"}
-            forItem={"email"}
-            inputPlaceholder={"El.paštas"}
-            value={this.state.data.parentData.email}
-            onChange={this.handleChange}
-            icon={faEnvelope}
-            valid={[required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-        </div>
-        <div>
-          <h3 className="mb-4 text-center">Vaiko atstovas 2</h3>
-          {this.state.unlockSecondParent || this.state.data.secondParentData ? (
-            <div>
+          <div className="row">
+            <div className="col-6">
+              <h3 className="mb-4 text-center">Vaiko atstovas 1</h3>
               <RenderInput
                 type={"text"}
                 forItem={"name"}
                 inputPlaceholder={"Vardas"}
-                value={this.state.data.secondParentData.name}
-                onChange={this.handleChangeForSecondParent}
-                icon={faUser}
-                disabled={disabled}
-                mandatory={true}
+                value={this.state.data.parentData.name}
+                onChange={this.handleChange}
                 valid={[noNumbers, required]}
+                mandatory={true}
+                disabled={disabled}
               />
               <RenderInput
                 type={"text"}
                 forItem={"surename"}
                 inputPlaceholder={"Pavardė"}
-                value={this.state.data.secondParentData.surename}
-                onChange={this.handleChangeForSecondParent}
-                icon={faUser}
-                disabled={disabled}
-                mandatory={true}
+                value={this.state.data.parentData.surename}
+                onChange={this.handleChange}
                 valid={[noNumbers, required]}
+                mandatory={true}
+                disabled={disabled}
               />
               <RenderInput
                 type={"number"}
                 forItem={"personId"}
                 inputPlaceholder={"Asmens kodas"}
-                value={this.state.data.secondParentData.personId}
-                mandatory={true}
-                onChange={this.handleChangeForSecondParent}
-                icon={faUser}
-                disabled={disabled}
+                value={this.state.data.parentData.personId}
+                onChange={this.handleChange}
                 valid={[required]}
+                mandatory={true}
+                disabled={disabled}
               />
               <RenderInput
                 type={"text"}
                 forItem={"address"}
-                mandatory={true}
                 inputPlaceholder={"Adresas"}
-                value={this.state.data.secondParentData.address}
-                onChange={this.handleChangeForSecondParent}
-                icon={faHome}
-                disabled={disabled}
+                value={this.state.data.parentData.address}
+                onChange={this.handleChange}
                 valid={[required]}
+                mandatory={true}
+                disabled={disabled}
               />
               <RenderInput
                 type={"text"}
                 forItem={"city"}
                 inputPlaceholder={"Miestas"}
-                value={this.state.data.secondParentData.city}
-                mandatory={true}
-                onChange={this.handleChangeForSecondParent}
-                icon={faHome}
-                disabled={disabled}
+                value={this.state.data.parentData.city}
+                onChange={this.handleChange}
                 valid={[noNumbers, required]}
+                mandatory={true}
+                disabled={disabled}
               />
               <RenderInput
                 type={"number"}
                 forItem={"phoneNum"}
                 inputPlaceholder={"Telefonas"}
-                value={this.state.data.secondParentData.phoneNum}
-                mandatory={true}
-                onChange={this.handleChangeForSecondParent}
-                icon={faPhone}
-                disabled={disabled}
+                value={this.state.data.parentData.phoneNum}
+                onChange={this.handleChange}
                 valid={[required]}
+                mandatory={true}
+                disabled={disabled}
+                span={
+                  <span
+                    className="input-group-text"
+                    style={{
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      padding: 4,
+                    }}
+                  >
+                    +370
+                  </span>
+                }
               />
               <RenderInput
                 type={"email"}
                 forItem={"email"}
                 inputPlaceholder={"El.paštas"}
-                value={this.state.data.secondParentData.email}
-                onChange={this.handleChangeForSecondParent}
-                mandatory={true}
-                icon={faEnvelope}
-                disabled={disabled}
+                value={this.state.data.parentData.email}
+                onChange={this.handleChange}
                 valid={[required]}
-              />
-              {this.state.unlockSecondParent && (
-                <div style={{ textAlign: "center" }}>
-                  <p>
-                    <button
-                      className="btn btn-sm btn-secondary"
-                      onClick={this.lockSecondParent}
-                    >
-                      Atšaukti
-                    </button>
-                  </p>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div style={{ textAlign: "center", alignContent: "center" }}>
-              <p>
-                Duomenys nesuvesti{" "}
-                {!this.state.disabled && (
-                  <button
-                    className="btn btn-sm btn-info"
-                    onClick={this.unlockSecondParent}
-                  >
-                    Pridėti
-                  </button>
-                )}
-              </p>
-            </div>
-          )}
-        </div>
-        <div>
-          <h3 className="mt-5 mb-4 text-center">Vaiko informacija</h3>
-          <RenderInput
-            type={"text"}
-            forItem={"name"}
-            inputPlaceholder={"Vardas"}
-            value={this.state.data.name}
-            onChange={this.handleChangeForChild}
-            icon={faUser}
-            valid={[noNumbers, required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"text"}
-            forItem={"surename"}
-            inputPlaceholder={"Pavardė"}
-            value={this.state.data.surename}
-            onChange={this.handleChangeForChild}
-            icon={faUser}
-            valid={[noNumbers, required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"number"}
-            forItem={"personId"}
-            inputPlaceholder={"Asmens kodas"}
-            value={this.state.data.personId}
-            onChange={this.handleChangeForChild}
-            icon={faUser}
-            valid={[required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"date"}
-            forItem={"birthDate"}
-            inputPlaceholder={"Gimimo data"}
-            value={this.state.data.birthDate.substr(0, 10)}
-            onChange={this.handleChangeForChild}
-            icon={faBirthdayCake}
-            valid={[required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-
-          <RenderInput
-            type={"text"}
-            forItem={"address"}
-            inputPlaceholder={"Adresas"}
-            value={this.state.data.address}
-            onChange={this.handleChangeForChild}
-            icon={faHome}
-            valid={[required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-          <RenderInput
-            type={"text"}
-            forItem={"city"}
-            inputPlaceholder={"Miestas"}
-            value={this.state.data.city}
-            onChange={this.handleChangeForChild}
-            icon={faHome}
-            valid={[noNumbers, required]}
-            mandatory={true}
-            disabled={disabled}
-          />
-        </div>
-        <div>
-          <h3 className="mb-4 mt-5 text-center">
-            Pasirinkite darželį (prioriteto mažėjimo tvarka):
-            <span className="text-danger" style={{ fontSize: 25 }}>
-              *
-            </span>
-          </h3>
-          <div className="form-group">
-            <RenderSelect
-              forItem={"kindergartenOne"}
-              inputPlaceholder={"1 prioritetas"}
-              value={this.state.data.kindergartenPriority.kindergartenOne}
-              onChange={this.kindergartenDropdownSelect}
-              kindergartens={this.state.kindergartens.filter(
-                (k) =>
-                  k.name !==
-                    this.state.data.kindergartenPriority.kindergartenTwo &&
-                  k.name !==
-                    this.state.data.kindergartenPriority.kindergartenThree &&
-                  k.name !==
-                    this.state.data.kindergartenPriority.kindergartenFour &&
-                  k.name !==
-                    this.state.data.kindergartenPriority.kindergartenFive &&
-                  k !== "Pasirinkti darželį iš sąrašo..."
-              )}
-              disabled={
-                disabled ||
-                this.state.data.kindergartenPriority.kindergartenTwo !==
-                  "Pasirinkti darželį iš sąrašo..."
-              }
-            />
-            {this.state.data.kindergartenPriority.kindergartenOne !==
-              "Pasirinkti darželį iš sąrašo..." && (
-              <RenderSelect
-                forItem={"kindergartenTwo"}
-                inputPlaceholder={"2 prioritetas"}
-                value={this.state.data.kindergartenPriority.kindergartenTwo}
-                onChange={this.kindergartenDropdownSelect}
-                kindergartens={this.state.kindergartens.filter(
-                  (k) =>
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenOne &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenThree &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenFour &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenFive
-                )}
-                disabled={
-                  disabled ||
-                  this.state.data.kindergartenPriority.kindergartenThree !==
-                    "Pasirinkti darželį iš sąrašo..."
-                }
-              />
-            )}
-            {this.state.data.kindergartenPriority.kindergartenTwo !==
-              "Pasirinkti darželį iš sąrašo..." && (
-              <RenderSelect
-                forItem={"kindergartenThree"}
-                inputPlaceholder={"3 prioritetas"}
-                value={this.state.data.kindergartenPriority.kindergartenThree}
-                onChange={this.kindergartenDropdownSelect}
-                kindergartens={this.state.kindergartens.filter(
-                  (k) =>
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenTwo &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenOne &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenFour &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenFive
-                )}
-                disabled={
-                  disabled ||
-                  this.state.data.kindergartenPriority.kindergartenFour !==
-                    "Pasirinkti darželį iš sąrašo..."
-                }
-              />
-            )}
-            {this.state.data.kindergartenPriority.kindergartenThree !==
-              "Pasirinkti darželį iš sąrašo..." && (
-              <RenderSelect
-                forItem={"kindergartenFour"}
-                inputPlaceholder={"4 prioritetas"}
-                value={this.state.data.kindergartenPriority.kindergartenFour}
-                onChange={this.kindergartenDropdownSelect}
-                kindergartens={this.state.kindergartens.filter(
-                  (k) =>
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenTwo &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenThree &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenOne &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenFive
-                )}
-                disabled={
-                  disabled ||
-                  this.state.data.kindergartenPriority.kindergartenFive !==
-                    "Pasirinkti darželį iš sąrašo..."
-                }
-              />
-            )}
-            {this.state.data.kindergartenPriority.kindergartenFour !==
-              "Pasirinkti darželį iš sąrašo..." && (
-              <RenderSelect
-                forItem={"kindergartenFive"}
-                inputPlaceholder={"5 prioritetas"}
-                value={this.state.data.kindergartenPriority.kindergartenFive}
-                onChange={this.kindergartenDropdownSelect}
-                kindergartens={this.state.kindergartens.filter(
-                  (k) =>
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenTwo &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenThree &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenFour &&
-                    k.name !==
-                      this.state.data.kindergartenPriority.kindergartenOne
-                )}
+                mandatory={true}
                 disabled={disabled}
               />
-            )}
+            </div>
+            <div className="col-6">
+              <div>
+                <h3 className="mb-4 text-center">Vaiko informacija</h3>
+                <RenderInput
+                  type={"text"}
+                  forItem={"name"}
+                  inputPlaceholder={"Vardas"}
+                  value={this.state.data.name}
+                  onChange={this.handleChangeForChild}
+                  valid={[noNumbers, required]}
+                  mandatory={true}
+                  disabled={disabled}
+                />
+                <RenderInput
+                  type={"text"}
+                  forItem={"surename"}
+                  inputPlaceholder={"Pavardė"}
+                  value={this.state.data.surename}
+                  onChange={this.handleChangeForChild}
+                  valid={[noNumbers, required]}
+                  mandatory={true}
+                  disabled={disabled}
+                />
+                <RenderInput
+                  type={"number"}
+                  forItem={"personId"}
+                  inputPlaceholder={"Asmens kodas"}
+                  value={this.state.data.personId}
+                  onChange={this.handleChangeForChild}
+                  valid={[required]}
+                  mandatory={true}
+                  disabled={disabled}
+                />
+                <RenderInput
+                  type={"date"}
+                  forItem={"birthDate"}
+                  inputPlaceholder={"Gimimo data"}
+                  value={this.state.data.birthDate.substr(0, 10)}
+                  onChange={this.handleChangeForChild}
+                  valid={[required]}
+                  mandatory={true}
+                  disabled={disabled}
+                />
+
+                <RenderInput
+                  type={"text"}
+                  forItem={"address"}
+                  inputPlaceholder={"Adresas"}
+                  value={this.state.data.address}
+                  onChange={this.handleChangeForChild}
+                  valid={[required]}
+                  mandatory={true}
+                  disabled={disabled}
+                />
+                <RenderInput
+                  type={"text"}
+                  forItem={"city"}
+                  inputPlaceholder={"Miestas"}
+                  value={this.state.data.city}
+                  onChange={this.handleChangeForChild}
+                  valid={[noNumbers, required]}
+                  mandatory={true}
+                  disabled={disabled}
+                />
+              </div>
+            </div>
           </div>
         </div>
+
+        <div className="row mt-5">
+          <div className="col-6">
+            <h3 className="mb-4 text-center">Vaiko atstovas 2</h3>
+            {this.state.unlockSecondParent ||
+            this.state.data.secondParentData ? (
+              <div>
+                <RenderInput
+                  type={"text"}
+                  forItem={"name"}
+                  inputPlaceholder={"Vardas"}
+                  value={this.state.data.secondParentData.name}
+                  onChange={this.handleChangeForSecondParent}
+                  disabled={disabled}
+                  mandatory={true}
+                  valid={[noNumbers, required]}
+                />
+                <RenderInput
+                  type={"text"}
+                  forItem={"surename"}
+                  inputPlaceholder={"Pavardė"}
+                  value={this.state.data.secondParentData.surename}
+                  onChange={this.handleChangeForSecondParent}
+                  disabled={disabled}
+                  mandatory={true}
+                  valid={[noNumbers, required]}
+                />
+                <RenderInput
+                  type={"number"}
+                  forItem={"personId"}
+                  inputPlaceholder={"Asmens kodas"}
+                  value={this.state.data.secondParentData.personId}
+                  mandatory={true}
+                  onChange={this.handleChangeForSecondParent}
+                  disabled={disabled}
+                  valid={[required]}
+                />
+                <RenderInput
+                  type={"text"}
+                  forItem={"address"}
+                  mandatory={true}
+                  inputPlaceholder={"Adresas"}
+                  value={this.state.data.secondParentData.address}
+                  onChange={this.handleChangeForSecondParent}
+                  disabled={disabled}
+                  valid={[required]}
+                />
+                <RenderInput
+                  type={"text"}
+                  forItem={"city"}
+                  inputPlaceholder={"Miestas"}
+                  value={this.state.data.secondParentData.city}
+                  mandatory={true}
+                  onChange={this.handleChangeForSecondParent}
+                  disabled={disabled}
+                  valid={[noNumbers, required]}
+                />
+                <RenderInput
+                  type={"number"}
+                  forItem={"phoneNum"}
+                  inputPlaceholder={"Telefonas"}
+                  value={this.state.data.secondParentData.phoneNum}
+                  mandatory={true}
+                  onChange={this.handleChangeForSecondParent}
+                  disabled={disabled}
+                  valid={[required]}
+                />
+                <RenderInput
+                  type={"email"}
+                  forItem={"email"}
+                  inputPlaceholder={"El.paštas"}
+                  value={this.state.data.secondParentData.email}
+                  onChange={this.handleChangeForSecondParent}
+                  mandatory={true}
+                  disabled={disabled}
+                  valid={[required]}
+                />
+                {this.state.unlockSecondParent && (
+                  <div style={{ textAlign: "center" }}>
+                    <p>
+                      <button
+                        className="btn btn-sm btn-secondary"
+                        onClick={this.lockSecondParent}
+                      >
+                        Atšaukti
+                      </button>
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div style={{ textAlign: "center", alignContent: "center" }}>
+                <p>
+                  Duomenys nesuvesti{" "}
+                  {!this.state.disabled && (
+                    <button
+                      className="btn btn-sm btn-info"
+                      onClick={this.unlockSecondParent}
+                    >
+                      Pridėti
+                    </button>
+                  )}
+                </p>
+              </div>
+            )}
+          </div>
+          <div className="col-6">
+            <div>
+              <h3 className="mb-4 text-center">
+                Pasirinkite darželį (prioriteto mažėjimo tvarka):
+                <span className="text-danger" style={{ fontSize: 25 }}>
+                  *
+                </span>
+              </h3>
+              <div className="form-group">
+                <RenderSelect
+                  forItem={"kindergartenOne"}
+                  inputPlaceholder={"1 prioritetas"}
+                  value={this.state.data.kindergartenPriority.kindergartenOne}
+                  onChange={this.kindergartenDropdownSelect}
+                  kindergartens={this.state.kindergartens.filter(
+                    (k) =>
+                      k.name !==
+                        this.state.data.kindergartenPriority.kindergartenTwo &&
+                      k.name !==
+                        this.state.data.kindergartenPriority
+                          .kindergartenThree &&
+                      k.name !==
+                        this.state.data.kindergartenPriority.kindergartenFour &&
+                      k.name !==
+                        this.state.data.kindergartenPriority.kindergartenFive &&
+                      k !== "Pasirinkti darželį iš sąrašo..."
+                  )}
+                  disabled={
+                    disabled ||
+                    this.state.data.kindergartenPriority.kindergartenTwo !==
+                      "Pasirinkti darželį iš sąrašo..."
+                  }
+                />
+                {this.state.data.kindergartenPriority.kindergartenOne !==
+                  "Pasirinkti darželį iš sąrašo..." && (
+                  <RenderSelect
+                    forItem={"kindergartenTwo"}
+                    inputPlaceholder={"2 prioritetas"}
+                    value={this.state.data.kindergartenPriority.kindergartenTwo}
+                    onChange={this.kindergartenDropdownSelect}
+                    kindergartens={this.state.kindergartens.filter(
+                      (k) =>
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenOne &&
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenThree &&
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenFour &&
+                        k.name !==
+                          this.state.data.kindergartenPriority.kindergartenFive
+                    )}
+                    disabled={
+                      disabled ||
+                      this.state.data.kindergartenPriority.kindergartenThree !==
+                        "Pasirinkti darželį iš sąrašo..."
+                    }
+                  />
+                )}
+                {this.state.data.kindergartenPriority.kindergartenTwo !==
+                  "Pasirinkti darželį iš sąrašo..." && (
+                  <RenderSelect
+                    forItem={"kindergartenThree"}
+                    inputPlaceholder={"3 prioritetas"}
+                    value={
+                      this.state.data.kindergartenPriority.kindergartenThree
+                    }
+                    onChange={this.kindergartenDropdownSelect}
+                    kindergartens={this.state.kindergartens.filter(
+                      (k) =>
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenTwo &&
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenOne &&
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenFour &&
+                        k.name !==
+                          this.state.data.kindergartenPriority.kindergartenFive
+                    )}
+                    disabled={
+                      disabled ||
+                      this.state.data.kindergartenPriority.kindergartenFour !==
+                        "Pasirinkti darželį iš sąrašo..."
+                    }
+                  />
+                )}
+                {this.state.data.kindergartenPriority.kindergartenThree !==
+                  "Pasirinkti darželį iš sąrašo..." && (
+                  <RenderSelect
+                    forItem={"kindergartenFour"}
+                    inputPlaceholder={"4 prioritetas"}
+                    value={
+                      this.state.data.kindergartenPriority.kindergartenFour
+                    }
+                    onChange={this.kindergartenDropdownSelect}
+                    kindergartens={this.state.kindergartens.filter(
+                      (k) =>
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenTwo &&
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenThree &&
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenOne &&
+                        k.name !==
+                          this.state.data.kindergartenPriority.kindergartenFive
+                    )}
+                    disabled={
+                      disabled ||
+                      this.state.data.kindergartenPriority.kindergartenFive !==
+                        "Pasirinkti darželį iš sąrašo..."
+                    }
+                  />
+                )}
+                {this.state.data.kindergartenPriority.kindergartenFour !==
+                  "Pasirinkti darželį iš sąrašo..." && (
+                  <RenderSelect
+                    forItem={"kindergartenFive"}
+                    inputPlaceholder={"5 prioritetas"}
+                    value={
+                      this.state.data.kindergartenPriority.kindergartenFive
+                    }
+                    onChange={this.kindergartenDropdownSelect}
+                    kindergartens={this.state.kindergartens.filter(
+                      (k) =>
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenTwo &&
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenThree &&
+                        k.name !==
+                          this.state.data.kindergartenPriority
+                            .kindergartenFour &&
+                        k.name !==
+                          this.state.data.kindergartenPriority.kindergartenOne
+                    )}
+                    disabled={disabled}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="row">
           <div className="col-lg-12">
             <h3 className="mb-4 mt-5 text-center">

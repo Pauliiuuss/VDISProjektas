@@ -42,7 +42,7 @@ class RenderInput extends Component {
             {span ? (
               span
             ) : (
-              <span className="input-group-text px-auto">
+              <span hidden={!icon} className="input-group-text px-auto">
                 <FontAwesomeIcon icon={icon} />
               </span>
             )}

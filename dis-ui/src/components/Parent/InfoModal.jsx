@@ -23,7 +23,7 @@ const InfoModal = ({ handleClose, show, showId, spec }) => {
 
   return (
     <div className={showHideClassName}>
-      <div className="modal-dialog modal-dialog-scrollable">
+      <div className="modal-dialog modal-xl modal-dialog-scrollable">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Vaiko forma</h5>
