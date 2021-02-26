@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
-import InfoModal from '../InfoModal';
-import FileUpload from '../FileUpload';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { Component } from "react";
+import _ from "lodash";
+import InfoModal from "../InfoModal";
+import FileUpload from "../FileUpload";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class TableBody extends Component {
   state = {
     show: false,
-    showId: '',
+    showId: "",
   };
 
   showModal = (showId) => {
@@ -16,7 +16,7 @@ class TableBody extends Component {
   };
 
   hideModal = () => {
-    this.setState({ show: false, showId: '' });
+    this.setState({ show: false, showId: "" });
     window.location.reload();
   };
 
@@ -36,6 +36,7 @@ class TableBody extends Component {
     return (
       <React.Fragment>
         <InfoModal
+          appStatus={this.props.appStatus}
           showId={this.state.showId}
           show={this.state.show}
           handleClose={this.hideModal}

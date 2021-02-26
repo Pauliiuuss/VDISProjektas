@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import ParenService from "../../services/parent.service";
 import RenderInfoForm from "./RenderInfoForm";
 
-const InfoModal = ({ spec, handleClose, show, showId }) => {
+const InfoModal = ({ appStatus, spec, handleClose, show, showId }) => {
   const showHideClassName = show ? "modal display-block" : "modal display-none";
   const [disabled] = useState(false);
   const [data, setData] = useState("");
@@ -34,6 +34,7 @@ const InfoModal = ({ spec, handleClose, show, showId }) => {
           <div className="modal-body">
             {showId && (
               <RenderInfoForm
+                appStatus={appStatus}
                 disabled={disabled}
                 showId={showId}
                 data={data}

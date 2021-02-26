@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import RegisteredFormsTable from './RegisteredFormsTable';
+import React, { Component } from "react";
+import RegisteredFormsTable from "./RegisteredFormsTable";
 
 export default class Forms extends Component {
   state = {
@@ -23,7 +23,10 @@ export default class Forms extends Component {
     return (
       <div className="row">
         <div className="col">
-          <RegisteredFormsTable forms={allForms} />
+          <RegisteredFormsTable
+            appStatus={this.props.appStatus}
+            forms={allForms}
+          />
         </div>
       </div>
     );

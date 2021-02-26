@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.akademija.models.AppStatus;
 import it.akademija.models.ChildForm;
 import it.akademija.models.Group;
 import it.akademija.models.KindergartenPriority;
@@ -18,6 +19,7 @@ import it.akademija.models.enums.EFormStatus;
 import it.akademija.payload.request.ChildFormRequest;
 import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.payload.response.MessageResponse;
+import it.akademija.repository.AppStatusRepo;
 import it.akademija.repository.ChildFormRepository;
 import it.akademija.repository.FormStatusRepository;
 import it.akademija.repository.KindergartenPriorityRepository;
@@ -43,6 +45,8 @@ public class ParentService {
 	private KindergartenPriorityRepository kindergartenPriorityRepository;
 	@Autowired
 	private SecondParentRepository secondParentRepository;
+	@Autowired
+	private AppStatusRepo appStatusRepo;
 
 	@Transactional(readOnly = true)
 	public Collection<KindergartenRequest> getKindergartens() {
@@ -325,4 +329,17 @@ public class ParentService {
 //        setKinderPriority.setKindergartenPriority(kindergartenPriorityRepository.findById(newKinder.getId()).orElse(null));
 //
 //    }
+
+	@Transactional
+	public AppStatus getStatus() {
+		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
+		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
+		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
+		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
+		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
+		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
+		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
+		AppStatus appStatus = new AppStatus(appStatusRepo.getOne(1L).isRegistrationClosed());
+		return appStatus;
+	}
 }

@@ -29,6 +29,7 @@ import it.akademija.payload.request.ChildFormRequest;
 import it.akademija.payload.request.GroupRequest;
 import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.payload.response.MessageResponse;
+import it.akademija.repository.AppStatusRepo;
 import it.akademija.repository.ChildFormRepository;
 import it.akademija.repository.FormStatusRepository;
 import it.akademija.repository.GroupRepository;
@@ -48,6 +49,9 @@ public class SpecService {
 
 	@Autowired
 	private GroupRepository groupRepository;
+
+	@Autowired
+	private AppStatusRepo appStatusRepo;
 
 	@Transactional
 	public ResponseEntity<?> registerKindergarten(KindergartenRequest info) {
@@ -329,6 +333,8 @@ public class SpecService {
 			}
 		}
 
+		appStatusRepo.setRegistrationClosed();
+
 		return ResponseEntity.ok(new MessageResponse("Vaikų eilė sudaryta!"));
 	}
 
@@ -340,6 +346,8 @@ public class SpecService {
 		forms.forEach(f -> f.setGroupName(null));
 		forms.forEach(f -> f.setKindergartenName(null));
 		formRepo.saveAll(forms);
+
+		appStatusRepo.setRegistrationOpen();
 
 		return ResponseEntity.ok(new MessageResponse("Vaikų eilė atšaukta!"));
 	}

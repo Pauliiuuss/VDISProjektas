@@ -900,7 +900,7 @@ class RenderInfoForm extends Component {
           </div>
         </div>
         {disabled && !this.props.spec ? (
-          <div>
+          <div hidden={this.props.appStatus.registrationClosed}>
             <button
               className="btn btn-info my-5"
               onClick={(e) => this.unlockForm(e)}
@@ -919,7 +919,9 @@ class RenderInfoForm extends Component {
             </button>
           </div>
         ) : (
-          <div hidden={this.props.spec}>
+          <div
+            hidden={this.props.spec || this.props.appStatus.registrationClosed}
+          >
             <button
               className="btn btn-success my-5"
               onClick={(e) => this.confirmForm(e)}
