@@ -17,6 +17,15 @@
   transform: translate(-50%, -50%);
 }
 
+.modalDocuments {
+  height: 100%;
+  width: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .display-block {
   display: block;
 }
@@ -43,7 +52,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 

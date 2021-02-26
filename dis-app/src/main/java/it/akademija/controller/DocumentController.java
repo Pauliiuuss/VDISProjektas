@@ -9,6 +9,7 @@ import it.akademija.payload.request.DocumentDownloadRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,12 +32,14 @@ public class DocumentController {
 	private DocumentService documentService;
 
 	@PostMapping("/add/{id}")
+	@PreAuthorize("hasRole('PARENT')")
 	public ResponseEntity<?> addDocument(@RequestParam("file") MultipartFile document, @PathVariable Long id)
 			throws IOException {
 		return documentService.addDocument(document, id);
 	}
 
 	@GetMapping("/all")
+	@PreAuthorize("hasRole('SPEC')")
 	public Collection<DocumentRequest> getDocuments() {
 		return documentService.getDocuments().stream().map(isdb -> {
 			String downloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/documents/doc/").path(isdb.getId())
@@ -48,6 +51,7 @@ public class DocumentController {
 	}
 
 	@GetMapping("/doc/{id}")
+	@PreAuthorize("hasRole('SPEC')")
 	public ResponseEntity<byte[]> getDocument(@PathVariable String id) {
 		DocumentDownloadRequest isdb = documentService.getDocumentById(id);
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UploadService from "../../services/upload-files.service";
 import AuthService from "../../services/auth.service";
+import { Redirect } from "react-router-dom";
 import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -14,6 +15,7 @@ class FileUpload extends Component {
     progress: 0,
     message: "",
     successful: false,
+    redirect: null,
   };
 
   componentDidMount() {
@@ -22,6 +24,11 @@ class FileUpload extends Component {
       currentUser: currentUser,
       roles: currentUser.roles,
     });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    if (!currentUser.roles.includes("ROLE_PARENT")) {
+      this.props.history.push("/dis-app/");
+      window.location.reload();
+    }
   }
 
   fileSelectHandler = (e) => {
@@ -75,6 +82,7 @@ class FileUpload extends Component {
 
   render() {
     const { selectedFiles, message, successful, fileName } = this.state;
+    if (this.state.redirect) return <Redirect to={this.state.redirect} />;
 
     return (
       <React.Fragment>

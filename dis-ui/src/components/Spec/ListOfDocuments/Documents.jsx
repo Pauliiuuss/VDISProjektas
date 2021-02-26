@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import AuthService from '../../../services/auth.service';
+import { Redirect } from 'react-router-dom';
 import Navbar from '../../navbar.component';
 import UploadService from '../../../services/upload-files.service';
 import DocumentsTable from './DocumentsTable';
@@ -14,10 +16,23 @@ export default class DocumentsList extends Component {
     pageSize: 5,
     length: 0,
     searchQuery: '',
+    roles: '',
+    redirect: null,
+    currentUser: '',
     sortColumn: { path: 'userName', order: 'asc' },
   };
 
   componentDidMount = async () => {
+    const currentUser = AuthService.getCurrentUser();
+    this.setState({
+      currentUser: currentUser,
+      roles: currentUser.roles,
+    });
+    if (!currentUser) this.setState({ redirect: '/dis-app/' });
+    if (!currentUser.roles.includes('ROLE_SPEC')) {
+      this.props.history.push('/dis-app/');
+      window.location.reload();
+    }
     const { data } = await UploadService.getFiles();
     this.setState({ docs: data });
   };
@@ -51,7 +66,25 @@ export default class DocumentsList extends Component {
   };
 
   render() {
+    if (this.state.redirect) return <Redirect to={this.state.redirect} />;
+
     const allDocs = this.state.docs;
+    const count = allDocs.length;
+    if (count === 0)
+      return (
+        <React.Fragment>
+          <Navbar />
+          <h3 className="my-4 text-secondary text-center">
+            Įkelti dokumentai sistemoje
+          </h3>
+          <div
+            className="alert alert-secondary text-center d-grid gap-2 col-6 mx-auto"
+            role="alert"
+          >
+            Įkeltų dokumentų sistemoje nėra.
+          </div>
+        </React.Fragment>
+      );
 
     const { pageSize, currentPage, searchQuery } = this.state;
 
@@ -60,6 +93,7 @@ export default class DocumentsList extends Component {
     return (
       <React.Fragment>
         <Navbar />
+
         <div className="container mt-5 text-secondary">
           <div className="mb-4 col-lg-4">
             <h3 className="mb-4">Įkelti dokumentai sistemoje</h3>
