@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import Navbar from '../../navbar.component';
-import UploadService from '../../../services/upload-files.service';
-import DocumentsTable from './DocumentsTable';
-import { paginate } from '../../utils/paginate';
-import Pagination from '../../utils/pagination';
-import _ from 'lodash';
-import SearchBox from '../../utils/SearchBox';
+import React, { Component } from "react";
+import AuthService from "../../../services/auth.service";
+import { Redirect } from "react-router-dom";
+import Navbar from "../../navbar.component";
+import UploadService from "../../../services/upload-files.service";
+import DocumentsTable from "./DocumentsTable";
+import { paginate } from "../../utils/paginate";
+import Pagination from "../../utils/pagination";
+import _ from "lodash";
+import SearchBox from "../../utils/SearchBox";
 
 export default class DocumentsList extends Component {
   state = {
@@ -13,11 +15,24 @@ export default class DocumentsList extends Component {
     currentPage: 1,
     pageSize: 5,
     length: 0,
-    searchQuery: '',
-    sortColumn: { path: 'userName', order: 'asc' },
+    searchQuery: "",
+    roles: "",
+    redirect: null,
+    currentUser: "",
+    sortColumn: { path: "userName", order: "asc" },
   };
 
   componentDidMount = async () => {
+    const currentUser = AuthService.getCurrentUser();
+    this.setState({
+      currentUser: currentUser,
+      roles: currentUser.roles,
+    });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    if (!currentUser.roles.includes("ROLE_SPEC")) {
+      this.props.history.push("/dis-app/");
+      window.location.reload();
+    }
     const { data } = await UploadService.getFiles();
     this.setState({ docs: data });
   };
@@ -51,6 +66,8 @@ export default class DocumentsList extends Component {
   };
 
   render() {
+    if (this.state.redirect) return <Redirect to={this.state.redirect} />;
+
     const allDocs = this.state.docs;
 
     const { pageSize, currentPage, searchQuery } = this.state;
