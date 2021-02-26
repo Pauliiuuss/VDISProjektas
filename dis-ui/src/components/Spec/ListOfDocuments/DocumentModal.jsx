@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import { LINK } from '../../../services/LINK';
 import { Button, Modal } from 'react-bootstrap';
+import AuthService from '../../../services/auth.service';
 
 const API_URL = LINK + '/api/documents/';
 
 export default function DocumentModal({ id, showModal }) {
   const [show, setShow] = useState(showModal);
-
   const handleClose = () => setShow(false);
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
