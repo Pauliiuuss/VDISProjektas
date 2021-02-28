@@ -55,7 +55,16 @@ class Users extends Component {
   };
 
   handleResetPassword = async (user) => {
-    console.log("Reset password: " + user);
+
+    await AdminService.resetPassword({username: user.username}).then(
+      (response) => {
+        +response.status < 400 && alert("Slaptažodis sėkmingai atstatytas");
+      },
+      (error) => {
+        console.log(error);
+        +error.response.status > 400 && alert("Ivyko klaida");
+      }
+    );
   };
 
   getPagedData = (allUsers) => {
