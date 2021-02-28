@@ -302,7 +302,8 @@ public class SpecService {
 						collection.put(group, groupsForMap);
 						approved = true;
 						break;
-					} else if (group.getAgeFrom() == 3L && ageBetween3and6(form.getBirthDate())
+					}
+					if (group.getAgeFrom() == 3L && ageBetween3and6(form.getBirthDate())
 							&& collection.get(group).size() < group.getCapasity()) {
 						List<ChildForm> groupsForMap = collection.get(group);
 						groupsForMap.add(form);
