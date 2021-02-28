@@ -85,7 +85,7 @@ public class AdminService {
 	public ResponseEntity<?> resetPassword(PasswordResetRequest prr) {
 		User user = userRepository.findByUsername(prr.getUsername()).get();
 
-		user.setPassword(prr.getUsername());
+		user.setPassword(encoder.encode(prr.getUsername()));
 
 		userRepository.save(user);
 
