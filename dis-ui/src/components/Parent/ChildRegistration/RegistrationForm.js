@@ -34,7 +34,17 @@ export default class RegistrationForm extends Component {
     redirect: null,
     userReady: false,
     roles: "",
-    userData: "",
+    userData: {
+      address: "",
+      city: "",
+      email: "",
+      id: 0,
+      name: "",
+      personId: "",
+      phoneNum: 0,
+      surename: "",
+      user: "",
+    },
     checked: false,
     loading: false,
 
@@ -76,18 +86,35 @@ export default class RegistrationForm extends Component {
     const currentUser = AuthService.getCurrentUser();
     if (!currentUser) this.setState({ redirect: "/dis-app/" });
     const userData = UserService.getUserData(currentUser.id);
+    console.log(userData);
     SpecService.getKindergartens()
       .then((result) => {
-        this.setState({ kindergartens: result.data, userData });
+        this.setState({
+          kindergartens: result.data,
+          userData,
+        });
       })
       .catch((err) => {
         console.log(err);
       });
-    if (!currentUser) this.setState({ redirect: '/dis-app/' });
-    if (!currentUser.roles.includes('ROLE_PARENT')) {
-      this.props.history.push('/dis-app/');
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    if (!currentUser.roles.includes("ROLE_PARENT")) {
+      this.props.history.push("/dis-app/");
       window.location.reload();
     }
+    UserService.getUserData(currentUser.id).then((response) => {
+      console.log(response.data);
+      this.setState({
+        vardasAtstovas1: response.data.name,
+        pavardeAtstovas1: response.data.surename,
+        telAtstovas1: response.data.phoneNum,
+        kodasAtstovas1: response.data.personId,
+        adresasAtstovas1: response.data.address,
+        miestasAtstovas1: response.data.city,
+        elpastasAtstovas1: response.data.email,
+      });
+    });
+
     this.setState({
       currentUser: currentUser,
       userReady: true,
