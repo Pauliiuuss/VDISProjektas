@@ -18,6 +18,12 @@ class AdminService {
       headers: authHeader(),
     });
   }
+
+  resetPassword(body) {
+    return axios.post(API_URL + "resetpassword/", body, {
+      headers: authHeader(),
+    });
+  }
 }
 
 export default new AdminService();
