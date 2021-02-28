@@ -26,6 +26,15 @@
   transform: translate(-50%, -50%);
 }
 
+#registerTip,
+#registerTip1,
+#registerTip2,
+#registerTip3,
+#registerTip4 {
+  background-color: #3c4447;
+  color: #f7f7f7;
+}
+
 .display-block {
   display: block;
 }

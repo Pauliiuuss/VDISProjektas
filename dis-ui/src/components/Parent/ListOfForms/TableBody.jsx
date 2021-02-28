@@ -4,6 +4,7 @@ import InfoModal from '../ListOfForms/InfoModal';
 import FileUpload from '../FileUpload';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ReactTooltip from 'react-tooltip';
 
 class TableBody extends Component {
   state = {
@@ -50,6 +51,8 @@ class TableBody extends Component {
               ))}
               <td className="text-center">
                 <button
+                  data-tip
+                  data-for="registerTip2"
                   className="btn btn-info "
                   onClick={() => this.showModal(item.personId)}
                   data-toggle="modal"
@@ -57,6 +60,9 @@ class TableBody extends Component {
                 >
                   <FontAwesomeIcon icon={faEye} />
                 </button>
+                <ReactTooltip id="registerTip2" place="bottom" effect="solid">
+                  Peržiūrėti
+                </ReactTooltip>
               </td>
               <td className="text-center">
                 <FileUpload />

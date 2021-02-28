@@ -1,19 +1,20 @@
-import React, { Component } from "react";
-import UploadService from "../../services/upload-files.service";
-import AuthService from "../../services/auth.service";
-import { Redirect } from "react-router-dom";
-import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { Component } from 'react';
+import UploadService from '../../services/upload-files.service';
+import AuthService from '../../services/auth.service';
+import { Redirect } from 'react-router-dom';
+import { faPaperclip, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ReactTooltip from 'react-tooltip';
 
 class FileUpload extends Component {
   state = {
-    currentUser: "",
-    roles: "",
+    currentUser: '',
+    roles: '',
     selectedFiles: null,
     currentFile: null,
-    fileName: "",
+    fileName: '',
     progress: 0,
-    message: "",
+    message: '',
     successful: false,
     redirect: null,
   };
@@ -24,9 +25,9 @@ class FileUpload extends Component {
       currentUser: currentUser,
       roles: currentUser.roles,
     });
-    if (!currentUser) this.setState({ redirect: "/dis-app/" });
-    if (!currentUser.roles.includes("ROLE_PARENT")) {
-      this.props.history.push("/dis-app/");
+    if (!currentUser) this.setState({ redirect: '/dis-app/' });
+    if (!currentUser.roles.includes('ROLE_PARENT')) {
+      this.props.history.push('/dis-app/');
       window.location.reload();
     }
   }
@@ -73,11 +74,12 @@ class FileUpload extends Component {
       }
     );
     this.setState({
-      message: "",
+      message: '',
       selectedFiles: null,
-      fileName: "",
+      fileName: '',
       successful: false,
     });
+    ReactTooltip.hide();
   };
 
   render() {
@@ -87,7 +89,7 @@ class FileUpload extends Component {
     return (
       <React.Fragment>
         <input
-          style={{ display: "none" }}
+          style={{ display: 'none' }}
           accept="application/pdf"
           id="files"
           type="file"
@@ -96,6 +98,8 @@ class FileUpload extends Component {
         />
         <div className="btn-group" role="group" aria-label="Third group">
           <button
+            data-tip
+            data-for="registerTip3"
             className="btn btn-secondary"
             onClick={() => {
               this.fileInput.click();
@@ -103,14 +107,22 @@ class FileUpload extends Component {
           >
             <FontAwesomeIcon icon={faPaperclip} />
           </button>
-
+          <ReactTooltip id="registerTip3" place="bottom" effect="solid">
+            Prisegti dokumentą
+          </ReactTooltip>
           <button
+            data-tip
+            data-tip-disabled={selectedFiles}
+            data-for="registerTip4"
             className="btn btn-success"
             onClick={this.fileUploadHandler}
             disabled={!selectedFiles}
           >
             <FontAwesomeIcon icon={faPaperPlane} />
           </button>
+          <ReactTooltip id="registerTip4" place="bottom" effect="solid">
+            Pateikti dokumentą
+          </ReactTooltip>
         </div>
 
         <div className="mt-2">{fileName}</div>
@@ -120,8 +132,8 @@ class FileUpload extends Component {
             <div
               className={
                 successful
-                  ? "alert alert-success alert-dismissible fade show"
-                  : "alert alert-danger alert-dismissible fade show"
+                  ? 'alert alert-success alert-dismissible fade show'
+                  : 'alert alert-danger alert-dismissible fade show'
               }
               role="alert"
             >
