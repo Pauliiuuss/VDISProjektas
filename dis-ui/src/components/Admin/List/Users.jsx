@@ -5,6 +5,7 @@ import Pagination from "../../utils/pagination";
 import AdminService from "../../../services/admin.service";
 import _ from "lodash";
 import SearchBox from "../../utils/SearchBox";
+import AuthService from '../../../services/auth.service';
 
 class Users extends Component {
   state = {
@@ -17,6 +18,7 @@ class Users extends Component {
   };
 
   componentDidMount = async () => {
+    const currentUser = AuthService.getCurrentUser();
     const { data } = await AdminService.getUsers();
     this.setState({ users: data });
   };
@@ -50,12 +52,22 @@ class Users extends Component {
     );
   };
 
-  handleDisable = async (user) => {
+  handleDisable = (user) => {
     console.log("Disable: " + user);
   };
 
-  handleResetPassword = async (user) => {
-    console.log("Reset password: " + user);
+  handleResetPassword =  async (user) => {
+    console.log(this.state.users);
+
+    await AdminService.resetPassword({username: user.username}).then(
+      (response) => {
+        +response.status < 400 && alert("Slaptažodis sėkmingai atstatytas");
+      },
+      (error) => {
+        console.log(error);
+        +error.response.status > 400 && alert("Ivyko klaida");
+      }
+    );
   };
 
   getPagedData = (allUsers) => {
