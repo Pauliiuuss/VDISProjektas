@@ -37,10 +37,6 @@ class AuthService {
   getUserById(id) {
     return axios.get(API_URL + id);
   }
-
-  reset(username) {
-    return axios.post(API_URL + "forgot_password/" + username);
-  }
 }
 
 export default new AuthService();
