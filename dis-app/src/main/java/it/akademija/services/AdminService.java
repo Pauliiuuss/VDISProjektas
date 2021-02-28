@@ -3,6 +3,7 @@ package it.akademija.services;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import it.akademija.payload.request.PasswordResetRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -78,6 +79,17 @@ public class AdminService {
 		userRepository.deleteById(id);
 
 		return ResponseEntity.ok(new MessageResponse("Naudotojas ištrintas!"));
+	}
+
+	@Transactional
+	public ResponseEntity<?> resetPassword(PasswordResetRequest prr) {
+		User user = userRepository.findByUsername(prr.getUsername()).get();
+
+		user.setPassword(encoder.encode(prr.getUsername()));
+
+		userRepository.save(user);
+
+		return ResponseEntity.ok(new MessageResponse("Slaptažodis sėkmingai atstatytas"));
 	}
 
 }

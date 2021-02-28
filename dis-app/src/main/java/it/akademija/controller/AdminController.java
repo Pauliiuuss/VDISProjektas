@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
+import it.akademija.payload.request.PasswordResetRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,4 +46,9 @@ public class AdminController {
 		return adminService.deleteUser(id);
 	}
 
+	@PostMapping("/resetpassword")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> resetPassword(@Valid @RequestBody PasswordResetRequest prr) {
+		return adminService.resetPassword(prr);
+	}
 }
