@@ -153,7 +153,7 @@ public class SpecService {
 	@Transactional
 	public Collection<ChildForm> getForms(Long id) {
 		Collection<ChildForm> forms;
-		if (id == null || id == 0) {
+		if (id == null || id == 0L) {
 			Sort sort = Sort.by(Sort.Order.desc("inCity"), Sort.Order.desc("adopted"), Sort.Order.desc("threeOrMore"),
 					Sort.Order.desc("parentStudent"), Sort.Order.desc("handicapped"));
 			forms = formRepo.findAll(sort);
