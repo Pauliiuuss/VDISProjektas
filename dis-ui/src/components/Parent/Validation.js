@@ -74,6 +74,10 @@ export const validEmail = (value) => {
 };
 
 export const validDate = (value) => {
+  var myCurrentDate = new Date();
+  var myPastDate = new Date(myCurrentDate);
+  myPastDate.setDate(myPastDate.getDate() - 2190);
+
   if (value > new Date().toISOString().split('T')[0]) {
     return (
       <div
@@ -82,6 +86,16 @@ export const validDate = (value) => {
         style={{ fontSize: '9px' }}
       >
         Data negali būti ateityje!
+      </div>
+    );
+  } else if (value < myPastDate.toISOString().split('T')[0]) {
+    return (
+      <div
+        className="alert alert-danger text-center px-0 py-2"
+        role="alert"
+        style={{ fontSize: '9px' }}
+      >
+        Laikas mokyklon!
       </div>
     );
   }
