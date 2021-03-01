@@ -85,6 +85,12 @@ export default class RegistrationForm extends Component {
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
     if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    ParentService.appStatus().then((response) => {
+      console.log(response);
+      this.setState({ appStatus: response.data });
+      if (response.data.registrationClosed)
+        this.setState({ redirect: "/dis-app/" });
+    });
     const userData = UserService.getUserData(currentUser.id);
     console.log(userData);
     SpecService.getKindergartens()

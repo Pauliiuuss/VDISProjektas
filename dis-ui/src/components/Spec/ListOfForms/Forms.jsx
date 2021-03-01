@@ -82,6 +82,7 @@ class Forms extends Component {
     SpecService.cancelQueue().then(
       (response) => {
         console.log(response);
+        window.location.reload();
       },
       (error) => {
         console.log(error);
@@ -181,21 +182,25 @@ class Forms extends Component {
               <div className="col-4"></div>
               <div className="col-4">
                 {forms.filter((f) => f.formStatus.name === "PATEIKTAS")
-                  .length !== 0 && (
+                  .length !== 0 ? (
                   <button
                     onClick={this.props.handleConfirm}
                     className="col-12 btn btn-lg btn-success m-1"
                   >
                     Sudaryti eiles
                   </button>
+                ) : (
+                  <button
+                    hidden={
+                      forms.filter((f) => f.formStatus.name === "PATEIKTAS")
+                        .length !== 0
+                    }
+                    onClick={this.handleCancel}
+                    className="col-12 btn btn-lg btn-secondary m-1"
+                  >
+                    Atšaukti eiles
+                  </button>
                 )}
-                <button
-                  hidden={true}
-                  onClick={this.handleCancel}
-                  className="col-1 btn btn-sm btn-secondary"
-                >
-                  X
-                </button>
               </div>
             </div>
           </div>
