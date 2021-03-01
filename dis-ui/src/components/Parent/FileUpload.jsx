@@ -21,13 +21,13 @@ class FileUpload extends Component {
 
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
-    if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    if (!currentUser) this.setState({ redirect: '/dis-app/' });
     this.setState({
       currentUser: currentUser,
       roles: currentUser.roles,
     });
-    if (!currentUser.roles.includes("ROLE_PARENT")) {
-      this.props.history.push("/dis-app/");
+    if (!currentUser.roles.includes('ROLE_PARENT')) {
+      this.props.history.push('/dis-app/');
       window.location.reload();
     }
   }
