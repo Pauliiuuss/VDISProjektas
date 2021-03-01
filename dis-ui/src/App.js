@@ -4,13 +4,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import ChildFormsQueue from "./components/Spec/ChildFormsQueue";
-import Login from './components/login.component';
-import MainAfterLogin from './components/MainAferLogin';
-import UnderConstruction from './components/underConstruction';
-import RegistrationForm from './components/Parent/ChildRegistration/RegistrationForm';
-import UserUpdateForm from './components/UserDetailUpdate/UserDetailUpdate';
-import PasswordReset from './components/PasswordReset';
-import Documents from './components/Spec/ListOfDocuments/Documents';
+import Login from "./components/login.component";
+import MainAfterLogin from "./components/MainAferLogin";
+import UnderConstruction from "./components/underConstruction";
+import RegistrationForm from "./components/Parent/ChildRegistration/RegistrationForm";
+import UserUpdateForm from "./components/UserDetailUpdate/UserDetailUpdate";
+import Documents from "./components/Spec/ListOfDocuments/Documents";
 
 class App extends Component {
   render() {
