@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
 import { vpassword } from "../Admin/Validation";
+import { Redirect } from "react-router-dom";
 import Navbar from "../navbar.component";
 import Details from "./Details";
 import Password from "./Password";
@@ -9,6 +10,7 @@ import Password from "./Password";
 class UserUpdateForm extends Component {
   state = {
     currentUser: "",
+    redirect: null,
     userReady: false,
     roles: "",
     userData: {
@@ -26,6 +28,7 @@ class UserUpdateForm extends Component {
   async componentDidMount() {
     this.setState({ loading: true });
     const currentUser = AuthService.getCurrentUser();
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     await UserService.getUserData(currentUser.id).then(
       (response) => {
         this.setState({ userData: response.data });
@@ -34,12 +37,16 @@ class UserUpdateForm extends Component {
         console.log(error);
       }
     );
-    if (!currentUser) this.setState({ redirect: "/dis-app/" });
+
     this.setState({
       currentUser,
       userReady: true,
       roles: currentUser.roles,
     });
+    if (currentUser.roles.includes("ROLE_ADMIN")) {
+      this.props.history.push("/dis-app/");
+      window.location.reload();
+    }
   }
 
   handleSubmit = async (e, name, surename, phoneNum, email) => {
@@ -164,6 +171,8 @@ class UserUpdateForm extends Component {
   };
 
   render() {
+    if (this.state.redirect) return <Redirect to={this.state.redirect} />;
+
     const { currentUser, userReady, roles, userData } = this.state;
 
     return (

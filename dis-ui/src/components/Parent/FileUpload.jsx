@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import UploadService from '../../services/upload-files.service';
 import AuthService from '../../services/auth.service';
+import { Redirect } from 'react-router-dom';
 import { faPaperclip, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ReactTooltip from 'react-tooltip';
 
 class FileUpload extends Component {
   state = {
@@ -14,14 +16,20 @@ class FileUpload extends Component {
     progress: 0,
     message: '',
     successful: false,
+    redirect: null,
   };
 
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
+    if (!currentUser) this.setState({ redirect: '/dis-app/' });
     this.setState({
       currentUser: currentUser,
       roles: currentUser.roles,
     });
+    if (!currentUser.roles.includes('ROLE_PARENT')) {
+      this.props.history.push('/dis-app/');
+      window.location.reload();
+    }
   }
 
   fileSelectHandler = (e) => {
@@ -71,9 +79,11 @@ class FileUpload extends Component {
       fileName: '',
       successful: false,
     });
+    ReactTooltip.hide();
   };
 
   render() {
+    if (this.state.redirect) return <Redirect to={this.state.redirect} />;
     const { selectedFiles, message, successful, fileName } = this.state;
 
     return (
@@ -88,6 +98,8 @@ class FileUpload extends Component {
         />
         <div className="btn-group" role="group" aria-label="Third group">
           <button
+            data-tip
+            data-for="registerTip3"
             className="btn btn-secondary"
             onClick={() => {
               this.fileInput.click();
@@ -95,14 +107,22 @@ class FileUpload extends Component {
           >
             <FontAwesomeIcon icon={faPaperclip} />
           </button>
-
+          <ReactTooltip id="registerTip3" place="bottom" effect="solid">
+            Prisegti dokumentą
+          </ReactTooltip>
           <button
+            data-tip
+            data-tip-disabled={selectedFiles}
+            data-for="registerTip4"
             className="btn btn-success"
             onClick={this.fileUploadHandler}
             disabled={!selectedFiles}
           >
             <FontAwesomeIcon icon={faPaperPlane} />
           </button>
+          <ReactTooltip id="registerTip4" place="bottom" effect="solid">
+            Pateikti dokumentą
+          </ReactTooltip>
         </div>
 
         <div className="mt-2">{fileName}</div>
