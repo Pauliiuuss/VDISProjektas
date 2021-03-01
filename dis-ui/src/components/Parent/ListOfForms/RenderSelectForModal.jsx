@@ -3,6 +3,7 @@ import React, { Component } from "react";
 class RenderSelect extends Component {
   render() {
     const {
+      hidden,
       forItem,
       inputPlaceholder,
       value,
@@ -11,8 +12,8 @@ class RenderSelect extends Component {
       disabled,
     } = this.props;
     return (
-      <div className="form-inline mb-4">
-        <label className="col-4" htmlFor={forItem}>
+      <div className="form-inline mb-4" hidden={hidden}>
+        <label style={{ padding: "10px" }} className="col-4" htmlFor={forItem}>
           {inputPlaceholder}
         </label>
         <select

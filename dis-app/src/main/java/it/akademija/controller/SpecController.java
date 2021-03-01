@@ -1,6 +1,7 @@
 package it.akademija.controller;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.akademija.models.ChildForm;
+import it.akademija.payload.request.ChildFormRequest;
 import it.akademija.payload.request.GroupRequest;
 import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.services.SpecService;
@@ -44,10 +47,28 @@ public class SpecController {
 		return specService.getKindergartens();
 	}
 
+	@GetMapping("/getkindergarten/{id}")
+	@PreAuthorize("hasRole('SPEC') or hasRole('PARENT')")
+	public KindergartenRequest getKindergarten(@PathVariable Long id) {
+		return specService.getKindergarten(id);
+	}
+
 	@GetMapping("/getgroups/{id}")
 	@PreAuthorize("hasRole('SPEC')")
 	public Collection<GroupRequest> getGroups(@PathVariable Long id) {
 		return specService.getGroups(id);
+	}
+
+	@GetMapping("/getforms/{id}")
+//	@PreAuthorize("hasRole('SPEC')")
+	public Collection<ChildForm> getForms(@PathVariable Long id) {
+		return specService.getForms(id);
+	}
+
+	@GetMapping("/getformsbykindergarten")
+//	@PreAuthorize("hasRole('SPEC')")
+	public List<ChildFormRequest> getFormsByKindergarten() {
+		return specService.getFormsByKindergarten();
 	}
 
 	@PostMapping("/amend/{id}")
@@ -61,4 +82,28 @@ public class SpecController {
 		return specService.amendGroup(groupId, info);
 	}
 
+	@RequestMapping("/confirmqueue")
+	public ResponseEntity<?> confirmQueue() {
+		return specService.confirmQueue();
+	}
+
+	@RequestMapping("/cancelqueue")
+	public ResponseEntity<?> cancelQueue() {
+		return specService.cancelQueue();
+	}
+
+	@GetMapping("/freespaces")
+	public Long freeSpaces() {
+		return specService.freeSpaces();
+	}
+
+	@RequestMapping("/cancel/{id}")
+	public ResponseEntity<?> cancelForm(@PathVariable Long id) {
+		return specService.cancelForm(id);
+	}
+
+	@RequestMapping("/enable/{id}")
+	public ResponseEntity<?> enableForm(@PathVariable Long id) {
+		return specService.enableForm(id);
+	}
 }

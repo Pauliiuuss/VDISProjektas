@@ -26,5 +26,9 @@ class ParentService {
   deleteFormById(id) {
     return axios.delete(API_URL + "delete/" + id, { headers: authHeader() });
   }
+
+  appStatus() {
+    return axios.get(API_URL + "appstatus", { headers: authHeader() });
+  }
 }
 export default new ParentService();

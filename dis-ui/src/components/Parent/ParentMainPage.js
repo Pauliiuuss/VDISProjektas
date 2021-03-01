@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import RegisteredForms from './ListOfForms/RegisteredForms';
-import ParentService from '../../services/parent.service';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import RegisteredForms from "./ListOfForms/RegisteredForms";
+import ParentService from "../../services/parent.service";
 
 export default class ParentMainPage extends Component {
   state = {
     forms: [],
     loading: true,
+    appStatus: {
+      registrationClosed: false,
+    },
   };
 
   componentDidMount = async () => {
@@ -16,17 +19,27 @@ export default class ParentMainPage extends Component {
         this.setState({ forms });
       }
     );
+    await ParentService.appStatus().then((response) => {
+      console.log(response);
+      this.setState({ appStatus: response.data });
+    });
     this.setState({ loading: false });
   };
 
   render() {
+    console.log(this.state.appStatus);
     return (
       <div className="container mt-5">
         <div className="row">
           <div className="col">
-            <Link to="/dis-app/addform" className="btn btn-success float-right">
-              Naujas prašymas
-            </Link>
+            {!this.state.appStatus.registrationClosed && (
+              <Link
+                to="/dis-app/addform"
+                className="btn btn-success float-right"
+              >
+                Naujas prašymas
+              </Link>
+            )}
           </div>
         </div>
         <div className="row">
@@ -41,14 +54,17 @@ export default class ParentMainPage extends Component {
           <div className="d-flex justify-content-center">
             <div
               className="spinner-border"
-              style={{ width: '3rem', height: '3rem', marginTop: '3rem' }}
+              style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
               role="status"
             >
               <span className="sr-only">Loading...</span>
             </div>
           </div>
         ) : (
-          <RegisteredForms forms={this.state.forms} />
+          <RegisteredForms
+            appStatus={this.state.appStatus}
+            forms={this.state.forms}
+          />
         )}
       </div>
     );
