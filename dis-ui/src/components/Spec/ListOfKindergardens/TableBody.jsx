@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import _ from "lodash";
+import ParentService from "../../../services/parent.service";
 
 class TableBody extends Component {
   state = {
     showInput: "",
     name: "",
     address: "",
+    appStatus: {
+      registrationClosed: true,
+      specelistsDisabled: true,
+    },
   };
 
   componentDidMount() {
@@ -13,6 +18,10 @@ class TableBody extends Component {
     if (data.length > 0) {
       this.handleClick(data[0].id);
     }
+    ParentService.appStatus().then((response) => {
+      console.log(response);
+      this.setState({ appStatus: response.data });
+    });
   }
 
   clickAmend = (item) => {
@@ -56,7 +65,7 @@ class TableBody extends Component {
           Atšaukti
         </button>
       );
-    if (column.label === "")
+    if (column.label === "" && !this.state.appStatus.specelistsDisabled)
       return (
         <button
           onClick={() => this.clickAmend(item)}

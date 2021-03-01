@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
-import it.akademija.payload.request.PasswordResetRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.akademija.payload.request.UserRequest;
+import it.akademija.payload.request.PasswordResetRequest;
 import it.akademija.payload.request.RegisterRequest;
+import it.akademija.payload.request.UserRequest;
 import it.akademija.services.AdminService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -51,4 +51,17 @@ public class AdminController {
 	public ResponseEntity<?> resetPassword(@Valid @RequestBody PasswordResetRequest prr) {
 		return adminService.resetPassword(prr);
 	}
+
+	@GetMapping("/disablespec")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> disableAllSpec() {
+		return adminService.disableAllSpec();
+	}
+
+	@GetMapping("/enablespec")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<?> enableAllSpec() {
+		return adminService.enableAllSpec();
+	}
+
 }

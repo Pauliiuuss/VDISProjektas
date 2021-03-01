@@ -15,6 +15,7 @@ public class AppStatus {
 	private long id;
 
 	private boolean registrationClosed;
+	private boolean specelistsDisabled;
 
 	public long getId() {
 		return id;
@@ -32,9 +33,18 @@ public class AppStatus {
 		this.registrationClosed = registrationClosed;
 	}
 
-	public AppStatus(boolean registrationClosed) {
+	public boolean isSpecelistsDisabled() {
+		return specelistsDisabled;
+	}
+
+	public void setSpecelistsDisabled(boolean specelistsDisabled) {
+		this.specelistsDisabled = specelistsDisabled;
+	}
+
+	public AppStatus(boolean registrationClosed, boolean specelistsDisabled) {
 		super();
 		this.registrationClosed = registrationClosed;
+		this.specelistsDisabled = specelistsDisabled;
 	}
 
 	public AppStatus() {

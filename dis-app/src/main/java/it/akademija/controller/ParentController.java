@@ -73,7 +73,7 @@ public class ParentController {
 	}
 
 	@GetMapping("/appstatus")
-	@PreAuthorize("hasRole('PARENT')")
+	@PreAuthorize("hasRole('PARENT') or hasRole('ADMIN') or hasRole('SPEC')")
 	public AppStatus getStatus() {
 		return parentService.getStatus();
 	}

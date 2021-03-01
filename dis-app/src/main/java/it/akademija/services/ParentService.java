@@ -332,14 +332,7 @@ public class ParentService {
 
 	@Transactional
 	public AppStatus getStatus() {
-		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
-		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
-		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
-		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
-		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
-		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
-		System.out.println("************************** " + appStatusRepo.getOne(1L).isRegistrationClosed());
-		AppStatus appStatus = new AppStatus(appStatusRepo.getOne(1L).isRegistrationClosed());
-		return appStatus;
+		AppStatus status = appStatusRepo.findAll().get(0);
+		return status;
 	}
 }

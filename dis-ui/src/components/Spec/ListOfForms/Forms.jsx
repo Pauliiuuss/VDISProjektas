@@ -5,6 +5,7 @@ import Pagination from "../../utils/pagination";
 import _ from "lodash";
 import SearchBox from "../../utils/SearchBox";
 import SpecService from "../../../services/spec.service";
+import ParentService from "../../../services/parent.service";
 
 class Forms extends Component {
   state = {
@@ -15,6 +16,10 @@ class Forms extends Component {
     searchQuery: "",
     buttonDisabled: true,
     freeSpaces: 0,
+    appStatus: {
+      registrationClosed: true,
+      specelistsDisabled: true,
+    },
   };
 
   componentDidMount = () => {
@@ -26,6 +31,10 @@ class Forms extends Component {
         console.log(error);
       }
     );
+    ParentService.appStatus().then((response) => {
+      console.log(response);
+      this.setState({ appStatus: response.data });
+    });
   };
 
   handleSearch = (query) => {
@@ -180,28 +189,30 @@ class Forms extends Component {
                 />
               </div>
               <div className="col-4"></div>
-              <div className="col-4">
-                {forms.filter((f) => f.formStatus.name === "PATEIKTAS")
-                  .length !== 0 ? (
-                  <button
-                    onClick={this.props.handleConfirm}
-                    className="col-12 btn btn-lg btn-success m-1"
-                  >
-                    Sudaryti eiles
-                  </button>
-                ) : (
-                  <button
-                    hidden={
-                      forms.filter((f) => f.formStatus.name === "PATEIKTAS")
-                        .length !== 0
-                    }
-                    onClick={this.handleCancel}
-                    className="col-12 btn btn-lg btn-secondary m-1"
-                  >
-                    Atšaukti eiles
-                  </button>
-                )}
-              </div>
+              {!this.state.appStatus.specelistsDisabled && (
+                <div className="col-4">
+                  {forms.filter((f) => f.formStatus.name === "PATEIKTAS")
+                    .length !== 0 ? (
+                    <button
+                      onClick={this.props.handleConfirm}
+                      className="col-12 btn btn-lg btn-success m-1"
+                    >
+                      Sudaryti eiles
+                    </button>
+                  ) : (
+                    <button
+                      hidden={
+                        forms.filter((f) => f.formStatus.name === "PATEIKTAS")
+                          .length !== 0
+                      }
+                      onClick={this.handleCancel}
+                      className="col-12 btn btn-lg btn-secondary m-1"
+                    >
+                      Atšaukti eiles
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>

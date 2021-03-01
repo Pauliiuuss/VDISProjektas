@@ -12,16 +12,19 @@ const Table = ({
   successful,
   message,
   onAmendGroup,
+  appStatus,
 }) => {
   return (
     <table className="table">
       <TableHeader columns={columns} sortColumn={sortColumn} onSort={onSort} />
       <TableBody columns={columns} data={data} onAmendGroup={onAmendGroup} />
-      <AddGroup
-        onAddGroup={onAddGroup}
-        successful={successful}
-        message={message}
-      />
+      {!appStatus.specelistsDisabled && (
+        <AddGroup
+          onAddGroup={onAddGroup}
+          successful={successful}
+          message={message}
+        />
+      )}
     </table>
   );
 };

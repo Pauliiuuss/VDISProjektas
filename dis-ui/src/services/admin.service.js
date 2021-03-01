@@ -9,6 +9,14 @@ class AdminService {
     return axios.post(API_URL + "create", body, { headers: authHeader() });
   }
 
+  enableAllSpec() {
+    return axios.get(API_URL + "enablespec", { headers: authHeader() });
+  }
+
+  disableAllSpec() {
+    return axios.get(API_URL + "disablespec", { headers: authHeader() });
+  }
+
   getUsers() {
     return axios.get(API_URL + "getusers", { headers: authHeader() });
   }

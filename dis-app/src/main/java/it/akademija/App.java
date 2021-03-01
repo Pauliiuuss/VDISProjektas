@@ -83,7 +83,7 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 	public void run(String... args) throws Exception {
 
 		if (appStatusRepo.count() == 0) {
-			AppStatus appStatus = new AppStatus(false);
+			AppStatus appStatus = new AppStatus(false, false);
 			appStatusRepo.save(appStatus);
 		}
 		if (userRepository.existsByUsername("admin")) {
