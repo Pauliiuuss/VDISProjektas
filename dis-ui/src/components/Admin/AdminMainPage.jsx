@@ -26,6 +26,10 @@ export default class AdminMainPage extends Component {
       registrationClosed: "",
       specelistsDisabled: "",
     },
+    specChanges: {
+      message: "",
+      successful: false,
+    },
   };
 
   openModal = () => {
@@ -125,13 +129,31 @@ export default class AdminMainPage extends Component {
 
   handleSpecChange = (e) => {
     e.preventDefault();
+    this.setState({
+      appStatus: {
+        ...this.state.appStatus,
+        specelistsDisabled: !this.state.appStatus.specelistsDisabled,
+      },
+    });
     if (this.state.appStatus.specelistsDisabled)
       AdminService.enableAllSpec().then(
         (response) => {
-          console.log(response);
+          console.log(response.data.message);
+          this.setState({
+            specChanges: {
+              message: response.data.message,
+              successful: true,
+            },
+          });
         },
         (error) => {
           console.log(error);
+          this.setState({
+            specChanges: {
+              message: error.message,
+              successful: false,
+            },
+          });
           ParentService.appStatus().then((response) => {
             console.log(response);
             this.setState({ appStatus: response.data });
@@ -139,16 +161,30 @@ export default class AdminMainPage extends Component {
         }
       );
     else
-      AdminService.disableAllSpec().then((response) => {
-        console.log(response);
-      });
-
-    this.setState({
-      appStatus: {
-        ...this.state.appStatus,
-        specelistsDisabled: !this.state.appStatus.specelistsDisabled,
-      },
-    });
+      AdminService.disableAllSpec().then(
+        (response) => {
+          console.log(response.data.message);
+          this.setState({
+            specChanges: {
+              message: response.data.message,
+              successful: true,
+            },
+          });
+        },
+        (error) => {
+          console.log(error);
+          this.setState({
+            specChanges: {
+              message: error.message,
+              successful: false,
+            },
+          });
+          ParentService.appStatus().then((response) => {
+            console.log(response);
+            this.setState({ appStatus: response.data });
+          });
+        }
+      );
   };
   render() {
     if (this.state.redirect) return <Redirect to={this.state.redirect} />;
@@ -295,6 +331,20 @@ export default class AdminMainPage extends Component {
                       >
                         Užrakinti
                       </button>
+                    )}
+                    {this.state.specChanges.message && (
+                      <div className="form-group mt-2">
+                        <div
+                          className={
+                            this.state.specChanges.successful
+                              ? "alert alert-success"
+                              : "alert alert-danger"
+                          }
+                          role="alert"
+                        >
+                          {this.state.specChanges.message}
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>
