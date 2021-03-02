@@ -53,6 +53,23 @@ class UserUpdateForm extends Component {
     e.preventDefault();
     console.log(name, surename, phoneNum, email);
 
+    if (
+      name === "" ||
+      surename === "" ||
+      phoneNum === "" ||
+      email === "" ||
+      name === null ||
+      surename === null ||
+      phoneNum === null ||
+      email === null
+    ) {
+      this.setState({
+        successfulDetails: false,
+        messageDetails: "Visi laukai privalo būti būti užpildyti!",
+      });
+      return;
+    }
+
     if (/\d/.test(name) || /\d/.test(surename)) {
       this.setState({
         successfulDetails: false,

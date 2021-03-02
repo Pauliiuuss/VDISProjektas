@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import RenderInput from "./util/RenderInput";
 import { faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  noNumbers,
+  required,
+  validEmail,
+  validPhoneNumber,
+} from "../Parent/Validation";
 
 const Details = ({
   userData,
@@ -50,6 +56,8 @@ const Details = ({
             value={name}
             onChange={(e) => setName(e.target.value)}
             icon={faUser}
+            valid={[noNumbers, required]}
+            mandatory={true}
           />
           <RenderInput
             inputPlaceholder={"Pavardė"}
@@ -58,6 +66,8 @@ const Details = ({
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
             icon={faUser}
+            valid={[noNumbers, required]}
+            mandatory={true}
           />
           <RenderInput
             inputPlaceholder={"Tel"}
@@ -86,6 +96,8 @@ const Details = ({
                 +370
               </span>
             }
+            valid={[required, validPhoneNumber]}
+            mandatory={true}
           />
           <RenderInput
             inputPlaceholder={"El.paštas"}
@@ -94,6 +106,8 @@ const Details = ({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             icon={faEnvelope}
+            valid={[required, validEmail]}
+            mandatory={true}
           />
         </div>
         <div
