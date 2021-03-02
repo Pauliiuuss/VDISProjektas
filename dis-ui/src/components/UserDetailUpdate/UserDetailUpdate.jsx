@@ -65,7 +65,7 @@ class UserUpdateForm extends Component {
     ) {
       this.setState({
         successfulDetails: false,
-        messageDetails: "Visi laukai privalo būti būti užpildyti!",
+        messageDetails: "Visi laukai privalo būti užpildyti!",
       });
       return;
     }
