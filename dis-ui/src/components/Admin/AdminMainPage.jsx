@@ -308,7 +308,6 @@ export default class AdminMainPage extends Component {
                       )}
                       :
                       <ul>
-                        <li>redaguoti registracijos formas (prašymus);</li>
                         <li>keisti prašymų statusus;</li>
                         <li>sudaryti darželių eiles;</li>
                         <li>pridėti naujus darželius;</li>
