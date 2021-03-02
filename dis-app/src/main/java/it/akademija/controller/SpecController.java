@@ -60,13 +60,13 @@ public class SpecController {
 	}
 
 	@GetMapping("/getforms/{id}")
-//	@PreAuthorize("hasRole('SPEC')")
+	@PreAuthorize("hasRole('SPEC') or hasRole('PARENT')")
 	public Collection<ChildForm> getForms(@PathVariable Long id) {
 		return specService.getForms(id);
 	}
 
 	@GetMapping("/getformsbykindergarten")
-//	@PreAuthorize("hasRole('SPEC')")
+	@PreAuthorize("hasRole('SPEC')")
 	public List<ChildFormRequest> getFormsByKindergarten() {
 		return specService.getFormsByKindergarten();
 	}
@@ -78,31 +78,37 @@ public class SpecController {
 	}
 
 	@PostMapping("/amend/group/{groupId}")
+	@PreAuthorize("hasRole('SPEC')")
 	public ResponseEntity<?> amendGroup(@Valid @RequestBody GroupRequest info, @PathVariable Long groupId) {
 		return specService.amendGroup(groupId, info);
 	}
 
 	@RequestMapping("/confirmqueue")
+	@PreAuthorize("hasRole('SPEC')")
 	public ResponseEntity<?> confirmQueue() {
 		return specService.confirmQueue();
 	}
 
 	@RequestMapping("/cancelqueue")
+	@PreAuthorize("hasRole('SPEC')")
 	public ResponseEntity<?> cancelQueue() {
 		return specService.cancelQueue();
 	}
 
 	@GetMapping("/freespaces")
+	@PreAuthorize("hasRole('SPEC')")
 	public Long freeSpaces() {
 		return specService.freeSpaces();
 	}
 
 	@RequestMapping("/cancel/{id}")
+	@PreAuthorize("hasRole('SPEC')")
 	public ResponseEntity<?> cancelForm(@PathVariable Long id) {
 		return specService.cancelForm(id);
 	}
 
 	@RequestMapping("/enable/{id}")
+	@PreAuthorize("hasRole('SPEC')")
 	public ResponseEntity<?> enableForm(@PathVariable Long id) {
 		return specService.enableForm(id);
 	}

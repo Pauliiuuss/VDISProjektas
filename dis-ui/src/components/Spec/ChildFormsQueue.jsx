@@ -4,6 +4,8 @@ import SpecService from "../../services/spec.service";
 import Forms from "./ListOfForms/Forms";
 import KindergartenModal from "./ListOfForms/KindergartenModal";
 import specService from "../../services/spec.service";
+import AuthService from "../../services/auth.service";
+import { Redirect } from "react-router-dom";
 
 const ChildFormsQueue = () => {
   const [forms, setForms] = useState([]);
@@ -11,6 +13,7 @@ const ChildFormsQueue = () => {
   const [showModal, setShowModal] = useState(false);
   const [kindergarten, setKindergarten] = useState("");
   const [fromsLoading, setFromsLoading] = useState(true);
+  const [redirctTo, setRedirctTo] = useState(false);
 
   useEffect(() => {
     SpecService.getForms(current).then((response) => {
@@ -19,6 +22,16 @@ const ChildFormsQueue = () => {
       console.log(response);
     });
   }, [current]);
+
+  useEffect(() => {
+    const currentUser = AuthService.getCurrentUser();
+    if (!currentUser) {
+      setRedirctTo(true);
+    }
+    if (!currentUser.roles.includes("ROLE_SPEC")) {
+      setRedirctTo(true);
+    }
+  }, []);
 
   function handleConfirm() {
     setFromsLoading(true);
@@ -80,23 +93,29 @@ const ChildFormsQueue = () => {
   }
 
   console.log(fromsLoading);
-  return (
-    <React.Fragment>
-      <Navbar />
-      <div className="container">
-        <h3 style={{ paddingLeft: "3%", paddingTop: "3%" }}>Darželių eilės</h3>
-        <div>
-          <Forms
-            cancelForm={cancelForm}
-            enableForm={enableForm}
-            loading={fromsLoading}
-            handleConfirm={handleConfirm}
-            forms={forms}
-          />
+  if (redirctTo) {
+    return <Redirect to="/dis-app" />;
+  } else {
+    return (
+      <React.Fragment>
+        <Navbar />
+        <div className="container">
+          <h3 style={{ paddingLeft: "3%", paddingTop: "3%" }}>
+            Darželių eilės
+          </h3>
+          <div>
+            <Forms
+              cancelForm={cancelForm}
+              enableForm={enableForm}
+              loading={fromsLoading}
+              handleConfirm={handleConfirm}
+              forms={forms}
+            />
+          </div>
         </div>
-      </div>
-    </React.Fragment>
-  );
+      </React.Fragment>
+    );
+  }
 };
 
 export default ChildFormsQueue;

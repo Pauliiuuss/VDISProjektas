@@ -42,13 +42,7 @@ public class DocumentService {
 				return ResponseEntity.badRequest()
 						.body(new MessageResponse("Failas per didelis, maksimalus failo dydis - 6 MB"));
 			}
-			byte[] docData = document.getBytes();
-			Document ifDocExists = currentUser.getDocuments().stream()
-					.filter(isdb -> Arrays.equals(isdb.getDocData(), docData)).findFirst().orElse(null);
-			if (ifDocExists != null) {
-				return ResponseEntity.badRequest()
-						.body(new MessageResponse("Toks dokumentas sistemoje jau egzistuoja!"));
-			}
+
 		} else {
 			return ResponseEntity.badRequest().body(new MessageResponse("Negalima įkelti tuščio failo!"));
 		}
