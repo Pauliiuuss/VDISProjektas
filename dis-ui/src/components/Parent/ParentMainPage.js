@@ -43,12 +43,13 @@ export default class ParentMainPage extends Component {
           </div>
         </div>
         <div className="row">
-          <h3
-            className="text-secondary mb-3
-            "
+          <h3 className="text-secondary mb-3 col-8">Mano prašymai</h3>
+          <div
+            class="alert alert-secondary col mb-2 float-right"
+            hidden={!this.state.appStatus.registrationClosed}
           >
-            Mano prašymai
-          </h3>
+            Naujų prašymų pateikimas negalimas
+          </div>
         </div>
         {this.state.loading ? (
           <div className="d-flex justify-content-center">
