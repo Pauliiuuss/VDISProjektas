@@ -3,6 +3,7 @@ import Table from "./Table";
 import Dialog from "react-bootstrap-dialog";
 
 class UsersTable extends Component {
+
   columns = [
     {
       path: "username",
