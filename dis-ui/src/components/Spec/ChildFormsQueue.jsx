@@ -21,24 +21,24 @@ const ChildFormsQueue = () => {
       setFromsLoading(false);
       console.log(response);
     });
-  }, [current]);
-
-  useEffect(() => {
     const currentUser = AuthService.getCurrentUser();
+    console.log("Roles: " + currentUser.roles);
+    console.log("CurentUser: " + currentUser.roles);
     if (!currentUser) {
       setRedirctTo(true);
     }
     if (!currentUser.roles.includes("ROLE_SPEC")) {
+      console.log("Does not have role SPEC");
       setRedirctTo(true);
     }
-  }, []);
+  }, [current]);
 
   function handleConfirm() {
     setFromsLoading(true);
     console.log(fromsLoading);
     if (
       window.confirm(
-        "Vaikų registracijų formų statusai bus pakeisti į PRIIMTAS arba EILĖJE negryštamai! Tai gali užtrukti."
+        "Vaikų registracijų formų statusai bus pakeisti į PRIIMTAS arba EILĖJE negrįžtamai! Tai gali užtrukti."
       )
     ) {
       console.log("Confirmed");
@@ -55,7 +55,13 @@ const ChildFormsQueue = () => {
           setFromsLoading(false);
         }
       );
-    } else console.log("Canceled");
+    } else {
+      console.log("Canceled");
+      SpecService.getForms(current).then((response) => {
+        setForms(response.data);
+        setFromsLoading(false);
+      });
+    }
   }
 
   async function cancelForm(id) {

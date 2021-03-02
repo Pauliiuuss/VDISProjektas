@@ -852,7 +852,7 @@ class RenderInfoForm extends Component {
         <div className="row">
           <div className="col-lg-12">
             {this.props.spec ? (
-              <h3 className="mb-4 mt-5 text-center">Pasirinktos sąlygas:</h3>
+              <h3 className="mb-4 mt-5 text-center">Pasirinktos sąlygos:</h3>
             ) : (
               <h3 className="mb-4 mt-5 text-center">
                 Pažymėkite visas atitinkančias sąlygas:

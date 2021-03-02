@@ -38,7 +38,7 @@ class TableBody extends Component {
             className="btn btn-sm btn-info"
             onClick={() => this.showModal(item.personId)}
           >
-            Peržiurėti
+            Peržiūrėti
           </button>
           {item.formStatus.name !== "PANAIKINTAS" ? (
             <button
