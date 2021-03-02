@@ -1,33 +1,33 @@
-import React, { Component } from 'react';
-import UploadService from '../../services/upload-files.service';
-import AuthService from '../../services/auth.service';
-import { Redirect } from 'react-router-dom';
-import { faPaperclip, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ReactTooltip from 'react-tooltip';
+import React, { Component } from "react";
+import UploadService from "../../services/upload-files.service";
+import AuthService from "../../services/auth.service";
+import { Redirect } from "react-router-dom";
+import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactTooltip from "react-tooltip";
 
 class FileUpload extends Component {
   state = {
-    currentUser: '',
-    roles: '',
+    currentUser: "",
+    roles: "",
     selectedFiles: null,
     currentFile: null,
-    fileName: '',
+    fileName: "",
     progress: 0,
-    message: '',
+    message: "",
     successful: false,
     redirect: null,
   };
 
   componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
-    if (!currentUser) this.setState({ redirect: '/dis-app/' });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
       currentUser: currentUser,
       roles: currentUser.roles,
     });
-    if (!currentUser.roles.includes('ROLE_PARENT')) {
-      this.props.history.push('/dis-app/');
+    if (!currentUser.roles.includes("ROLE_PARENT")) {
+      this.props.history.push("/dis-app/");
       window.location.reload();
     }
   }
@@ -74,9 +74,9 @@ class FileUpload extends Component {
       }
     );
     this.setState({
-      message: '',
+      message: "",
       selectedFiles: null,
-      fileName: '',
+      fileName: "",
       successful: false,
     });
     ReactTooltip.hide();
@@ -89,7 +89,7 @@ class FileUpload extends Component {
     return (
       <React.Fragment>
         <input
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
           accept="application/pdf"
           id="files"
           type="file"
@@ -132,8 +132,8 @@ class FileUpload extends Component {
             <div
               className={
                 successful
-                  ? 'alert alert-success alert-dismissible fade show'
-                  : 'alert alert-danger alert-dismissible fade show'
+                  ? "alert alert-success alert-dismissible fade show"
+                  : "alert alert-danger alert-dismissible fade show"
               }
               role="alert"
             >

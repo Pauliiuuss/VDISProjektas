@@ -3,19 +3,21 @@ package it.akademija.services;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import it.akademija.payload.request.PasswordResetRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.akademija.models.enums.ERole;
+import it.akademija.models.AppStatus;
 import it.akademija.models.Role;
 import it.akademija.models.User;
-import it.akademija.payload.request.UserRequest;
+import it.akademija.models.enums.ERole;
+import it.akademija.payload.request.PasswordResetRequest;
 import it.akademija.payload.request.RegisterRequest;
+import it.akademija.payload.request.UserRequest;
 import it.akademija.payload.response.MessageResponse;
+import it.akademija.repository.AppStatusRepo;
 import it.akademija.repository.RoleRepository;
 import it.akademija.repository.UserDataRepository;
 import it.akademija.repository.UserRepository;
@@ -29,6 +31,8 @@ public class AdminService {
 	private PasswordEncoder encoder;
 	@Autowired
 	private RoleRepository roleRepository;
+	@Autowired
+	private AppStatusRepo statusRepo;
 
 	@Autowired
 	private UserDataRepository userDataRepository;
@@ -90,6 +94,20 @@ public class AdminService {
 		userRepository.save(user);
 
 		return ResponseEntity.ok(new MessageResponse("Slaptažodis sėkmingai atstatytas"));
+	}
+
+	public ResponseEntity<?> disableAllSpec() {
+		AppStatus appStatus = statusRepo.findAll().get(0);
+		appStatus.setSpecelistsDisabled(true);
+		statusRepo.save(appStatus);
+		return ResponseEntity.ok(new MessageResponse("Švietimo specialistų funkcionalumas užrakintas"));
+	}
+
+	public ResponseEntity<?> enableAllSpec() {
+		AppStatus appStatus = statusRepo.findAll().get(0);
+		appStatus.setSpecelistsDisabled(false);
+		statusRepo.save(appStatus);
+		return ResponseEntity.ok(new MessageResponse("Švietimo specialistų funkcionalumas atstatytas"));
 	}
 
 }

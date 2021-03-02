@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import _ from "lodash";
 import InfoModal from "../../Parent/ListOfForms/InfoModal";
 import LoadingSpan from "../../utils/LoadingSpan";
+import ParentService from "../../../services/parent.service";
 
 class TableBody extends Component {
   state = {
@@ -11,6 +12,10 @@ class TableBody extends Component {
     showId: "",
     show: "",
     hideModal: true,
+    appStatus: {
+      registrationClosed: true,
+      specelistsDisabled: true,
+    },
   };
 
   componentDidMount() {
@@ -18,29 +23,11 @@ class TableBody extends Component {
     if (data.length > 0) {
       this.handleClick(data[0].id);
     }
+    ParentService.appStatus().then((response) => {
+      console.log(response);
+      this.setState({ appStatus: response.data });
+    });
   }
-
-  // cancelForm = async (id) => {
-  //   await specService.cancelForm(id).then(
-  //     (response) => {
-  //       console.log(response);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // };
-
-  // enableForm = async (id) => {
-  //   await specService.enableForm(id).then(
-  //     (response) => {
-  //       console.log(response);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // };
 
   renderCell = (item, column) => {
     if (column.path === "buttons") {
@@ -108,6 +95,7 @@ class TableBody extends Component {
   render() {
     const { data, columns, loading } = this.props;
     if (loading) return <LoadingSpan />;
+    console.log(this.state.appStatus);
 
     if (data.length > 0)
       return (
@@ -125,7 +113,13 @@ class TableBody extends Component {
                 key={item.id}
               >
                 {columns.map((column) => (
-                  <td key={this.createKey(item, column)}>
+                  <td
+                    hidden={
+                      this.state.appStatus.specelistsDisabled &&
+                      column.path === "buttons"
+                    }
+                    key={this.createKey(item, column)}
+                  >
                     {this.renderCell(item, column)}
                   </td>
                 ))}

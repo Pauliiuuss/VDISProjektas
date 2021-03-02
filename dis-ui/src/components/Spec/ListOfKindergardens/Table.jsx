@@ -14,6 +14,7 @@ const Table = ({
   message,
   active,
   onAmendKindergarten,
+  appStatus,
 }) => {
   return (
     <React.Fragment>
@@ -30,11 +31,13 @@ const Table = ({
           data={data}
           onKindergartenChange={onKindergartenChange}
         />
-        <AddElement
-          successful={successful}
-          message={message}
-          onAddKindergarten={onAddKindergarten}
-        />
+        {!appStatus.specelistsDisabled && (
+          <AddElement
+            successful={successful}
+            message={message}
+            onAddKindergarten={onAddKindergarten}
+          />
+        )}
       </table>
     </React.Fragment>
   );

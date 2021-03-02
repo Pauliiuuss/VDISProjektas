@@ -1,7 +1,22 @@
 import React, { Component } from "react";
 import Table from "./Table";
+import ParentService from "../../../services/parent.service";
 
 class KindergartenTable extends Component {
+  state = {
+    appStatus: {
+      registrationClosed: true,
+      specelistsDisabled: true,
+    },
+  };
+
+  componentDidMount() {
+    ParentService.appStatus().then((response) => {
+      console.log(response);
+      this.setState({ appStatus: response.data });
+    });
+  }
+
   columns = [
     {
       path: "name",
@@ -36,6 +51,7 @@ class KindergartenTable extends Component {
         successful={successful}
         message={message}
         active={active}
+        appStatus={this.state.appStatus}
       />
     );
   }

@@ -1,6 +1,6 @@
-import React from 'react';
-import { Component } from 'react';
-import Input from 'react-validation/build/input';
+import React from "react";
+import { Component } from "react";
+import Input from "react-validation/build/input";
 
 class RenderInput extends Component {
   state = {};
@@ -25,15 +25,15 @@ class RenderInput extends Component {
         <label
           className="my-auto col-4"
           htmlFor={forItem}
-          style={{ padding: '0 10px' }}
+          style={{ padding: "0 10px" }}
         >
-          {inputPlaceholder} :{' '}
+          {inputPlaceholder} :{" "}
           {mandatory ? (
             <span className="text-danger" style={{ fontSize: 20 }}>
               *
             </span>
           ) : (
-            ''
+            ""
           )}
         </label>
         <div className="input-group">
