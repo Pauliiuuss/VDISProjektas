@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -54,6 +54,9 @@ public class KindergartenPriorityServiceTest {
 
     @Test
     public void testAddKindergartenPriority(){
+        KindergartenPriority kinder = new KindergartenPriority(1L, "priorityOne", "priorityTwo", "priorityThree", "priorityFour", "priorityFive");
+        kindergartenPriorityRepository.save(kinder);
 
+        verify(kindergartenPriorityRepository, times(1)).save(kinder);
     }
 }
