@@ -5,6 +5,8 @@ import Pagination from "../../utils/pagination";
 import AdminService from "../../../services/admin.service";
 import _ from "lodash";
 import SearchBox from "../../utils/SearchBox";
+import swal from 'sweetalert';
+
 
 class Users extends Component {
   state = {
@@ -40,8 +42,15 @@ class Users extends Component {
 
     await AdminService.deleteUser(user.id).then(
       (response) => {
-        +response.status < 400 && alert("Naudotojas ištrintas");
-        window.location.reload();
+        +response.status < 400 && swal({
+          title: "Naudotojas ištrintas",
+          icon: "success",
+          button: "Uždaryti",
+        }).then(function() {
+          window.location.reload();
+        });
+        
+      
       },
       (error) => {
         this.setState({ users: originalUsers });
@@ -58,7 +67,12 @@ class Users extends Component {
 
     await AdminService.resetPassword({username: user.username}).then(
       (response) => {
-        +response.status < 400 && alert("Slaptažodis sėkmingai atstatytas");
+        +response.status < 400 && swal({
+          title: "Slaptažodis sėkmingai atstatytas",
+          icon: "success",
+          button: "Uždaryti"
+        });
+        // alert("Slaptažodis sėkmingai atstatytas");
       },
       (error) => {
         console.log(error);
