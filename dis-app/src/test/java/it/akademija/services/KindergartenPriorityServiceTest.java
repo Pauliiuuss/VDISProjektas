@@ -1,18 +1,18 @@
 package it.akademija.services;
 
-import it.akademija.models.Kindergarten;
 import it.akademija.models.KindergartenPriority;
 import it.akademija.payload.request.KindergartenPriorityRequest;
 import it.akademija.repository.KindergartenPriorityRepository;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class KindergartenPriorityServiceTest {
+class KindergartenPriorityServiceTest {
 
     @Autowired
     private KindergartenPriorityService kindergartenPriorityService;
@@ -30,7 +30,7 @@ public class KindergartenPriorityServiceTest {
     private KindergartenPriorityRepository kindergartenPriorityRepository;
 
     @Test
-    public void testGetKindergartenPriorities(){
+    void testGetKindergartenPriorities(){
         when(kindergartenPriorityRepository.findAll())
                 .thenReturn(Stream
                         .of(new KindergartenPriority(1L, "priorityOne", "priorityTwo", "priorityThree", "priorityFour", "priorityFive"),
@@ -39,24 +39,39 @@ public class KindergartenPriorityServiceTest {
         assertEquals(2, kindergartenPriorityService.getAllKindergartenPriorities().size());
     }
 
+
     @Test
-    public void testGetKindergartenPriority(){
+    void testGetKindergartenPriority(){
         Long id = 1L;
-        when(kindergartenPriorityRepository.getOne(id)).thenReturn(new KindergartenPriority(1L, "priorityOne", "priorityTwo", "priorityThree", "priorityFour", "priorityFive"));
+        KindergartenPriority kinder = new KindergartenPriority(1L, "priorityOne", "priorityTwo", "priorityThree", "priorityFour", "priorityFive");
+        when(kindergartenPriorityRepository.getOne(id))
+                .thenReturn(kinder);
 
         assertEquals(1L, kindergartenPriorityService.getKindergartenPrioritiesById(id).getId());
         assertEquals("priorityOne", kindergartenPriorityService.getKindergartenPrioritiesById(id).getKindergartenOne());
         assertEquals("priorityTwo", kindergartenPriorityService.getKindergartenPrioritiesById(id).getKindergartenTwo());
-        assertEquals("priorityThee", kindergartenPriorityService.getKindergartenPrioritiesById(id).getKindergartenThree());
+        assertEquals("priorityThree", kindergartenPriorityService.getKindergartenPrioritiesById(id).getKindergartenThree());
         assertEquals("priorityFour", kindergartenPriorityService.getKindergartenPrioritiesById(id).getKindergartenFour());
         assertEquals("priorityFive", kindergartenPriorityService.getKindergartenPrioritiesById(id).getKindergartenFive());
     }
 
     @Test
-    public void testAddKindergartenPriority(){
+    void testAddKindergartenPriority(){
         KindergartenPriority kinder = new KindergartenPriority(1L, "priorityOne", "priorityTwo", "priorityThree", "priorityFour", "priorityFive");
         kindergartenPriorityRepository.save(kinder);
 
         verify(kindergartenPriorityRepository, times(1)).save(kinder);
+        assertEquals(200, kindergartenPriorityService.addKindergartenPriority(new KindergartenPriorityRequest(2L, "priorityOne", "priorityTwo", "priorityThree", "priorityFour", "priorityFive")).getStatusCodeValue());
     }
+
+//    @Test
+//    void testDeleteKindergartenPriority(){
+//        Long id = 1L;
+//        KindergartenPriority kinder = new KindergartenPriority(1L, "priorityOne", "priorityTwo", "priorityThree", "priorityFour", "priorityFive");
+//        when(kindergartenPriorityRepository.findById(id)).thenReturn(Optional.of(kinder)).thenReturn(null);
+//
+//        kindergartenPriorityRepository.deleteById(id);
+//        verify(kindergartenPriorityRepository, times(1)).deleteById(id);
+//        assertNull(kindergartenPriorityService.getKindergartenPrioritiesById(id));
+//    }
 }

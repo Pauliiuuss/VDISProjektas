@@ -21,12 +21,12 @@ public class KindergartenPriorityController {
     }
 
     @GetMapping("/get/{id}")
-    public KindergartenPriorityRequest getKindergartenPrioritiesById (@PathVariable("id") long id){
+    public KindergartenPriorityRequest getKindergartenPrioritiesById (@PathVariable("id") Long id){
         return kindergartenPriorityService.getKindergartenPrioritiesById(id);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteKindergartenPriorityById (@PathVariable("id") long id){
+    public void deleteKindergartenPriorityById (@PathVariable("id") Long id){
         kindergartenPriorityService.deleteKindergartenPriorityById(id);
     }
     @PostMapping("/add")
