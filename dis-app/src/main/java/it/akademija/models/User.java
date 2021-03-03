@@ -28,10 +28,10 @@ public class User {
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Role role;
 
-	@OneToOne(mappedBy = "user")
+	@OneToOne(cascade = CascadeType.REMOVE, mappedBy = "user")
 	private UserData userData;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Document> documents;
 
