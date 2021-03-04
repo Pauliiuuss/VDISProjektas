@@ -6,8 +6,6 @@ import it.akademija.repository.KindergartenPriorityRepository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -57,21 +55,13 @@ class KindergartenPriorityServiceTest {
 
     @Test
     void testAddKindergartenPriority(){
-        KindergartenPriority kinder = new KindergartenPriority(1L, "priorityOne", "priorityTwo", "priorityThree", "priorityFour", "priorityFive");
-        kindergartenPriorityRepository.save(kinder);
-
-        verify(kindergartenPriorityRepository, times(1)).save(kinder);
         assertEquals(200, kindergartenPriorityService.addKindergartenPriority(new KindergartenPriorityRequest(2L, "priorityOne", "priorityTwo", "priorityThree", "priorityFour", "priorityFive")).getStatusCodeValue());
     }
 
-//    @Test
-//    void testDeleteKindergartenPriority(){
-//        Long id = 1L;
-//        KindergartenPriority kinder = new KindergartenPriority(1L, "priorityOne", "priorityTwo", "priorityThree", "priorityFour", "priorityFive");
-//        when(kindergartenPriorityRepository.findById(id)).thenReturn(Optional.of(kinder)).thenReturn(null);
-//
-//        kindergartenPriorityRepository.deleteById(id);
-//        verify(kindergartenPriorityRepository, times(1)).deleteById(id);
-//        assertNull(kindergartenPriorityService.getKindergartenPrioritiesById(id));
-//    }
+    @Test
+    void testDeleteKindergartenPriority(){
+        KindergartenPriority kinder = new KindergartenPriority(1L, "priorityOne", "priorityTwo", "priorityThree", "priorityFour", "priorityFive");
+        kindergartenPriorityService.deleteKindergartenPriorityById(kinder.getId());
+        verify(kindergartenPriorityRepository, times(1)).deleteById(kinder.getId());
+    }
 }

@@ -57,14 +57,18 @@ public class KindergartenPriorityService {
 
     @Transactional
     public ResponseEntity<?> addKindergartenPriority(KindergartenPriorityRequest kindergartenPriorityRequest){
-        KindergartenPriority idb = new KindergartenPriority(
-                kindergartenPriorityRequest.getKindergartenOne(),
-                kindergartenPriorityRequest.getKindergartenTwo(),
-                kindergartenPriorityRequest.getKindergartenThree(),
-                kindergartenPriorityRequest.getKindergartenFour(),
-                kindergartenPriorityRequest.getKindergartenFive());
-        kindergartenPriorityRepository.save(idb);
-        return ResponseEntity.ok(new MessageResponse("Vaiko prioritetai užregistruoti!"));
+        if(kindergartenPriorityRequest != null) {
+            KindergartenPriority idb = new KindergartenPriority(
+                    kindergartenPriorityRequest.getKindergartenOne(),
+                    kindergartenPriorityRequest.getKindergartenTwo(),
+                    kindergartenPriorityRequest.getKindergartenThree(),
+                    kindergartenPriorityRequest.getKindergartenFour(),
+                    kindergartenPriorityRequest.getKindergartenFive());
+            kindergartenPriorityRepository.save(idb);
+            return ResponseEntity.ok(new MessageResponse("Vaiko prioritetai užregistruoti!"));
+        }else {
+            return ResponseEntity.badRequest().body(new IllegalArgumentException());
+        }
     }
 
     @Transactional
