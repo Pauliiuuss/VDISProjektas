@@ -43,7 +43,10 @@ const ChildFormsQueue = () => {
         title: "Ar jūs tikrai to norite?",
         text: "Vaikų registracijų formų statusai bus pakeisti į PRIIMTAS arba EILĖJE negrįžtamai! Tai gali užtrukti.",
         icon: "info",
-        buttons: ["Atšaukti", "Sudaryti"],
+        buttons: {
+          cancel: "Atšaukti", 
+          confirm: {text: "Sudaryti", className: "sweet-confirm"},
+        },
       })
       .then((willDelete) => {
         if (willDelete) {

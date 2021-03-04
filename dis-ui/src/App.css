@@ -61,7 +61,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -95,4 +95,12 @@ input[type='number'] {
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
+}
+
+.sweet-confirm {
+  background-color: #5cb85c;
+}
+
+.sweet-confirm:not([disabled]):hover {
+  background-color: green;
 }

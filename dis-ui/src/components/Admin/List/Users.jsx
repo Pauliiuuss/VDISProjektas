@@ -54,7 +54,12 @@ class Users extends Component {
       },
       (error) => {
         this.setState({ users: originalUsers });
-        +error.response.status > 400 && alert("Ivyko klaida");
+        +error.response.status > 400 && swal({
+          title: "Ivyko klaida",
+          icon: "warning",
+          button: "Uždaryti",
+          dangerMode: true,
+        });
       }
     );
   };
@@ -70,13 +75,20 @@ class Users extends Component {
         +response.status < 400 && swal({
           title: "Slaptažodis sėkmingai atstatytas",
           icon: "success",
-          button: "Uždaryti"
+          buttons: {
+            confirm: {text: "Uždaryti", className: "sweet-confirm"}
+          } 
         });
         // alert("Slaptažodis sėkmingai atstatytas");
       },
       (error) => {
         console.log(error);
-        +error.response.status > 400 && alert("Ivyko klaida");
+        +error.response.status > 400 && swal({
+          title: "Ivyko klaida",
+          icon: "warning",
+          button: "Uždaryti",
+          dangerMode: true,
+        });
       }
     );
   };
