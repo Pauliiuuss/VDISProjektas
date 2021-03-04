@@ -45,7 +45,9 @@ class Users extends Component {
         +response.status < 400 && swal({
           title: "Naudotojas ištrintas",
           icon: "success",
-          button: "Uždaryti",
+          buttons: {
+            confirm: {text: "Uždaryti", className: "sweet-confirm"}
+          } 
         }).then(function() {
           window.location.reload();
         });
