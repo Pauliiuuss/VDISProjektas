@@ -9,6 +9,7 @@ import SpecService from "../../services/spec.service";
 import AuthService from "../../services/auth.service";
 import UserService from "../../services/user.service";
 import { noNumbers, required } from "./Validation";
+import swal from 'sweetalert';
 
 class RenderInfoForm extends Component {
   state = {
@@ -135,12 +136,23 @@ class RenderInfoForm extends Component {
       (response) => {
         console.log(response);
 
-        +response.status < 400 && alert("Forma ištrinta");
+        +response.status < 400 && swal({
+          title: "Forma ištrinta",
+          icon: "success",
+          buttons: {
+            confirm: {text: "Uždaryti", className: "sweet-confirm"}
+          } 
+        });
 
         window.location.replace("/dis-app/home");
       },
       (error) => {
-        +error.response.status > 400 && alert("Ivyko klaida");
+        +error.response.status > 400 && swal({
+          title: "Ivyko klaida",
+          icon: "warning",
+          button: "Uždaryti",
+          dangerMode: true,
+        });
       }
     );
     console.log("Delete form");
@@ -902,10 +914,28 @@ class RenderInfoForm extends Component {
         <button
           className="btn btn-danger my-5 m-1"
           hidden={this.props.spec}
+          type="button"
           onClick={(e) => {
-            if (window.confirm(`Ištrinti formą?`)) {
-              this.deleteForm(e);
-            }
+            swal({
+              title: "Ištrinti formą?",
+              icon: "warning",
+              buttons: {
+                cancel: "Atšaukti", 
+                confirm: {text: "Ištrinti", className: "sweet-confirm"},
+              },
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                {
+                  this.deleteForm(e);
+                }
+              } else {
+                console.log("canceled")
+              }
+            });
+            // if (window.confirm(`Ištrinti formą?`)) {
+            //   this.deleteForm(e);
+            // }
           }}
         >
           Ištrinti
