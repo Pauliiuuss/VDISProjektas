@@ -901,6 +901,7 @@ class RenderInfoForm extends Component {
         </div>
         <button
           className="btn btn-danger my-5 m-1"
+          hidden={this.props.spec}
           onClick={(e) => {
             if (window.confirm(`Ištrinti formą?`)) {
               this.deleteForm(e);
