@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
-import InfoModal from '../ListOfForms/InfoModal';
-import FileUpload from '../FileUpload';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ReactTooltip from 'react-tooltip';
+import React, { Component } from "react";
+import _ from "lodash";
+import InfoModal from "../ListOfForms/InfoModal";
+import FileUpload from "../FileUpload";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ReactTooltip from "react-tooltip";
 
 class TableBody extends Component {
   state = {
@@ -22,6 +22,8 @@ class TableBody extends Component {
   };
 
   renderCell = (item, column) => {
+    if (column.path === "formStatus.name" && item.formStatus.name === "EILEJE")
+      return "EILĖJE";
     if (column.content) return column.content(item);
 
     return _.get(item, column.path);
