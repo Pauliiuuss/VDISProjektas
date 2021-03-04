@@ -899,6 +899,16 @@ class RenderInfoForm extends Component {
             />
           </div>
         </div>
+        <button
+          className="btn btn-danger my-5 m-1"
+          onClick={(e) => {
+            if (window.confirm(`Ištrinti formą?`)) {
+              this.deleteForm(e);
+            }
+          }}
+        >
+          Ištrinti
+        </button>
         {disabled && !this.props.spec ? (
           <div hidden={this.props.appStatus.registrationClosed}>
             <button
@@ -906,16 +916,6 @@ class RenderInfoForm extends Component {
               onClick={(e) => this.unlockForm(e)}
             >
               Redaguoti prašymą
-            </button>
-            <button
-              className="btn btn-danger my-5 m-1"
-              onClick={(e) => {
-                if (window.confirm(`Ištrinti formą?`)) {
-                  this.deleteForm(e);
-                }
-              }}
-            >
-              Ištrinti
             </button>
           </div>
         ) : (
