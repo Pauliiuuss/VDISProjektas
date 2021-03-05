@@ -5,8 +5,7 @@ import Pagination from "../../utils/pagination";
 import AdminService from "../../../services/admin.service";
 import _ from "lodash";
 import SearchBox from "../../utils/SearchBox";
-import swal from 'sweetalert';
-
+import swal from "sweetalert";
 
 class Users extends Component {
   state = {
@@ -42,26 +41,26 @@ class Users extends Component {
 
     await AdminService.deleteUser(user.id).then(
       (response) => {
-        +response.status < 400 && swal({
-          title: "Naudotojas ištrintas",
-          icon: "success",
-          buttons: {
-            confirm: {text: "Uždaryti", className: "sweet-confirm"}
-          } 
-        }).then(function() {
-          window.location.reload();
-        });
-        
-      
+        +response.status < 400 &&
+          swal({
+            title: "Naudotojas ištrintas",
+            icon: "success",
+            buttons: {
+              confirm: { text: "Uždaryti", className: "sweet-confirm" },
+            },
+          }).then(function () {
+            window.location.reload();
+          });
       },
       (error) => {
         this.setState({ users: originalUsers });
-        +error.response.status > 400 && swal({
-          title: "Ivyko klaida",
-          icon: "warning",
-          button: "Uždaryti",
-          dangerMode: true,
-        });
+        +error.response.status > 400 &&
+          swal({
+            title: "Ivyko klaida",
+            icon: "warning",
+            button: "Uždaryti",
+            dangerMode: true,
+          });
       }
     );
   };
@@ -71,26 +70,27 @@ class Users extends Component {
   };
 
   handleResetPassword = async (user) => {
-
-    await AdminService.resetPassword({username: user.username}).then(
+    await AdminService.resetPassword({ username: user.username }).then(
       (response) => {
-        +response.status < 400 && swal({
-          title: "Slaptažodis sėkmingai atstatytas",
-          icon: "success",
-          buttons: {
-            confirm: {text: "Uždaryti", className: "sweet-confirm"}
-          } 
-        });
+        +response.status < 400 &&
+          swal({
+            title: "Slaptažodis sėkmingai atstatytas",
+            icon: "success",
+            buttons: {
+              confirm: { text: "Uždaryti", className: "sweet-confirm" },
+            },
+          });
         // alert("Slaptažodis sėkmingai atstatytas");
       },
       (error) => {
         console.log(error);
-        +error.response.status > 400 && swal({
-          title: "Ivyko klaida",
-          icon: "warning",
-          button: "Uždaryti",
-          dangerMode: true,
-        });
+        +error.response.status > 400 &&
+          swal({
+            title: "Ivyko klaida",
+            icon: "warning",
+            button: "Uždaryti",
+            dangerMode: true,
+          });
       }
     );
   };
