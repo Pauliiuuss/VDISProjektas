@@ -91,7 +91,7 @@ class TableBody extends Component {
 
   hideModal = () => {
     this.setState({ show: false, showId: "" });
-    window.location.reload();
+    // window.location.reload();
   };
 
   render() {
