@@ -56,6 +56,7 @@ const ChildFormsQueue = () => {
               setForms(response.data);
               setFromsLoading(false);
             });
+            window.location.reload();
           },
           (error) => {
             console.log(error);
