@@ -16,10 +16,15 @@ class Forms extends Component {
     searchQuery: "",
     buttonDisabled: true,
     freeSpaces: 0,
+    sortColumn: { path: "name", order: "asc" },
     appStatus: {
       registrationClosed: true,
       specelistsDisabled: true,
     },
+  };
+
+  handleSort = (sortColumn) => {
+    this.setState({ sortColumn });
   };
 
   componentDidMount = () => {
@@ -50,7 +55,7 @@ class Forms extends Component {
   };
 
   getPagedData = (allForms) => {
-    const { pageSize, currentPage, searchQuery } = this.state;
+    const { pageSize, currentPage, searchQuery, sortColumn } = this.state;
 
     let filtered = allForms;
     if (searchQuery)
@@ -58,7 +63,9 @@ class Forms extends Component {
         m.personId.toString().includes(searchQuery.toString())
       );
 
-    const forms = paginate(filtered, currentPage, pageSize);
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+
+    const forms = paginate(sorted, currentPage, pageSize);
 
     return { totalCount: filtered.length, data: forms };
   };
@@ -100,14 +107,11 @@ class Forms extends Component {
   };
 
   render() {
-    console.log(this.props.loading);
     const allForms = this.props.forms;
     const count = allForms ? allForms.length : 0;
-    const { pageSize, currentPage, searchQuery } = this.state;
+    const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
 
     const { totalCount, data: forms } = this.getPagedData(allForms);
-    console.log(forms);
-    console.log(allForms);
 
     return (
       <div className="container" style={{ marginTop: "20px" }}>
@@ -129,8 +133,7 @@ class Forms extends Component {
             </div> */}
             {count !== 0 && (
               <div className="row" style={{ paddingBottom: "5%" }}>
-                {forms.filter((f) => f.formStatus.name === "PATEIKTAS")
-                  .length !== 0 ? (
+                {!this.state.appStatus.registrationClosed ? (
                   <div className="col-5">
                     <p style={{ marginBottom: "2px" }}>
                       Užregistruotų vaikų skaičius: <b>{count}</b>
@@ -183,13 +186,13 @@ class Forms extends Component {
             <div className="row">
               <div className="col-4">
                 <SearchBox
-                  placeholder={"Paieška pagal asmens kodą."}
+                  placeholder={"Paieška pagal asmens kodą ..."}
                   value={searchQuery}
                   onChange={this.handleSearch}
                 />
               </div>
               <div className="col-4"></div>
-              {!this.state.appStatus.specelistsDisabled && (
+              {!this.state.appStatus.specelistsDisabled ? (
                 <div className="col-4">
                   {forms.filter((f) => f.formStatus.name === "PATEIKTAS")
                     .length !== 0 ? (
@@ -212,12 +215,18 @@ class Forms extends Component {
                     </button>
                   )}
                 </div>
+              ) : (
+                <div class="alert alert-secondary col">
+                  Eilių sudarymas ir atšaukimas negalimas
+                </div>
               )}
             </div>
           </div>
         </div>
 
         <FormsTable
+          sortColumn={sortColumn}
+          onSort={this.handleSort}
           enableForm={this.props.enableForm}
           cancelForm={this.props.cancelForm}
           loading={this.props.loading}

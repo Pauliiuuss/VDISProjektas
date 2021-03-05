@@ -11,6 +11,10 @@ class FormsTable extends Component {
       path: "surename",
       label: "Pavardė",
     },
+    {
+      path: "personId",
+      label: "Asmens kodas",
+    },
     { path: "formStatus.name", label: "Statusas" },
     { path: "buttons", label: "Veiksmai" },
   ];
@@ -38,6 +42,10 @@ class FormsTable extends Component {
         {
           path: "surename",
           label: "Pavardė",
+        },
+        {
+          path: "personId",
+          label: "Asmens kodas",
         },
         { path: "formStatus.name", label: "Statusas" },
         { path: "kindergartenName", label: "Darželis" },
