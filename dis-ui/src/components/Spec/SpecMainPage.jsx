@@ -21,6 +21,7 @@ class SpecMainPage extends Component {
     messageGroup: "",
     appStatus: {
       registrationClosed: false,
+      specelistsDisabled: false,
     },
   };
 
@@ -42,7 +43,7 @@ class SpecMainPage extends Component {
     }
     if (!currentUser) this.setState({ redirect: "/dis-app/" });
     await ParentService.appStatus().then((response) => {
-      console.log(response);
+      console.log(response.data);
       this.setState({ appStatus: response.data });
     });
     this.setState({
@@ -220,7 +221,7 @@ class SpecMainPage extends Component {
             <div className="col-7">
               <div
                 class="alert alert-secondary col mb-2 float-right"
-                hidden={this.state.appStatus.registrationClosed}
+                hidden={!this.state.appStatus.specelistsDisabled}
               >
                 Naujų darželių ir grupių pridėjimas negalimas{" "}
               </div>
