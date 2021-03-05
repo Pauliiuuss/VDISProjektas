@@ -133,8 +133,7 @@ class Forms extends Component {
             </div> */}
             {count !== 0 && (
               <div className="row" style={{ paddingBottom: "5%" }}>
-                {forms.filter((f) => f.formStatus.name === "PATEIKTAS")
-                  .length !== 0 ? (
+                {!this.state.appStatus.registrationClosed ? (
                   <div className="col-5">
                     <p style={{ marginBottom: "2px" }}>
                       Užregistruotų vaikų skaičius: <b>{count}</b>
@@ -193,7 +192,7 @@ class Forms extends Component {
                 />
               </div>
               <div className="col-4"></div>
-              {!this.state.appStatus.specelistsDisabled && (
+              {!this.state.appStatus.specelistsDisabled ? (
                 <div className="col-4">
                   {forms.filter((f) => f.formStatus.name === "PATEIKTAS")
                     .length !== 0 ? (
@@ -215,6 +214,10 @@ class Forms extends Component {
                       Atšaukti eiles
                     </button>
                   )}
+                </div>
+              ) : (
+                <div class="alert alert-secondary col">
+                  Eilių sudarymas ir atšaukimas negalimas
                 </div>
               )}
             </div>

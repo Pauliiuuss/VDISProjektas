@@ -6,7 +6,7 @@ import KindergartenModal from "./ListOfForms/KindergartenModal";
 import specService from "../../services/spec.service";
 import AuthService from "../../services/auth.service";
 import { Redirect } from "react-router-dom";
-import swal from 'sweetalert';
+import swal from "sweetalert";
 
 const ChildFormsQueue = () => {
   const [forms, setForms] = useState([]);
@@ -37,42 +37,39 @@ const ChildFormsQueue = () => {
   function handleConfirm() {
     setFromsLoading(true);
     console.log(fromsLoading);
-    
 
-      swal({
-        title: "Ar jūs tikrai to norite?",
-        text: "Vaikų registracijų formų statusai bus pakeisti į PRIIMTAS arba EILĖJE negrįžtamai! Tai gali užtrukti.",
-        icon: "warning",
-        buttons: ["Atšaukti", "Sudaryti"],
-        // buttons: true,
-        dangerMode: true,
-      })
-      .then((willDelete) => {
-        if (willDelete) {
-          {
-            console.log("Confirmed");
-            SpecService.confirmQueue().then(
-              (response) => {
-                console.log(response);
-                SpecService.getForms(current).then((response) => {
-                  setForms(response.data);
-                  setFromsLoading(false);
-                });
-              },
-              (error) => {
-                console.log(error);
-                setFromsLoading(false);
-              }
-            );
-          }
-        } else {
-          console.log("Canceled");
-          SpecService.getForms(current).then((response) => {
-            setForms(response.data);
+    swal({
+      title: "Ar jūs tikrai to norite?",
+      text:
+        "Vaikų registracijų formų statusai bus pakeisti į PRIIMTAS arba EILĖJE negrįžtamai! Tai gali užtrukti.",
+      icon: "warning",
+      buttons: ["Atšaukti", "Sudaryti"],
+      // buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        console.log("Confirmed");
+        SpecService.confirmQueue().then(
+          (response) => {
+            console.log(response);
+            SpecService.getForms(current).then((response) => {
+              setForms(response.data);
+              setFromsLoading(false);
+            });
+          },
+          (error) => {
+            console.log(error);
             setFromsLoading(false);
-          });
-        }
-      });
+          }
+        );
+      } else {
+        console.log("Canceled");
+        SpecService.getForms(current).then((response) => {
+          setForms(response.data);
+          setFromsLoading(false);
+        });
+      }
+    });
   }
 
   async function cancelForm(id) {
