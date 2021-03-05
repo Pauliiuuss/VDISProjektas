@@ -37,7 +37,7 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
                   class="page-link"
                   onClick={() => onPageChange(currentPage - 1)}
                 >
-                  Ankstasnis
+                  Ankstesnis
                 </button>
               </li>
               {currentPage > 2 && (
