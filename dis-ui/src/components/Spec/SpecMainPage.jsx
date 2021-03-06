@@ -220,7 +220,7 @@ class SpecMainPage extends Component {
           <div className="row">
             <div className="col-7">
               <div
-                class="alert alert-secondary col mb-2 float-right"
+                class="alert alert-secondary mb-2"
                 hidden={!this.state.appStatus.specelistsDisabled}
               >
                 Naujų darželių ir grupių pridėjimas negalimas{" "}
