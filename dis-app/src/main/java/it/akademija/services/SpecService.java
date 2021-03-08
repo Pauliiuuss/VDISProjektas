@@ -342,7 +342,10 @@ public class SpecService {
 	public ResponseEntity<?> cancelQueue() {
 
 		List<ChildForm> forms = formRepo.findAll();
-		forms.forEach(f -> f.setFormStatus(statusRepo.findByName(EFormStatus.PATEIKTAS).get()));
+		forms.forEach(f -> {
+			if (!f.getFormStatus().getName().equals(EFormStatus.PANAIKINTAS))
+				f.setFormStatus(statusRepo.findByName(EFormStatus.PATEIKTAS).get());
+		});
 		forms.forEach(f -> f.setGroup(null));
 		forms.forEach(f -> f.setGroupName(null));
 		forms.forEach(f -> f.setKindergartenName(null));
