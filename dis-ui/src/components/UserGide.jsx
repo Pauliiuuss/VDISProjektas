@@ -18,9 +18,14 @@ export default class UserGide extends Component {
 
   render() {
     return (
-      <div>
-        <a className="text-primary" target="_blank" href={usergide}>
-          <FontAwesomeIcon icon={faBookOpen} /> Naudotojo vadovas tėvams
+      <div className="mt-4">
+        <a
+          style={{ color: '#004c99', fontSize: '14px' }}
+          target="_blank"
+          href={usergide}
+        >
+          <FontAwesomeIcon icon={faBookOpen} /> Naudotojo vadovas vaiko
+          atstovams
         </a>
         <ReactTooltip id="registerTip1" place="bottom" effect="solid">
           Parsisiųsti
