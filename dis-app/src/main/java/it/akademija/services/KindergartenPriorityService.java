@@ -2,8 +2,10 @@ package it.akademija.services;
 
 import it.akademija.models.KindergartenPriority;
 import it.akademija.payload.request.KindergartenPriorityRequest;
+import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.KindergartenPriorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,13 +31,15 @@ public class KindergartenPriorityService {
     }
 
     @Transactional(readOnly = true)
-    public KindergartenPriorityRequest getKindergartenPrioritiesById(long id){
-        KindergartenPriority info = kindergartenPriorityRepository.findAll().stream()
-                .filter(isdb -> isdb.getId() == id)
-                .findFirst()
-                .orElse(null);
-        if(info != null){
+    public KindergartenPriorityRequest getKindergartenPrioritiesById(Long id){
+//        KindergartenPriority info = kindergartenPriorityRepository.findAll().stream()
+//                .filter(isdb -> isdb.getId().equals(id))
+//                .findFirst()
+//                .orElse(null);
+        KindergartenPriority info = kindergartenPriorityRepository.getOne(id);
+        if(info.getId() != null){
             return new KindergartenPriorityRequest(
+                    info.getId(),
                     info.getKindergartenOne(),
                     info.getKindergartenTwo(),
                     info.getKindergartenThree(),
@@ -47,19 +51,24 @@ public class KindergartenPriorityService {
     }
 
     @Transactional
-    public void deleteKindergartenPriorityById(long id){
+    public void deleteKindergartenPriorityById(Long id){
         kindergartenPriorityRepository.deleteById(id);
     }
 
     @Transactional
-    public void addKindergartenPriority(KindergartenPriorityRequest kindergartenPriorityRequest){
-        KindergartenPriority idb = new KindergartenPriority(
-                kindergartenPriorityRequest.getKindergartenOne(),
-                kindergartenPriorityRequest.getKindergartenTwo(),
-                kindergartenPriorityRequest.getKindergartenThree(),
-                kindergartenPriorityRequest.getKindergartenFour(),
-                kindergartenPriorityRequest.getKindergartenFive());
-        kindergartenPriorityRepository.save(idb);
+    public ResponseEntity<?> addKindergartenPriority(KindergartenPriorityRequest kindergartenPriorityRequest){
+        if(kindergartenPriorityRequest != null) {
+            KindergartenPriority idb = new KindergartenPriority(
+                    kindergartenPriorityRequest.getKindergartenOne(),
+                    kindergartenPriorityRequest.getKindergartenTwo(),
+                    kindergartenPriorityRequest.getKindergartenThree(),
+                    kindergartenPriorityRequest.getKindergartenFour(),
+                    kindergartenPriorityRequest.getKindergartenFive());
+            kindergartenPriorityRepository.save(idb);
+            return ResponseEntity.ok(new MessageResponse("Vaiko prioritetai užregistruoti!"));
+        }else {
+            return ResponseEntity.badRequest().body(new IllegalArgumentException());
+        }
     }
 
     @Transactional

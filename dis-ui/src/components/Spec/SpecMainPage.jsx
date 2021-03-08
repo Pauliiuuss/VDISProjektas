@@ -1,23 +1,28 @@
-import React, { Component } from 'react';
-import SpecService from '../../services/spec.service';
-import AuthService from '../../services/auth.service';
-import Kindergartens from './ListOfKindergardens/Kindergartens';
-import Groups from './ListOfGroups/Groups';
+import React, { Component } from "react";
+import SpecService from "../../services/spec.service";
+import AuthService from "../../services/auth.service";
+import Kindergartens from "./ListOfKindergardens/Kindergartens";
+import Groups from "./ListOfGroups/Groups";
+import ParentService from "../../services/parent.service";
 
 class SpecMainPage extends Component {
   state = {
     groups: [],
     selectedKindergarten: 0,
-    selectedKindergartenName: 'Not selected',
-    currentUser: '',
+    selectedKindergartenName: "Not selected",
+    currentUser: "",
     userReady: false,
-    roles: '',
+    roles: "",
     kindergartens: null,
-    message: '',
+    message: "",
     successful: false,
     loading: false,
     successfulGroup: false,
-    messageGroup: '',
+    messageGroup: "",
+    appStatus: {
+      registrationClosed: false,
+      specelistsDisabled: false,
+    },
   };
 
   async componentDidMount() {
@@ -36,7 +41,11 @@ class SpecMainPage extends Component {
         this.setState({ groups: data });
       });
     }
-    if (!currentUser) this.setState({ redirect: '/dis-app/' });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
+    await ParentService.appStatus().then((response) => {
+      console.log(response.data);
+      this.setState({ appStatus: response.data });
+    });
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -45,7 +54,7 @@ class SpecMainPage extends Component {
   }
 
   handleKindergartenChange = async (id) => {
-    this.setState({ selectedKindergarten: id, message: '', messageGroup: '' });
+    this.setState({ selectedKindergarten: id, message: "", messageGroup: "" });
     this.setState({
       selectedKindergartenName: this.state.kindergartens.filter(
         (g) => g.id === id
@@ -58,10 +67,10 @@ class SpecMainPage extends Component {
   };
 
   handleAddKindergarten = async (address, name) => {
-    if (name === '' || address === '') {
+    if (name === "" || address === "") {
       this.setState({
         successful: false,
-        message: 'Laukai negali būti neužpildyti!',
+        message: "Laukai negali būti neužpildyti!",
       });
       return;
     }
@@ -93,7 +102,7 @@ class SpecMainPage extends Component {
         });
       }
     );
-    this.setState({ messageGroup: '' });
+    this.setState({ messageGroup: "" });
   };
 
   handleAmendKindergarten = async (item) => {
@@ -125,7 +134,7 @@ class SpecMainPage extends Component {
         });
       }
     );
-    this.setState({ messageGroup: '' });
+    this.setState({ messageGroup: "" });
   };
   handleAmendGroup = async (item) => {
     console.log(item);
@@ -159,13 +168,13 @@ class SpecMainPage extends Component {
       }
     );
     await SpecService.getKindergartens().then((response) =>
-      this.setState({ message: '', kindergartens: response.data })
+      this.setState({ message: "", kindergartens: response.data })
     );
     console.log(this.state);
   };
 
   handleAddGroup = async (name, age, capasity) => {
-    console.log('Now', name, age, capasity);
+    console.log("Now", name, age, capasity);
     await SpecService.createGroup(this.state.selectedKindergarten, {
       name,
       age,
@@ -200,16 +209,22 @@ class SpecMainPage extends Component {
       }
     );
     await SpecService.getKindergartens().then((response) =>
-      this.setState({ message: '', kindergartens: response.data })
+      this.setState({ message: "", kindergartens: response.data })
     );
   };
 
   render() {
     return (
-      <div className="container" style={{ paddingTop: '1rem' }}>
+      <div className="container" style={{ paddingTop: "1rem" }}>
         {this.state.kindergartens ? (
           <div className="row">
             <div className="col-7">
+              <div
+                class="alert alert-secondary mb-2"
+                hidden={!this.state.appStatus.specelistsDisabled}
+              >
+                Naujų darželių ir grupių pridėjimas negalimas{" "}
+              </div>
               <Kindergartens
                 onAmendKindergarten={this.handleAmendKindergarten}
                 active={this.state.selectedKindergarten}
@@ -238,7 +253,7 @@ class SpecMainPage extends Component {
           <div className="d-flex justify-content-center">
             <div
               className="spinner-border"
-              style={{ width: '3rem', height: '3rem', marginTop: '3rem' }}
+              style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
               role="status"
             >
               <span className="sr-only">Loading...</span>

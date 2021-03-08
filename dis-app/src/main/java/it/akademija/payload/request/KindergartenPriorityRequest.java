@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 public class KindergartenPriorityRequest {
 
-    private long id;
+    private Long id;
 
     private String kindergartenOne;
     private String kindergartenTwo;
@@ -19,6 +19,16 @@ public class KindergartenPriorityRequest {
     public KindergartenPriorityRequest() {
     }
 
+    public KindergartenPriorityRequest(Long id, String kindergartenOne, String kindergartenTwo, String kindergartenThree,
+                                       String kindergartenFour, String kindergartenFive) {
+        this.id = id;
+        this.kindergartenOne = kindergartenOne;
+        this.kindergartenTwo = kindergartenTwo;
+        this.kindergartenThree = kindergartenThree;
+        this.kindergartenFour = kindergartenFour;
+        this.kindergartenFive = kindergartenFive;
+    }
+
     public KindergartenPriorityRequest(String kindergartenOne, String kindergartenTwo, String kindergartenThree,
                                        String kindergartenFour, String kindergartenFive) {
         this.kindergartenOne = kindergartenOne;
@@ -28,11 +38,11 @@ public class KindergartenPriorityRequest {
         this.kindergartenFive = kindergartenFive;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

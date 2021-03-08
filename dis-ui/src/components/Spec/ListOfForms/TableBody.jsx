@@ -30,6 +30,8 @@ class TableBody extends Component {
   }
 
   renderCell = (item, column) => {
+    if (column.path === "formStatus.name" && item.formStatus.name === "EILEJE")
+      return "EILĖJE";
     if (column.path === "buttons") {
       return (
         <>
@@ -89,7 +91,6 @@ class TableBody extends Component {
 
   hideModal = () => {
     this.setState({ show: false, showId: "" });
-    window.location.reload();
   };
 
   render() {

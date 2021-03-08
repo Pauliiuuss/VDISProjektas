@@ -10,7 +10,7 @@ public class KindergartenPriority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String kindergartenOne;
     private String kindergartenTwo;
@@ -26,6 +26,16 @@ public class KindergartenPriority {
     public KindergartenPriority() {
     }
 
+    public KindergartenPriority(Long id, String kindergartenOne, String kindergartenTwo, String kindergartenThree,
+                                String kindergartenFour, String kindergartenFive) {
+        this.id = id;
+        this.kindergartenOne = kindergartenOne;
+        this.kindergartenTwo = kindergartenTwo;
+        this.kindergartenThree = kindergartenThree;
+        this.kindergartenFour = kindergartenFour;
+        this.kindergartenFive = kindergartenFive;
+    }
+
     public KindergartenPriority(String kindergartenOne, String kindergartenTwo, String kindergartenThree,
                                 String kindergartenFour, String kindergartenFive) {
         this.kindergartenOne = kindergartenOne;
@@ -35,11 +45,11 @@ public class KindergartenPriority {
         this.kindergartenFive = kindergartenFive;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
