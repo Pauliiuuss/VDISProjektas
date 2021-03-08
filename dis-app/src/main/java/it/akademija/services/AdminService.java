@@ -3,6 +3,8 @@ package it.akademija.services;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,9 +23,13 @@ import it.akademija.repository.AppStatusRepo;
 import it.akademija.repository.RoleRepository;
 import it.akademija.repository.UserDataRepository;
 import it.akademija.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class AdminService {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(AdminService.class);
 
 	@Autowired
 	private UserRepository userRepository;
@@ -71,6 +77,7 @@ public class AdminService {
 
 	@Transactional(readOnly = true)
 	public Collection<UserRequest> getUsers() {
+
 		return userRepository.findAll().stream().filter(user -> !user.getUsername().equals("admin"))
 				.map(isdb -> new UserRequest(isdb.getId(), isdb.getUsername(), isdb.getPassword(), isdb.getRole()))
 				.collect(Collectors.toList());
@@ -104,6 +111,11 @@ public class AdminService {
 	}
 
 	public ResponseEntity<?> enableAllSpec() {
+		LOGGER.error("Error message");
+		LOGGER.warn("Warning message");
+		LOGGER.info("Info message");
+		LOGGER.debug("Debug message");
+		LOGGER.trace("Trace message");
 		AppStatus appStatus = statusRepo.findAll().get(0);
 		appStatus.setSpecelistsDisabled(false);
 		statusRepo.save(appStatus);
