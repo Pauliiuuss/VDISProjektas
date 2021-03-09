@@ -3,12 +3,17 @@ package it.akademija.services;
 
 import java.io.*;
 import java.util.Collection;
+import java.util.Map;
 import java.util.stream.Collectors;
+//import java.util.zip.ZipEntry;
+//import java.util.zip.ZipFile;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
+//import com.google.gson.Gson;
+//import net.lingala.zip4j.io.outputstream.ZipOutputStream;
+import it.akademija.payload.request.UserDataDownloadRequest;
 import net.lingala.zip4j.ZipFile;
-
-import com.google.gson.Gson;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -40,8 +45,8 @@ import springfox.documentation.spring.web.json.Json;
 @Service
 public class ParentService {
 
-	@Autowired
-	private Gson gson;
+	//	@Autowired
+//	private Gson gson;
 	@Autowired
 	private FormStatusRepository formrepo;
 	@Autowired
@@ -176,7 +181,7 @@ public class ParentService {
 	public ResponseEntity<?> updateForm(Long id, ChildFormRequest childFormRequest) {
 		if (childFormRequest.getKindergartenPriority().getKindergartenOne() == null
 				|| childFormRequest.getKindergartenPriority().getKindergartenOne().equals("") || childFormRequest
-						.getKindergartenPriority().getKindergartenOne().equals("Pasirinkti darželį iš sąrašo..."))
+				.getKindergartenPriority().getKindergartenOne().equals("Pasirinkti darželį iš sąrašo..."))
 			return ResponseEntity.badRequest().body(new MessageResponse("Privaloma pasirinkti pirma prioriteta!"));
 
 		System.out.println("++++++++++++++++++++++" + id + "form is: " + childFormRequest);
@@ -348,9 +353,10 @@ public class ParentService {
 	}
 
 	@Transactional
+	//PIRMAS
 //	public ResponseEntity<byte[]> downloadUserData(Long id) throws IOException {
 //		UserData isdb = userRepository.getOne(id).getUserData();
-//		String data = gson.toJson(isdb);
+////		String data = gson.toJson(isdb);
 //		String nameInZip = userRepository.getOne(id).getUsername() + "_userData";
 //		String zipName = userRepository.getOne(id).getUsername() + "_archivedData";
 //
@@ -364,11 +370,11 @@ public class ParentService {
 //			zos.write(bais.readAllBytes());
 //
 //			// play safe
-////			byte[] buffer = new byte[1024];
-////			int len;
-////			while ((len = bais.read(buffer)) > 0) {
-////				zos.write(buffer, 0, len);
-////			}
+//			byte[] buffer = new byte[1024];
+//			int len;
+//			while ((len = bais.read(buffer)) > 0) {
+//				zos.write(buffer, 0, len);
+//			}
 //
 //			zos.closeEntry();
 //		}
@@ -378,6 +384,7 @@ public class ParentService {
 //
 //	}
 
+	//ANTRAS
 //	public byte[] downloadUserData(Long id) throws IOException {
 //		UserData isdb = userRepository.getOne(id).getUserData();
 //		String data = gson.toJson(isdb);
@@ -396,38 +403,56 @@ public class ParentService {
 //
 //	}
 
-		public byte[] downloadUserData(Long id) throws IOException {
+	//TRECIAS
+//		public byte[] downloadUserData(Long id) throws IOException {
+//		UserData isdb = userRepository.getOne(id).getUserData();
+////		String data = gson.toJson(isdb);
+//		String nameInZip = userRepository.getOne(id).getUsername() + "_userData.txt";
+//		String zipName = userRepository.getOne(id).getUsername() + "_archivedData.zip";
+//
+//		File file = new File(nameInZip);
+//
+//		try (Writer writer = new BufferedWriter(new FileWriter(file))) {
+//			writer.write("lalalalala");
+//
+//		}
+//		File zipp = new File(zipName);
+//		ZipFile zip = new ZipFile(zipp);
+//		zip.addFile(file);
+//
+//
+//	}
+
+
+	public byte[] downloadUserData(Long id) throws IOException {
 		UserData isdb = userRepository.getOne(id).getUserData();
-		String data = gson.toJson(isdb);
+		UserDataDownloadRequest request = new UserDataDownloadRequest(isdb.getName(),isdb.getSurename(),isdb.getPersonId()
+				,isdb.getAddress(),isdb.getCity(),isdb.getPhoneNum(),isdb.getEmail());
+
 		String nameInZip = userRepository.getOne(id).getUsername() + "_userData.txt";
-		String zipName = userRepository.getOne(id).getUsername() + "_archivedData";
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
+		ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
 
 		File file = new File(nameInZip);
-
 		try (Writer writer = new BufferedWriter(new FileWriter(file))) {
-			writer.write(data);
-
-		}
-		ZipFile zip = new ZipFile(zipName);
-
-		ZipEntry entry = new ZipEntry(file.getName());
-
-		BufferedInputStream istream = new BufferedInputStream(zip.getInputStream(entry));
-		int file_size  = (int) entry.getCompressedSize();
-		byte[] blob = new byte[(int) entry.getCompressedSize()];
-		int bytes_read = 0;
-		int offset = 0;
-
-		while((bytes_read = istream.read(blob, 0, file_size)) != -1)
-		{
-			offset += bytes_read;
+			writer.write(request.toString());
 		}
 
+		zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+		FileInputStream fileInputStream = new FileInputStream(file);
 
-//closing every thing
-		zip.close();
-		istream.close();
-		return blob;
+		IOUtils.copy(fileInputStream, zipOutputStream);
+
+		fileInputStream.close();
+		zipOutputStream.closeEntry();
+
+		zipOutputStream.finish();
+		zipOutputStream.flush();
+		IOUtils.closeQuietly(zipOutputStream);
+		IOUtils.closeQuietly(bufferedOutputStream);
+		IOUtils.closeQuietly(byteArrayOutputStream);
+
+		return byteArrayOutputStream.toByteArray();
 	}
-
 }

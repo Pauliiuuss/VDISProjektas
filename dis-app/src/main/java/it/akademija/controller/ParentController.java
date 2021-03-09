@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -80,9 +81,10 @@ public class ParentController {
 	}
 
 	@GetMapping(value = "/archivedata/{id}", produces = "application/zip")
-	public ResponseEntity<?> downloadUserData(@PathVariable Long id) throws IOException {
-		parentService.downloadUserData(id);
-		InputS
+	public ResponseEntity<byte[]> downloadUserData(@PathVariable Long id) throws IOException {
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=archivedData.zip")
+				.body(parentService.downloadUserData(id));
 	}
 
 }

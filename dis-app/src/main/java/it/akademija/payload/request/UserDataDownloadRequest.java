@@ -101,4 +101,16 @@ public class UserDataDownloadRequest {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "archivedUserData {" + '\'' +
+                "name='" + name + '\'' +
+                ", surename='" + surename + '\'' +
+                ", personId=" + personId +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", phoneNum=" + phoneNum +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
