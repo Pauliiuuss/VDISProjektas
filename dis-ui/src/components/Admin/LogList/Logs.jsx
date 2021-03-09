@@ -9,7 +9,7 @@ export default class Logs extends Component {
   state = {
     logs: [],
     currentPage: 1,
-    pageSize: 15,
+    pageSize: 9,
     length: 0,
     searchQuery: "",
     searchColumn: "Data",
