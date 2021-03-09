@@ -21,6 +21,10 @@ class AdminService {
     return axios.get(API_URL + "getusers", { headers: authHeader() });
   }
 
+  getLog() {
+    return axios.get(API_URL + "log", { headers: authHeader() });
+  }
+
   deleteUser(id) {
     return axios.delete(API_URL + "deleteuser/" + id, {
       headers: authHeader(),

@@ -1,6 +1,11 @@
 package it.akademija.services;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -12,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.akademija.models.AppStatus;
+import it.akademija.models.Log;
 import it.akademija.models.Role;
 import it.akademija.models.User;
 import it.akademija.models.enums.ERole;
@@ -71,13 +77,17 @@ public class AdminService {
 		}
 
 		userRepository.save(user);
+		if (role.equals("ROLE_SPEC")) {
+			LOGGER.info("Administratorius -- Užregistravo švietimo specialistą: \"" + user.getUsername() + "\"");
+		} else {
+			LOGGER.info("Administratorius -- Užregistravo vaiko atstovą: \"" + user.getUsername() + "\"");
 
+		}
 		return ResponseEntity.ok(new MessageResponse("Naudotojas užregistruotas!"));
 	}
 
 	@Transactional(readOnly = true)
 	public Collection<UserRequest> getUsers() {
-
 		return userRepository.findAll().stream().filter(user -> !user.getUsername().equals("admin"))
 				.map(isdb -> new UserRequest(isdb.getId(), isdb.getUsername(), isdb.getPassword(), isdb.getRole()))
 				.collect(Collectors.toList());
@@ -85,10 +95,12 @@ public class AdminService {
 
 	@Transactional
 	public ResponseEntity<?> deleteUser(Long id) {
+
 		userDataRepository.deleteByUser(userRepository.getOne(id));
 
 		userRepository.deleteById(id);
 
+		LOGGER.info("Administratorius -- Ištrynė naudotoją: \"" + userRepository.getOne(id).getUsername() + "\"");
 		return ResponseEntity.ok(new MessageResponse("Naudotojas ištrintas!"));
 	}
 
@@ -100,6 +112,7 @@ public class AdminService {
 
 		userRepository.save(user);
 
+		LOGGER.info("Administratorius -- Atstatė slaptažodį naudotojui: \"" + user.getUsername() + "\"");
 		return ResponseEntity.ok(new MessageResponse("Slaptažodis sėkmingai atstatytas"));
 	}
 
@@ -107,19 +120,32 @@ public class AdminService {
 		AppStatus appStatus = statusRepo.findAll().get(0);
 		appStatus.setSpecelistsDisabled(true);
 		statusRepo.save(appStatus);
+		LOGGER.info("Administratorius -- Švietimo specialistų funkcionalumas užrakintas");
 		return ResponseEntity.ok(new MessageResponse("Švietimo specialistų funkcionalumas užrakintas"));
 	}
 
 	public ResponseEntity<?> enableAllSpec() {
-		LOGGER.error("Error message");
-		LOGGER.warn("Warning message");
-		LOGGER.info("Info message");
-		LOGGER.debug("Debug message");
-		LOGGER.trace("Trace message");
 		AppStatus appStatus = statusRepo.findAll().get(0);
 		appStatus.setSpecelistsDisabled(false);
 		statusRepo.save(appStatus);
+		LOGGER.info("Administratorius -- Švietimo specialistų funkcionalumas atstatytas");
 		return ResponseEntity.ok(new MessageResponse("Švietimo specialistų funkcionalumas atstatytas"));
+	}
+
+	public List<Log> getLog() throws FileNotFoundException {
+		File file = new File("app.log");
+		Scanner reader = new Scanner(file);
+		List<Log> strings = new ArrayList<>();
+		while (reader.hasNextLine()) {
+			String[] data = reader.nextLine().split("--");
+			if (data.length == 4) {
+				Log log = new Log(data[0], data[1], data[2], data[3]);
+				strings.add(log);
+			}
+		}
+		reader.close();
+
+		return strings;
 	}
 
 }

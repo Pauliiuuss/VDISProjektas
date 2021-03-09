@@ -10,6 +10,7 @@ import UnderConstruction from "./components/underConstruction";
 import RegistrationForm from "./components/Parent/ChildRegistration/RegistrationForm";
 import UserUpdateForm from "./components/UserDetailUpdate/UserDetailUpdate";
 import Documents from "./components/Spec/ListOfDocuments/Documents";
+import Logging from "./components/Admin/Logging";
 
 class App extends Component {
   render() {
@@ -28,6 +29,7 @@ class App extends Component {
           <Route path="/dis-app/mydata" component={UserUpdateForm} />
           <Route path="/dis-app/queue" component={ChildFormsQueue} />
           <Route path="/dis-app/statistic" component={UnderConstruction} />
+          <Route path="/dis-app/logging" component={Logging} />
         </Switch>
       </div>
     );

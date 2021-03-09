@@ -4,7 +4,7 @@
     <appender name="FILE-AUDIT" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>app.log</file>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>%d{yyyy-MM-dd HH:mm:ss} - %msg%n</Pattern>
+            <Pattern>%d{yyyy-MM-dd -- HH:mm:ss} -- %msg%n</Pattern>
         </encoder>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
@@ -16,6 +16,19 @@
     </appender>
  
     <logger name="com.java2novice" level="debug" additivity="false">
+        <appender-ref ref="FILE-AUDIT" />
+    </logger>
+ 
+    <logger name="org.springframework" level="off" additivity="false">
+        <appender-ref ref="FILE-AUDIT" />
+    </logger>
+ 
+ 
+    <logger name="org.hibernate" level="off" additivity="false">
+        <appender-ref ref="FILE-AUDIT" />
+    </logger>
+ 
+    <logger name="jdbc" level="off" additivity="false">
         <appender-ref ref="FILE-AUDIT" />
     </logger>
  

@@ -128,9 +128,18 @@ export default class Navbar extends Component {
                 </li>
               </React.Fragment>
             ) : (
-              <Link to={"/dis-app/home"} className="nav-link">
-                <span>Administratorius</span>
-              </Link>
+              <React.Fragment>
+                <li className="nav-item my-auto">
+                  <Link to={"/dis-app/logging"} className="nav-link">
+                    Įvykių žurnalas
+                  </Link>
+                </li>
+                <li className="nav-item my-auto">
+                  <Link to={"/dis-app/home"} className="nav-link">
+                    <span>Administratorius</span>
+                  </Link>
+                </li>
+              </React.Fragment>
             )}
             <li className="nav-item my-auto">
               <a href="/dis-app/" className="nav-link" onClick={this.logOut}>
