@@ -62,7 +62,7 @@ public class ParentService {
 				.map(isdb -> new ChildFormRequest(isdb.getId(), isdb.getName(), isdb.getSurename(), isdb.getBirthDate(),
 						isdb.getAddress(), isdb.getCity(), isdb.getPersonId(), isdb.isInCity(), isdb.isAdopted(),
 						isdb.isThreeOrMore(), isdb.isParentStudent(), isdb.isHandicapped(), isdb.getParentData(),
-						isdb.getSecondParentData(), isdb.getKindergartenPriority(), isdb.getPostDate()))
+						isdb.getSecondParentData(), isdb.getKindergartenPriority(), isdb.getPostDate(), isdb.getGroup(), isdb.getFormStatus()))
 				.collect(Collectors.toList());
 	}
 
