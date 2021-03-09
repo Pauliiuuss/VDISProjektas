@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,8 +32,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class AdminService {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(AdminService.class);
 
 	@Autowired
 	private UserRepository userRepository;
@@ -78,9 +74,10 @@ public class AdminService {
 
 		userRepository.save(user);
 		if (role.equals("ROLE_SPEC")) {
-			LOGGER.info("Administratorius -- Užregistravo švietimo specialistą: \"" + user.getUsername() + "\"");
+			Log.logMessage("Administratorius", "Užregistravo švietimo specialistą: \"" + user.getUsername() + "\"");
 		} else {
-			LOGGER.info("Administratorius -- Užregistravo vaiko atstovą: \"" + user.getUsername() + "\"");
+
+			Log.logMessage("Administratorius", "Užregistravo vaiko atstovą: \"" + user.getUsername() + "\"");
 
 		}
 		return ResponseEntity.ok(new MessageResponse("Naudotojas užregistruotas!"));
@@ -100,7 +97,7 @@ public class AdminService {
 
 		userRepository.deleteById(id);
 
-		LOGGER.info("Administratorius -- Ištrynė naudotoją: \"" + userRepository.getOne(id).getUsername() + "\"");
+		Log.logMessage("Administratorius", "Ištrynė naudotoją: \"" + userRepository.getOne(id).getUsername() + "\"");
 		return ResponseEntity.ok(new MessageResponse("Naudotojas ištrintas!"));
 	}
 
@@ -112,7 +109,7 @@ public class AdminService {
 
 		userRepository.save(user);
 
-		LOGGER.info("Administratorius -- Atstatė slaptažodį naudotojui: \"" + user.getUsername() + "\"");
+		Log.logMessage("Administratorius", "Atstatė slaptažodį naudotojui: \"" + user.getUsername() + "\"");
 		return ResponseEntity.ok(new MessageResponse("Slaptažodis sėkmingai atstatytas"));
 	}
 
@@ -120,7 +117,7 @@ public class AdminService {
 		AppStatus appStatus = statusRepo.findAll().get(0);
 		appStatus.setSpecelistsDisabled(true);
 		statusRepo.save(appStatus);
-		LOGGER.info("Administratorius -- Švietimo specialistų funkcionalumas užrakintas");
+		Log.logMessage("Administratorius", "Švietimo specialistų funkcionalumas užrakintas");
 		return ResponseEntity.ok(new MessageResponse("Švietimo specialistų funkcionalumas užrakintas"));
 	}
 
@@ -128,7 +125,7 @@ public class AdminService {
 		AppStatus appStatus = statusRepo.findAll().get(0);
 		appStatus.setSpecelistsDisabled(false);
 		statusRepo.save(appStatus);
-		LOGGER.info("Administratorius -- Švietimo specialistų funkcionalumas atstatytas");
+		Log.logMessage("Administratorius", "Švietimo specialistų funkcionalumas atstatytas");
 		return ResponseEntity.ok(new MessageResponse("Švietimo specialistų funkcionalumas atstatytas"));
 	}
 
@@ -139,7 +136,7 @@ public class AdminService {
 		while (reader.hasNextLine()) {
 			String[] data = reader.nextLine().split("--");
 			if (data.length == 4) {
-				Log log = new Log(data[0], data[1], data[2], data[3]);
+				Log log = new Log(data[0].strip(), data[1].strip(), data[2].strip(), data[3].strip());
 				strings.add(log);
 			}
 		}

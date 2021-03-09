@@ -37,25 +37,9 @@ class Logging extends Component {
       <React.Fragment>
         <Navbar />
         <div className="container">
-          <div className="row">
-            <div className="col-3 m-4">
-              <h2 className="m-6">Įvykių žurnalas</h2>
-            </div>
-            <div className="col-5"></div>
-            <div className="col-3">
-              <div class="form-group">
-                <label for="exampleFormControlSelect1">Example select</label>
-                <select class="form-control" id="exampleFormControlSelect1">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div className="table mt-5">
+          <h2 className="m-6">Įvykių žurnalas</h2>
+
+          <div className="table">
             <Logs logs={this.state.log} />
           </div>
         </div>

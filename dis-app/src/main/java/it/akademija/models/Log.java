@@ -1,6 +1,13 @@
 package it.akademija.models;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import it.akademija.services.AdminService;
+
 public class Log {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(AdminService.class);
 
 	private String date;
 	private String time;
@@ -45,6 +52,14 @@ public class Log {
 
 	public void setAction(String action) {
 		this.action = action;
+	}
+
+	public static String logMessag(String user, String message) {
+		return user + " -- " + message;
+	}
+
+	public static void logMessage(String user, String message) {
+		LOGGER.info(user + " -- " + message);
 	}
 
 }
