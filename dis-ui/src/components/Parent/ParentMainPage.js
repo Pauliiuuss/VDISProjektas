@@ -2,21 +2,36 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import RegisteredForms from "./ListOfForms/RegisteredForms";
 import ParentService from "../../services/parent.service";
+import SpecService from "../../services/spec.service";
 
 export default class ParentMainPage extends Component {
   state = {
-    forms: [],
+    allForms: [],
+    parentForms: [],
     loading: true,
+    freeSpaces: 0,
     appStatus: {
       registrationClosed: false,
     },
   };
 
   componentDidMount = async () => {
-    await ParentService.getAllForms(this.props.currentUser.id).then(
+    await ParentService.getAllForms().then((response) => {
+      const allForms = response.data;
+      this.setState({ allForms: allForms });
+    });
+    await ParentService.getFormsById(this.props.currentUser.id).then(
       (response) => {
         const forms = response.data;
-        this.setState({ forms });
+        this.setState({ parentForms: forms });
+      }
+    );
+    await SpecService.freeSpaces().then(
+      (response) => {
+        this.setState({ freeSpaces: response.data });
+      },
+      (error) => {
+        console.log(error);
       }
     );
     await ParentService.appStatus().then((response) => {
@@ -27,11 +42,56 @@ export default class ParentMainPage extends Component {
   };
 
   render() {
+    const allForms = this.state.allForms;
+    const count = allForms.length;
     console.log(this.state.appStatus);
+    console.log(this.state.allForms);
     return (
       <div className="container mt-5">
         <div className="row">
           <div className="col">
+            {count !== 0 && (
+              <div className="row" style={{ paddingBottom: "5%" }}>
+                {!this.state.appStatus.registrationClosed ? (
+                  <div className="col-5">
+                    <p style={{ marginBottom: "2px" }}>
+                      Užregistruotų vaikų skaičius: <b>{count}</b>
+                    </p>
+                    <p style={{ marginBottom: "2px" }}>
+                      Laisvų vietų skaičius: <b>{this.state.freeSpaces}</b>
+                    </p>
+                  </div>
+                ) : (
+                  <div className="col-5">
+                    <p style={{ marginBottom: "2px" }}>
+                      Užregistruotų vaikų skaičius: <b>{count}</b>
+                    </p>
+                    <p style={{ marginBottom: "2px" }}>
+                      Laisvų vietų skaičius: <b>{this.state.freeSpaces}</b>
+                    </p>{" "}
+                    <p style={{ marginBottom: "2px" }}>
+                      Eilėje laukiančių vaikų skaičius:{" "}
+                      <b>
+                        {
+                          allForms.filter((f) => f.formStatus.name === "EILEJE")
+                            .length
+                        }
+                      </b>
+                    </p>
+                    <p style={{ marginBottom: "2px" }}>
+                      Priimtų vaikų skaičius:{" "}
+                      <b>
+                        {
+                          allForms.filter(
+                            (f) => f.formStatus.name === "PRIIMTAS"
+                          ).length
+                        }
+                      </b>
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
             {!this.state.appStatus.registrationClosed && (
               <Link
                 to="/dis-app/addform"
@@ -64,7 +124,7 @@ export default class ParentMainPage extends Component {
         ) : (
           <RegisteredForms
             appStatus={this.state.appStatus}
-            forms={this.state.forms}
+            forms={this.state.parentForms}
           />
         )}
       </div>
