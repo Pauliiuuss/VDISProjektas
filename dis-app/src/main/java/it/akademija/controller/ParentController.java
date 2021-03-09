@@ -1,5 +1,6 @@
 package it.akademija.controller;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,12 @@ public class ParentController {
 	@PreAuthorize("hasRole('PARENT') or hasRole('ADMIN') or hasRole('SPEC')")
 	public AppStatus getStatus() {
 		return parentService.getStatus();
+	}
+
+	@GetMapping(value = "/archivedata/{id}", produces = "application/zip")
+	public ResponseEntity<?> downloadUserData(@PathVariable Long id) throws IOException {
+		parentService.downloadUserData(id);
+		InputS
 	}
 
 }

@@ -1,9 +1,17 @@
 package it.akademija.services;
 
+
+import java.io.*;
 import java.util.Collection;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
 
+import net.lingala.zip4j.ZipFile;
+
+import com.google.gson.Gson;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,10 +35,13 @@ import it.akademija.repository.KindergartenRepository;
 import it.akademija.repository.SecondParentRepository;
 import it.akademija.repository.UserDataRepository;
 import it.akademija.repository.UserRepository;
+import springfox.documentation.spring.web.json.Json;
 
 @Service
 public class ParentService {
 
+	@Autowired
+	private Gson gson;
 	@Autowired
 	private FormStatusRepository formrepo;
 	@Autowired
@@ -335,4 +346,88 @@ public class ParentService {
 		AppStatus status = appStatusRepo.findAll().get(0);
 		return status;
 	}
+
+	@Transactional
+//	public ResponseEntity<byte[]> downloadUserData(Long id) throws IOException {
+//		UserData isdb = userRepository.getOne(id).getUserData();
+//		String data = gson.toJson(isdb);
+//		String nameInZip = userRepository.getOne(id).getUsername() + "_userData";
+//		String zipName = userRepository.getOne(id).getUsername() + "_archivedData";
+//
+//		try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipName))) {
+//
+//			ZipEntry zipEntry = new ZipEntry(nameInZip);
+//			zos.putNextEntry(zipEntry);
+//
+//			ByteArrayInputStream bais = new ByteArrayInputStream(data.getBytes());
+//			// one line, able to handle large size?
+//			zos.write(bais.readAllBytes());
+//
+//			// play safe
+////			byte[] buffer = new byte[1024];
+////			int len;
+////			while ((len = bais.read(buffer)) > 0) {
+////				zos.write(buffer, 0, len);
+////			}
+//
+//			zos.closeEntry();
+//		}
+//
+//		return ResponseEntity.ok()
+//				.body(zos);
+//
+//	}
+
+//	public byte[] downloadUserData(Long id) throws IOException {
+//		UserData isdb = userRepository.getOne(id).getUserData();
+//		String data = gson.toJson(isdb);
+//		String nameInZip = userRepository.getOne(id).getUsername() + "_userData.txt";
+//		String zipName = userRepository.getOne(id).getUsername() + "_archivedData";
+//
+//		File file = new File(nameInZip);
+//
+//		try (Writer writer = new BufferedWriter(new FileWriter(file))) {
+//			writer.write(data);
+//
+//		}
+//		ZipFile zipped = new ZipFile(zipName);
+//		zipped.addFile(file);
+//
+//
+//	}
+
+		public byte[] downloadUserData(Long id) throws IOException {
+		UserData isdb = userRepository.getOne(id).getUserData();
+		String data = gson.toJson(isdb);
+		String nameInZip = userRepository.getOne(id).getUsername() + "_userData.txt";
+		String zipName = userRepository.getOne(id).getUsername() + "_archivedData";
+
+		File file = new File(nameInZip);
+
+		try (Writer writer = new BufferedWriter(new FileWriter(file))) {
+			writer.write(data);
+
+		}
+		ZipFile zip = new ZipFile(zipName);
+
+		ZipEntry entry = new ZipEntry(file.getName());
+
+		BufferedInputStream istream = new BufferedInputStream(zip.getInputStream(entry));
+		int file_size  = (int) entry.getCompressedSize();
+		byte[] blob = new byte[(int) entry.getCompressedSize()];
+		int bytes_read = 0;
+		int offset = 0;
+
+		while((bytes_read = istream.read(blob, 0, file_size)) != -1)
+		{
+			offset += bytes_read;
+		}
+
+
+//closing every thing
+		zip.close();
+		istream.close();
+		return blob;
+	}
+
 }
