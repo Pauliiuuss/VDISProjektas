@@ -19,8 +19,12 @@ class ParentService {
     });
   }
 
-  getAllForms(id) {
+  getFormsById(id) {
     return axios.get(API_URL + "getforms/" + id, { headers: authHeader() });
+  }
+
+  getAllForms() {
+    return axios.get(API_URL + "allforms", { headers: authHeader() });
   }
 
   deleteFormById(id) {
