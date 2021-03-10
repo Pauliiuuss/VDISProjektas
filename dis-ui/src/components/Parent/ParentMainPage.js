@@ -94,7 +94,12 @@ export default class ParentMainPage extends Component {
               {!this.state.appStatus.registrationClosed ? (
                 <div className="col-5">
                   <p style={{ marginBottom: '2px' }}>
-                    Laisvų vietų skaičius: <b>{this.state.freeSpaces}</b>
+                    Laisvų vietų skaičius:{' '}
+                    <b className="text-dark">{this.state.freeSpaces}</b>
+                  </p>
+                  <p style={{ marginBottom: '2px' }}>
+                    Užregistruotų vaikų skaičius:{' '}
+                    <b className="text-dark">{count}</b>
                   </p>
                 </div>
               ) : (
