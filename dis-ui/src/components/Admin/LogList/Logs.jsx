@@ -9,21 +9,23 @@ export default class Logs extends Component {
   state = {
     logs: [],
     currentPage: 1,
-    pageSize: 9,
+    pageSize: 12,
     length: 0,
     dateSearchQuery: "",
     timeSearchQuery: "",
     userSearchQuery: "",
     actionSearchQuery: "",
-    searchColumn: "Datą",
-    sortColumn: { path: "date", order: "asc" },
+    sortColumn: { path: "date", order: "desc" },
   };
 
   handleSearch = (field, query) => {
     this.setState({ [field]: query, currentPage: 1 });
+    if (field === "dateSearchQuery" && (query === "" || query === null))
+      this.setState({ sortColumn: { path: "date", order: "desc" } });
   };
 
   handleSort = (sortColumn) => {
+    if (sortColumn.path === "time" && this.state.dateSearchQuery === "") return;
     this.setState({ sortColumn });
   };
 
@@ -60,7 +62,17 @@ export default class Logs extends Component {
         log.action.toLowerCase().includes(actionSearchQuery.toLowerCase())
       );
 
-    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+    let sorted = _.orderBy(
+      filtered,
+      [sortColumn.path, "date", "time"],
+      [sortColumn.order, "desc", "desc"]
+    );
+    if (sortColumn.path === "date")
+      sorted = _.orderBy(
+        filtered,
+        [sortColumn.path, "time"],
+        [sortColumn.order, "desc"]
+      );
 
     const users = paginate(sorted, currentPage, pageSize);
 
