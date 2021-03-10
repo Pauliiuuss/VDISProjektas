@@ -22,6 +22,7 @@ export default class UserGide extends Component {
         <a
           style={{ color: '#004c99', fontSize: '14px' }}
           target="_blank"
+          rel="noopener noreferrer"
           href={usergide}
         >
           <FontAwesomeIcon icon={faBookOpen} /> Naudotojo vadovas vaiko

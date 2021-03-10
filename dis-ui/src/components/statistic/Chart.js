@@ -1,27 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { HorizontalBar } from 'react-chartjs-2';
-import SpecService from '../../services/spec.service';
-// import 'chartjs-plugin-sort';
+import StatisticService from '../../services/statistic.service';
 import 'chartjs-plugin-datalabels';
 
 const Chart = () => {
-  const [kindergartens, setKindergartens] = useState([]);
+  const [priorities, setPriorities] = useState([]);
 
   useEffect(() => {
-    SpecService.getKindergartens()
-      .then((res) => setKindergartens(res.data))
+    StatisticService.getAllKindergartenPriorities()
+      .then((res) => setPriorities(res.data))
       .catch((err) => console.log(err));
   }, []);
 
-  const allKindergartens = kindergartens
-    .filter((k) => k.name)
-    .map((k) => k.name);
+  var allPrioritiesOne = priorities
+    .filter((p) => p.kindergartenOne)
+    .map((p) => p.kindergartenOne);
+  var allPrioritiesTwo = priorities
+    .filter((p) => p.kindergartenTwo)
+    .map((p) => p.kindergartenTwo);
+  var allPrioritiesThree = priorities
+    .filter((p) => p.kindergartenThree)
+    .map((p) => p.kindergartenThree);
+  var allPrioritiesFour = priorities
+    .filter((p) => p.kindergartenFour)
+    .map((p) => p.kindergartenFour);
+  var allPrioritiesFive = priorities
+    .filter((p) => p.kindergartenFive)
+    .map((p) => p.kindergartenFive);
+
+  var allPriorities = allPrioritiesOne
+    .concat(allPrioritiesTwo)
+    .concat(allPrioritiesThree)
+    .concat(allPrioritiesFour)
+    .concat(allPrioritiesFive);
+
+  var countedPriorities = {};
+  allPriorities.forEach(function (i) {
+    countedPriorities[i] = (countedPriorities[i] || 0) + 1;
+  });
+
+  var chartKindergartensLabels = Object.keys(countedPriorities);
+  var chartPrioritiesCount = Object.values(countedPriorities);
 
   return (
     <div className="container mt-5">
       <HorizontalBar
         data={{
-          labels: allKindergartens,
+          labels: chartKindergartensLabels,
           datasets: [
             {
               label: 'Darželių populiarumas',
@@ -30,7 +55,7 @@ const Chart = () => {
               borderWidth: 1,
               hoverBackgroundColor: '#0066CC',
               hoverBorderColor: '#004c99',
-              data: [2, 9, 8, 1, 6, 5, 4, 7, 0, 12, 3],
+              data: chartPrioritiesCount,
             },
           ],
         }}
@@ -43,16 +68,16 @@ const Chart = () => {
               display: true,
               color: 'white',
             },
-            sort: {
-              enable: true,
-              sort: 'desc',
-            },
           },
           scales: {
             xAxes: [
               {
                 gridLines: {
                   display: false,
+                },
+                ticks: {
+                  beginAtZero: true,
+                  stepSize: 1,
                 },
               },
             ],
