@@ -60,6 +60,10 @@ public class Log {
 		LOGGER.info(user + " -- " + message);
 	}
 
+	public static void logMessage(String message) {
+		LOGGER.info(getUsername() + " -- " + message);
+	}
+
 	public static String getUsername() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = "Įvymo klaida";

@@ -11,13 +11,16 @@ export default class Logs extends Component {
     currentPage: 1,
     pageSize: 9,
     length: 0,
-    searchQuery: "",
-    searchColumn: "Data",
-    sortColumn: { path: "data", order: "asc" },
+    dateSearchQuery: "",
+    timeSearchQuery: "",
+    userSearchQuery: "",
+    actionSearchQuery: "",
+    searchColumn: "Datą",
+    sortColumn: { path: "date", order: "asc" },
   };
 
-  handleSearch = (query) => {
-    this.setState({ searchQuery: query, currentPage: 1 });
+  handleSearch = (field, query) => {
+    this.setState({ [field]: query, currentPage: 1 });
   };
 
   handleSort = (sortColumn) => {
@@ -32,30 +35,31 @@ export default class Logs extends Component {
     const {
       pageSize,
       currentPage,
-      searchQuery,
+      dateSearchQuery,
+      timeSearchQuery,
+      userSearchQuery,
+      actionSearchQuery,
       sortColumn,
-      searchColumn,
     } = this.state;
 
     let filtered = allLogs;
-    if (searchQuery) {
-      if (searchColumn === "Data")
-        filtered = allLogs.filter((log) =>
-          log.date.toLowerCase().startsWith(searchQuery.toLowerCase())
-        );
-      if (searchColumn === "Laikas")
-        filtered = allLogs.filter((log) =>
-          log.time.toLowerCase().startsWith(searchQuery.toLowerCase())
-        );
-      if (searchColumn === "Naudotojas")
-        filtered = allLogs.filter((log) =>
-          log.user.toLowerCase().startsWith(searchQuery.toLowerCase())
-        );
-      if (searchColumn === "Veiksmas")
-        filtered = allLogs.filter((log) =>
-          log.action.toLowerCase().includes(searchQuery.toLowerCase())
-        );
-    }
+    if (dateSearchQuery)
+      filtered = filtered.filter((log) =>
+        log.date.toLowerCase().startsWith(dateSearchQuery.toLowerCase())
+      );
+    if (timeSearchQuery)
+      filtered = filtered.filter((log) =>
+        log.time.toLowerCase().startsWith(timeSearchQuery.toLowerCase())
+      );
+    if (userSearchQuery)
+      filtered = filtered.filter((log) =>
+        log.user.toLowerCase().startsWith(userSearchQuery.toLowerCase())
+      );
+    if (actionSearchQuery)
+      filtered = filtered.filter((log) =>
+        log.action.toLowerCase().includes(actionSearchQuery.toLowerCase())
+      );
+
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
 
     const users = paginate(sorted, currentPage, pageSize);
@@ -71,41 +75,70 @@ export default class Logs extends Component {
 
   render() {
     const allLogs = this.props.logs;
-    const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
+    const {
+      searchColumn,
+      pageSize,
+      currentPage,
+      sortColumn,
+      dateSearchQuery,
+      timeSearchQuery,
+      userSearchQuery,
+      actionSearchQuery,
+    } = this.state;
     const { totalCount, data: logs } = this.getPagedData(allLogs);
+    let typeOfSearchField = "text";
+    if (searchColumn === "Datą") typeOfSearchField = "date";
+    if (searchColumn === "Laiką") typeOfSearchField = "time";
 
     return (
       <div className="row">
         <div className="col">
           <div className="row">
-            <div className="col-6"></div>
             <div className="col-6">
-              <div class="form-group row">
+              <h2 className="ml-3">Įvykių žurnalas</h2>
+            </div>
+            <div className="col-6">
+              <div className="form-group row">
                 <div className="col-3" style={{ paddingRight: "0" }}>
-                  <label>Paieška pagal:</label>
+                  <label className="text-right">Data:</label>
                 </div>
-                <div className="col">
-                  <select
-                    class="form-control"
-                    value={this.state.searchColumn}
-                    onChange={this.handleSelectChange}
-                  >
-                    <option>Data</option>
-                    <option>Laikas</option>
-                    <option>Naudotojas</option>
-                    <option>Veiksmas</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <div className="col-4" style={{ paddingRight: "0" }}>
-                  <label>Paieškos tekstas:</label>
-                </div>
-                <div className="col" style={{ paddingLeft: "0" }}>
+                <div className="col-9">
                   <SearchBoxForlogs
-                    placeholder={"..."}
-                    value={searchQuery}
-                    onChange={this.handleSearch}
+                    type={"date"}
+                    value={dateSearchQuery}
+                    onChange={(e) => this.handleSearch("dateSearchQuery", e)}
+                  />
+                </div>
+                <div className="col-3" style={{ paddingRight: "0" }}>
+                  <label className="text-right">Laikas:</label>
+                </div>
+                <div className="col-9">
+                  <SearchBoxForlogs
+                    type={"time"}
+                    value={timeSearchQuery}
+                    onChange={(e) => this.handleSearch("timeSearchQuery", e)}
+                  />
+                </div>
+                <div className="col-3" style={{ paddingRight: "0" }}>
+                  <label className="text-right">Naudotojas:</label>
+                </div>
+                <div className="col-9">
+                  <SearchBoxForlogs
+                    placeholder={" "}
+                    type={"text"}
+                    value={userSearchQuery}
+                    onChange={(e) => this.handleSearch("userSearchQuery", e)}
+                  />
+                </div>
+                <div className="col-3" style={{ paddingRight: "0" }}>
+                  <label className="text-right">Veiksmas:</label>
+                </div>
+                <div className="col-9">
+                  <SearchBoxForlogs
+                    placeholder={" "}
+                    type={"text"}
+                    value={actionSearchQuery}
+                    onChange={(e) => this.handleSearch("actionSearchQuery", e)}
                   />
                 </div>
               </div>

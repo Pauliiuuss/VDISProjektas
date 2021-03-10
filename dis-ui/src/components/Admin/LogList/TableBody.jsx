@@ -26,13 +26,12 @@ class TableBody extends Component {
     return (
       <tbody>
         {data.map((item) => (
-          <tr key={item.id}>
+          <tr key={item.date + item.time + item.action}>
             {columns.map((column) => (
               <td key={this.createKey(item, column)}>
                 {this.renderCell(item, column)}
               </td>
             ))}
-            <td></td>
           </tr>
         ))}
       </tbody>

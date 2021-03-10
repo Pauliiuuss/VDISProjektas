@@ -12,6 +12,7 @@ import it.akademija.models.AppStatus;
 import it.akademija.models.ChildForm;
 import it.akademija.models.Group;
 import it.akademija.models.KindergartenPriority;
+import it.akademija.models.Log;
 import it.akademija.models.SecondParent;
 import it.akademija.models.User;
 import it.akademija.models.UserData;
@@ -153,6 +154,8 @@ public class ParentService {
 		kinderSelection.setChildForm(newForm);
 		kindergartenPriorityRepository.save(kinderSelection);
 
+		Log.logMessage("Vaiko \"" + childFormRequest.getName() + " " + childFormRequest.getSurename()
+				+ "\" prašymas užregistruotas.");
 		return ResponseEntity.ok(new MessageResponse("Prašymas užregistruotas!"));
 
 	}
@@ -170,7 +173,7 @@ public class ParentService {
 
 		System.out.println("++++++++++++++++++++++" + id + "form is: " + childFormRequest);
 
-		ChildForm newForm = childFormRepository.getOne(id);
+		ChildForm newForm = childFormRepository.findById(id).orElseThrow();
 
 		newForm.setPersonId(childFormRequest.getPersonId());
 		newForm.setName(childFormRequest.getName());
@@ -187,7 +190,7 @@ public class ParentService {
 		newForm.setPostDate(childFormRequest.getPostDate());
 		newForm.setFormStatus(formrepo.findByName(EFormStatus.PATEIKTAS).get());
 
-		User currentUser = userRepository.getOne(childFormRequest.getIdFront());
+		User currentUser = userRepository.findById(childFormRequest.getIdFront()).orElseThrow();
 
 		UserData newData = currentUser.getUserData();
 
@@ -247,6 +250,8 @@ public class ParentService {
 		kinderSelection.setChildForm(newForm);
 		kindergartenPriorityRepository.save(kinderSelection);
 
+		Log.logMessage("Vaiko \"" + childFormRequest.getName() + " " + childFormRequest.getSurename()
+				+ "\" prašymas atnaujintas.");
 		return ResponseEntity.ok(new MessageResponse("Forma užregistruota!"));
 	}
 
@@ -254,6 +259,8 @@ public class ParentService {
 	public ResponseEntity<?> deleteFormById(Long id) {
 		childFormRepository.deleteById(id);
 
+		ChildForm form = childFormRepository.findById(id).orElseThrow();
+		Log.logMessage("Vaiko \"" + form.getName() + " " + form.getSurename() + "\" prašymas ištrintas.");
 		return ResponseEntity.ok(new MessageResponse("Forma ištrinta!"));
 	}
 //

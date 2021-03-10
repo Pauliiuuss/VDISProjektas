@@ -23,7 +23,6 @@ class Logging extends Component {
     });
     AdminService.getLog().then(
       (response) => {
-        console.log(response.data);
         this.setState({ log: response.data });
       },
       (error) => {
@@ -37,9 +36,7 @@ class Logging extends Component {
       <React.Fragment>
         <Navbar />
         <div className="container">
-          <h2 className="m-6">Įvykių žurnalas</h2>
-
-          <div className="table">
+          <div className="table mt-4">
             <Logs logs={this.state.log} />
           </div>
         </div>

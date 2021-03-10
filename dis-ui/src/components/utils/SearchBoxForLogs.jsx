@@ -1,9 +1,9 @@
 import React from "react";
 
-const SearchBoxForlogs = ({ placeholder, value, onChange }) => {
+const SearchBoxForlogs = ({ type, placeholder, value, onChange }) => {
   return (
     <input
-      type="text"
+      type={type}
       name="query"
       className="form-control"
       placeholder={placeholder ? placeholder : "Paieška..."}

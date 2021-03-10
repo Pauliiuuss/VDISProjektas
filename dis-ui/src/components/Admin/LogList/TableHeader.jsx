@@ -31,7 +31,7 @@ export default class TableHeader extends Component {
               onClick={
                 column.path !== "action"
                   ? () => this.raiseSort(column.path)
-                  : ""
+                  : null
               }
             >
               {column.label} {this.renderSortIcon(column)}
