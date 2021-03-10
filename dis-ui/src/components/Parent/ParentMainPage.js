@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import RegisteredForms from "./ListOfForms/RegisteredForms";
-import ParentService from "../../services/parent.service";
-import SpecService from "../../services/spec.service";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import RegisteredForms from './ListOfForms/RegisteredForms';
+import ParentService from '../../services/parent.service';
+import SpecService from '../../services/spec.service';
 
 export default class ParentMainPage extends Component {
   state = {
@@ -50,48 +50,6 @@ export default class ParentMainPage extends Component {
       <div className="container mt-5">
         <div className="row">
           <div className="col">
-            {count !== 0 && (
-              <div className="row" style={{ paddingBottom: "5%" }}>
-                {!this.state.appStatus.registrationClosed ? (
-                  <div className="col-5">
-                    <p style={{ marginBottom: "2px" }}>
-                      Užregistruotų vaikų skaičius: <b>{count}</b>
-                    </p>
-                    <p style={{ marginBottom: "2px" }}>
-                      Laisvų vietų skaičius: <b>{this.state.freeSpaces}</b>
-                    </p>
-                  </div>
-                ) : (
-                  <div className="col-5">
-                    <p style={{ marginBottom: "2px" }}>
-                      Užregistruotų vaikų skaičius: <b>{count}</b>
-                    </p>
-                    <p style={{ marginBottom: "2px" }}>
-                      Laisvų vietų skaičius: <b>{this.state.freeSpaces}</b>
-                    </p>{" "}
-                    <p style={{ marginBottom: "2px" }}>
-                      Eilėje laukiančių vaikų skaičius:{" "}
-                      <b>
-                        {
-                          allForms.filter((f) => f.formStatus.name === "EILEJE")
-                            .length
-                        }
-                      </b>
-                    </p>
-                    <p style={{ marginBottom: "2px" }}>
-                      Priimtų vaikų skaičius:{" "}
-                      <b>
-                        {
-                          allForms.filter(
-                            (f) => f.formStatus.name === "PRIIMTAS"
-                          ).length
-                        }
-                      </b>
-                    </p>
-                  </div>
-                )}
-              </div>
-            )}
             {!this.state.appStatus.registrationClosed && (
               <Link
                 to="/dis-app/addform"
@@ -105,7 +63,7 @@ export default class ParentMainPage extends Component {
         <div className="row">
           <h3 className="text-secondary mb-3 col-8">Mano prašymai</h3>
           <div
-            class="alert alert-secondary col mb-2 float-right"
+            className="alert alert-secondary col mb-5 float-right"
             hidden={!this.state.appStatus.registrationClosed}
           >
             Naujų prašymų pateikimas negalimas
@@ -115,7 +73,7 @@ export default class ParentMainPage extends Component {
           <div className="d-flex justify-content-center">
             <div
               className="spinner-border"
-              style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
+              style={{ width: '3rem', height: '3rem', marginTop: '3rem' }}
               role="status"
             >
               <span className="sr-only">Loading...</span>
@@ -127,6 +85,51 @@ export default class ParentMainPage extends Component {
             forms={this.state.parentForms}
           />
         )}
+        <div className="text-secondary">
+          <h5 className="mt-5 mb-3">
+            Pateiktų prašymų į darželius informacija:
+          </h5>
+          {count !== 0 && (
+            <div className="row" style={{ paddingBottom: '5%' }}>
+              {!this.state.appStatus.registrationClosed ? (
+                <div className="col-5">
+                  <p style={{ marginBottom: '2px' }}>
+                    Laisvų vietų skaičius: <b>{this.state.freeSpaces}</b>
+                  </p>
+                </div>
+              ) : (
+                <div className="col-5">
+                  <p style={{ marginBottom: '2px' }}>
+                    Užregistruotų vaikų skaičius:{' '}
+                    <b className="text-dark">{count}</b>
+                  </p>
+                  <p style={{ marginBottom: '2px' }}>
+                    Laisvų vietų skaičius:{' '}
+                    <b className="text-dark">{this.state.freeSpaces}</b>
+                  </p>{' '}
+                  <p style={{ marginBottom: '2px' }}>
+                    Eilėje laukiančių vaikų skaičius:{' '}
+                    <b className="text-dark">
+                      {
+                        allForms.filter((f) => f.formStatus.name === 'EILEJE')
+                          .length
+                      }
+                    </b>
+                  </p>
+                  <p style={{ marginBottom: '2px' }}>
+                    Priimtų vaikų skaičius:{' '}
+                    <b className="text-dark">
+                      {
+                        allForms.filter((f) => f.formStatus.name === 'PRIIMTAS')
+                          .length
+                      }
+                    </b>
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     );
   }

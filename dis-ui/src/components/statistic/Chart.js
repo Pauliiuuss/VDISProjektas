@@ -40,16 +40,18 @@ const Chart = () => {
   });
 
   var chartKindergartensLabels = Object.keys(countedPriorities);
-  var chartPrioritiesCount = Object.values(countedPriorities);
+  var chartPrioritiesCount = Object.values(countedPriorities).sort().reverse();
 
   return (
     <div className="container mt-5">
+      <h3 className="text-secondary text-center ">Darželių populiarumas</h3>
+      <p className="text-secondary text-center ">(pagal prašymų skaičių)</p>
       <HorizontalBar
         data={{
           labels: chartKindergartensLabels,
           datasets: [
             {
-              label: 'Darželių populiarumas',
+              label: 'prašymai',
               backgroundColor: '#004c99',
               borderColor: '#004c99',
               borderWidth: 1,
@@ -84,6 +86,12 @@ const Chart = () => {
           },
         }}
       />
+      <p
+        className="text-secondary  col-6 text-right"
+        style={{ fontSize: '10px', fontWeight: 'bold' }}
+      >
+        *atvaizduojami tik tie darželiai, kurie turi bent vieną pasirinkimą
+      </p>
     </div>
   );
 };
