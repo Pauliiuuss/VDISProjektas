@@ -3,10 +3,6 @@ package it.akademija.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import it.akademija.models.User;
-import it.akademija.models.enums.ERole;
-import it.akademija.payload.request.UserRequest;
-import it.akademija.payload.response.MessageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,8 +13,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.akademija.models.Log;
+import it.akademija.models.User;
+import it.akademija.models.enums.ERole;
 import it.akademija.payload.request.LoginRequest;
+import it.akademija.payload.request.UserRequest;
 import it.akademija.payload.response.JwtResponse;
+import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.RoleRepository;
 import it.akademija.repository.UserRepository;
 import it.akademija.security.jwt.JwtUtils;
@@ -51,21 +52,15 @@ public class AuthService {
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
+		Log.logMessage(loginRequest.getUsername(), "Prisijungė prie sistemos.");
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));
 	}
 
 	@Transactional(readOnly = true)
-	public UserRequest getUserById(long id){
-		User info = userRepository.findAll().stream()
-				.filter(isdb -> isdb.getId() == id)
-				.findFirst()
-				.orElse(null);
-		if(info != null){
-			return new UserRequest(
-					info.getId(),
-					info.getUsername(),
-					info.getPassword(),
-					info.getRole());
+	public UserRequest getUserById(long id) {
+		User info = userRepository.findAll().stream().filter(isdb -> isdb.getId() == id).findFirst().orElse(null);
+		if (info != null) {
+			return new UserRequest(info.getId(), info.getUsername(), info.getPassword(), info.getRole());
 		} else {
 			throw new IllegalArgumentException("Vartotojas pagal duota ID nerastas.");
 		}
@@ -75,7 +70,7 @@ public class AuthService {
 	public ResponseEntity<?> passwordResetToMatchUsername(String username) {
 		User user = userRepository.findByUsername(username).get();
 
-		if(user.getRole().getName().equals(ERole.ROLE_ADMIN)) {
+		if (user.getRole().getName().equals(ERole.ROLE_ADMIN)) {
 			System.out.println("Can't reset admin password");
 		} else {
 			user.setPassword(encoder.encode(username));
