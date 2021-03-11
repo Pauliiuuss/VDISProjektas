@@ -26,7 +26,7 @@ export default class Logs extends Component {
 
   handleSort = (sortColumn) => {
     if (sortColumn.path === "time" && this.state.dateSearchQuery === "") return;
-    this.setState({ sortColumn });
+    this.setState({ sortColumn, currentPage: 1 });
   };
 
   handlePageChange = (page) => {
@@ -74,9 +74,9 @@ export default class Logs extends Component {
         [sortColumn.order, "desc"]
       );
 
-    const users = paginate(sorted, currentPage, pageSize);
+    const logs = paginate(sorted, currentPage, pageSize);
 
-    return { totalCount: filtered.length, data: users };
+    return { totalCount: filtered.length, data: logs };
   };
 
   handleSelectChange = (e) => {
@@ -87,8 +87,8 @@ export default class Logs extends Component {
 
   render() {
     const allLogs = this.props.logs;
+    const { loading } = this.props;
     const {
-      searchColumn,
       pageSize,
       currentPage,
       sortColumn,
@@ -98,9 +98,6 @@ export default class Logs extends Component {
       actionSearchQuery,
     } = this.state;
     const { totalCount, data: logs } = this.getPagedData(allLogs);
-    let typeOfSearchField = "text";
-    if (searchColumn === "Datą") typeOfSearchField = "date";
-    if (searchColumn === "Laiką") typeOfSearchField = "time";
 
     return (
       <div className="row">
@@ -158,6 +155,7 @@ export default class Logs extends Component {
           </div>
 
           <LogsTable
+            loading={loading}
             logs={logs}
             sortColumn={sortColumn}
             onSort={this.handleSort}

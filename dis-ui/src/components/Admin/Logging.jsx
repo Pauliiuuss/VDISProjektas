@@ -7,6 +7,7 @@ import Logs from "./LogList/Logs";
 class Logging extends Component {
   state = {
     log: [],
+    loading: true,
   };
 
   async componentDidMount() {
@@ -23,10 +24,11 @@ class Logging extends Component {
     });
     AdminService.getLog().then(
       (response) => {
-        this.setState({ log: response.data });
+        this.setState({ log: response.data, loading: false });
       },
       (error) => {
         console.log(error);
+        this.setState({ loading: false });
       }
     );
   }
@@ -37,7 +39,7 @@ class Logging extends Component {
         <Navbar />
         <div className="container">
           <div className="table mt-4">
-            <Logs logs={this.state.log} />
+            <Logs loading={this.state.loading} logs={this.state.log} />
           </div>
         </div>
       </React.Fragment>

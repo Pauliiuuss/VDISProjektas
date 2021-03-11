@@ -10,10 +10,11 @@ class LogsTable extends Component {
   ];
 
   render() {
-    const { logs, onSort, sortColumn } = this.props;
+    const { loading, logs, onSort, sortColumn } = this.props;
 
     return (
       <Table
+        loading={loading}
         columns={this.columns}
         data={logs}
         sortColumn={sortColumn}
