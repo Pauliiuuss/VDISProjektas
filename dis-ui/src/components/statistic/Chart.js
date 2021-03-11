@@ -40,7 +40,7 @@ const Chart = () => {
   });
 
   var chartKindergartensLabels = Object.keys(countedPriorities);
-  var chartPrioritiesCount = Object.values(countedPriorities).sort().reverse();
+  var chartPrioritiesCount = Object.values(countedPriorities);
 
   return (
     <div className="container mt-5">
