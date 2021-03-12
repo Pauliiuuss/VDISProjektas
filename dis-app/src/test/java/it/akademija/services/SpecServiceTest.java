@@ -35,7 +35,7 @@ import it.akademija.repository.KindergartenRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-class SpecControllerTest {
+class SpecServiceTest {
 
 	@Autowired
 	private SpecService specService;
@@ -200,7 +200,7 @@ class SpecControllerTest {
 		when(groupRepository.save(newGroup2)).thenReturn(newGroup2);
 
 		GroupRequest groupRequest2 = new GroupRequest("diffName", 1L, "2 iki 3");
-		assertEquals("Vaikų darželis pakeistas!", specService.amendGroup(2L, groupRequest2).getBody().toString());
+		assertEquals("Vaikų grupė atnaujinta!", specService.amendGroup(2L, groupRequest2).getBody().toString());
 	}
 
 //	@Test
@@ -407,16 +407,16 @@ class SpecControllerTest {
 		ChildForm childForm1 = new ChildForm(1L, "name1", "surename1", new Date(1514757600000L), "address1", "city1",
 				true, true, true, true, true, null, null, new Date(1614504968824L));
 		childForm1.setFormStatus(new FormStatus(EFormStatus.PATEIKTAS));
-		when(formRepo.getOne(1L)).thenReturn(childForm1);
+		when(formRepo.findById(1L)).thenReturn(Optional.of(childForm1));
 		assertEquals("Vaiko forma atšaukta!", specService.cancelForm(1L).getBody().toString());
-		assertEquals(EFormStatus.PANAIKINTAS, formRepo.getOne(1L).getFormStatus().getName());
+		assertEquals(EFormStatus.PANAIKINTAS, formRepo.findById(1L).get().getFormStatus().getName());
 
 		ChildForm childForm2 = new ChildForm(2L, "name2", "surename2", new Date(1514757600000L), "address1", "city1",
 				true, true, true, true, true, null, null, new Date(1614504968824L));
 		childForm2.setFormStatus(new FormStatus(EFormStatus.PANAIKINTAS));
-		when(formRepo.getOne(2L)).thenReturn(childForm2);
+		when(formRepo.findById(2L)).thenReturn(Optional.of(childForm2));
 		assertEquals("Forma jau panaikinta!", specService.cancelForm(2L).getBody().toString());
-		assertEquals(EFormStatus.PANAIKINTAS, formRepo.getOne(2L).getFormStatus().getName());
+		assertEquals(EFormStatus.PANAIKINTAS, formRepo.findById(2L).get().getFormStatus().getName());
 	}
 
 	@Test
@@ -427,16 +427,16 @@ class SpecControllerTest {
 		ChildForm childForm1 = new ChildForm(1L, "name1", "surename1", new Date(1514757600000L), "address1", "city1",
 				true, true, true, true, true, null, null, new Date(1614504968824L));
 		childForm1.setFormStatus(new FormStatus(EFormStatus.PANAIKINTAS));
-		when(formRepo.getOne(1L)).thenReturn(childForm1);
+		when(formRepo.findById(1L)).thenReturn(Optional.of(childForm1));
 		assertEquals("Vaiko forma aktyvuota!", specService.enableForm(1L).getBody().toString());
-		assertEquals(EFormStatus.PATEIKTAS, formRepo.getOne(1L).getFormStatus().getName());
+		assertEquals(EFormStatus.PATEIKTAS, formRepo.findById(1L).get().getFormStatus().getName());
 
 		ChildForm childForm2 = new ChildForm(2L, "name2", "surename2", new Date(1514757600000L), "address1", "city1",
 				true, true, true, true, true, null, null, new Date(1614504968824L));
 		childForm2.setFormStatus(new FormStatus(EFormStatus.PATEIKTAS));
-		when(formRepo.getOne(2L)).thenReturn(childForm2);
+		when(formRepo.findById(2L)).thenReturn(Optional.of(childForm2));
 		assertEquals("Forma jau aktyvi!", specService.enableForm(2L).getBody().toString());
-		assertEquals(EFormStatus.PATEIKTAS, formRepo.getOne(2L).getFormStatus().getName());
+		assertEquals(EFormStatus.PATEIKTAS, formRepo.findById(2L).get().getFormStatus().getName());
 	}
 
 //	@BeforeAll

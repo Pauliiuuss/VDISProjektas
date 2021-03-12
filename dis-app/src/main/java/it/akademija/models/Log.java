@@ -61,21 +61,27 @@ public class Log {
 	}
 
 	public static void logMessage(String message) {
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++-" + getUsername() + "-+");
 		if (getUsername().equals("admin"))
 			LOGGER.info("Administratorius -- " + message);
-		else
+		if (!getUsername().equals("Test"))
 			LOGGER.info(getUsername() + " -- " + message);
 	}
 
 	public static String getUsername() {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		String username = "Įvymo klaida";
-		if (principal instanceof UserDetails) {
-			username = ((UserDetails) principal).getUsername();
+		if (SecurityContextHolder.getContext() != null
+				&& SecurityContextHolder.getContext().getAuthentication() != null) {
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username = "Įvymo klaida";
+			if (principal instanceof UserDetails) {
+				username = ((UserDetails) principal).getUsername();
+			} else {
+				username = principal.toString();
+			}
+			return username;
 		} else {
-			username = principal.toString();
+			return "Test";
 		}
-		return username;
 	}
 
 }
