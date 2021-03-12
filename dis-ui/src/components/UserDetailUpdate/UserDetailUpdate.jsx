@@ -202,6 +202,7 @@ class UserUpdateForm extends Component {
                 <Details
                   clearUpdateFormMessage={this.clearUpdateFormMessage}
                   userData={this.state.userData}
+                  currentUserId={this.state.currentUser.id}
                   onSubmit={this.handleSubmit}
                   message={this.state.messageDetails}
                   successful={this.state.successfulDetails}

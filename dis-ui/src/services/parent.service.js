@@ -30,5 +30,9 @@ class ParentService {
   appStatus() {
     return axios.get(API_URL + "appstatus", { headers: authHeader() });
   }
+
+  downloadUserData(id) {
+    return axios.get(API_URL + "archivedata/" + id, { headers: authHeader() });
+  }
 }
 export default new ParentService();

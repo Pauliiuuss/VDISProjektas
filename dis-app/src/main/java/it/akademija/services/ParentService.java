@@ -2,18 +2,14 @@ package it.akademija.services;
 
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Map;
+import java.util.Date;
 import java.util.stream.Collectors;
-//import java.util.zip.ZipEntry;
-//import java.util.zip.ZipFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-//import com.google.gson.Gson;
-//import net.lingala.zip4j.io.outputstream.ZipOutputStream;
 import it.akademija.payload.request.UserDataDownloadRequest;
-import net.lingala.zip4j.ZipFile;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -40,13 +36,11 @@ import it.akademija.repository.KindergartenRepository;
 import it.akademija.repository.SecondParentRepository;
 import it.akademija.repository.UserDataRepository;
 import it.akademija.repository.UserRepository;
-import springfox.documentation.spring.web.json.Json;
 
 @Service
 public class ParentService {
 
-	//	@Autowired
-//	private Gson gson;
+
 	@Autowired
 	private FormStatusRepository formrepo;
 	@Autowired
@@ -175,7 +169,6 @@ public class ParentService {
 
 	public Collection<ChildForm> getForms(Long id) {
 		return userDataRepository.findByUser(userRepository.getOne(id)).orElse(new UserData()).getChildForms();
-//		return childFormRepository.findAllByParentData(userDataRepository.getOne(id));
 	}
 
 	public ResponseEntity<?> updateForm(Long id, ChildFormRequest childFormRequest) {
@@ -272,79 +265,7 @@ public class ParentService {
 
 		return ResponseEntity.ok(new MessageResponse("Forma ištrinta!"));
 	}
-//
-//    @Transactional
-//    public void addForm(ChildFormRequest childFormInfo){
-//        ChildForm checkEx = childFormRepository.findAll().stream()
-//                .filter(isdb -> isdb.getName().equals(childFormInfo.getName()) &&
-//                        isdb.getSurename().equals(childFormInfo.getSurename()) &&
-//                        isdb.getAddress().equals(childFormInfo.getAddress()) &&
-//                        isdb.getBirthDate().equals(childFormInfo.getBirthDate()))
-//                .findFirst()
-//                .orElse(null);
-//        if(checkEx != null){
-//            throw new IllegalArgumentException("Tokia forma jau egzistuoja, redaguokite senaja.");
-//        } else {
-//            this.newForm = new ChildForm(
-//                    childFormInfo.getName(),
-//                    childFormInfo.getSurename(),
-//                    childFormInfo.getBirthDate(),
-//                    childFormInfo.getAddress(),
-//                    childFormInfo.getCity(),
-//                    childFormInfo.isInCity(),
-//                    childFormInfo.isAdopted(),
-//                    childFormInfo.isThreeOrMore(),
-//                    childFormInfo.isParentStudent(),
-//                    childFormInfo.isHandicapped());
-//            childFormRepository.save(newForm);
-//        }
-//    }
-//
-//    @Transactional
-//    public void addParentData(UserDataRequest parentDataInfo){
-//        UserData userDataEx = userDataRepository.findAll().stream()
-//                .filter(isdb -> isdb.getName().equals(parentDataInfo.getName()) &&
-//                        isdb.getSurename().equals(parentDataInfo.getSurename()))
-//                .findFirst()
-//                .orElse(null);
-//        if(userDataEx != null){
-//            userDataEx.setName(parentDataInfo.getName());
-//            userDataEx.setSurename(parentDataInfo.getSurename());
-//            userDataEx.setAddress(parentDataInfo.getAddress());
-//            userDataEx.setCity(parentDataInfo.getCity());
-//            userDataEx.setPhoneNum(parentDataInfo.getPhoneNum());
-//            userDataEx.setEmail(parentDataInfo.getEmail());
-//            userDataEx.addChildForms(newForm);
-//        } else {
-//            this.newData = new UserData(
-//                    parentDataInfo.getName(),
-//                    parentDataInfo.getSurename(),
-//                    parentDataInfo.getPersonId(),
-//                    parentDataInfo.getAddress(),
-//                    parentDataInfo.getCity(),
-//                    parentDataInfo.getPhoneNum(),
-//                    parentDataInfo.getEmail());
-//            newData.addChildForms(childFormRepository.findById(newForm.getId()).orElse(null));
-//            userDataRepository.save(newData);
-//            ChildForm setUserData = childFormRepository.findById(newForm.getId()).orElse(null);
-//            setUserData.setParentData(userDataRepository.findById(newData.getId()).orElse(null));
-//        }
-//    }
-//
-//    @Transactional
-//    public void addKindergartenPriorities(KindergartenPriorityRequest kindergartenPriorityInfo){
-//        this.newKinder = new KindergartenPriority(
-//                kindergartenPriorityInfo.getKindergartenOne(),
-//                kindergartenPriorityInfo.getKindergartenTwo(),
-//                kindergartenPriorityInfo.getKindergartenThree(),
-//                kindergartenPriorityInfo.getKindergartenFour(),
-//                kindergartenPriorityInfo.getKindergartenFive());
-//                kindergartenPriorityInfo.setChildForm(childFormRepository.findById(newForm.getId()).orElse(null));
-//        kindergartenPriorityRepository.save(newKinder);
-//        ChildForm setKinderPriority = childFormRepository.findById(newForm.getId()).orElse(null);
-//        setKinderPriority.setKindergartenPriority(kindergartenPriorityRepository.findById(newKinder.getId()).orElse(null));
-//
-//    }
+
 
 	@Transactional
 	public AppStatus getStatus() {
@@ -353,106 +274,43 @@ public class ParentService {
 	}
 
 	@Transactional
-	//PIRMAS
-//	public ResponseEntity<byte[]> downloadUserData(Long id) throws IOException {
-//		UserData isdb = userRepository.getOne(id).getUserData();
-////		String data = gson.toJson(isdb);
-//		String nameInZip = userRepository.getOne(id).getUsername() + "_userData";
-//		String zipName = userRepository.getOne(id).getUsername() + "_archivedData";
-//
-//		try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipName))) {
-//
-//			ZipEntry zipEntry = new ZipEntry(nameInZip);
-//			zos.putNextEntry(zipEntry);
-//
-//			ByteArrayInputStream bais = new ByteArrayInputStream(data.getBytes());
-//			// one line, able to handle large size?
-//			zos.write(bais.readAllBytes());
-//
-//			// play safe
-//			byte[] buffer = new byte[1024];
-//			int len;
-//			while ((len = bais.read(buffer)) > 0) {
-//				zos.write(buffer, 0, len);
-//			}
-//
-//			zos.closeEntry();
-//		}
-//
-//		return ResponseEntity.ok()
-//				.body(zos);
-//
-//	}
-
-	//ANTRAS
-//	public byte[] downloadUserData(Long id) throws IOException {
-//		UserData isdb = userRepository.getOne(id).getUserData();
-//		String data = gson.toJson(isdb);
-//		String nameInZip = userRepository.getOne(id).getUsername() + "_userData.txt";
-//		String zipName = userRepository.getOne(id).getUsername() + "_archivedData";
-//
-//		File file = new File(nameInZip);
-//
-//		try (Writer writer = new BufferedWriter(new FileWriter(file))) {
-//			writer.write(data);
-//
-//		}
-//		ZipFile zipped = new ZipFile(zipName);
-//		zipped.addFile(file);
-//
-//
-//	}
-
-	//TRECIAS
-//		public byte[] downloadUserData(Long id) throws IOException {
-//		UserData isdb = userRepository.getOne(id).getUserData();
-////		String data = gson.toJson(isdb);
-//		String nameInZip = userRepository.getOne(id).getUsername() + "_userData.txt";
-//		String zipName = userRepository.getOne(id).getUsername() + "_archivedData.zip";
-//
-//		File file = new File(nameInZip);
-//
-//		try (Writer writer = new BufferedWriter(new FileWriter(file))) {
-//			writer.write("lalalalala");
-//
-//		}
-//		File zipp = new File(zipName);
-//		ZipFile zip = new ZipFile(zipp);
-//		zip.addFile(file);
-//
-//
-//	}
-
-
-	public byte[] downloadUserData(Long id) throws IOException {
+	public ResponseEntity<?> downloadUserData(Long id) throws IOException {
 		UserData isdb = userRepository.getOne(id).getUserData();
-		UserDataDownloadRequest request = new UserDataDownloadRequest(isdb.getName(),isdb.getSurename(),isdb.getPersonId()
-				,isdb.getAddress(),isdb.getCity(),isdb.getPhoneNum(),isdb.getEmail());
+		if(isdb == null){
+			return ResponseEntity.badRequest().body(new MessageResponse("Galimų archyvuoti duomenų nerasta."));
+		} else {
+			UserDataDownloadRequest request = new UserDataDownloadRequest(isdb.getName(), isdb.getSurename(), isdb.getPersonId()
+					, isdb.getAddress(), isdb.getCity(), isdb.getPhoneNum(), isdb.getEmail());
 
-		String nameInZip = userRepository.getOne(id).getUsername() + "_userData.txt";
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-		BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
-		ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
+			String nameInZip = userRepository.getOne(id).getUsername() + "_userData_";
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
+			ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
 
-		File file = new File(nameInZip);
-		try (Writer writer = new BufferedWriter(new FileWriter(file))) {
-			writer.write(request.toString());
+			File file = File.createTempFile(nameInZip, ".json");
+			try (Writer writer = new BufferedWriter(new FileWriter(file))) {
+				writer.write(request.toString());
+			}
+
+			zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+			FileInputStream fileInputStream = new FileInputStream(file);
+
+			IOUtils.copy(fileInputStream, zipOutputStream);
+
+			fileInputStream.close();
+			zipOutputStream.closeEntry();
+
+			zipOutputStream.finish();
+			zipOutputStream.flush();
+			IOUtils.closeQuietly(zipOutputStream);
+			IOUtils.closeQuietly(bufferedOutputStream);
+			IOUtils.closeQuietly(byteArrayOutputStream);
+
+			byte[] bytes = byteArrayOutputStream.toByteArray();
+
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + isdb.getUser().getUsername() + "_archivedData_" + LocalDate.now() +".zip")
+					.body(bytes);
 		}
-
-		zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
-		FileInputStream fileInputStream = new FileInputStream(file);
-
-		IOUtils.copy(fileInputStream, zipOutputStream);
-
-		fileInputStream.close();
-		zipOutputStream.closeEntry();
-
-		zipOutputStream.finish();
-		zipOutputStream.flush();
-		IOUtils.closeQuietly(zipOutputStream);
-		IOUtils.closeQuietly(bufferedOutputStream);
-		IOUtils.closeQuietly(byteArrayOutputStream);
-
-		return byteArrayOutputStream.toByteArray();
 	}
 }

@@ -2,6 +2,7 @@ package it.akademija.controller;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -81,10 +82,8 @@ public class ParentController {
 	}
 
 	@GetMapping(value = "/archivedata/{id}", produces = "application/zip")
-	public ResponseEntity<byte[]> downloadUserData(@PathVariable Long id) throws IOException {
-		return ResponseEntity.ok()
-				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=archivedData.zip")
-				.body(parentService.downloadUserData(id));
+	public ResponseEntity<?> downloadUserData(@PathVariable Long id) throws IOException {
+		return parentService.downloadUserData(id);
 	}
 
 }

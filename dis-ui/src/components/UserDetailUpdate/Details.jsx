@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from "react";
 import RenderInput from "./util/RenderInput";
 import { faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileArchive } from "@fortawesome/free-solid-svg-icons";
+import ReactTooltip from "react-tooltip";
 import {
   noNumbers,
   required,
   validEmail,
   validPhoneNumber,
 } from "../Parent/Validation";
+import parentService from "../../services/parent.service";
 
 const Details = ({
   userData,
+  currentUserId,
   onSubmit,
   message,
   successful,
   clearUpdateFormMessage,
 }) => {
   const [name, setName] = useState(userData.name);
+  const [id, setId] = useState(currentUserId);
   const [surname, setSurname] = useState(userData.surename);
   const [phone, setPhone] = useState(userData.phoneNum);
   const [email, setEmail] = useState(userData.email);
@@ -27,6 +33,10 @@ const Details = ({
     setSurname(initialValue.surename);
     setPhone(initialValue.phoneNum);
     setEmail(initialValue.email);
+  }
+
+  function handleDownload() {
+    parentService.downloadUserData(id);
   }
 
   function getButtonState() {
@@ -118,6 +128,17 @@ const Details = ({
           }}
         >
           <div className="row">
+            <button
+              data-tip
+              data-for="archiveDownload"
+              className="btn btn-success mx-2"
+              onClick={handleDownload}
+            >
+              <FontAwesomeIcon icon={faFileArchive} />
+            </button>
+            <ReactTooltip id="archiveDownload" place="bottom" effect="solid">
+              Archyvuoti ir parsisiųsti duomenis
+            </ReactTooltip>
             <button
               style={{ padding: "6px 6px" }}
               type="submit"

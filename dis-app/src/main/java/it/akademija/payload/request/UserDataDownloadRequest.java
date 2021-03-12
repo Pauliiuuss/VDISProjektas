@@ -103,14 +103,14 @@ public class UserDataDownloadRequest {
 
     @Override
     public String toString() {
-        return "archivedUserData {" + '\'' +
-                "name='" + name + '\'' +
-                ", surename='" + surename + '\'' +
-                ", personId=" + personId +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", phoneNum=" + phoneNum +
-                ", email='" + email + '\'' +
-                '}';
+        return "{\n\"userData\": {\n" +
+                "\"name\": \"" + name + "\"" +
+                ",\n\"surename\": \"" + surename + "\"" +
+                ",\n\"personId\": " + personId +
+                ",\n\"address=\": \"" + address + "\"" +
+                ",\n\"city=\": \"" + city + "\"" +
+                ",\n\"phoneNum\": " + phoneNum +
+                ",\n\"email=\": \"" + email + "\"" +
+                "\n}\n}";
     }
 }
