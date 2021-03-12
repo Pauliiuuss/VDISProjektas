@@ -51,8 +51,7 @@ public class AuthService {
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-
-		Log.logMessage(loginRequest.getUsername(), "Prisijungė prie sistemos.");
+		Log.logMessage("Prisijungė prie sistemos.");
 		return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), roles));
 	}
 

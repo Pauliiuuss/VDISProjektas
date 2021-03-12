@@ -61,7 +61,10 @@ public class Log {
 	}
 
 	public static void logMessage(String message) {
-		LOGGER.info(getUsername() + " -- " + message);
+		if (getUsername().equals("admin"))
+			LOGGER.info("Administratorius -- " + message);
+		else
+			LOGGER.info(getUsername() + " -- " + message);
 	}
 
 	public static String getUsername() {

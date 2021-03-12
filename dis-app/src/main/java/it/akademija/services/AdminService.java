@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -132,16 +131,12 @@ public class AdminService {
 	}
 
 	public List<Log> getLog() throws IOException {
-		System.out.println(new Date().toString() + " Started");
 		List<Log> strings = new ArrayList<>();
-		System.out.println(new Date().toString() + " List created");
 
 		BufferedReader bf = new BufferedReader(new FileReader(new File("app.log")));
-		System.out.println(new Date().toString() + " File readed");
 		while (bf.ready()) {
 			String[] data = bf.readLine().split("--");
 			if (data.length == 4) {
-				System.out.println(new Date().toString() + " Added to list");
 				Log log = new Log(data[0].strip(), data[1].strip(), data[2].strip(), data[3].strip());
 				strings.add(log);
 			}
