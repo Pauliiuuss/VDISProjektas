@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import it.akademija.models.ChildForm;
 import it.akademija.models.Group;
 import it.akademija.models.Kindergarten;
+import it.akademija.models.Log;
 import it.akademija.models.enums.EFormStatus;
 import it.akademija.payload.request.ChildFormRequest;
 import it.akademija.payload.request.GroupRequest;
@@ -61,6 +62,7 @@ public class SpecService {
 
 		kindergartenRepository.save(new Kindergarten(info.getAddress(), info.getName(), new ArrayList<>()));
 
+		Log.logMessage(Log.getUsername(), "Darželis \"" + info.getName() + "\" įvestas sėkmingai.");
 		return ResponseEntity.ok(new MessageResponse("Darželis įvestas sėkmingai!"));
 	}
 
@@ -103,6 +105,7 @@ public class SpecService {
 		groupRepository.save(group);
 		kindergartenRepository.getOne(id).setGroups(groups);
 
+		Log.logMessage(Log.getUsername(), "Vaikų grupė \"" + info.getName() + "\" užregistruota.");
 		return ResponseEntity.ok(new MessageResponse("Vaikų grupė užregistruota!"));
 	}
 
@@ -119,6 +122,7 @@ public class SpecService {
 
 		kindergartenRepository.save(kindergarten);
 
+		Log.logMessage(Log.getUsername(), "Vaikų darželis \"" + info.getName() + "\" atnaujintas.");
 		return ResponseEntity.ok(new MessageResponse("Vaikų darželis pakeistas!"));
 	}
 
@@ -147,7 +151,8 @@ public class SpecService {
 
 		groupRepository.save(group);
 
-		return ResponseEntity.ok(new MessageResponse("Vaikų darželis pakeistas!"));
+		Log.logMessage(Log.getUsername(), "Vaikų grupė \"" + info.getName() + "\" atnaujinta.");
+		return ResponseEntity.ok(new MessageResponse("Vaikų grupė atnaujinta!"));
 	}
 
 	@Transactional
@@ -336,6 +341,7 @@ public class SpecService {
 
 		appStatusRepo.setRegistrationClosed();
 
+		Log.logMessage(Log.getUsername(), "Vaikų eilė sudaryta.");
 		return ResponseEntity.ok(new MessageResponse("Vaikų eilė sudaryta!"));
 	}
 
@@ -353,6 +359,7 @@ public class SpecService {
 
 		appStatusRepo.setRegistrationOpen();
 
+		Log.logMessage(Log.getUsername(), "Vaikų eilė atšaukta.");
 		return ResponseEntity.ok(new MessageResponse("Vaikų eilė atšaukta!"));
 	}
 
@@ -364,20 +371,27 @@ public class SpecService {
 	}
 
 	public ResponseEntity<?> cancelForm(Long id) {
-		ChildForm form = formRepo.getOne(id);
+		ChildForm form = formRepo.findById(id).orElse(null);
 		if (form.getFormStatus().getName().equals(EFormStatus.PANAIKINTAS))
 			return ResponseEntity.badRequest().body(new MessageResponse("Forma jau panaikinta!"));
 		form.setFormStatus(statusRepo.findByName(EFormStatus.PANAIKINTAS).get());
 		formRepo.save(form);
+
+		Log.logMessage(Log.getUsername(),
+				"Vaiko \"" + form.getName() + " " + form.getSurename() + "\" forma atšaukta.");
 		return ResponseEntity.ok(new MessageResponse("Vaiko forma atšaukta!"));
 	}
 
 	public ResponseEntity<?> enableForm(Long id) {
-		ChildForm form = formRepo.getOne(id);
-		if (form.getFormStatus().getName().equals(EFormStatus.PATEIKTAS))
+		ChildForm form = formRepo.findById(id).orElse(null);
+		if (form.getFormStatus().getName().equals(EFormStatus.PATEIKTAS)) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Forma jau aktyvi!"));
+		}
 		form.setFormStatus(statusRepo.findByName(EFormStatus.PATEIKTAS).get());
 		formRepo.save(form);
+
+		Log.logMessage(Log.getUsername(),
+				"Vaiko \"" + form.getName() + " " + form.getSurename() + "\" forma aktyvuota.");
 		return ResponseEntity.ok(new MessageResponse("Vaiko forma aktyvuota!"));
 	}
 }

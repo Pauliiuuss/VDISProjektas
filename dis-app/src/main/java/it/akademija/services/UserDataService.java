@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.akademija.models.Log;
 import it.akademija.models.User;
 import it.akademija.models.UserData;
 import it.akademija.payload.request.UserDataRequest;
@@ -74,12 +75,14 @@ public class UserDataService {
 		idb.setUser(user);
 
 		userDataRepository.save(idb);
+
+		Log.logMessage("Asmeniniai duomenys atnaujinti.");
 		return ResponseEntity.ok(new MessageResponse("Duomenys atnaujinti!"));
 
 	}
 
 	public ResponseEntity<?> updatePassword(long id, String oldPassword, String newPassword) {
-		User user = userrepo.getOne(id);
+		User user = userrepo.findById(id).orElseThrow();
 
 		if (!encoder.matches(oldPassword, user.getPassword())) {
 			System.out.println("neteisingas");
@@ -89,6 +92,7 @@ public class UserDataService {
 			user.setPassword(encoder.encode(newPassword));
 			userrepo.save(user);
 
+			Log.logMessage("Slaptažodis atnaujintas.");
 			return ResponseEntity.ok(new MessageResponse("Slaptažodis atnaujintas!"));
 		}
 	}
