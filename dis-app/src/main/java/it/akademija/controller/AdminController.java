@@ -1,6 +1,6 @@
 package it.akademija.controller;
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -69,7 +69,7 @@ public class AdminController {
 
 	@GetMapping("/log")
 	@PreAuthorize("hasRole('ADMIN')")
-	public List<Log> getLog() throws FileNotFoundException {
+	public List<Log> getLog() throws IOException {
 		return adminService.getLog();
 	}
 

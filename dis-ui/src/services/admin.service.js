@@ -21,8 +21,18 @@ class AdminService {
     return axios.get(API_URL + "getusers", { headers: authHeader() });
   }
 
-  getLog() {
-    return axios.get(API_URL + "log", { headers: authHeader() });
+  async getLog() {
+    return await axios.get(API_URL + "log", {
+      onDownloadProgress: (progressEvent) => {
+        console.log(progressEvent);
+        let percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        console.log(progressEvent.lengthComputable);
+        console.log(percentCompleted);
+      },
+      headers: authHeader(),
+    });
   }
 
   deleteUser(id) {

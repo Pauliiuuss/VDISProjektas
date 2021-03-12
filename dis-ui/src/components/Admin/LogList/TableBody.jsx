@@ -62,14 +62,12 @@ class TableBody extends Component {
         </div>
       );
 
-    if (data === 0)
+    if (+data === 0)
       return (
         <tbody>
           <tr>
-            <td colSpan="4">
-              <p className="m-4 mx-auto" style={{ width: "500px" }}>
-                Duomenų bazėje duomenų nerasta.
-              </p>
+            <td colSpan="4" style={{ textAlign: "center" }}>
+              <p className="mt-5">Duomenų bazėje duomenų nerasta.</p>
             </td>
           </tr>
         </tbody>

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { Component } from "react";
 import AdminService from "../../services/admin.service";
 import AuthService from "../../services/auth.service";
@@ -22,14 +23,16 @@ class Logging extends Component {
       userReady: true,
       roles: currentUser.roles,
     });
-    AdminService.getLog().then(
-      (response) => {
-        this.setState({ log: response.data, loading: false });
-      },
-      (error) => {
-        console.log(error);
-        this.setState({ loading: false });
-      }
+    console.log(
+      AdminService.getLog().then(
+        (response) => {
+          this.setState({ log: response.data, loading: false });
+        },
+        (error) => {
+          console.log(error);
+          this.setState({ loading: false });
+        }
+      )
     );
   }
 

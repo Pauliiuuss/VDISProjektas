@@ -1,4 +1,5 @@
 import axios from "axios";
+import authHeader from "./auth-header";
 import { LINK } from "./LINK";
 
 const API_URL = LINK + "/api/auth/";
@@ -20,6 +21,7 @@ class AuthService {
   }
 
   logout() {
+    axios.get(API_URL + "logout", { headers: authHeader() });
     sessionStorage.removeItem("user");
   }
 
