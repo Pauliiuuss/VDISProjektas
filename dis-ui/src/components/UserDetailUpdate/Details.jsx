@@ -4,24 +4,26 @@ import { faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileArchive } from "@fortawesome/free-solid-svg-icons";
 import ReactTooltip from "react-tooltip";
+import { LINK } from "../../services/LINK";
 import {
   noNumbers,
   required,
   validEmail,
   validPhoneNumber,
 } from "../Parent/Validation";
-import parentService from "../../services/parent.service";
+
+const API_URL = LINK + "/api/parent/";
 
 const Details = ({
   userData,
-  currentUserId,
+  id,
   onSubmit,
+  handleDownload,
   message,
   successful,
   clearUpdateFormMessage,
 }) => {
   const [name, setName] = useState(userData.name);
-  const [id, setId] = useState(currentUserId);
   const [surname, setSurname] = useState(userData.surename);
   const [phone, setPhone] = useState(userData.phoneNum);
   const [email, setEmail] = useState(userData.email);
@@ -35,9 +37,7 @@ const Details = ({
     setEmail(initialValue.email);
   }
 
-  function handleDownload() {
-    parentService.downloadUserData(id);
-  }
+
 
   function getButtonState() {
     if (
@@ -132,7 +132,7 @@ const Details = ({
               data-tip
               data-for="archiveDownload"
               className="btn btn-success mx-2"
-              onClick={handleDownload}
+              onClick={(e) => handleDownload(e, id)}
             >
               <FontAwesomeIcon icon={faFileArchive} />
             </button>
