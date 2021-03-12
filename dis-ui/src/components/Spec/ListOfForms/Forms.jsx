@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import FormsTable from "./FormsTable";
-import { paginate } from "../../utils/paginate";
-import Pagination from "../../utils/pagination";
-import _ from "lodash";
-import SearchBox from "../../utils/SearchBox";
-import SpecService from "../../../services/spec.service";
-import ParentService from "../../../services/parent.service";
+import React, { Component } from 'react';
+import FormsTable from './FormsTable';
+import { paginate } from '../../utils/paginate';
+import Pagination from '../../utils/pagination';
+import _ from 'lodash';
+import SearchBox from '../../utils/SearchBox';
+import SpecService from '../../../services/spec.service';
+import ParentService from '../../../services/parent.service';
 
 class Forms extends Component {
   state = {
@@ -13,10 +13,10 @@ class Forms extends Component {
     currentPage: 1,
     pageSize: 5,
     length: 0,
-    searchQuery: "",
+    searchQuery: '',
     buttonDisabled: true,
     freeSpaces: 0,
-    sortColumn: { path: "name", order: "asc" },
+    sortColumn: { path: 'name', order: 'asc' },
     appStatus: {
       registrationClosed: true,
       specelistsDisabled: true,
@@ -76,24 +76,6 @@ class Forms extends Component {
     else this.setState({ buttonDisabled: false });
   };
 
-  // handleConfirm = () => {
-  //   if (
-  //     window.confirm(
-  //       "Vaikų registracijų formų statusai bus pakeisti į PRIIMTAS arba EILĖJE negryštamai! Tai gali užtrukti."
-  //     )
-  //   ) {
-  //     console.log("Confirmed");
-  //     SpecService.confirmQueue().then(
-  //       (response) => {
-  //         console.log(response);
-  //       },
-  //       (error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   } else console.log("Canceled");
-  // };
-
   handleCancel = () => {
     SpecService.cancelQueue().then(
       (response) => {
@@ -114,7 +96,7 @@ class Forms extends Component {
     const { totalCount, data: forms } = this.getPagedData(allForms);
 
     return (
-      <div className="container" style={{ marginTop: "20px" }}>
+      <div className="container" style={{ marginTop: '20px' }}>
         <div className="row">
           <div className="col">
             {/* <div className="row">
@@ -132,49 +114,49 @@ class Forms extends Component {
               </div>
             </div> */}
             {count !== 0 && (
-              <div className="row" style={{ paddingBottom: "5%" }}>
+              <div className="row" style={{ paddingBottom: '5%' }}>
                 {!this.state.appStatus.registrationClosed ? (
                   <div className="col-5">
-                    <p style={{ marginBottom: "2px" }}>
+                    <p style={{ marginBottom: '2px' }}>
                       Užregistruotų vaikų skaičius: <b>{count}</b>
                     </p>
-                    <p style={{ marginBottom: "2px" }}>
+                    <p style={{ marginBottom: '2px' }}>
                       Laisvų vietų skaičius: <b>{this.state.freeSpaces}</b>
                     </p>
                   </div>
                 ) : (
                   <div className="col-5">
-                    <p style={{ marginBottom: "2px" }}>
+                    <p style={{ marginBottom: '2px' }}>
                       Užregistruotų vaikų skaičius: <b>{count}</b>
                     </p>
-                    <p style={{ marginBottom: "2px" }}>
+                    <p style={{ marginBottom: '2px' }}>
                       Laisvų vietų skaičius: <b>{this.state.freeSpaces}</b>
-                    </p>{" "}
-                    <p style={{ marginBottom: "2px" }}>
-                      Panaikintų formų skaičius:{" "}
+                    </p>{' '}
+                    <p style={{ marginBottom: '2px' }}>
+                      Panaikintų formų skaičius:{' '}
                       <b>
                         {
                           allForms.filter(
-                            (f) => f.formStatus.name === "PANAIKINTAS"
+                            (f) => f.formStatus.name === 'PANAIKINTAS'
                           ).length
                         }
                       </b>
                     </p>
-                    <p style={{ marginBottom: "2px" }}>
-                      Eilėje laukiančių vaikų skaičius:{" "}
+                    <p style={{ marginBottom: '2px' }}>
+                      Eilėje laukiančių vaikų skaičius:{' '}
                       <b>
                         {
-                          allForms.filter((f) => f.formStatus.name === "EILEJE")
+                          allForms.filter((f) => f.formStatus.name === 'EILEJE')
                             .length
                         }
                       </b>
                     </p>
-                    <p style={{ marginBottom: "2px" }}>
-                      Priimtų vaikų skaičius:{" "}
+                    <p style={{ marginBottom: '2px' }}>
+                      Priimtų vaikų skaičius:{' '}
                       <b>
                         {
                           allForms.filter(
-                            (f) => f.formStatus.name === "PRIIMTAS"
+                            (f) => f.formStatus.name === 'PRIIMTAS'
                           ).length
                         }
                       </b>
@@ -186,7 +168,7 @@ class Forms extends Component {
             <div className="row">
               <div className="col-4">
                 <SearchBox
-                  placeholder={"Paieška pagal asmens kodą ..."}
+                  placeholder={'Paieška pagal asmens kodą ...'}
                   value={searchQuery}
                   onChange={this.handleSearch}
                 />
@@ -194,7 +176,7 @@ class Forms extends Component {
               <div className="col-4"></div>
               {!this.state.appStatus.specelistsDisabled ? (
                 <div className="col-4">
-                  {forms.filter((f) => f.formStatus.name === "PATEIKTAS")
+                  {forms.filter((f) => f.formStatus.name === 'PATEIKTAS')
                     .length !== 0 ? (
                     <button
                       onClick={this.props.handleConfirm}
@@ -205,7 +187,7 @@ class Forms extends Component {
                   ) : (
                     <button
                       hidden={
-                        forms.filter((f) => f.formStatus.name === "PATEIKTAS")
+                        forms.filter((f) => f.formStatus.name === 'PATEIKTAS')
                           .length !== 0
                       }
                       onClick={this.handleCancel}
@@ -216,7 +198,7 @@ class Forms extends Component {
                   )}
                 </div>
               ) : (
-                <div class="alert alert-secondary col">
+                <div className="alert alert-secondary col">
                   Eilių sudarymas ir atšaukimas negalimas
                 </div>
               )}

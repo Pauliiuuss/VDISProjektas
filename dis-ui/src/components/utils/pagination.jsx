@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import _ from "lodash";
+import React from 'react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
   const pagesCount = Math.ceil(itemsCount / pageSize);
@@ -15,7 +15,7 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
             <li
               key={page}
               className={
-                page === currentPage ? "page-item active" : "page-item"
+                page === currentPage ? 'page-item active' : 'page-item'
               }
             >
               <button className="page-link" onClick={() => onPageChange(page)}>
@@ -44,7 +44,7 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
                 <li
                   key="lastPage"
                   className={
-                    1 === currentPage ? "page-item active" : "page-item"
+                    1 === currentPage ? 'page-item active' : 'page-item'
                   }
                 >
                   <button className="page-link" onClick={() => onPageChange(1)}>
@@ -65,7 +65,7 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
               <li
                 key={page}
                 className={
-                  page === currentPage ? "page-item active" : "page-item"
+                  page === currentPage ? 'page-item active' : 'page-item'
                 }
               >
                 <button
@@ -85,7 +85,7 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
             <li
               key="lastPage"
               className={
-                pagesCount === currentPage ? "page-item active" : "page-item"
+                pagesCount === currentPage ? 'page-item active' : 'page-item'
               }
             >
               <button

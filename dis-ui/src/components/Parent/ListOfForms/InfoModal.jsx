@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import ParenService from "../../../services/parent.service";
-import RenderInfoForm from "../RenderInfoForm";
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import ParenService from '../../../services/parent.service';
+import RenderInfoForm from '../RenderInfoForm';
 
 const InfoModal = ({ appStatus, spec, handleClose, show, showId }) => {
-  const showHideClassName = show ? "modal display-block" : "modal display-none";
+  const showHideClassName = show ? 'modal display-block' : 'modal display-none';
   const [disabled] = useState(false);
-  const [data, setData] = useState("");
+  const [data, setData] = useState('');
 
   useEffect(() => {
-    if (showId !== "") {
+    if (showId !== '') {
       ParenService.getAllData(showId).then(
         (response) => {
           setData(response.data);

@@ -96,7 +96,7 @@ public class SpecController {
 	}
 
 	@GetMapping("/freespaces")
-	@PreAuthorize("hasRole('SPEC')")
+	@PreAuthorize("hasRole('SPEC') or hasRole('PARENT')")
 	public Long freeSpaces() {
 		return specService.freeSpaces();
 	}
