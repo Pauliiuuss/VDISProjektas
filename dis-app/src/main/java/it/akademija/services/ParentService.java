@@ -282,7 +282,7 @@ public class ParentService {
 			UserDataDownloadRequest request = new UserDataDownloadRequest(isdb.getName(), isdb.getSurename(), isdb.getPersonId()
 					, isdb.getAddress(), isdb.getCity(), isdb.getPhoneNum(), isdb.getEmail());
 
-			String nameInZip = userRepository.getOne(id).getUsername() + "_userData_";
+			String nameInZip = userRepository.getOne(id).getUsername() + "_duomenys_";
 			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
 			ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
@@ -309,7 +309,7 @@ public class ParentService {
 			byte[] bytes = byteArrayOutputStream.toByteArray();
 
 			return ResponseEntity.ok()
-					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + isdb.getUser().getUsername() + "_archivedData_" + LocalDate.now() +".zip")
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + isdb.getUser().getUsername() + "_archyvuotiDuomenys_" + LocalDate.now() +".zip")
 					.body(bytes);
 		}
 	}

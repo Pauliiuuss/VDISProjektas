@@ -37,8 +37,6 @@ const Details = ({
     setEmail(initialValue.email);
   }
 
-
-
   function getButtonState() {
     if (
       initialValue.name === name &&
@@ -131,7 +129,7 @@ const Details = ({
             <button
               data-tip
               data-for="archiveDownload"
-              className="btn btn-success mx-2"
+              className="btn btn-secondary mx-2"
               onClick={(e) => handleDownload(e, id)}
             >
               <FontAwesomeIcon icon={faFileArchive} />
@@ -152,7 +150,7 @@ const Details = ({
             initialValue.email !== email ||
             +initialValue.phoneNum !== +phone ? (
               <button
-                className="btn btn-secondary"
+                className="btn btn-danger"
                 style={{ padding: "6px 8px", marginLeft: "10px" }}
                 onClick={handleCancel}
               >
