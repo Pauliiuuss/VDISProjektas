@@ -44,8 +44,8 @@ const Chart = () => {
 
   return (
     <div className="container mt-5">
-      <h3 className="text-secondary text-center ">Darželių populiarumas</h3>
-      <p className="text-secondary text-center ">(pagal prašymų skaičių)</p>
+      <h3 className="text-secondary text-center">Darželių populiarumas</h3>
+      <p className="text-secondary text-center">(pagal prašymų skaičių)</p>
       <HorizontalBar
         data={{
           labels: chartKindergartensLabels,

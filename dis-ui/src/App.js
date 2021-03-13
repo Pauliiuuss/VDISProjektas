@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
-import Logging from "./components/Admin/Logging";
+import Logging from './components/Admin/Logging';
 import ChildFormsQueue from './components/Spec/ChildFormsQueue';
 import Login from './components/login.component';
 import MainAfterLogin from './components/MainAferLogin';
@@ -16,7 +16,7 @@ class App extends Component {
   render() {
     document.title = 'DarželiųInformacinėSistema';
     return (
-      <div>
+      <React.Fragment>
         <Switch>
           <Route
             exact
@@ -31,7 +31,7 @@ class App extends Component {
           <Route path="/dis-app/statistic" component={Statistic} />
           <Route path="/dis-app/logging" component={Logging} />
         </Switch>
-      </div>
+      </React.Fragment>
     );
   }
 }

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import AuthService from "../services/auth.service";
-import logo from "../img/logo.png";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-import parentService from "../services/parent.service";
+import React, { Component } from 'react';
+import AuthService from '../services/auth.service';
+import logo from '../img/logo.png';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import parentService from '../services/parent.service';
 
 export default class Navbar extends Component {
   constructor(props) {
@@ -14,7 +14,7 @@ export default class Navbar extends Component {
     this.state = {
       currentUser: undefined,
       appStatus: {
-        registrationClosed: "",
+        registrationClosed: '',
       },
     };
   }
@@ -27,7 +27,7 @@ export default class Navbar extends Component {
         currentUser: user,
       });
     }
-    if (user.roles.includes("ROLE_PARENT")) {
+    if (user.roles.includes('ROLE_PARENT')) {
       parentService.appStatus().then((response) => {
         console.log(response);
         this.setState({ appStatus: response.data });
@@ -46,55 +46,57 @@ export default class Navbar extends Component {
   render() {
     const { currentUser } = this.state;
     return (
-      <nav className="navbar navbar-expand navbar-dark bg-dark col-12 col-sm-12 col-md-12 col-lg-12">
-        <img src={logo} alt="logo" style={{ width: "5rem" }} />
-        <div className="navbar-nav mr-auto"></div>
+      <nav className="navbar navbar-static-top navbar-dark bg-dark navbar-expand">
+        <img src={logo} alt="logo" style={{ width: '5rem' }} />
         {currentUser && (
-          <div className="navbar-nav">
-            {currentUser.roles.includes("ROLE_SPEC") ? (
+          <ul className="nav list-inline ml-auto">
+            {currentUser.roles.includes('ROLE_SPEC') ? (
               <React.Fragment>
                 <li className="nav-item my-auto">
-                  <Link to={"/dis-app/queue"} className="nav-link">
+                  <Link to={'/dis-app/queue'} className="nav-link text-light">
                     Darželių eilės
                   </Link>
                 </li>
                 <li className="nav-item my-auto">
-                  <Link to={"/dis-app/home"} className="nav-link">
+                  <Link to={'/dis-app/home'} className="nav-link text-light">
                     Darželiai
                   </Link>
                 </li>
                 <li className="nav-item my-auto">
-                  <Link to={"/dis-app/docs"} className="nav-link">
+                  <Link to={'/dis-app/docs'} className="nav-link text-light">
                     Dokumentai
                   </Link>
                 </li>
                 <li className="nav-item my-auto">
-                  <Link to={"/dis-app/statistic"} className="nav-link">
+                  <Link
+                    to={'/dis-app/statistic'}
+                    className="nav-link text-light"
+                  >
                     Statistika
                   </Link>
                 </li>
                 <li className="nav-item my-auto">
                   <Link
-                    to={"/dis-app/mydata"}
-                    className="nav-link"
-                    onClick={() => this.handleReload("/dis-app/mydata")}
+                    to={'/dis-app/mydata'}
+                    className="nav-link text-light"
+                    onClick={() => this.handleReload('/dis-app/mydata')}
                   >
                     Mano duomenys
                   </Link>
                 </li>
                 <li className="nav-item my-auto">
-                  <Link to={"/dis-app/home"} className="nav-link">
+                  <Link to={'/dis-app/home'} className="nav-link text-light">
                     {currentUser.username} <br />
-                    <span style={{ fontSize: "small" }}>
+                    <span style={{ fontSize: 'small' }}>
                       Švietimo specialistas
                     </span>
                   </Link>
                 </li>
               </React.Fragment>
-            ) : currentUser.roles.includes("ROLE_PARENT") ? (
+            ) : currentUser.roles.includes('ROLE_PARENT') ? (
               <React.Fragment>
                 <li className="nav-item my-auto">
-                  <Link to={"/dis-app/home"} className="nav-link">
+                  <Link to={'/dis-app/home'} className="nav-link text-light">
                     Mano prašymai
                   </Link>
                 </li>
@@ -102,53 +104,60 @@ export default class Navbar extends Component {
                   hidden={this.state.appStatus.registrationClosed}
                   className="nav-item my-auto"
                 >
-                  <Link to={"/dis-app/addform"} className="nav-link">
+                  <Link to={'/dis-app/addform'} className="nav-link text-light">
                     Naujas prašymas
                   </Link>
                 </li>
                 <li className="nav-item my-auto">
-                  <Link to={"/dis-app/statistic"} className="nav-link">
+                  <Link
+                    to={'/dis-app/statistic'}
+                    className="nav-link text-light"
+                  >
                     Statistika
                   </Link>
                 </li>
                 <li className="nav-item my-auto">
                   <Link
-                    to={"/dis-app/mydata"}
-                    onClick={() => this.handleReload("/dis-app/mydata")}
-                    className="nav-link"
+                    to={'/dis-app/mydata'}
+                    onClick={() => this.handleReload('/dis-app/mydata')}
+                    className="nav-link text-light"
                   >
                     Mano duomenys
                   </Link>
                 </li>
                 <li className="nav-item my-auto">
-                  <Link to={"/dis-app/home"} className="nav-link">
+                  <Link to={'/dis-app/home'} className="nav-link text-light">
                     {currentUser.username} <br />
-                    <span style={{ fontSize: "small" }}>Vaiko atstovas</span>
+                    <span style={{ fontSize: 'small' }}>Vaiko atstovas</span>
                   </Link>
                 </li>
               </React.Fragment>
             ) : (
               <React.Fragment>
                 <li className="nav-item my-auto">
-                  <Link to={"/dis-app/logging"} className="nav-link">
+                  <Link to={'/dis-app/logging'} className="nav-link text-light">
                     Įvykių žurnalas
                   </Link>
                 </li>
                 <li className="nav-item my-auto">
-                  <Link to={"/dis-app/home"} className="nav-link">
+                  <Link to={'/dis-app/home'} className="nav-link text-light">
                     <span>Administratorius</span>
                   </Link>
                 </li>
               </React.Fragment>
             )}
             <li className="nav-item my-auto">
-              <a href="/dis-app/" className="nav-link" onClick={this.logOut}>
-                {" "}
+              <a
+                href="/dis-app/"
+                className="nav-link text-light"
+                onClick={this.logOut}
+              >
+                {' '}
                 <FontAwesomeIcon icon={faSignOutAlt} />
                 Atsijungti
               </a>
             </li>
-          </div>
+          </ul>
         )}
       </nav>
     );

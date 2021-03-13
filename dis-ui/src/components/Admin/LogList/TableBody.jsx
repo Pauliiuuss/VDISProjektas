@@ -1,14 +1,13 @@
-import React, { Component } from "react";
-import _ from "lodash";
-import LoadingSpan from "../../utils/LoadingSpan";
+import React, { Component } from 'react';
+import _ from 'lodash';
 
 class TableBody extends Component {
   renderCell = (item, column) => {
-    if (column === "date") {
+    if (column === 'date') {
       return new Date(item);
     }
 
-    if (column === "time") {
+    if (column === 'time') {
       return new Date(item);
     }
 
@@ -46,15 +45,15 @@ class TableBody extends Component {
         <div
           className="d-flex justify-content-center"
           style={{
-            position: "fixed",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
           }}
         >
           <div
             className="spinner-border"
-            style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
+            style={{ width: '3rem', height: '3rem', marginTop: '3rem' }}
             role="status"
           >
             <span className="sr-only">Loading...</span>
@@ -66,7 +65,7 @@ class TableBody extends Component {
       return (
         <tbody>
           <tr>
-            <td colSpan="4" style={{ textAlign: "center" }}>
+            <td colSpan="4" style={{ textAlign: 'center' }}>
               <p className="mt-5">Duomenų bazėje duomenų nerasta.</p>
             </td>
           </tr>

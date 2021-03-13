@@ -26,6 +26,18 @@
   transform: translate(-50%, -50%);
 }
 
+@media (max-width: 767px) {
+  .navbar {
+    width: max-content;
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+  }
+  .nav-link {
+    padding: 0, 1px;
+  }
+}
+
 #registerTip,
 #registerTip1,
 #registerTip2,
@@ -61,7 +73,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 

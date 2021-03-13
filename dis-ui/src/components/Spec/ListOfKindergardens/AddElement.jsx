@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 
 const AddElement = ({ onAddKindergarten, successful, message }) => {
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState('');
+  const [address, setAddress] = useState('');
   const [addForm, setAddForm] = useState(false);
 
   function hanldeClick() {
     onAddKindergarten(address, name);
     setAddForm(false);
-    setAddress("");
-    setName("");
+    setAddress('');
+    setName('');
   }
 
   function getButtonState() {
-    if (name === "" || address === "") return true;
+    if (name === '' || address === '') return true;
     return false;
   }
   if (!addForm)
@@ -64,8 +64,8 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
             <button
               onClick={() => {
                 setAddForm(!addForm);
-                setAddress("");
-                setName("");
+                setAddress('');
+                setName('');
               }}
               className="btn btn-sm btn-secondary m-3"
             >
@@ -84,11 +84,11 @@ const AddElement = ({ onAddKindergarten, successful, message }) => {
               placeholder="Adresas"
             />
           </td>
-          <td style={{ paddingRight: "4px", paddingLeft: "4px" }}>
+          <td style={{ paddingRight: '4px', paddingLeft: '4px' }}>
             <button
               disabled={getButtonState() ? true : false}
               className="btn btn-md btn-success"
-              style={{ height: "95%" }}
+              style={{ height: '95%' }}
               onClick={() => hanldeClick()}
             >
               Pridėti <i className="fa fa-check" aria-hidden="true"></i>

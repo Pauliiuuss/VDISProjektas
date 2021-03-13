@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import RegisteredFormsTable from "./RegisteredFormsTable";
+import React, { Component } from 'react';
+import RegisteredFormsTable from './RegisteredFormsTable';
 
 export default class Forms extends Component {
   state = {

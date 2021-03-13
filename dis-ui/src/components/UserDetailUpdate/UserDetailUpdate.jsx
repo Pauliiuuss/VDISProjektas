@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import AuthService from "../../services/auth.service";
-import UserService from "../../services/user.service";
-import { vpassword } from "../Admin/Validation";
-import { Redirect } from "react-router-dom";
-import Navbar from "../navbar.component";
-import Details from "./Details";
-import Password from "./Password";
-import ParentService from "../../services/parent.service";
+import React, { Component } from 'react';
+import AuthService from '../../services/auth.service';
+import UserService from '../../services/user.service';
+import { vpassword } from '../Admin/Validation';
+import { Redirect } from 'react-router-dom';
+import Navbar from '../navbar.component';
+import Details from './Details';
+import Password from './Password';
+import ParentService from '../../services/parent.service';
 
 class UserUpdateForm extends Component {
   state = {
@@ -143,7 +143,7 @@ class UserUpdateForm extends Component {
     } else {
       this.setState({
         successfulDetails: false,
-        messageDetails: "Nėra archyvuojamų duomenų!",
+        messageDetails: 'Nėra archyvuojamų duomenų!',
       });
     }
   };
@@ -213,8 +213,8 @@ class UserUpdateForm extends Component {
         <Navbar />
         {userReady ? (
           <div className="container">
-            <div className="row justify-content-around">
-              <div className="col-5">
+            <div className="row justify-content-center">
+              <div className="col-12 col-sm-12 col-md-5 col-lg-5">
                 <Details
                   clearUpdateFormMessage={this.clearUpdateFormMessage}
                   userData={this.state.userData}
@@ -225,7 +225,7 @@ class UserUpdateForm extends Component {
                   successful={this.state.successfulDetails}
                 />
               </div>
-              <div className="col-5">
+              <div className="col-12 col-sm-12 col-md-5 col-lg-5">
                 <Password
                   currentUser={currentUser}
                   userReady={userReady}
@@ -238,9 +238,9 @@ class UserUpdateForm extends Component {
             </div>
           </div>
         ) : (
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center mt-5">
             <div
-              className="spinner-border"
+              className="spinner-border mt-5"
               style={{ width: '3rem', height: '3rem', marginTop: '3rem' }}
               role="status"
             >

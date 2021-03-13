@@ -215,12 +215,12 @@ class SpecMainPage extends Component {
 
   render() {
     return (
-      <div className="container" style={{ paddingTop: '1rem' }}>
+      <div className="container">
         {this.state.kindergartens ? (
           <div className="row">
-            <div className="col-7">
+            <div className="col-12 col-sm-12 col-md-7 col-lg-7 mt-5">
               <div
-                className="alert alert-secondary mb-2"
+                className="alert alert-secondary mb-2 mt-5"
                 hidden={!this.state.appStatus.specelistsDisabled}
               >
                 Naujų darželių ir grupių pridėjimas negalimas{' '}
@@ -236,7 +236,7 @@ class SpecMainPage extends Component {
               />
             </div>
             {this.state.kindergartens.length > 0 ? (
-              <div className="col-5">
+              <div className="col-12 col-sm-12 col-md-5 col-lg-5 mt-5">
                 <Groups
                   onAmendGroup={this.handleAmendGroup}
                   activeName={this.state.selectedKindergartenName}

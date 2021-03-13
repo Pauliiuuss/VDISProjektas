@@ -112,7 +112,7 @@ const ChildFormsQueue = () => {
     return (
       <React.Fragment>
         <Navbar />
-        <div className="container">
+        <div className="container ">
           <h3 style={{ paddingLeft: '3%', paddingTop: '3%' }}>
             Darželių eilės
           </h3>

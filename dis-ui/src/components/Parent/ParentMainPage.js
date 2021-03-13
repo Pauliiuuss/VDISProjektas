@@ -47,23 +47,25 @@ export default class ParentMainPage extends Component {
     console.log(this.state.appStatus);
     console.log(this.state.allForms);
     return (
-      <div className="container mt-5">
+      <div className="container">
         <div className="row">
           <div className="col">
             {!this.state.appStatus.registrationClosed && (
               <Link
                 to="/dis-app/addform"
-                className="btn btn-success float-right"
+                className="btn btn-success float-right mt-5"
               >
                 Naujas prašymas
               </Link>
             )}
           </div>
         </div>
-        <div className="row">
-          <h3 className="text-secondary mb-3 col-8">Mano prašymai</h3>
+        <div className="row mt-5">
+          <h3 className="text-secondary col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+            Mano prašymai
+          </h3>
           <div
-            className="alert alert-secondary col mb-5 float-right"
+            className="alert alert-secondary col-12 col-sm-12 col-md-6 col-lg-6 mb-5 "
             hidden={!this.state.appStatus.registrationClosed}
           >
             Naujų prašymų pateikimas negalimas

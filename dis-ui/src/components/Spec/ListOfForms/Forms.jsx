@@ -180,7 +180,7 @@ class Forms extends Component {
                     .length !== 0 ? (
                     <button
                       onClick={this.props.handleConfirm}
-                      className="col-12 btn btn-lg btn-success m-1"
+                      className="col-12 btn btn-success m-1"
                     >
                       Sudaryti eiles
                     </button>

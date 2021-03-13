@@ -191,7 +191,7 @@ export default class AdminMainPage extends Component {
     const { name } = this.state;
     return (
       <React.Fragment>
-        <div className="container">
+        <div className="container mt-5">
           <div className="row">
             <div className="col-12 col-sm-12 col-md-4 col-lg-4">
               <strong className="fw-bold text-secondary">
@@ -324,7 +324,7 @@ export default class AdminMainPage extends Component {
                     ) : (
                       <button
                         onClick={(e) => this.handleSpecChange(e)}
-                        className="btn btn-sm btn-secondary col-12"
+                        className="btn btn-sm btn-secondary"
                         style={{ fontSize: '0.8rem' }}
                       >
                         Užrakinti
@@ -358,7 +358,7 @@ export default class AdminMainPage extends Component {
                 </div>
               )}
             </div>
-            <div className="col">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-6">
               <Users users={this.state.users} />
             </div>
           </div>

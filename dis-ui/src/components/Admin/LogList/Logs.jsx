@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import LogsTable from "./LogsTable";
-import _ from "lodash";
-import { paginate } from "../../utils/paginate";
-import SearchBoxForlogs from "../../utils/SearchBoxForLogs";
-import Pagination from "../../utils/pagination";
+import React, { Component } from 'react';
+import LogsTable from './LogsTable';
+import _ from 'lodash';
+import { paginate } from '../../utils/paginate';
+import SearchBoxForlogs from '../../utils/SearchBoxForLogs';
+import Pagination from '../../utils/pagination';
 
 export default class Logs extends Component {
   state = {
@@ -11,21 +11,21 @@ export default class Logs extends Component {
     currentPage: 1,
     pageSize: 12,
     length: 0,
-    dateSearchQuery: "",
-    timeSearchQuery: "",
-    userSearchQuery: "",
-    actionSearchQuery: "",
-    sortColumn: { path: "date", order: "desc" },
+    dateSearchQuery: '',
+    timeSearchQuery: '',
+    userSearchQuery: '',
+    actionSearchQuery: '',
+    sortColumn: { path: 'date', order: 'desc' },
   };
 
   handleSearch = (field, query) => {
     this.setState({ [field]: query, currentPage: 1 });
-    if (field === "dateSearchQuery" && (query === "" || query === null))
-      this.setState({ sortColumn: { path: "date", order: "desc" } });
+    if (field === 'dateSearchQuery' && (query === '' || query === null))
+      this.setState({ sortColumn: { path: 'date', order: 'desc' } });
   };
 
   handleSort = (sortColumn) => {
-    if (sortColumn.path === "time" && this.state.dateSearchQuery === "") return;
+    if (sortColumn.path === 'time' && this.state.dateSearchQuery === '') return;
     this.setState({ sortColumn, currentPage: 1 });
   };
 
@@ -64,14 +64,14 @@ export default class Logs extends Component {
 
     let sorted = _.orderBy(
       filtered,
-      [sortColumn.path, "date", "time"],
-      [sortColumn.order, "desc", "desc"]
+      [sortColumn.path, 'date', 'time'],
+      [sortColumn.order, 'desc', 'desc']
     );
-    if (sortColumn.path === "date")
+    if (sortColumn.path === 'date')
       sorted = _.orderBy(
         filtered,
-        [sortColumn.path, "time"],
-        [sortColumn.order, "desc"]
+        [sortColumn.path, 'time'],
+        [sortColumn.order, 'desc']
       );
 
     const logs = paginate(sorted, currentPage, pageSize);
@@ -82,7 +82,7 @@ export default class Logs extends Component {
   handleSelectChange = (e) => {
     const searchColumn = e.target.value;
     console.log(searchColumn);
-    this.setState({ searchColumn, searchQuery: "" });
+    this.setState({ searchColumn, searchQuery: '' });
   };
 
   render() {
@@ -101,53 +101,53 @@ export default class Logs extends Component {
 
     return (
       <div className="row">
-        <div className="col">
+        <div className="col mt-5">
           <div className="row">
-            <div className="col-6">
+            <div className="col-12 col-sm-12 col-md-6 col-lg-6">
               <h2 className="ml-3">Įvykių žurnalas</h2>
             </div>
-            <div className="col-6">
+            <div className="col-12 ol-sm-12 col-md-6 col-lg-6">
               <div className="form-group row">
-                <div className="col-3" style={{ paddingRight: "0" }}>
+                <div className="col-3" style={{ paddingRight: '0' }}>
                   <label className="text-right">Data:</label>
                 </div>
                 <div className="col-9">
                   <SearchBoxForlogs
-                    type={"date"}
+                    type={'date'}
                     value={dateSearchQuery}
-                    onChange={(e) => this.handleSearch("dateSearchQuery", e)}
+                    onChange={(e) => this.handleSearch('dateSearchQuery', e)}
                   />
                 </div>
-                <div className="col-3" style={{ paddingRight: "0" }}>
+                <div className="col-3" style={{ paddingRight: '0' }}>
                   <label className="text-right">Laikas:</label>
                 </div>
                 <div className="col-9">
                   <SearchBoxForlogs
-                    type={"time"}
+                    type={'time'}
                     value={timeSearchQuery}
-                    onChange={(e) => this.handleSearch("timeSearchQuery", e)}
+                    onChange={(e) => this.handleSearch('timeSearchQuery', e)}
                   />
                 </div>
-                <div className="col-3" style={{ paddingRight: "0" }}>
+                <div className="col-3" style={{ paddingRight: '0' }}>
                   <label className="text-right">Naudotojas:</label>
                 </div>
                 <div className="col-9">
                   <SearchBoxForlogs
-                    placeholder={" "}
-                    type={"text"}
+                    placeholder={' '}
+                    type={'text'}
                     value={userSearchQuery}
-                    onChange={(e) => this.handleSearch("userSearchQuery", e)}
+                    onChange={(e) => this.handleSearch('userSearchQuery', e)}
                   />
                 </div>
-                <div className="col-3" style={{ paddingRight: "0" }}>
+                <div className="col-3" style={{ paddingRight: '0' }}>
                   <label className="text-right">Veiksmas:</label>
                 </div>
                 <div className="col-9">
                   <SearchBoxForlogs
-                    placeholder={" "}
-                    type={"text"}
+                    placeholder={' '}
+                    type={'text'}
                     value={actionSearchQuery}
-                    onChange={(e) => this.handleSearch("actionSearchQuery", e)}
+                    onChange={(e) => this.handleSearch('actionSearchQuery', e)}
                   />
                 </div>
               </div>

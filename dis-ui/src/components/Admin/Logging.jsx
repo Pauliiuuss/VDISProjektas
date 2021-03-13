@@ -1,9 +1,8 @@
-import axios from "axios";
-import React, { Component } from "react";
-import AdminService from "../../services/admin.service";
-import AuthService from "../../services/auth.service";
-import Navbar from "../navbar.component";
-import Logs from "./LogList/Logs";
+import React, { Component } from 'react';
+import AdminService from '../../services/admin.service';
+import AuthService from '../../services/auth.service';
+import Navbar from '../navbar.component';
+import Logs from './LogList/Logs';
 
 class Logging extends Component {
   state = {
@@ -14,8 +13,8 @@ class Logging extends Component {
   async componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
 
-    if (!currentUser || !currentUser.roles.includes("ROLE_ADMIN")) {
-      this.props.history.push("/dis-app/");
+    if (!currentUser || !currentUser.roles.includes('ROLE_ADMIN')) {
+      this.props.history.push('/dis-app/');
       window.location.reload();
     }
     this.setState({
@@ -41,7 +40,7 @@ class Logging extends Component {
       <React.Fragment>
         <Navbar />
         <div className="container">
-          <div className="table mt-4">
+          <div className="table">
             <Logs loading={this.state.loading} logs={this.state.log} />
           </div>
         </div>
