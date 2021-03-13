@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import RenderInput from "./util/RenderInput";
 import { faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileArchive } from "@fortawesome/free-solid-svg-icons";
+import ReactTooltip from "react-tooltip";
+import { LINK } from "../../services/LINK";
 import {
   noNumbers,
   required,
@@ -8,9 +12,13 @@ import {
   validPhoneNumber,
 } from "../Parent/Validation";
 
+const API_URL = LINK + "/api/parent/";
+
 const Details = ({
   userData,
+  id,
   onSubmit,
+  handleDownload,
   message,
   successful,
   clearUpdateFormMessage,
@@ -119,6 +127,17 @@ const Details = ({
         >
           <div className="row">
             <button
+              data-tip
+              data-for="archiveDownload"
+              className="btn btn-secondary mx-2"
+              onClick={(e) => handleDownload(e, id)}
+            >
+              <FontAwesomeIcon icon={faFileArchive} />
+            </button>
+            <ReactTooltip id="archiveDownload" place="bottom" effect="solid">
+              Archyvuoti ir parsisiųsti duomenis
+            </ReactTooltip>
+            <button
               style={{ padding: "6px 6px" }}
               type="submit"
               className="btn btn-success mx-auto"
@@ -131,7 +150,7 @@ const Details = ({
             initialValue.email !== email ||
             +initialValue.phoneNum !== +phone ? (
               <button
-                className="btn btn-secondary"
+                className="btn btn-danger"
                 style={{ padding: "6px 8px", marginLeft: "10px" }}
                 onClick={handleCancel}
               >

@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
-import AuthService from '../../services/auth.service';
-import UserService from '../../services/user.service';
-import { vpassword } from '../Admin/Validation';
-import { Redirect } from 'react-router-dom';
-import Navbar from '../navbar.component';
-import Details from './Details';
-import Password from './Password';
+import React, { Component } from "react";
+import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
+import { vpassword } from "../Admin/Validation";
+import { Redirect } from "react-router-dom";
+import Navbar from "../navbar.component";
+import Details from "./Details";
+import Password from "./Password";
+import ParentService from "../../services/parent.service";
 
 class UserUpdateForm extends Component {
   state = {
@@ -132,6 +133,21 @@ class UserUpdateForm extends Component {
     );
   };
 
+  handleDownload = (e, id) => {
+    e.preventDefault();
+    if (this.state.userData.name !== null) {
+      ParentService.downloadUserData(id);
+      this.setState({
+        successfulDetails: true,
+      });
+    } else {
+      this.setState({
+        successfulDetails: false,
+        messageDetails: "Nėra archyvuojamų duomenų!",
+      });
+    }
+  };
+
   handlePasswordSubmit = async (
     e,
     currentUser,
@@ -202,6 +218,8 @@ class UserUpdateForm extends Component {
                 <Details
                   clearUpdateFormMessage={this.clearUpdateFormMessage}
                   userData={this.state.userData}
+                  handleDownload={this.handleDownload}
+                  id={this.state.currentUser.id}
                   onSubmit={this.handleSubmit}
                   message={this.state.messageDetails}
                   successful={this.state.successfulDetails}
