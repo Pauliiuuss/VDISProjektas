@@ -133,7 +133,7 @@ public class AdminService {
 	public List<Log> getLog() throws IOException {
 		List<Log> strings = new ArrayList<>();
 
-		BufferedReader bf = new BufferedReader(new FileReader(new File("app.log")));
+		BufferedReader bf = new BufferedReader(new FileReader(new File("tmp/app.log")));
 		while (bf.ready()) {
 			String[] data = bf.readLine().split("--");
 			if (data.length == 4) {

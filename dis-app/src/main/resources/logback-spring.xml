@@ -8,10 +8,12 @@
 				%m%n</pattern>
 		</encoder>
 	</appender>
+	
+	<property name="HOME_LOG" value="tmp/app.log"/>
 
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>app.log</file>
+		 <file>${HOME_LOG}</file>
 		<encoder
 			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>%d{yyyy-MM-dd -- HH:mm:ss} -- %msg%n</Pattern>
