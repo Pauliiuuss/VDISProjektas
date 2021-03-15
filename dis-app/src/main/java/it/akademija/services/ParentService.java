@@ -266,9 +266,9 @@ public class ParentService {
 
 	@Transactional
 	public ResponseEntity<?> deleteFormById(Long id) {
-		childFormRepository.deleteById(id);
 
 		ChildForm form = childFormRepository.findById(id).orElseThrow();
+		childFormRepository.deleteById(id);
 		Log.logMessage("Vaiko \"" + form.getName() + " " + form.getSurename() + "\" prašymas ištrintas.");
 		return ResponseEntity.ok(new MessageResponse("Forma ištrinta!"));
 	}
