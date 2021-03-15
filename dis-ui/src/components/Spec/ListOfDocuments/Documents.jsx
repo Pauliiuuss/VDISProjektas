@@ -93,19 +93,20 @@ export default class DocumentsList extends Component {
     return (
       <React.Fragment>
         <Navbar />
-
-        <div className="container mt-5 text-secondary">
-          <div className="mb-4 col-lg-4">
-            <h3 className="mb-4">Įkelti dokumentai sistemoje</h3>
-            <SearchBox value={searchQuery} onChange={this.handleSearch} />
+        <div className="container text-secondary mt-5">
+          <div className="row">
+            <div className="mb-4 col-lg-4">
+              <h3 className="mb-4">Įkelti dokumentai sistemoje</h3>
+              <SearchBox value={searchQuery} onChange={this.handleSearch} />
+            </div>
+            <DocumentsTable docs={documents} />
+            <Pagination
+              itemsCount={totalCount}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={this.handlePageChange}
+            />
           </div>
-          <DocumentsTable docs={documents} />
-          <Pagination
-            itemsCount={totalCount}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={this.handlePageChange}
-          />
         </div>
       </React.Fragment>
     );

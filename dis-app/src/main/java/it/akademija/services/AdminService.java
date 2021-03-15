@@ -1,6 +1,12 @@
 package it.akademija.services;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.akademija.models.AppStatus;
+import it.akademija.models.Log;
 import it.akademija.models.Role;
 import it.akademija.models.User;
 import it.akademija.models.enums.ERole;
@@ -21,7 +28,9 @@ import it.akademija.repository.AppStatusRepo;
 import it.akademija.repository.RoleRepository;
 import it.akademija.repository.UserDataRepository;
 import it.akademija.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class AdminService {
 
@@ -65,7 +74,13 @@ public class AdminService {
 		}
 
 		userRepository.save(user);
+		if (role.equals("ROLE_SPEC")) {
+			Log.logMessage("Administratorius", "Užregistravo švietimo specialistą: \"" + user.getUsername() + "\"");
+		} else {
 
+			Log.logMessage("Administratorius", "Užregistravo vaiko atstovą: \"" + user.getUsername() + "\"");
+
+		}
 		return ResponseEntity.ok(new MessageResponse("Naudotojas užregistruotas!"));
 	}
 
@@ -78,10 +93,12 @@ public class AdminService {
 
 	@Transactional
 	public ResponseEntity<?> deleteUser(Long id) {
+
 		userDataRepository.deleteByUser(userRepository.getOne(id));
 
 		userRepository.deleteById(id);
 
+		Log.logMessage("Administratorius", "Ištrynė naudotoją: \"" + userRepository.getOne(id).getUsername() + "\"");
 		return ResponseEntity.ok(new MessageResponse("Naudotojas ištrintas!"));
 	}
 
@@ -93,6 +110,7 @@ public class AdminService {
 
 		userRepository.save(user);
 
+		Log.logMessage("Administratorius", "Atstatė slaptažodį naudotojui: \"" + user.getUsername() + "\"");
 		return ResponseEntity.ok(new MessageResponse("Slaptažodis sėkmingai atstatytas"));
 	}
 
@@ -100,6 +118,7 @@ public class AdminService {
 		AppStatus appStatus = statusRepo.findAll().get(0);
 		appStatus.setSpecelistsDisabled(true);
 		statusRepo.save(appStatus);
+		Log.logMessage("Administratorius", "Švietimo specialistų funkcionalumas užrakintas");
 		return ResponseEntity.ok(new MessageResponse("Švietimo specialistų funkcionalumas užrakintas"));
 	}
 
@@ -107,7 +126,22 @@ public class AdminService {
 		AppStatus appStatus = statusRepo.findAll().get(0);
 		appStatus.setSpecelistsDisabled(false);
 		statusRepo.save(appStatus);
+		Log.logMessage("Administratorius", "Švietimo specialistų funkcionalumas atstatytas");
 		return ResponseEntity.ok(new MessageResponse("Švietimo specialistų funkcionalumas atstatytas"));
+	}
+
+	public List<Log> getLog() throws IOException {
+		List<Log> strings = new ArrayList<>();
+
+		BufferedReader bf = new BufferedReader(new FileReader(new File("tmp/app.log")));
+		while (bf.ready()) {
+			String[] data = bf.readLine().split("--");
+			if (data.length == 4) {
+				Log log = new Log(data[0].strip(), data[1].strip(), data[2].strip(), data[3].strip());
+				strings.add(log);
+			}
+		}
+		return strings;
 	}
 
 }

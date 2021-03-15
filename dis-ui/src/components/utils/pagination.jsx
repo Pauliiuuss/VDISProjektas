@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import _ from "lodash";
+import React from 'react';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
   const pagesCount = Math.ceil(itemsCount / pageSize);
@@ -15,7 +15,7 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
             <li
               key={page}
               className={
-                page === currentPage ? "page-item active" : "page-item"
+                page === currentPage ? 'page-item active' : 'page-item'
               }
             >
               <button className="page-link" onClick={() => onPageChange(page)}>
@@ -32,9 +32,9 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
         <ul className="pagination justify-content-center">
           {currentPage !== 1 && (
             <>
-              <li class="page-item">
+              <li className="page-item">
                 <button
-                  class="page-link"
+                  className="page-link"
                   onClick={() => onPageChange(currentPage - 1)}
                 >
                   Ankstesnis
@@ -44,7 +44,7 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
                 <li
                   key="lastPage"
                   className={
-                    1 === currentPage ? "page-item active" : "page-item"
+                    1 === currentPage ? 'page-item active' : 'page-item'
                   }
                 >
                   <button className="page-link" onClick={() => onPageChange(1)}>
@@ -55,8 +55,8 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
             </>
           )}
           {currentPage >= 4 && (
-            <li class="page-item disabled" hidden={currentPage < 4}>
-              <p class="page-link">...</p>
+            <li className="page-item disabled" hidden={currentPage < 4}>
+              <p className="page-link">...</p>
             </li>
           )}
           {pages
@@ -65,7 +65,7 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
               <li
                 key={page}
                 className={
-                  page === currentPage ? "page-item active" : "page-item"
+                  page === currentPage ? 'page-item active' : 'page-item'
                 }
               >
                 <button
@@ -77,15 +77,15 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
               </li>
             ))}
           {+pagesCount - +currentPage > 2 && (
-            <li class="page-item disabled">
-              <p class="page-link">...</p>
+            <li className="page-item disabled">
+              <p className="page-link">...</p>
             </li>
           )}
           {+pagesCount - +currentPage >= 2 && (
             <li
               key="lastPage"
               className={
-                pagesCount === currentPage ? "page-item active" : "page-item"
+                pagesCount === currentPage ? 'page-item active' : 'page-item'
               }
             >
               <button
@@ -97,9 +97,9 @@ const Pagination = ({ itemsCount, pageSize, currentPage, onPageChange }) => {
             </li>
           )}
           {pagesCount !== currentPage && (
-            <li class="page-item">
+            <li className="page-item">
               <button
-                class="page-link"
+                className="page-link"
                 onClick={() => onPageChange(currentPage + 1)}
               >
                 Sekantis

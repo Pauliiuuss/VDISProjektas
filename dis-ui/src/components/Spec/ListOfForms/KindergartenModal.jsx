@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
-import SpecService from "../../../services/spec.service";
-import Groups from "./ListOfGroups/Groups";
+import React, { useState } from 'react';
+import { useEffect } from 'react';
+import SpecService from '../../../services/spec.service';
+import Groups from './ListOfGroups/Groups';
 
 const KindergartenModal = ({ kindergarten, handleClose, show }) => {
-  const showHideClassName = show ? "modal display-block" : "modal display-none";
-  const [disabled] = useState(false);
+  const showHideClassName = show ? 'modal display-block' : 'modal display-none';
+  // const [disabled] = useState(false);
   const [data, setData] = useState([]);
   const [waitingList, setWaitingList] = useState([]);
 
@@ -15,7 +15,7 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
         console.log(response.data);
         setData(response.data);
         setWaitingList(
-          response.data["Laukiantys null"].filter(
+          response.data['Laukiantys null'].filter(
             (g) =>
               g.kindergartenPriority.kindergartenOne === kindergarten.name ||
               g.kindergartenPriority.kindergartenTwo === kindergarten.name ||
@@ -34,12 +34,12 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
   function handleConfirm() {
     if (
       window.confirm(
-        "Vaikų registracijų formu statusai bus pakiesti į PRIIMTAS arba EILĖJE negryštamai"
+        'Vaikų registracijų formu statusai bus pakiesti į PRIIMTAS arba EILĖJE negryštamai'
       )
     ) {
-      console.log("Confirmed");
+      console.log('Confirmed');
     }
-    console.log("Approved");
+    console.log('Approved');
   }
 
   return (
@@ -60,13 +60,13 @@ const KindergartenModal = ({ kindergarten, handleClose, show }) => {
                 <div
                   key={
                     g.name +
-                    " " +
+                    ' ' +
                     g.age +
-                    " " +
+                    ' ' +
                     g.capasity +
-                    " " +
+                    ' ' +
                     g.kindergarten +
-                    " " +
+                    ' ' +
                     g.id
                   }
                 >

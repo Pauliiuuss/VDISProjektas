@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import KindergartenTable from "./KindergartenTable";
-import { paginate } from "../../utils/paginate";
-import Pagination from "../../utils/pagination";
-import _ from "lodash";
-import SearchBox from "../../utils/SearchBox";
+import React, { Component } from 'react';
+import KindergartenTable from './KindergartenTable';
+import { paginate } from '../../utils/paginate';
+import Pagination from '../../utils/pagination';
+import _ from 'lodash';
+import SearchBox from '../../utils/SearchBox';
 
 class Kindergartens extends Component {
   state = {
@@ -11,8 +11,8 @@ class Kindergartens extends Component {
     currentPage: 1,
     pageSize: 5,
     length: 0,
-    searchQuery: "",
-    sortColumn: { path: "id", order: "asc" },
+    searchQuery: '',
+    sortColumn: { path: 'id', order: 'asc' },
   };
 
   handleSearch = (query) => {
@@ -56,7 +56,7 @@ class Kindergartens extends Component {
       <div className="row">
         <div className="col">
           <p>
-            Duomenų bazėje {count} registruotų vaikų darželių. Rodomi{" "}
+            Duomenų bazėje {count} registruotų vaikų darželių. Rodomi{' '}
             {totalCount} pagal paieškos kriterijų.
           </p>
           <SearchBox value={searchQuery} onChange={this.handleSearch} />

@@ -1,11 +1,12 @@
-import React, { Component } from "react";
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
-import logo from "../img/logo.png";
+import React, { Component } from 'react';
+import Form from 'react-validation/build/form';
+import Input from 'react-validation/build/input';
+import CheckButton from 'react-validation/build/button';
+import logo from '../img/logo.png';
+import UserGide from './UserGide';
 
-import AuthService from "../services/auth.service";
-import { Redirect } from "react-router-dom";
+import AuthService from '../services/auth.service';
+import { Redirect } from 'react-router-dom';
 
 const required = (value) => {
   if (!value) {
@@ -13,7 +14,7 @@ const required = (value) => {
       <div
         className="alert alert-danger text-center px-0 py-2"
         role="alert"
-        style={{ fontSize: "9px" }}
+        style={{ fontSize: '9px' }}
       >
         Privalomi laukai turi būti užpildyti!
       </div>
@@ -23,12 +24,12 @@ const required = (value) => {
 
 export default class Login extends Component {
   state = {
-    username: "",
-    password: "",
+    username: '',
+    password: '',
     loading: false,
-    message: "",
-    currentUser: "",
-    redirect: "",
+    message: '',
+    currentUser: '',
+    redirect: '',
   };
 
   onChangeUsername = (e) => {
@@ -47,7 +48,7 @@ export default class Login extends Component {
     e.preventDefault();
 
     this.setState({
-      message: "",
+      message: '',
       loading: true,
     });
 
@@ -56,11 +57,11 @@ export default class Login extends Component {
     if (this.checkBtn.context._errors.length === 0) {
       await AuthService.login(this.state.username, this.state.password).then(
         () => {
-          this.props.history.push("/dis-app/home");
+          this.props.history.push('/dis-app/home');
           window.location.reload();
         },
         (error) => {
-          const resMessage = "Neteisingas prisijungimo vardas ar slaptažodis!";
+          const resMessage = 'Neteisingas prisijungimo vardas ar slaptažodis!';
 
           this.setState({
             loading: false,
@@ -76,8 +77,8 @@ export default class Login extends Component {
   };
 
   render() {
-    if (sessionStorage.getItem("user"))
-      return <Redirect to={"/dis-app/home"} />;
+    if (sessionStorage.getItem('user'))
+      return <Redirect to={'/dis-app/home'} />;
 
     return (
       <div className="container col-12 col-sm-12 col-md-6 col-lg-6">
@@ -85,17 +86,17 @@ export default class Login extends Component {
           <div
             className="mx-auto block "
             style={{
-              width: "30rem",
-              marginTop: "5rem",
-              backgroundColor: "#E2E2E2",
-              paddingBottom: "1rem",
+              width: '30rem',
+              marginTop: '5rem',
+              backgroundColor: '#E2E2E2',
+              paddingBottom: '1rem',
             }}
           >
             <img
               src={logo}
               alt="logo"
               className="img-fluid"
-              style={{ width: "30rem" }}
+              style={{ width: '30rem' }}
             />
             <Form
               onSubmit={this.handleLogin}
@@ -105,7 +106,7 @@ export default class Login extends Component {
             >
               <div
                 className="form-group mx-auto mt-3"
-                style={{ width: "10rem" }}
+                style={{ width: '10rem' }}
               >
                 <label htmlFor="username">Prisijungimo vardas</label>
                 <Input
@@ -118,7 +119,7 @@ export default class Login extends Component {
                 />
               </div>
 
-              <div className="form-group mx-auto" style={{ width: "10rem" }}>
+              <div className="form-group mx-auto" style={{ width: '10rem' }}>
                 <label htmlFor="password">Slaptažodis</label>
                 <Input
                   type="password"
@@ -150,12 +151,15 @@ export default class Login extends Component {
                 </div>
               )}
               <CheckButton
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
                 ref={(c) => {
                   this.checkBtn = c;
                 }}
               />
             </Form>
+            <div className="text-center">
+              <UserGide />
+            </div>
           </div>
         </div>
       </div>

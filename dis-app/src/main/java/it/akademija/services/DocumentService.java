@@ -1,12 +1,10 @@
 package it.akademija.services;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import it.akademija.payload.request.DocumentDownloadRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.akademija.models.Document;
+import it.akademija.models.Log;
 import it.akademija.models.User;
+import it.akademija.payload.request.DocumentDownloadRequest;
 import it.akademija.payload.request.DocumentRequest;
 import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.DocumentRepository;
@@ -51,6 +51,7 @@ public class DocumentService {
 		doc.setUploadDate(new Date());
 		documentRepository.save(doc);
 
+		Log.logMessage("Failas įkeltas.");
 		return ResponseEntity.ok().body(new MessageResponse("Failas įkeltas sėkmingai!"));
 
 	}

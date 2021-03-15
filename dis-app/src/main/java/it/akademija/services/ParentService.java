@@ -1,9 +1,18 @@
 package it.akademija.services;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
 
+import java.io.*;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Date;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+import it.akademija.payload.request.UserDataDownloadRequest;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +21,7 @@ import it.akademija.models.AppStatus;
 import it.akademija.models.ChildForm;
 import it.akademija.models.Group;
 import it.akademija.models.KindergartenPriority;
+import it.akademija.models.Log;
 import it.akademija.models.SecondParent;
 import it.akademija.models.User;
 import it.akademija.models.UserData;
@@ -30,6 +40,7 @@ import it.akademija.repository.UserRepository;
 
 @Service
 public class ParentService {
+
 
 	@Autowired
 	private FormStatusRepository formrepo;
@@ -62,7 +73,7 @@ public class ParentService {
 				.map(isdb -> new ChildFormRequest(isdb.getId(), isdb.getName(), isdb.getSurename(), isdb.getBirthDate(),
 						isdb.getAddress(), isdb.getCity(), isdb.getPersonId(), isdb.isInCity(), isdb.isAdopted(),
 						isdb.isThreeOrMore(), isdb.isParentStudent(), isdb.isHandicapped(), isdb.getParentData(),
-						isdb.getSecondParentData(), isdb.getKindergartenPriority(), isdb.getPostDate()))
+						isdb.getSecondParentData(), isdb.getKindergartenPriority(), isdb.getPostDate(), isdb.getGroup(), isdb.getFormStatus()))
 				.collect(Collectors.toList());
 	}
 
@@ -153,24 +164,25 @@ public class ParentService {
 		kinderSelection.setChildForm(newForm);
 		kindergartenPriorityRepository.save(kinderSelection);
 
+		Log.logMessage("Vaiko \"" + childFormRequest.getName() + " " + childFormRequest.getSurename()
+				+ "\" prašymas užregistruotas.");
 		return ResponseEntity.ok(new MessageResponse("Prašymas užregistruotas!"));
 
 	}
 
 	public Collection<ChildForm> getForms(Long id) {
 		return userDataRepository.findByUser(userRepository.getOne(id)).orElse(new UserData()).getChildForms();
-//		return childFormRepository.findAllByParentData(userDataRepository.getOne(id));
 	}
 
 	public ResponseEntity<?> updateForm(Long id, ChildFormRequest childFormRequest) {
 		if (childFormRequest.getKindergartenPriority().getKindergartenOne() == null
 				|| childFormRequest.getKindergartenPriority().getKindergartenOne().equals("") || childFormRequest
-						.getKindergartenPriority().getKindergartenOne().equals("Pasirinkti darželį iš sąrašo..."))
+				.getKindergartenPriority().getKindergartenOne().equals("Pasirinkti darželį iš sąrašo..."))
 			return ResponseEntity.badRequest().body(new MessageResponse("Privaloma pasirinkti pirma prioriteta!"));
 
 		System.out.println("++++++++++++++++++++++" + id + "form is: " + childFormRequest);
 
-		ChildForm newForm = childFormRepository.getOne(id);
+		ChildForm newForm = childFormRepository.findById(id).orElseThrow();
 
 		newForm.setPersonId(childFormRequest.getPersonId());
 		newForm.setName(childFormRequest.getName());
@@ -187,7 +199,7 @@ public class ParentService {
 		newForm.setPostDate(childFormRequest.getPostDate());
 		newForm.setFormStatus(formrepo.findByName(EFormStatus.PATEIKTAS).get());
 
-		User currentUser = userRepository.getOne(childFormRequest.getIdFront());
+		User currentUser = userRepository.findById(childFormRequest.getIdFront()).orElseThrow();
 
 		UserData newData = currentUser.getUserData();
 
@@ -247,92 +259,65 @@ public class ParentService {
 		kinderSelection.setChildForm(newForm);
 		kindergartenPriorityRepository.save(kinderSelection);
 
+		Log.logMessage("Vaiko \"" + childFormRequest.getName() + " " + childFormRequest.getSurename()
+				+ "\" prašymas atnaujintas.");
 		return ResponseEntity.ok(new MessageResponse("Forma užregistruota!"));
 	}
 
 	@Transactional
 	public ResponseEntity<?> deleteFormById(Long id) {
-		childFormRepository.deleteById(id);
 
+		ChildForm form = childFormRepository.findById(id).orElseThrow();
+		childFormRepository.deleteById(id);
+		Log.logMessage("Vaiko \"" + form.getName() + " " + form.getSurename() + "\" prašymas ištrintas.");
 		return ResponseEntity.ok(new MessageResponse("Forma ištrinta!"));
 	}
-//
-//    @Transactional
-//    public void addForm(ChildFormRequest childFormInfo){
-//        ChildForm checkEx = childFormRepository.findAll().stream()
-//                .filter(isdb -> isdb.getName().equals(childFormInfo.getName()) &&
-//                        isdb.getSurename().equals(childFormInfo.getSurename()) &&
-//                        isdb.getAddress().equals(childFormInfo.getAddress()) &&
-//                        isdb.getBirthDate().equals(childFormInfo.getBirthDate()))
-//                .findFirst()
-//                .orElse(null);
-//        if(checkEx != null){
-//            throw new IllegalArgumentException("Tokia forma jau egzistuoja, redaguokite senaja.");
-//        } else {
-//            this.newForm = new ChildForm(
-//                    childFormInfo.getName(),
-//                    childFormInfo.getSurename(),
-//                    childFormInfo.getBirthDate(),
-//                    childFormInfo.getAddress(),
-//                    childFormInfo.getCity(),
-//                    childFormInfo.isInCity(),
-//                    childFormInfo.isAdopted(),
-//                    childFormInfo.isThreeOrMore(),
-//                    childFormInfo.isParentStudent(),
-//                    childFormInfo.isHandicapped());
-//            childFormRepository.save(newForm);
-//        }
-//    }
-//
-//    @Transactional
-//    public void addParentData(UserDataRequest parentDataInfo){
-//        UserData userDataEx = userDataRepository.findAll().stream()
-//                .filter(isdb -> isdb.getName().equals(parentDataInfo.getName()) &&
-//                        isdb.getSurename().equals(parentDataInfo.getSurename()))
-//                .findFirst()
-//                .orElse(null);
-//        if(userDataEx != null){
-//            userDataEx.setName(parentDataInfo.getName());
-//            userDataEx.setSurename(parentDataInfo.getSurename());
-//            userDataEx.setAddress(parentDataInfo.getAddress());
-//            userDataEx.setCity(parentDataInfo.getCity());
-//            userDataEx.setPhoneNum(parentDataInfo.getPhoneNum());
-//            userDataEx.setEmail(parentDataInfo.getEmail());
-//            userDataEx.addChildForms(newForm);
-//        } else {
-//            this.newData = new UserData(
-//                    parentDataInfo.getName(),
-//                    parentDataInfo.getSurename(),
-//                    parentDataInfo.getPersonId(),
-//                    parentDataInfo.getAddress(),
-//                    parentDataInfo.getCity(),
-//                    parentDataInfo.getPhoneNum(),
-//                    parentDataInfo.getEmail());
-//            newData.addChildForms(childFormRepository.findById(newForm.getId()).orElse(null));
-//            userDataRepository.save(newData);
-//            ChildForm setUserData = childFormRepository.findById(newForm.getId()).orElse(null);
-//            setUserData.setParentData(userDataRepository.findById(newData.getId()).orElse(null));
-//        }
-//    }
-//
-//    @Transactional
-//    public void addKindergartenPriorities(KindergartenPriorityRequest kindergartenPriorityInfo){
-//        this.newKinder = new KindergartenPriority(
-//                kindergartenPriorityInfo.getKindergartenOne(),
-//                kindergartenPriorityInfo.getKindergartenTwo(),
-//                kindergartenPriorityInfo.getKindergartenThree(),
-//                kindergartenPriorityInfo.getKindergartenFour(),
-//                kindergartenPriorityInfo.getKindergartenFive());
-//                kindergartenPriorityInfo.setChildForm(childFormRepository.findById(newForm.getId()).orElse(null));
-//        kindergartenPriorityRepository.save(newKinder);
-//        ChildForm setKinderPriority = childFormRepository.findById(newForm.getId()).orElse(null);
-//        setKinderPriority.setKindergartenPriority(kindergartenPriorityRepository.findById(newKinder.getId()).orElse(null));
-//
-//    }
+
 
 	@Transactional
 	public AppStatus getStatus() {
 		AppStatus status = appStatusRepo.findAll().get(0);
 		return status;
+	}
+
+	@Transactional
+	public ResponseEntity<?> downloadUserData(Long id) throws IOException {
+		UserData isdb = userRepository.getOne(id).getUserData();
+		if(isdb == null){
+			return ResponseEntity.badRequest().body(new MessageResponse("Galimų archyvuoti duomenų nerasta."));
+		} else {
+			UserDataDownloadRequest request = new UserDataDownloadRequest(isdb.getName(), isdb.getSurename(), isdb.getPersonId()
+					, isdb.getAddress(), isdb.getCity(), isdb.getPhoneNum(), isdb.getEmail());
+
+			String nameInZip = userRepository.getOne(id).getUsername() + "_duomenys_";
+			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+			BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
+			ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
+
+			File file = File.createTempFile(nameInZip, ".json");
+			try (Writer writer = new BufferedWriter(new FileWriter(file))) {
+				writer.write(request.toString());
+			}
+
+			zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+			FileInputStream fileInputStream = new FileInputStream(file);
+
+			IOUtils.copy(fileInputStream, zipOutputStream);
+
+			fileInputStream.close();
+			zipOutputStream.closeEntry();
+
+			zipOutputStream.finish();
+			zipOutputStream.flush();
+			IOUtils.closeQuietly(zipOutputStream);
+			IOUtils.closeQuietly(bufferedOutputStream);
+			IOUtils.closeQuietly(byteArrayOutputStream);
+
+			byte[] bytes = byteArrayOutputStream.toByteArray();
+
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + isdb.getUser().getUsername() + "_archyvuotiDuomenys_" + LocalDate.now() +".zip")
+					.body(bytes);
+		}
 	}
 }

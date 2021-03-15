@@ -1,6 +1,8 @@
 package it.akademija.controller;
 
+import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.akademija.models.Log;
 import it.akademija.payload.request.PasswordResetRequest;
 import it.akademija.payload.request.RegisterRequest;
 import it.akademija.payload.request.UserRequest;
@@ -62,6 +65,12 @@ public class AdminController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> enableAllSpec() {
 		return adminService.enableAllSpec();
+	}
+
+	@GetMapping("/log")
+	@PreAuthorize("hasRole('ADMIN')")
+	public List<Log> getLog() throws IOException {
+		return adminService.getLog();
 	}
 
 }

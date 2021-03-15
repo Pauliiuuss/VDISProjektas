@@ -1,8 +1,12 @@
 package it.akademija.controller;
 
+import java.io.IOException;
 import java.util.Collection;
+import java.util.Date;
 
+import it.akademija.services.ChildFormService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -76,6 +80,11 @@ public class ParentController {
 	@PreAuthorize("hasRole('PARENT') or hasRole('ADMIN') or hasRole('SPEC')")
 	public AppStatus getStatus() {
 		return parentService.getStatus();
+	}
+
+	@GetMapping(value = "/archivedata/{id}", produces = "application/zip")
+	public ResponseEntity<?> downloadUserData(@PathVariable Long id) throws IOException {
+		return parentService.downloadUserData(id);
 	}
 
 }

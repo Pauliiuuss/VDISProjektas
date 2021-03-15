@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import Navbar from "../navbar.component";
-import SpecService from "../../services/spec.service";
-import Forms from "./ListOfForms/Forms";
-import KindergartenModal from "./ListOfForms/KindergartenModal";
-import specService from "../../services/spec.service";
-import AuthService from "../../services/auth.service";
-import { Redirect } from "react-router-dom";
-import swal from "sweetalert";
+import React, { useEffect, useState } from 'react';
+import Navbar from '../navbar.component';
+import SpecService from '../../services/spec.service';
+import Forms from './ListOfForms/Forms';
+import specService from '../../services/spec.service';
+import AuthService from '../../services/auth.service';
+import { Redirect } from 'react-router-dom';
+import swal from 'sweetalert';
 
 const ChildFormsQueue = () => {
   const [forms, setForms] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [current, setCurrent] = useState(0);
-  const [showModal, setShowModal] = useState(false);
-  const [kindergarten, setKindergarten] = useState("");
+  // const [showModal, setShowModal] = useState(false);
+  // const [kindergarten, setKindergarten] = useState("");
   const [fromsLoading, setFromsLoading] = useState(true);
   const [redirctTo, setRedirctTo] = useState(false);
 
@@ -23,13 +23,13 @@ const ChildFormsQueue = () => {
       console.log(response);
     });
     const currentUser = AuthService.getCurrentUser();
-    console.log("Roles: " + currentUser.roles);
-    console.log("CurentUser: " + currentUser.roles);
+    console.log('Roles: ' + currentUser.roles);
+    console.log('CurentUser: ' + currentUser.roles);
     if (!currentUser) {
       setRedirctTo(true);
     }
-    if (!currentUser.roles.includes("ROLE_SPEC")) {
-      console.log("Does not have role SPEC");
+    if (!currentUser.roles.includes('ROLE_SPEC')) {
+      console.log('Does not have role SPEC');
       setRedirctTo(true);
     }
   }, [current]);
@@ -39,14 +39,14 @@ const ChildFormsQueue = () => {
     console.log(fromsLoading);
 
     swal({
-      title: "Ar jūs tikrai to norite?",
+      title: 'Ar jūs tikrai to norite?',
       text:
-        "Vaikų registracijų formų statusai bus pakeisti į PRIIMTAS arba EILĖJE negrįžtamai! Tai gali užtrukti.",
-      icon: "info",
-      buttons: ["Atšaukti", "Sudaryti"],
+        'Vaikų registracijų formų statusai bus pakeisti į PRIIMTAS arba EILĖJE negrįžtamai! Tai gali užtrukti.',
+      icon: 'info',
+      buttons: ['Atšaukti', 'Sudaryti'],
     }).then((willDelete) => {
       if (willDelete) {
-        console.log("Confirmed");
+        console.log('Confirmed');
         SpecService.confirmQueue().then(
           (response) => {
             console.log(response);
@@ -62,7 +62,7 @@ const ChildFormsQueue = () => {
           }
         );
       } else {
-        console.log("Canceled");
+        console.log('Canceled');
         SpecService.getForms(current).then((response) => {
           setForms(response.data);
           setFromsLoading(false);
@@ -112,8 +112,8 @@ const ChildFormsQueue = () => {
     return (
       <React.Fragment>
         <Navbar />
-        <div className="container">
-          <h3 style={{ paddingLeft: "3%", paddingTop: "3%" }}>
+        <div className="container ">
+          <h3 style={{ paddingLeft: '3%', paddingTop: '3%' }}>
             Darželių eilės
           </h3>
           <div>

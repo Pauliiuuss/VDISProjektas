@@ -19,8 +19,12 @@ class ParentService {
     });
   }
 
-  getAllForms(id) {
+  getFormsById(id) {
     return axios.get(API_URL + "getforms/" + id, { headers: authHeader() });
+  }
+
+  getAllForms() {
+    return axios.get(API_URL + "allforms", { headers: authHeader() });
   }
 
   deleteFormById(id) {
@@ -29,6 +33,25 @@ class ParentService {
 
   appStatus() {
     return axios.get(API_URL + "appstatus", { headers: authHeader() });
+  }
+
+  downloadUserData(id) {
+    fetch(API_URL + "archivedata/" + id, {
+      method: "GET",
+      headers: authHeader(),
+    }).then((response) => {
+      console.log(response);
+      response.blob().then((blob) => {
+        console.log(blob);
+        var binaryData = [];
+        binaryData.push(blob);
+        var url = API_URL + "archivedata/" + id;
+        var a = document.createElement("a");
+        a.href = url;
+        a.click();
+        a.remove();
+      });
+    });
   }
 }
 export default new ParentService();

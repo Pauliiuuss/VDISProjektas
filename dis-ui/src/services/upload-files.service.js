@@ -14,6 +14,7 @@ class UploadFilesService {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
+      // eslint-disable-next-line no-dupe-keys
       headers: authHeader(),
       onUploadProgress,
     });

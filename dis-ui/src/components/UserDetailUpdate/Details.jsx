@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from "react";
-import RenderInput from "./util/RenderInput";
-import { faUser, faPhone, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from 'react';
+import RenderInput from './util/RenderInput';
+import AuthService from '../../services/auth.service';
+import { faUser, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFileArchive } from '@fortawesome/free-solid-svg-icons';
+import ReactTooltip from 'react-tooltip';
 import {
   noNumbers,
   required,
   validEmail,
   validPhoneNumber,
-} from "../Parent/Validation";
+} from '../Parent/Validation';
 
 const Details = ({
   userData,
+  id,
   onSubmit,
+  handleDownload,
   message,
   successful,
   clearUpdateFormMessage,
@@ -44,14 +50,16 @@ const Details = ({
     setInitialValue(userData);
   }, [userData]);
 
+  const currentUser = AuthService.getCurrentUser();
+
   return (
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <h2 className={"m-3 text-secondary"}>Mano duomenys</h2>
+    <div style={{ textAlign: 'center', marginTop: '100px' }}>
+      <h2 className={'m-3 text-secondary'}>Mano duomenys</h2>
       <form onSubmit={(e) => onSubmit(e, name, surname, phone, email)}>
         <div className="form-group">
           <RenderInput
-            inputPlaceholder={"Vardas"}
-            type={"text"}
+            inputPlaceholder={'Vardas'}
+            type={'text'}
             forItem={name}
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -60,8 +68,8 @@ const Details = ({
             mandatory={true}
           />
           <RenderInput
-            inputPlaceholder={"Pavardė"}
-            type={"text"}
+            inputPlaceholder={'Pavardė'}
+            type={'text'}
             forItem={surname}
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
@@ -70,26 +78,26 @@ const Details = ({
             mandatory={true}
           />
           <RenderInput
-            inputPlaceholder={"Tel"}
-            type={"number"}
+            inputPlaceholder={'Tel'}
+            type={'number'}
             forItem={phone}
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             icon={faPhone}
             disNumInputSymbols={(evt) =>
-              (evt.key === "e" && evt.preventDefault()) ||
-              (evt.key === "E" && evt.preventDefault()) ||
-              (evt.key === "," && evt.preventDefault()) ||
-              (evt.key === "=" && evt.preventDefault()) ||
-              (evt.key === "-" && evt.preventDefault()) ||
-              (evt.key === "." && evt.preventDefault())
+              (evt.key === 'e' && evt.preventDefault()) ||
+              (evt.key === 'E' && evt.preventDefault()) ||
+              (evt.key === ',' && evt.preventDefault()) ||
+              (evt.key === '=' && evt.preventDefault()) ||
+              (evt.key === '-' && evt.preventDefault()) ||
+              (evt.key === '.' && evt.preventDefault())
             }
             span={
               <span
                 className="input-group-text"
                 style={{
-                  fontSize: "12px",
-                  fontWeight: "bold",
+                  fontSize: '12px',
+                  fontWeight: 'bold',
                   padding: 4,
                 }}
               >
@@ -100,8 +108,8 @@ const Details = ({
             mandatory={true}
           />
           <RenderInput
-            inputPlaceholder={"El.paštas"}
-            type={"text"}
+            inputPlaceholder={'El.paštas'}
+            type={'text'}
             forItem={email}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -112,14 +120,33 @@ const Details = ({
         </div>
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <div className="row">
+            {currentUser.roles.includes('ROLE_PARENT') && (
+              <React.Fragment>
+                <button
+                  data-tip
+                  data-for="archiveDownload"
+                  className="btn btn-secondary mx-2"
+                  onClick={(e) => handleDownload(e, id)}
+                >
+                  <FontAwesomeIcon icon={faFileArchive} />
+                </button>
+                <ReactTooltip
+                  id="archiveDownload"
+                  place="bottom"
+                  effect="solid"
+                >
+                  Archyvuoti ir parsisiųsti duomenis
+                </ReactTooltip>
+              </React.Fragment>
+            )}
             <button
-              style={{ padding: "6px 6px" }}
+              style={{ padding: '6px 6px' }}
               type="submit"
               className="btn btn-success mx-auto"
               disabled={getButtonState()}
@@ -131,14 +158,14 @@ const Details = ({
             initialValue.email !== email ||
             +initialValue.phoneNum !== +phone ? (
               <button
-                className="btn btn-secondary"
-                style={{ padding: "6px 8px", marginLeft: "10px" }}
+                className="btn btn-danger"
+                style={{ padding: '6px 8px', marginLeft: '10px' }}
                 onClick={handleCancel}
               >
                 Atšaukti
               </button>
             ) : (
-              ""
+              ''
             )}
           </div>
         </div>
@@ -146,7 +173,7 @@ const Details = ({
           <div className="form-group m-3">
             <div
               className={
-                successful ? "alert alert-success" : "alert alert-danger"
+                successful ? 'alert alert-success' : 'alert alert-danger'
               }
               role="alert"
             >
