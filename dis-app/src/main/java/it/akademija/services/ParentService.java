@@ -1,15 +1,19 @@
 package it.akademija.services;
 
-
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import it.akademija.payload.request.UserDataDownloadRequest;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -28,6 +32,7 @@ import it.akademija.models.UserData;
 import it.akademija.models.enums.EFormStatus;
 import it.akademija.payload.request.ChildFormRequest;
 import it.akademija.payload.request.KindergartenRequest;
+import it.akademija.payload.request.UserDataDownloadRequest;
 import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.AppStatusRepo;
 import it.akademija.repository.ChildFormRepository;
@@ -40,7 +45,6 @@ import it.akademija.repository.UserRepository;
 
 @Service
 public class ParentService {
-
 
 	@Autowired
 	private FormStatusRepository formrepo;
@@ -73,7 +77,8 @@ public class ParentService {
 				.map(isdb -> new ChildFormRequest(isdb.getId(), isdb.getName(), isdb.getSurename(), isdb.getBirthDate(),
 						isdb.getAddress(), isdb.getCity(), isdb.getPersonId(), isdb.isInCity(), isdb.isAdopted(),
 						isdb.isThreeOrMore(), isdb.isParentStudent(), isdb.isHandicapped(), isdb.getParentData(),
-						isdb.getSecondParentData(), isdb.getKindergartenPriority(), isdb.getPostDate(), isdb.getGroup(), isdb.getFormStatus()))
+						isdb.getSecondParentData(), isdb.getKindergartenPriority(), isdb.getPostDate(), isdb.getGroup(),
+						isdb.getFormStatus()))
 				.collect(Collectors.toList());
 	}
 
@@ -177,7 +182,7 @@ public class ParentService {
 	public ResponseEntity<?> updateForm(Long id, ChildFormRequest childFormRequest) {
 		if (childFormRequest.getKindergartenPriority().getKindergartenOne() == null
 				|| childFormRequest.getKindergartenPriority().getKindergartenOne().equals("") || childFormRequest
-				.getKindergartenPriority().getKindergartenOne().equals("Pasirinkti darželį iš sąrašo..."))
+						.getKindergartenPriority().getKindergartenOne().equals("Pasirinkti darželį iš sąrašo..."))
 			return ResponseEntity.badRequest().body(new MessageResponse("Privaloma pasirinkti pirma prioriteta!"));
 
 		System.out.println("++++++++++++++++++++++" + id + "form is: " + childFormRequest);
@@ -198,7 +203,7 @@ public class ParentService {
 		newForm.setParentData(childFormRequest.getParentData());
 		newForm.setPostDate(childFormRequest.getPostDate());
 		newForm.setFormStatus(formrepo.findByName(EFormStatus.PATEIKTAS).get());
-
+		System.out.println(childFormRequest.getIdFront() + " ------_______---_______--_______---______-----");
 		User currentUser = userRepository.findById(childFormRequest.getIdFront()).orElseThrow();
 
 		UserData newData = currentUser.getUserData();
@@ -273,7 +278,6 @@ public class ParentService {
 		return ResponseEntity.ok(new MessageResponse("Forma ištrinta!"));
 	}
 
-
 	@Transactional
 	public AppStatus getStatus() {
 		AppStatus status = appStatusRepo.findAll().get(0);
@@ -283,11 +287,11 @@ public class ParentService {
 	@Transactional
 	public ResponseEntity<?> downloadUserData(Long id) throws IOException {
 		UserData isdb = userRepository.getOne(id).getUserData();
-		if(isdb == null){
+		if (isdb == null) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Galimų archyvuoti duomenų nerasta."));
 		} else {
-			UserDataDownloadRequest request = new UserDataDownloadRequest(isdb.getName(), isdb.getSurename(), isdb.getPersonId()
-					, isdb.getAddress(), isdb.getCity(), isdb.getPhoneNum(), isdb.getEmail());
+			UserDataDownloadRequest request = new UserDataDownloadRequest(isdb.getName(), isdb.getSurename(),
+					isdb.getPersonId(), isdb.getAddress(), isdb.getCity(), isdb.getPhoneNum(), isdb.getEmail());
 
 			String nameInZip = userRepository.getOne(id).getUsername() + "_duomenys_";
 			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -315,9 +319,8 @@ public class ParentService {
 
 			byte[] bytes = byteArrayOutputStream.toByteArray();
 
-			return ResponseEntity.ok()
-					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + isdb.getUser().getUsername() + "_archyvuotiDuomenys_" + LocalDate.now() +".zip")
-					.body(bytes);
+			return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="
+					+ isdb.getUser().getUsername() + "_archyvuotiDuomenys_" + LocalDate.now() + ".zip").body(bytes);
 		}
 	}
 }

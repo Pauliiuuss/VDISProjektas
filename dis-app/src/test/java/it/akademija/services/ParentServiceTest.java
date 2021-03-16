@@ -36,6 +36,7 @@ import it.akademija.repository.AppStatusRepo;
 import it.akademija.repository.ChildFormRepository;
 import it.akademija.repository.FormStatusRepository;
 import it.akademija.repository.GroupRepository;
+import it.akademija.repository.KindergartenPriorityRepository;
 import it.akademija.repository.KindergartenRepository;
 import it.akademija.repository.SecondParentRepository;
 import it.akademija.repository.UserDataRepository;
@@ -71,6 +72,9 @@ class ParentServiceTest {
 
 	@MockBean
 	private SecondParentRepository secondParentRepository;
+
+	@MockBean
+	private KindergartenPriorityRepository kindergartenPriorityRepository;
 
 	@Test
 	void testGetKindergartens() {
@@ -136,50 +140,36 @@ class ParentServiceTest {
 		assertEquals(400, parentService.addForm(request2).getStatusCodeValue());
 		assertEquals(400, parentService.addForm(request3).getStatusCodeValue());
 
+		UserData data = new UserData(1L, "name1", "surename1", 1L, "Address1", "city1", 123L, "email1");
 		ChildFormRequest request01 = new ChildFormRequest(1L, "name1", "surename1", new Date(1514757600000L),
-				"address1", "city1", 1L, true, true, true, true, true, null, null, null, new Date(1614504968824L));
-		ChildFormRequest request02 = new ChildFormRequest(2L, "name1", "surename1", new Date(1514757600000L),
-				"address1", "city1", 2L, true, true, true, true, true, null, null, null, new Date(1614504968824L));
-		ChildFormRequest request03 = new ChildFormRequest(3L, "name1", "surename1", new Date(1514757600000L),
-				"address1", "city1", 3L, true, true, true, true, true, null, null, null, new Date(1614504968824L));
+				"address1", "city1", 1L, true, true, true, true, true, data, null, null, new Date(1614504968824L));
 		KindergartenPriority priority1 = new KindergartenPriority(1L, "Pasirinkti darželį iš sąrašo...",
 				"Pasirinkti darželį iš sąrašo...", "Pasirinkti darželį iš sąrašo...", "Pasirinkti darželį iš sąrašo...",
 				"Pasirinkti darželį iš sąrašo...");
 		request01.setKindergartenPriority(priority1);
-//		priority1.setChildForm(request01);
+		ChildForm childForm1 = new ChildForm(1L, "name1", "surename1", new Date(1514757600000L), "address1", "city1",
+				true, true, true, true, true, null, null, new Date(1614504968824L));
+		childForm1.setKindergartenPriority(priority1);
+		priority1.setChildForm(childForm1);
 
+		when(kindergartenPriorityRepository.save(priority1)).thenReturn(priority1);
 		when(statusRepo.findByName(EFormStatus.PATEIKTAS))
 				.thenReturn(Optional.of(new FormStatus(EFormStatus.PATEIKTAS)));
 		User user1 = new User("username1", "password1");
 		User user2 = new User("username2", "password2");
 		user1.setId(1L);
+		user1.setUserData(data);
+		data.setUser(user1);
 		user2.setId(2L);
 		when(userRepo.findAll()).thenReturn(Stream.of(user1, user2).collect(Collectors.toList()));
 		when(secondParentRepository.existsByPersonId(1L)).thenReturn(false);
 		assertEquals(200, parentService.addForm(request01).getStatusCodeValue());
 
-//		ChildForm childForm1 = new ChildForm(1L, "name1", "surename1", new Date(1514757600000L), "address1", "city1",
-//				true, true, true, true, true, null, null, new Date(1614504968824L));
-//		ChildForm childForm2 = new ChildForm(2L, "name2", "surename2", new Date(1514757600000L), "address2", "city2",
-//				true, true, true, true, true, null, null, new Date(1614504968824L));
-//		ChildForm childForm3 = new ChildForm(12345L, "name3", "surename3", new Date(1514757600000L), "address3",
-//				"city3", true, true, true, true, true, null, null, new Date(1614504968824L));
-//
-//		ChildFormRequest request1 = new ChildFormRequest(1L, "name1", "surename1", new Date(1514757600000L), "address1",
-//				"city1", null, true, true, true, true, true, null, null, priority1, new Date(1614504968824L));
-//		ChildFormRequest request2 = new ChildFormRequest(123L, "name1", "surename1", new Date(1514757600000L),
-//				"address1", "city1", null, true, true, true, true, true, null, null, priority1,
-//				new Date(1614504968824L));
-//
-//		when(kindergartenRepository.findByName("KG1"))
-//				.thenReturn(Optional.of(new Kindergarten("Address1", "Name1", new ArrayList<>())));
-//		when(formRepo.existsByPersonId(123L)).thenReturn(true);
-//		when(formRepo.existsByPersonId(1L)).thenReturn(false);
-//		when(formRepo.save(childForm1)).thenReturn(childForm1);
-//
-//
-//		assertEquals(200, parentService.addForm(request1));
-//		assertEquals(200, parentService.addForm(request2));
+		KindergartenPriority priority2 = new KindergartenPriority(2L, "Pasirinkti darželį iš sąrašo...",
+				"Pasirinkti darželį iš sąrašo...", "Pasirinkti darželį iš sąrašo...", "Pasirinkti darželį iš sąrašo...",
+				"Pasirinkti darželį iš sąrašo...");
+		request01.setKindergartenPriority(priority2);
+		assertEquals(200, parentService.addForm(request01).getStatusCodeValue());
 	}
 
 	@Test
@@ -211,10 +201,48 @@ class ParentServiceTest {
 		assertEquals(false, parentService.getForms(1L).contains(childForm));
 	}
 
-//	@Test
-//	void testUpdateForm() {
-//		fail("Not yet implemented");
-//	}
+	@Test
+	void testUpdateForm() {
+		UserData data = new UserData(1L, "name1", "surename1", 1L, "Address1", "city1", 123L, "email1");
+		ChildFormRequest request01 = new ChildFormRequest(1L, "name1", "surename1", new Date(1514757600000L),
+				"address1", "city1", 1L, true, true, true, true, true, data, null, null, new Date(1614504968824L));
+		KindergartenPriority priority1 = new KindergartenPriority(1L, "Pasirinkti darželį iš sąrašo...",
+				"Pasirinkti darželį iš sąrašo...", "Pasirinkti darželį iš sąrašo...", "Pasirinkti darželį iš sąrašo...",
+				"Pasirinkti darželį iš sąrašo...");
+		request01.setKindergartenPriority(priority1);
+		ChildForm childForm1 = new ChildForm(1L, "name1", "surename1", new Date(1514757600000L), "address1", "city1",
+				true, true, true, true, true, null, null, new Date(1614504968824L));
+		childForm1.setKindergartenPriority(priority1);
+		priority1.setChildForm(childForm1);
+
+		when(kindergartenPriorityRepository.save(priority1)).thenReturn(priority1);
+		when(statusRepo.findByName(EFormStatus.PATEIKTAS))
+				.thenReturn(Optional.of(new FormStatus(EFormStatus.PATEIKTAS)));
+		User user1 = new User("username1", "password1");
+		User user2 = new User("username2", "password2");
+		user1.setId(1L);
+		user1.setUserData(data);
+		data.setUser(user1);
+		user2.setId(2L);
+		when(userRepo.findAll()).thenReturn(Stream.of(user1, user2).collect(Collectors.toList()));
+		when(secondParentRepository.existsByPersonId(1L)).thenReturn(false);
+		parentService.addForm(request01);
+
+		assertEquals("Privaloma pasirinkti pirma prioriteta!",
+				parentService.updateForm(1L, request01).getBody().toString());
+
+		priority1 = new KindergartenPriority(1L, "Pasirinkti darželį iš sąrašo...", "Pasirinkti darželį iš sąrašo...",
+				"Pasirinkti darželį iš sąrašo...", "Pasirinkti darželį iš sąrašo...",
+				"Pasirinkti darželį iš sąrašo...");
+		childForm1.setKindergartenPriority(priority1);
+		request01.setKindergartenPriority(priority1);
+		when(formRepo.findById(1L)).thenReturn(Optional.of(childForm1));
+		when(userRepo.findById(0L)).thenReturn(Optional.of(user1));
+		request01.setName("newName");
+		priority1.setKindergartenOne("ONE");
+		request01.setKindergartenPriority(priority1);
+		assertEquals(200, parentService.updateForm(1L, request01).getStatusCodeValue());
+	}
 
 	@Test
 	void testDeleteFormById() {
