@@ -25,17 +25,6 @@ public class UserDataDownloadRequest {
         this.email = email;
     }
 
-    public UserDataDownloadRequest(long id, String name, String surename, Long personId, String address, String city,
-                           Long phoneNum, String email) {
-        this.id = id;
-        this.name = name;
-        this.surename = surename;
-        this.personId = personId;
-        this.address = address;
-        this.city = city;
-        this.phoneNum = phoneNum;
-        this.email = email;
-    }
 
     public long getId() {
         return id;

@@ -17,4 +17,7 @@ public class OverrideController implements ErrorController {
 		return "index.html";
 	}
 
+	@RequestMapping("/api/users")
+	public String noAccess() { return "index.html"; }
+
 }

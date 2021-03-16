@@ -1,9 +1,8 @@
 package it.akademija.payload.request;
 
-import java.util.Set;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 public class SignupRequest {
 	@NotBlank

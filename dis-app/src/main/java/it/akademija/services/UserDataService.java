@@ -1,14 +1,5 @@
 package it.akademija.services;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import it.akademija.models.Log;
 import it.akademija.models.User;
 import it.akademija.models.UserData;
@@ -16,12 +7,17 @@ import it.akademija.payload.request.UserDataRequest;
 import it.akademija.payload.response.MessageResponse;
 import it.akademija.repository.UserDataRepository;
 import it.akademija.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class UserDataService {
-
-	@Autowired
-	private UserRepository userRepository;
 
 	@Autowired
 	private PasswordEncoder encoder;

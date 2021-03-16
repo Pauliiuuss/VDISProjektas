@@ -1,15 +1,13 @@
 package it.akademija.services;
 
 
-import java.io.*;
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Date;
-import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
+import it.akademija.models.*;
+import it.akademija.models.enums.EFormStatus;
+import it.akademija.payload.request.ChildFormRequest;
+import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.payload.request.UserDataDownloadRequest;
+import it.akademija.payload.response.MessageResponse;
+import it.akademija.repository.*;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,26 +15,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.akademija.models.AppStatus;
-import it.akademija.models.ChildForm;
-import it.akademija.models.Group;
-import it.akademija.models.KindergartenPriority;
-import it.akademija.models.Log;
-import it.akademija.models.SecondParent;
-import it.akademija.models.User;
-import it.akademija.models.UserData;
-import it.akademija.models.enums.EFormStatus;
-import it.akademija.payload.request.ChildFormRequest;
-import it.akademija.payload.request.KindergartenRequest;
-import it.akademija.payload.response.MessageResponse;
-import it.akademija.repository.AppStatusRepo;
-import it.akademija.repository.ChildFormRepository;
-import it.akademija.repository.FormStatusRepository;
-import it.akademija.repository.KindergartenPriorityRepository;
-import it.akademija.repository.KindergartenRepository;
-import it.akademija.repository.SecondParentRepository;
-import it.akademija.repository.UserDataRepository;
-import it.akademija.repository.UserRepository;
+import java.io.*;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Service
 public class ParentService {
@@ -265,19 +249,18 @@ public class ParentService {
 	}
 
 	@Transactional
-	public ResponseEntity<?> deleteFormById(Long id) {
+	public void deleteFormById(Long id) {
 
 		ChildForm form = childFormRepository.findById(id).orElseThrow();
 		childFormRepository.deleteById(id);
 		Log.logMessage("Vaiko \"" + form.getName() + " " + form.getSurename() + "\" prašymas ištrintas.");
-		return ResponseEntity.ok(new MessageResponse("Forma ištrinta!"));
+		ResponseEntity.ok(new MessageResponse("Forma ištrinta!"));
 	}
 
 
 	@Transactional
 	public AppStatus getStatus() {
-		AppStatus status = appStatusRepo.findAll().get(0);
-		return status;
+		return appStatusRepo.findAll().get(0);
 	}
 
 	@Transactional

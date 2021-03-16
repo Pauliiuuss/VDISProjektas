@@ -1,17 +1,16 @@
 package it.akademija.services;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
-
+import it.akademija.models.KindergartenPriority;
+import it.akademija.payload.request.KindergartenPriorityRequest;
+import it.akademija.payload.response.MessageResponse;
+import it.akademija.repository.KindergartenPriorityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import it.akademija.models.KindergartenPriority;
-import it.akademija.payload.request.KindergartenPriorityRequest;
-import it.akademija.payload.response.MessageResponse;
-import it.akademija.repository.KindergartenPriorityRepository;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class KindergartenPriorityService {
@@ -29,10 +28,6 @@ public class KindergartenPriorityService {
 
 	@Transactional(readOnly = true)
 	public KindergartenPriorityRequest getKindergartenPrioritiesById(Long id) {
-//        KindergartenPriority info = kindergartenPriorityRepository.findAll().stream()
-//                .filter(isdb -> isdb.getId().equals(id))
-//                .findFirst()
-//                .orElse(null);
 		KindergartenPriority info = kindergartenPriorityRepository.getOne(id);
 		if (info.getId() != null) {
 			return new KindergartenPriorityRequest(info.getId(), info.getKindergartenOne(), info.getKindergartenTwo(),

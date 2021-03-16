@@ -1,20 +1,5 @@
 package it.akademija.services;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import it.akademija.models.AppStatus;
 import it.akademija.models.Log;
 import it.akademija.models.Role;
@@ -29,6 +14,20 @@ import it.akademija.repository.RoleRepository;
 import it.akademija.repository.UserDataRepository;
 import it.akademija.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -52,7 +51,6 @@ public class AdminService {
 			return ResponseEntity.badRequest().body(new MessageResponse("Toks prisijungimo vardas jau yra!"));
 		}
 
-		// Create new user's account
 		User user = new User(signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()));
 
 		String role = signUpRequest.getRole();

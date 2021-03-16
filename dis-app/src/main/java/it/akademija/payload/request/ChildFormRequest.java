@@ -1,12 +1,8 @@
 package it.akademija.payload.request;
 
-import java.util.Date;
+import it.akademija.models.*;
 
-import it.akademija.models.FormStatus;
-import it.akademija.models.Group;
-import it.akademija.models.KindergartenPriority;
-import it.akademija.models.SecondParent;
-import it.akademija.models.UserData;
+import java.util.Date;
 
 public class ChildFormRequest {
 

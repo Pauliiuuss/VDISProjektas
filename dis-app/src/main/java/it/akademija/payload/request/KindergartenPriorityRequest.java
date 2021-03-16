@@ -2,8 +2,6 @@ package it.akademija.payload.request;
 
 import it.akademija.models.ChildForm;
 
-import javax.persistence.*;
-
 public class KindergartenPriorityRequest {
 
     private Long id;

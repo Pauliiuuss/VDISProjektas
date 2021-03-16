@@ -1,12 +1,11 @@
 package it.akademija.repository;
 
-import java.util.Optional;
-
+import it.akademija.models.Role;
+import it.akademija.models.enums.ERole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import it.akademija.models.enums.ERole;
-import it.akademija.models.Role;
+import java.util.Optional;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {

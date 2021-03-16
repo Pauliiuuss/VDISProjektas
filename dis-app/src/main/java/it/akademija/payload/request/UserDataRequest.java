@@ -29,18 +29,6 @@ public class UserDataRequest {
 	}
 
 	public UserDataRequest(long id, String name, String surename, Long personId, String address, String city,
-						   Long phoneNum, String email) {
-		this.id = id;
-		this.name = name;
-		this.surename = surename;
-		this.personId = personId;
-		this.address = address;
-		this.city = city;
-		this.phoneNum = phoneNum;
-		this.email = email;
-	}
-
-	public UserDataRequest(long id, String name, String surename, Long personId, String address, String city,
 						   Long phoneNum, String email, User user) {
 		this.id = id;
 		this.name = name;

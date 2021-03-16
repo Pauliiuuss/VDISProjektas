@@ -1,26 +1,5 @@
 package it.akademija.services;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import it.akademija.models.ChildForm;
 import it.akademija.models.Group;
 import it.akademija.models.Kindergarten;
@@ -30,11 +9,18 @@ import it.akademija.payload.request.ChildFormRequest;
 import it.akademija.payload.request.GroupRequest;
 import it.akademija.payload.request.KindergartenRequest;
 import it.akademija.payload.response.MessageResponse;
-import it.akademija.repository.AppStatusRepo;
-import it.akademija.repository.ChildFormRepository;
-import it.akademija.repository.FormStatusRepository;
-import it.akademija.repository.GroupRepository;
-import it.akademija.repository.KindergartenRepository;
+import it.akademija.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.validation.Valid;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SpecService {
@@ -93,7 +79,7 @@ public class SpecService {
 
 		List<Group> groups = kindergartenRepository.getOne(id).getGroups();
 
-		Group group = null;
+		Group group;
 
 		if (info.getAge().equals("3 iki 6")) {
 			group = new Group(info.getName(), info.getCapasity(), 3L, 6L, kindergartenRepository.getOne(id));
@@ -128,7 +114,6 @@ public class SpecService {
 
 	@Transactional
 	public ResponseEntity<?> amendGroup(Long groupId, @Valid GroupRequest info) {
-//		Kindergarten kindergarten = kindergartenRepository.getOne(gartenId);
 
 		Group group = groupRepository.getOne(groupId);
 
@@ -172,17 +157,15 @@ public class SpecService {
 
 	public KindergartenRequest getKindergarten(Long id) {
 		Kindergarten kindergarten = kindergartenRepository.getOne(id);
-		Long capasity = kindergarten.getGroups().stream().map(g -> g.getCapasity()).reduce(0L, Long::sum);
+		Long capasity = kindergarten.getGroups().stream().map(Group::getCapasity).reduce(0L, Long::sum);
 		List<GroupRequest> groupRequests = kindergarten.getGroups().stream().map(
 				k -> new GroupRequest(k.getId(), k.getName(), k.getCapasity(), k.getAgeFrom() + " iki " + k.getAgeTo()))
 				.collect(Collectors.toList());
-		KindergartenRequest request = new KindergartenRequest(kindergarten.getId(), kindergarten.getAddress(),
+		return new KindergartenRequest(kindergarten.getId(), kindergarten.getAddress(),
 				kindergarten.getName(), capasity, groupRequests);
-		return request;
 	}
 
 	public boolean ageBetween2and3(Date birthDate) {
-		// validate inputs ...
 		DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 		int d1 = Integer.parseInt(formatter.format(birthDate));
 		int d2 = Integer.parseInt(formatter.format(new Date()));
@@ -191,26 +174,12 @@ public class SpecService {
 	}
 
 	public boolean ageBetween3and6(Date birthDate) {
-		// validate inputs ...
 		DateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 		int d1 = Integer.parseInt(formatter.format(birthDate));
 		int d2 = Integer.parseInt(formatter.format(new Date()));
 		int age = (d2 - d1) / 10000;
 		return age >= 3 && age <= 6;
 	}
-
-//	public Collection<Collection<ChildForm>> getFormsByKindergarten(Long id) {
-//		Collection<ChildForm> all = formRepo.findAllByKindergartenName(kindergartenRepository.getOne(id).getName());
-//		Collection<ChildForm> young = all.stream().filter(f -> ageBetween2and3(f.getBirthDate()))
-//				.collect(Collectors.toList());
-//		Collection<ChildForm> old = all.stream().filter(f -> ageBetween3and6(f.getBirthDate()))
-//				.collect(Collectors.toList());
-//		Collection<Collection<ChildForm>> collection = new ArrayList<Collection<ChildForm>>();
-//		collection.add(young);
-//		collection.add(old);
-//
-//		return collection;
-//	}
 
 	private int getPoints(ChildForm form) {
 		int result = 0;
@@ -226,16 +195,12 @@ public class SpecService {
 
 	}
 
-	Comparator<ChildForm> comparator = new Comparator<ChildForm>() {
-
-		@Override
-		public int compare(ChildForm o1, ChildForm o2) {
-			if (o1.isInCity() && !o2.isInCity())
-				return 1;
-			if (!o1.isInCity() && o2.isInCity())
-				return -1;
-			return getPoints(o1) - getPoints(o2);
-		}
+	Comparator<ChildForm> comparator = (o1, o2) -> {
+		if (o1.isInCity() && !o2.isInCity())
+			return 1;
+		if (!o1.isInCity() && o2.isInCity())
+			return -1;
+		return getPoints(o1) - getPoints(o2);
 	};
 
 	public List<ChildFormRequest> getFormsByKindergarten() {
@@ -256,7 +221,7 @@ public class SpecService {
 
 		Collection<ChildForm> all = formRepo.findAll().stream()
 				.filter(f -> !f.getFormStatus().getName().equals(EFormStatus.PANAIKINTAS)).collect(Collectors.toList());
-		Collections.sort(formRepo.findAll(), comparator);
+		formRepo.findAll().sort(comparator);
 
 		Collection<Group> groups = groupRepository.findAll();
 
@@ -296,10 +261,7 @@ public class SpecService {
 			for (Kindergarten kindergarten : kindergartens) {
 				if (approved)
 					break;
-				List<Group> kindergartenGroups = kindergarten.getGroups();
 				for (Group group : kindergarten.getGroups()) {
-					if (approved)
-						break;
 					if (group.getAgeFrom() == 2L && ageBetween2and3(form.getBirthDate())
 							&& collection.get(group).size() < group.getCapasity()) {
 						List<ChildForm> groupsForMap = collection.get(group);
@@ -365,13 +327,14 @@ public class SpecService {
 
 	public Long freeSpaces() {
 		Long spaces = groupRepository.findAll().stream().filter(g -> !g.getName().equals("Laukiantys"))
-				.map(g -> g.getCapasity()).reduce(0L, Long::sum);
+				.map(Group::getCapasity).reduce(0L, Long::sum);
 		System.out.println("******************************** Free spaces:" + spaces);
 		return spaces;
 	}
 
 	public ResponseEntity<?> cancelForm(Long id) {
 		ChildForm form = formRepo.findById(id).orElse(null);
+		assert form != null;
 		if (form.getFormStatus().getName().equals(EFormStatus.PANAIKINTAS))
 			return ResponseEntity.badRequest().body(new MessageResponse("Forma jau panaikinta!"));
 		form.setFormStatus(statusRepo.findByName(EFormStatus.PANAIKINTAS).get());

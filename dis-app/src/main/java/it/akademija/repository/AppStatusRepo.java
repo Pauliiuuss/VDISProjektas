@@ -1,8 +1,7 @@
 package it.akademija.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import it.akademija.models.AppStatus;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AppStatusRepo extends JpaRepository<AppStatus, Long> {
 

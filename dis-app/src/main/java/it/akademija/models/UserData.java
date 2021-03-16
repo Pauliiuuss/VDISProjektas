@@ -1,10 +1,9 @@
 package it.akademija.models;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 
 @Entity
 @Table(name = "userData")
@@ -32,17 +31,6 @@ public class UserData {
 	private List<ChildForm> childForms;
 
 	public UserData() {
-	}
-
-	public UserData(String name, String surename, Long personId, String address, String city, Long phoneNum,
-			String email) {
-		this.name = name;
-		this.surename = surename;
-		this.personId = personId;
-		this.address = address;
-		this.city = city;
-		this.phoneNum = phoneNum;
-		this.email = email;
 	}
 
 	public UserData(long id, String name, String surename, Long personId, String address, String city, Long phoneNum,

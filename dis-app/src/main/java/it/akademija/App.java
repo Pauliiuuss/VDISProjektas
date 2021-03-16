@@ -1,11 +1,9 @@
 package it.akademija;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
-
+import it.akademija.models.*;
+import it.akademija.models.enums.EFormStatus;
+import it.akademija.models.enums.ERole;
+import it.akademija.repository.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -16,27 +14,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-
-import it.akademija.models.AppStatus;
-import it.akademija.models.FormStatus;
-import it.akademija.models.Group;
-import it.akademija.models.Kindergarten;
-import it.akademija.models.Role;
-import it.akademija.models.User;
-import it.akademija.models.enums.EFormStatus;
-import it.akademija.models.enums.ERole;
-import it.akademija.repository.AppStatusRepo;
-import it.akademija.repository.FormStatusRepository;
-import it.akademija.repository.GroupRepository;
-import it.akademija.repository.KindergartenRepository;
-import it.akademija.repository.RoleRepository;
-import it.akademija.repository.UserRepository;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.ArrayList;
 
 @EnableSwagger2
 @SpringBootApplication
@@ -112,9 +101,6 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 		if (kindergartenRepository.findAll().size() < 1) {
 			System.out.println("++++++++++++++Started");
 
-//			Reader reader = Files.newBufferedReader(Paths.get("./CSV/darzeliai.csv"));
-//			Reader reader = new FileReader("darzeliai.csv");
-
 			InputStream in = getClass().getResourceAsStream("/darzeliai.csv");
 			Reader reader = new BufferedReader(new InputStreamReader(in));
 			System.out.println("++++++++++++++Reader");
@@ -145,8 +131,6 @@ public class App extends SpringBootServletInitializer implements CommandLineRunn
 		if (groupRepository.findAll().size() < 1) {
 			System.out.println("++++++++++++++Started");
 
-//			Reader reader = File(getClass().getResource("darzeliai.csv").getPath());
-//			Reader reader = new FileReader("grupes.csv");
 
 			InputStream in = getClass().getResourceAsStream("/grupes.csv");
 			Reader reader = new BufferedReader(new InputStreamReader(in));

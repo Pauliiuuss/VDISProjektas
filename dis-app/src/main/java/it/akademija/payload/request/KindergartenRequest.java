@@ -27,12 +27,6 @@ public class KindergartenRequest {
 		this.capasity = capasity;
 	}
 
-	public KindergartenRequest(String address, String name, Long capasity) {
-		this.address = address;
-		this.name = name;
-		this.capasity = capasity;
-	}
-
 	public KindergartenRequest(Long id, String address, String name) {
 		super();
 		this.id = id;
