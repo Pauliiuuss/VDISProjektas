@@ -1,6 +1,8 @@
 package it.akademija.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.akademija.models.Group;
+import it.akademija.models.Kindergarten;
 import it.akademija.models.Role;
 import it.akademija.models.User;
 import it.akademija.models.enums.ERole;
@@ -25,12 +27,17 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 public class adminTests {
-
 
     private MockMvc mockMvc;
 
@@ -85,11 +92,6 @@ public class adminTests {
     }
 
     @Test
-    public void getUsersTest() throws Exception {
-        Assertions.assertEquals(Boolean.FALSE, adminService.getUsers().isEmpty());
-    }
-
-    @Test
     public void disableSpecTest() throws Exception {
 
         MvcResult result = mockMvc.perform(get("/api/admin/disablespec")
@@ -122,37 +124,5 @@ public class adminTests {
 
         Assertions.assertEquals(Boolean.FALSE, userRepository.existsByUsername("TestFirstName"));
     }
-
-//    @Test
-//    public void resetPasswordTest() throws Exception {
-//
-//        User user = new User("TestResetPW", "TestPassword");
-//        user.setRole(roleRepository.findByName(ERole.ROLE_SPEC).get());
-//        userRepository.save(user);
-//
-//        PasswordResetRequest prr = new PasswordResetRequest();
-//        prr.setUsername(user.getUsername());
-//        adminService.resetPassword(prr);
-//
-//        LoginRequest loginRequest = new LoginRequest();
-//        loginRequest.setUsername("TestResetPW");
-//        loginRequest.setPassword("TestResetPW");
-//
-//        authService.authenticateUser(loginRequest);
-//
-//        String jsonRequest = objectMapper.writeValueAsString(loginRequest);
-//
-//        MvcResult result = mockMvc.perform(post("/api/auth/signin")
-//                .content(jsonRequest).contentType(MediaType.APPLICATION_JSON_VALUE))
-//                .andExpect(status().isOk()).andReturn();
-//
-//        String resultContext = result.getResponse().getContentAsString();
-//
-//        JwtResponse response = objectMapper.readValue(resultContext, JwtResponse.class);
-//
-////        MessageResponse response = objectMapper.readValue(resultContext, MessageResponse.class);
-//
-//        Assertions.assertEquals(Boolean.FALSE, response.getAccessToken().isEmpty());
-//    }
 
 }
