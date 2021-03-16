@@ -24,7 +24,6 @@ class AdminService {
   async getLog() {
     return await axios.get(API_URL + "log", {
       onDownloadProgress: (progressEvent) => {
-        console.log(progressEvent);
         let percentCompleted = Math.round(
           (progressEvent.loaded * 100) / progressEvent.total
         );

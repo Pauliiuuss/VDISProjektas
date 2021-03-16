@@ -1,35 +1,35 @@
-import React, { Component } from 'react';
-import AuthService from '../../services/auth.service';
-import UserService from '../../services/user.service';
-import { vpassword } from '../Admin/Validation';
-import { Redirect } from 'react-router-dom';
-import Navbar from '../navbar.component';
-import Details from './Details';
-import Password from './Password';
-import ParentService from '../../services/parent.service';
+import React, { Component } from "react";
+import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
+import { vpassword } from "../Admin/Validation";
+import { Redirect } from "react-router-dom";
+import Navbar from "../navbar.component";
+import Details from "./Details";
+import Password from "./Password";
+import ParentService from "../../services/parent.service";
 
 class UserUpdateForm extends Component {
   state = {
-    currentUser: '',
+    currentUser: "",
     redirect: null,
     userReady: false,
-    roles: '',
+    roles: "",
     userData: {
-      name: '',
-      surename: '',
-      email: '',
-      phoneNum: '',
+      name: "",
+      surename: "",
+      email: "",
+      phoneNum: "",
     },
     successfulPassword: false,
-    messagePassword: '',
+    messagePassword: "",
     successfulDetails: false,
-    messageDetails: '',
+    messageDetails: "",
   };
 
   async componentDidMount() {
     this.setState({ loading: true });
     const currentUser = AuthService.getCurrentUser();
-    if (!currentUser) this.setState({ redirect: '/dis-app/' });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     await UserService.getUserData(currentUser.id).then(
       (response) => {
         this.setState({ userData: response.data });
@@ -44,21 +44,20 @@ class UserUpdateForm extends Component {
       userReady: true,
       roles: currentUser.roles,
     });
-    if (currentUser.roles.includes('ROLE_ADMIN')) {
-      this.props.history.push('/dis-app/');
+    if (currentUser.roles.includes("ROLE_ADMIN")) {
+      this.props.history.push("/dis-app/");
       window.location.reload();
     }
   }
 
   handleSubmit = async (e, name, surename, phoneNum, email) => {
     e.preventDefault();
-    console.log(name, surename, phoneNum, email);
 
     if (
-      name === '' ||
-      surename === '' ||
-      phoneNum === '' ||
-      email === '' ||
+      name === "" ||
+      surename === "" ||
+      phoneNum === "" ||
+      email === "" ||
       name === null ||
       surename === null ||
       phoneNum === null ||
@@ -66,7 +65,7 @@ class UserUpdateForm extends Component {
     ) {
       this.setState({
         successfulDetails: false,
-        messageDetails: 'Visi laukai privalo būti užpildyti!',
+        messageDetails: "Visi laukai privalo būti užpildyti!",
       });
       return;
     }
@@ -74,7 +73,7 @@ class UserUpdateForm extends Component {
     if (/\d/.test(name) || /\d/.test(surename)) {
       this.setState({
         successfulDetails: false,
-        messageDetails: 'Skaičiai negalimi vardo ir pavardės laukuose!',
+        messageDetails: "Skaičiai negalimi vardo ir pavardės laukuose!",
       });
       return;
     }
@@ -82,12 +81,12 @@ class UserUpdateForm extends Component {
     if (phoneNum !== null && phoneNum.length > 19) {
       this.setState({
         successfulDetails: false,
-        messageDetails: 'Neteisingas telefono numerio ilgis!',
+        messageDetails: "Neteisingas telefono numerio ilgis!",
       });
       return;
     } else {
       this.setState({
-        messageDetails: '',
+        messageDetails: "",
       });
     }
 
@@ -98,12 +97,11 @@ class UserUpdateForm extends Component {
       email,
     }).then(
       (response) => {
-        console.log(response);
         this.setState({
           successfulDetails: true,
           messageDetails: response.data.message,
           successfulPassword: false,
-          messagePassword: '',
+          messagePassword: "",
         });
         UserService.getUserData(this.state.currentUser.id).then(
           (response) => {
@@ -121,29 +119,28 @@ class UserUpdateForm extends Component {
             error.response.data.message) ||
           error.message ||
           error.toString();
-        console.log(resMessage);
 
         this.setState({
           successfulDetails: false,
           messageDetails: resMessage,
           successfulPassword: false,
-          messagePassword: '',
+          messagePassword: "",
         });
       }
     );
   };
 
-  handleDownload = (e, id) => {
+  handleDownload = (e, id, currentUserName) => {
     e.preventDefault();
     if (this.state.userData.name !== null) {
-      ParentService.downloadUserData(id);
+      ParentService.downloadUserData(id, currentUserName);
       this.setState({
         successfulDetails: true,
       });
     } else {
       this.setState({
         successfulDetails: false,
-        messageDetails: 'Nėra archyvuojamų duomenų!',
+        messageDetails: "Nėra archyvuojamų duomenų!",
       });
     }
   };
@@ -163,12 +160,11 @@ class UserUpdateForm extends Component {
         newPassword1
       ).then(
         (response) => {
-          console.log(response);
           this.setState({
             successfulPassword: true,
             messagePassword: response.data.message,
             successfulDetails: false,
-            messageDetails: '',
+            messageDetails: "",
           });
         },
         (error) => {
@@ -178,36 +174,34 @@ class UserUpdateForm extends Component {
               error.response.data.message) ||
             error.message ||
             error.toString();
-          console.log(resMessage);
 
           this.setState({
             successfulPassword: false,
             messagePassword: resMessage,
             successfulDetails: false,
-            messageDetails: '',
+            messageDetails: "",
           });
         }
       );
     } else {
       this.setState({
         successfulDetails: false,
-        messageDetails: '',
+        messageDetails: "",
         messagePassword:
-          'Nesutampa naujojo slaptažodžio laukai arba naujas slaptažodis neatitinka reikalavimų!',
+          "Nesutampa naujojo slaptažodžio laukai arba naujas slaptažodis neatitinka reikalavimų!",
         successfulPassword: false,
       });
     }
   };
 
   clearUpdateFormMessage = () => {
-    this.setState({ messageDetails: '' });
+    this.setState({ messageDetails: "" });
   };
 
   render() {
     if (this.state.redirect) return <Redirect to={this.state.redirect} />;
 
     const { currentUser, userReady, roles } = this.state;
-
     return (
       <React.Fragment>
         <Navbar />
@@ -223,6 +217,7 @@ class UserUpdateForm extends Component {
                   onSubmit={this.handleSubmit}
                   message={this.state.messageDetails}
                   successful={this.state.successfulDetails}
+                  currentUserName={this.state.currentUser.username}
                 />
               </div>
               <div className="col-12 col-sm-12 col-md-5 col-lg-5">
@@ -241,7 +236,7 @@ class UserUpdateForm extends Component {
           <div className="d-flex justify-content-center mt-5">
             <div
               className="spinner-border mt-5"
-              style={{ width: '3rem', height: '3rem', marginTop: '3rem' }}
+              style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
               role="status"
             >
               <span className="sr-only">Loading...</span>

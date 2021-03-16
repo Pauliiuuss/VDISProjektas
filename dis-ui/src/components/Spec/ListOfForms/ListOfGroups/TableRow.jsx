@@ -2,8 +2,6 @@ import React from "react";
 import _ from "lodash";
 
 const TableRow = (item, columns, createKey) => {
-  console.log(item);
-
   function renderCell(item, column) {
     if (column.content) return column.content(item);
     return _.get(item, column.path);

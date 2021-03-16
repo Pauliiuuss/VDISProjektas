@@ -1,32 +1,32 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import AdminService from '../../services/admin.service';
-import CheckButton from 'react-validation/build/button';
-import Form from 'react-validation/build/form';
-import Input from 'react-validation/build/input';
-import AuthService from '../../services/auth.service';
-import { vusername } from './Validation';
-import Users from './List/Users';
-import ParentService from '../../services/parent.service';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
+import AdminService from "../../services/admin.service";
+import CheckButton from "react-validation/build/button";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import AuthService from "../../services/auth.service";
+import { vusername } from "./Validation";
+import Users from "./List/Users";
+import ParentService from "../../services/parent.service";
 
 export default class AdminMainPage extends Component {
   state = {
     users: [],
-    role: '',
-    name: '',
-    message: '',
+    role: "",
+    name: "",
+    message: "",
     successful: false,
-    selectedRole: 'ROLE_SPEC',
+    selectedRole: "ROLE_SPEC",
     loading: false,
     redirect: null,
     userReady: false,
     modalIsOpen: false,
     appStatus: {
-      registrationClosed: '',
-      specelistsDisabled: '',
+      registrationClosed: "",
+      specelistsDisabled: "",
     },
     specChanges: {
-      message: '',
+      message: "",
       successful: false,
     },
   };
@@ -40,22 +40,22 @@ export default class AdminMainPage extends Component {
   };
 
   handleClearFields = () => {
-    this.setState({ name: '', pass: '' });
+    this.setState({ name: "", pass: "" });
   };
 
   handleCreate = async (e) => {
     e.preventDefault();
     this.setState({
-      message: '',
+      message: "",
       loading: true,
     });
 
     const { name, pass, selectedRole } = this.state;
 
-    if (name === '' || pass === '') {
+    if (name === "" || pass === "") {
       this.setState({
         successful: false,
-        message: 'Prisijungimo vardo laukas negali būti tuščias!',
+        message: "Prisijungimo vardo laukas negali būti tuščias!",
         loading: false,
       });
       return;
@@ -74,7 +74,7 @@ export default class AdminMainPage extends Component {
               users: res.data,
               successful: true,
               message: response.data.message,
-              name: '',
+              name: "",
               loading: false,
             })
           );
@@ -103,7 +103,7 @@ export default class AdminMainPage extends Component {
     const { data } = await AdminService.getUsers();
     this.setState({ users: data });
 
-    if (!currentUser) this.setState({ redirect: '/dis-app/' });
+    if (!currentUser) this.setState({ redirect: "/dis-app/" });
     this.setState({
       currentUser: currentUser,
       userReady: true,
@@ -111,19 +111,17 @@ export default class AdminMainPage extends Component {
     });
 
     ParentService.appStatus().then((response) => {
-      console.log(response);
       this.setState({ appStatus: response.data });
     });
   }
 
   handleSelectChange = (e) => {
     const selectedRole = e.target.value;
-    console.log(selectedRole);
-    this.setState({ selectedRole, message: '' });
+    this.setState({ selectedRole, message: "" });
   };
 
   handleInputChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value, message: '' });
+    this.setState({ [event.target.name]: event.target.value, message: "" });
   };
 
   handleSpecChange = (e) => {
@@ -137,7 +135,6 @@ export default class AdminMainPage extends Component {
     if (this.state.appStatus.specelistsDisabled)
       AdminService.enableAllSpec().then(
         (response) => {
-          console.log(response.data.message);
           this.setState({
             specChanges: {
               message: response.data.message,
@@ -154,7 +151,6 @@ export default class AdminMainPage extends Component {
             },
           });
           ParentService.appStatus().then((response) => {
-            console.log(response);
             this.setState({ appStatus: response.data });
           });
         }
@@ -162,7 +158,6 @@ export default class AdminMainPage extends Component {
     else
       AdminService.disableAllSpec().then(
         (response) => {
-          console.log(response.data.message);
           this.setState({
             specChanges: {
               message: response.data.message,
@@ -179,7 +174,6 @@ export default class AdminMainPage extends Component {
             },
           });
           ParentService.appStatus().then((response) => {
-            console.log(response);
             this.setState({ appStatus: response.data });
           });
         }
@@ -187,7 +181,6 @@ export default class AdminMainPage extends Component {
   };
   render() {
     if (this.state.redirect) return <Redirect to={this.state.redirect} />;
-    console.log(this.state.appStatus);
     const { name } = this.state;
     return (
       <React.Fragment>
@@ -279,8 +272,8 @@ export default class AdminMainPage extends Component {
                     <div
                       className={
                         this.state.successful
-                          ? 'alert alert-success'
-                          : 'alert alert-danger'
+                          ? "alert alert-success"
+                          : "alert alert-danger"
                       }
                       role="alert"
                     >
@@ -289,17 +282,17 @@ export default class AdminMainPage extends Component {
                   </div>
                 )}
                 <CheckButton
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                   ref={(c) => {
                     this.checkBtn = c;
                   }}
                 />
               </Form>
-              {this.state.appStatus.specelistsDisabled !== '' ? (
-                <div className="row" style={{ marginTop: '3rem' }}>
+              {this.state.appStatus.specelistsDisabled !== "" ? (
+                <div className="row" style={{ marginTop: "3rem" }}>
                   <div className="col">
                     <p className="list-group-item">
-                      Švietimo specialistai{' '}
+                      Švietimo specialistai{" "}
                       {this.state.appStatus.specelistsDisabled ? (
                         <b>NEGALI</b>
                       ) : (
@@ -317,7 +310,7 @@ export default class AdminMainPage extends Component {
                       <button
                         onClick={(e) => this.handleSpecChange(e)}
                         className="btn btn-sm btn-info col-12"
-                        style={{ fontSize: '0.8rem' }}
+                        style={{ fontSize: "0.8rem" }}
                       >
                         Atrakinti
                       </button>
@@ -325,7 +318,7 @@ export default class AdminMainPage extends Component {
                       <button
                         onClick={(e) => this.handleSpecChange(e)}
                         className="btn btn-sm btn-secondary"
-                        style={{ fontSize: '0.8rem' }}
+                        style={{ fontSize: "0.8rem" }}
                       >
                         Užrakinti
                       </button>
@@ -335,8 +328,8 @@ export default class AdminMainPage extends Component {
                         <div
                           className={
                             this.state.specChanges.successful
-                              ? 'alert alert-success'
-                              : 'alert alert-danger'
+                              ? "alert alert-success"
+                              : "alert alert-danger"
                           }
                           role="alert"
                         >
@@ -350,7 +343,7 @@ export default class AdminMainPage extends Component {
                 <div className="col m-5">
                   <div
                     className="spinner-border"
-                    style={{ width: '3rem', height: '3rem', marginTop: '3rem' }}
+                    style={{ width: "3rem", height: "3rem", marginTop: "3rem" }}
                     role="status"
                   >
                     <span className="sr-only">Loading...</span>

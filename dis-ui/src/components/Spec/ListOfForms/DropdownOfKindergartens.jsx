@@ -8,7 +8,6 @@ const DropdownOfKindergartens = ({ handleChange }) => {
   useEffect(() => {
     SpecService.getKindergartens().then((response) => {
       setKindergartens(response.data);
-      console.log(response.data);
     });
   }, []);
 

@@ -16,7 +16,6 @@ class TableBody extends Component {
 
   componentDidMount = () => {
     ParentService.appStatus().then((response) => {
-      console.log(response);
       this.setState({ appStatus: response.data });
     });
   };

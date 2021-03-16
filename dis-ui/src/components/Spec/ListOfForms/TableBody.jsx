@@ -24,7 +24,6 @@ class TableBody extends Component {
       this.handleClick(data[0].id);
     }
     ParentService.appStatus().then((response) => {
-      console.log(response);
       this.setState({ appStatus: response.data });
     });
   }
@@ -96,7 +95,6 @@ class TableBody extends Component {
   render() {
     const { data, columns, loading } = this.props;
     if (loading) return <LoadingSpan />;
-    console.log(this.state.appStatus);
 
     if (data.length > 0)
       return (

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import AdminService from '../../services/admin.service';
-import AuthService from '../../services/auth.service';
-import Navbar from '../navbar.component';
-import Logs from './LogList/Logs';
+import React, { Component } from "react";
+import AdminService from "../../services/admin.service";
+import AuthService from "../../services/auth.service";
+import Navbar from "../navbar.component";
+import Logs from "./LogList/Logs";
 
 class Logging extends Component {
   state = {
@@ -13,8 +13,8 @@ class Logging extends Component {
   async componentDidMount() {
     const currentUser = AuthService.getCurrentUser();
 
-    if (!currentUser || !currentUser.roles.includes('ROLE_ADMIN')) {
-      this.props.history.push('/dis-app/');
+    if (!currentUser || !currentUser.roles.includes("ROLE_ADMIN")) {
+      this.props.history.push("/dis-app/");
       window.location.reload();
     }
     this.setState({
@@ -22,16 +22,14 @@ class Logging extends Component {
       userReady: true,
       roles: currentUser.roles,
     });
-    console.log(
-      AdminService.getLog().then(
-        (response) => {
-          this.setState({ log: response.data, loading: false });
-        },
-        (error) => {
-          console.log(error);
-          this.setState({ loading: false });
-        }
-      )
+    AdminService.getLog().then(
+      (response) => {
+        this.setState({ log: response.data, loading: false });
+      },
+      (error) => {
+        console.log(error);
+        this.setState({ loading: false });
+      }
     );
   }
 

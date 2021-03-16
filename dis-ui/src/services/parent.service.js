@@ -35,19 +35,21 @@ class ParentService {
     return axios.get(API_URL + "appstatus", { headers: authHeader() });
   }
 
-  downloadUserData(id) {
+  downloadUserData(id, currentUserName) {
     fetch(API_URL + "archivedata/" + id, {
       method: "GET",
       headers: authHeader(),
     }).then((response) => {
-      console.log(response);
       response.blob().then((blob) => {
-        console.log(blob);
         var binaryData = [];
         binaryData.push(blob);
-        var url = API_URL + "archivedata/" + id;
+        var url = window.URL.createObjectURL(
+          new Blob(binaryData, { type: "application/zip" })
+        );
         var a = document.createElement("a");
+        var date = new Date().toISOString().slice(0, 10);
         a.href = url;
+        a.download = currentUserName + "_archyvuotiDuomenys_" + date + ".zip";
         a.click();
         a.remove();
       });

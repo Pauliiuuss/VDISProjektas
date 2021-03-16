@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
-import ParentService from '../../../services/parent.service';
+import React, { Component } from "react";
+import _ from "lodash";
+import ParentService from "../../../services/parent.service";
 
 class TableBody extends Component {
   state = {
-    showInput: '',
-    name: '',
-    address: '',
+    showInput: "",
+    name: "",
+    address: "",
     appStatus: {
       registrationClosed: true,
       specelistsDisabled: true,
@@ -19,7 +19,6 @@ class TableBody extends Component {
       this.handleClick(data[0].id);
     }
     ParentService.appStatus().then((response) => {
-      console.log(response);
       this.setState({ appStatus: response.data });
     });
   }
@@ -33,7 +32,7 @@ class TableBody extends Component {
   };
 
   onInputChange = (event) => {
-    this.setState({ [event.target.name]: event.target.value, message: '' });
+    this.setState({ [event.target.name]: event.target.value, message: "" });
   };
 
   clickConfirm = (item) => {
@@ -41,11 +40,11 @@ class TableBody extends Component {
     newItem.name = this.state.name;
     newItem.address = this.state.address;
     this.props.onAmendKindergarten(item);
-    this.setState({ showInput: '' });
+    this.setState({ showInput: "" });
   };
 
   renderCell = (item, column) => {
-    if (column.path === 'capasity' && item.id === this.state.showInput)
+    if (column.path === "capasity" && item.id === this.state.showInput)
       return (
         <button
           onClick={() => this.clickConfirm(item)}
@@ -54,18 +53,18 @@ class TableBody extends Component {
           Patvirtinti
         </button>
       );
-    if (column.label === '' && item.id === this.state.showInput)
+    if (column.label === "" && item.id === this.state.showInput)
       return (
         <button
           onClick={() =>
-            this.setState({ showInput: '', name: '', address: '' })
+            this.setState({ showInput: "", name: "", address: "" })
           }
           className="btn btn-danger btn-md"
         >
           Atšaukti
         </button>
       );
-    if (column.label === '' && !this.state.appStatus.specelistsDisabled)
+    if (column.label === "" && !this.state.appStatus.specelistsDisabled)
       return (
         <button
           onClick={() => this.clickAmend(item)}
@@ -74,7 +73,7 @@ class TableBody extends Component {
           Redaguoti
         </button>
       );
-    if (item.id === this.state.showInput && column.label !== 'Vietų skaičius') {
+    if (item.id === this.state.showInput && column.label !== "Vietų skaičius") {
       const name = column.path;
       return (
         <input
@@ -107,7 +106,7 @@ class TableBody extends Component {
         <tbody>
           {data.map((item) => (
             <tr
-              className={this.props.active === item.id ? 'active' : ''}
+              className={this.props.active === item.id ? "active" : ""}
               onClick={() => this.handleClick(item.id)}
               key={item.id}
             >
@@ -125,7 +124,7 @@ class TableBody extends Component {
       <tbody>
         <tr>
           <td colSpan="4">
-            <p className="m-4 mx-auto" style={{ width: '330px' }}>
+            <p className="m-4 mx-auto" style={{ width: "330px" }}>
               Duomenų bazėje vaikų darželių nėra registruota.
             </p>
           </td>

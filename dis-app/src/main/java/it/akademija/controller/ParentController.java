@@ -83,6 +83,7 @@ public class ParentController {
 	}
 
 	@GetMapping(value = "/archivedata/{id}", produces = "application/zip")
+	@PreAuthorize("hasRole('PARENT')")
 	public ResponseEntity<?> downloadUserData(@PathVariable Long id) throws IOException {
 		return parentService.downloadUserData(id);
 	}

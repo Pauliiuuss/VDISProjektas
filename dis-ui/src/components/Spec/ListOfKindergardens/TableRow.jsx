@@ -4,8 +4,6 @@ import _ from "lodash";
 const TableRow = (active, handleClick, item, columns, createKey) => {
   const [buttonState, setButtonState] = useState(true);
 
-  console.log(item);
-
   function renderCell(item, column) {
     if (column.content) return column.content(item);
     if (column.label === "" && !buttonState)

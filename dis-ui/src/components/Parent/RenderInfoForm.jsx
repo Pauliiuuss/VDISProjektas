@@ -134,7 +134,6 @@ class RenderInfoForm extends Component {
 
     await ParentService.deleteFormById(this.state.data.id).then(
       (response) => {
-        console.log(response);
 
         +response.status < 400 &&
           swal({
@@ -157,7 +156,6 @@ class RenderInfoForm extends Component {
           });
       }
     );
-    console.log('Delete form');
   };
 
   confirmForm = (e) => {
@@ -280,13 +278,11 @@ class RenderInfoForm extends Component {
         }
       }
 
-      console.log('Confirm form');
       ParentService.updateForm(this.state.data.id, {
         ...this.state.data,
         idFront: this.state.currentUser.id,
       }).then(
         (response) => {
-          console.log(response.data.message);
           this.setState({
             successful: true,
             message: response.data.message,
@@ -326,7 +322,6 @@ class RenderInfoForm extends Component {
 
   handleSelectChange = (e) => {
     const value = this.state.data[e.target.name];
-    console.log(value);
     this.setState({
       data: {
         ...this.state.data,
@@ -368,7 +363,6 @@ class RenderInfoForm extends Component {
         },
       },
     });
-    console.log(this.state.data.secondParentData);
   };
 
   unlockSecondParent = (e) => {
@@ -931,8 +925,6 @@ class RenderInfoForm extends Component {
                 {
                   this.deleteForm(e);
                 }
-              } else {
-                console.log('canceled');
               }
             });
             // if (window.confirm(`Ištrinti formą?`)) {
