@@ -64,7 +64,7 @@ public class Log {
 		System.out.println("++++++++++++++++++++++++++++++++++++++++++++-" + getUsername() + "-+");
 		if (getUsername().equals("admin"))
 			LOGGER.info("Administratorius -- " + message);
-		if (!getUsername().equals("Test"))
+		if (!getUsername().equals("Test") && !getUsername().equals("admin"))
 			LOGGER.info(getUsername() + " -- " + message);
 	}
 
