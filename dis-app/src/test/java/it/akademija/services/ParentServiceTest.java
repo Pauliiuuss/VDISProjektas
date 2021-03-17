@@ -11,11 +11,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -226,7 +222,7 @@ class ParentServiceTest {
 		user2.setId(2L);
 		when(userRepo.findAll()).thenReturn(Stream.of(user1, user2).collect(Collectors.toList()));
 		when(secondParentRepository.existsByPersonId(1L)).thenReturn(false);
-		parentService.addForm(request01);
+		assertEquals(200, parentService.addForm(request01).getStatusCodeValue());
 
 		assertEquals("Privaloma pasirinkti pirma prioriteta!",
 				parentService.updateForm(1L, request01).getBody().toString());
@@ -238,10 +234,15 @@ class ParentServiceTest {
 		request01.setKindergartenPriority(priority1);
 		when(formRepo.findById(1L)).thenReturn(Optional.of(childForm1));
 		when(userRepo.findById(0L)).thenReturn(Optional.of(user1));
+		when(formRepo.findAll()).thenReturn(Stream.of(childForm1).collect(Collectors.toList()));
 		request01.setName("newName");
 		priority1.setKindergartenOne("ONE");
 		request01.setKindergartenPriority(priority1);
+		assertEquals(1, formRepo.findAll().size());
 		assertEquals(200, parentService.updateForm(1L, request01).getStatusCodeValue());
+		assertEquals(1, formRepo.findAll().size());
+		assertEquals("newName", formRepo.findAll().stream().findFirst().get().getName());
+
 	}
 
 	@Test
@@ -284,21 +285,5 @@ class ParentServiceTest {
 		when(appStatusRepo.findAll()).thenReturn(Stream.of(status2).collect(Collectors.toList()));
 		assertEquals(true, parentService.getStatus().isRegistrationClosed());
 		assertEquals(true, parentService.getStatus().isSpecelistsDisabled());
-	}
-
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
 	}
 }
