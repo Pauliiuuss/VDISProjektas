@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="15" total="23" passed="8" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2021-03-17T20:00:25 EET" name="RegressionTests" finished-at="2021-03-17T20:01:57 EET" duration-ms="91917">
+    <groups>
+      <group name="regression">
+        <method signature="ChildRegistrationTest.pdfUploadTest()[pri:0, instance:Tests.ChildRegistrationTest@747edf66]" name="pdfUploadTest" class="Tests.ChildRegistrationTest"/>
+        <method signature="KindergartenAddToList.uploadKindergarenToList()[pri:0, instance:Tests.KindergartenAddToList@3d1cfad4]" name="uploadKindergarenToList" class="Tests.KindergartenAddToList"/>
+        <method signature="ParentAddPersonalDataTest.parentAddPersonalDataTest()[pri:0, instance:Tests.ParentAddPersonalDataTest@62230c58]" name="parentAddPersonalDataTest" class="Tests.ParentAddPersonalDataTest"/>
+        <method signature="ParentDeleteApplicationformTest.parentDeleteAplicationform()[pri:0, instance:Tests.ParentDeleteApplicationformTest@2cd2a21f]" name="parentDeleteAplicationform" class="Tests.ParentDeleteApplicationformTest"/>
+        <method signature="SpecialistAddPersonalDataTest.specialistAddPersonalDataTest()[pri:0, instance:Tests.SpecialistAddPersonalDataTest@2e55dd0c]" name="specialistAddPersonalDataTest" class="Tests.SpecialistAddPersonalDataTest"/>
+        <method signature="SpecialistCreateQueueTest.specialistCreateWithdrawQueue()[pri:0, instance:Tests.SpecialistCreateQueueTest@74455848]" name="specialistCreateWithdrawQueue" class="Tests.SpecialistCreateQueueTest"/>
+        <method signature="SpecialistPasswordChangeTest.specialistPasswordChangeTest()[pri:0, instance:Tests.SpecialistPasswordChangeTest@e7edb54]" name="specialistPasswordChangeTest" class="Tests.SpecialistPasswordChangeTest"/>
+        <method signature="StopAndUnlockSpecialistFunctionsTest.adminLockUnlockSpecialistFunctions()[pri:0, instance:Tests.StopAndUnlockSpecialistFunctionsTest@378542de]" name="adminLockUnlockSpecialistFunctions" class="Tests.StopAndUnlockSpecialistFunctionsTest"/>
+      </group> <!-- regression -->
+    </groups>
+    <test started-at="2021-03-17T20:00:25 EET" name="regression" finished-at="2021-03-17T20:01:57 EET" duration-ms="91917">
+      <class name="Tests.ChildRegistrationTest">
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:Tests.ChildRegistrationTest@747edf66]" started-at="2021-03-17T20:00:25 EET" name="openHomePage" finished-at="2021-03-17T20:00:30 EET" duration-ms="4113" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="pdfUploadTest()[pri:0, instance:Tests.ChildRegistrationTest@747edf66]" started-at="2021-03-17T20:00:30 EET" name="pdfUploadTest" finished-at="2021-03-17T20:00:44 EET" duration-ms="14209" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- pdfUploadTest -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:Tests.ChildRegistrationTest@747edf66]" started-at="2021-03-17T20:00:44 EET" name="tearDown" finished-at="2021-03-17T20:00:44 EET" duration-ms="358" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- Tests.ChildRegistrationTest -->
+      <class name="Tests.ParentAddPersonalDataTest">
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:Tests.ParentAddPersonalDataTest@62230c58]" started-at="2021-03-17T20:00:51 EET" name="openHomePage" finished-at="2021-03-17T20:00:54 EET" duration-ms="2938" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="parentAddPersonalDataTest()[pri:0, instance:Tests.ParentAddPersonalDataTest@62230c58]" started-at="2021-03-17T20:00:54 EET" name="parentAddPersonalDataTest" finished-at="2021-03-17T20:00:58 EET" duration-ms="3847" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- parentAddPersonalDataTest -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:Tests.ParentAddPersonalDataTest@62230c58]" started-at="2021-03-17T20:00:58 EET" name="tearDown" finished-at="2021-03-17T20:00:58 EET" duration-ms="352" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- Tests.ParentAddPersonalDataTest -->
+      <class name="Tests.SpecialistAddPersonalDataTest">
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:Tests.SpecialistAddPersonalDataTest@2e55dd0c]" started-at="2021-03-17T20:01:13 EET" name="openHomePage" finished-at="2021-03-17T20:01:15 EET" duration-ms="2826" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="specialistAddPersonalDataTest()[pri:0, instance:Tests.SpecialistAddPersonalDataTest@2e55dd0c]" started-at="2021-03-17T20:01:15 EET" name="specialistAddPersonalDataTest" finished-at="2021-03-17T20:01:20 EET" duration-ms="4647" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- specialistAddPersonalDataTest -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:Tests.SpecialistAddPersonalDataTest@2e55dd0c]" started-at="2021-03-17T20:01:20 EET" name="tearDown" finished-at="2021-03-17T20:01:20 EET" duration-ms="264" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- Tests.SpecialistAddPersonalDataTest -->
+      <class name="Tests.SpecialistCreateQueueTest">
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:Tests.SpecialistCreateQueueTest@74455848]" started-at="2021-03-17T20:01:20 EET" name="openHomePage" finished-at="2021-03-17T20:01:23 EET" duration-ms="2832" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="specialistCreateWithdrawQueue()[pri:0, instance:Tests.SpecialistCreateQueueTest@74455848]" started-at="2021-03-17T20:01:23 EET" name="specialistCreateWithdrawQueue" finished-at="2021-03-17T20:01:32 EET" duration-ms="9135" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- specialistCreateWithdrawQueue -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:Tests.SpecialistCreateQueueTest@74455848]" started-at="2021-03-17T20:01:32 EET" name="tearDown" finished-at="2021-03-17T20:01:33 EET" duration-ms="306" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- Tests.SpecialistCreateQueueTest -->
+      <class name="Tests.SpecialistPasswordChangeTest">
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:Tests.SpecialistPasswordChangeTest@e7edb54]" started-at="2021-03-17T20:01:33 EET" name="openHomePage" finished-at="2021-03-17T20:01:35 EET" duration-ms="2875" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="specialistPasswordChangeTest()[pri:0, instance:Tests.SpecialistPasswordChangeTest@e7edb54]" started-at="2021-03-17T20:01:35 EET" name="specialistPasswordChangeTest" finished-at="2021-03-17T20:01:40 EET" duration-ms="4882" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- specialistPasswordChangeTest -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:Tests.SpecialistPasswordChangeTest@e7edb54]" started-at="2021-03-17T20:01:40 EET" name="tearDown" finished-at="2021-03-17T20:01:41 EET" duration-ms="342" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- Tests.SpecialistPasswordChangeTest -->
+      <class name="Tests.StopAndUnlockSpecialistFunctionsTest">
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:Tests.StopAndUnlockSpecialistFunctionsTest@378542de]" started-at="2021-03-17T20:01:41 EET" name="openHomePage" finished-at="2021-03-17T20:01:43 EET" duration-ms="2845" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="adminLockUnlockSpecialistFunctions()[pri:0, instance:Tests.StopAndUnlockSpecialistFunctionsTest@378542de]" started-at="2021-03-17T20:01:43 EET" name="adminLockUnlockSpecialistFunctions" finished-at="2021-03-17T20:01:57 EET" duration-ms="13522" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- adminLockUnlockSpecialistFunctions -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:Tests.StopAndUnlockSpecialistFunctionsTest@378542de]" started-at="2021-03-17T20:01:57 EET" name="tearDown" finished-at="2021-03-17T20:01:57 EET" duration-ms="256" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- Tests.StopAndUnlockSpecialistFunctionsTest -->
+      <class name="Tests.AdminPageTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:Tests.AdminPageTest@73ee04c8]" started-at="2021-03-17T20:00:25 EET" name="setUp" finished-at="2021-03-17T20:00:25 EET" duration-ms="15" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+      </class> <!-- Tests.AdminPageTest -->
+      <class name="Tests.ParentDeleteApplicationformTest">
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:Tests.ParentDeleteApplicationformTest@2cd2a21f]" started-at="2021-03-17T20:00:58 EET" name="openHomePage" finished-at="2021-03-17T20:01:02 EET" duration-ms="3506" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="parentDeleteAplicationform()[pri:0, instance:Tests.ParentDeleteApplicationformTest@2cd2a21f]" started-at="2021-03-17T20:01:02 EET" name="parentDeleteAplicationform" finished-at="2021-03-17T20:01:12 EET" duration-ms="10459" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- parentDeleteAplicationform -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:Tests.ParentDeleteApplicationformTest@2cd2a21f]" started-at="2021-03-17T20:01:12 EET" name="tearDown" finished-at="2021-03-17T20:01:13 EET" duration-ms="277" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- Tests.ParentDeleteApplicationformTest -->
+      <class name="Tests.KindergartenAddToList">
+        <test-method is-config="true" signature="openHomePage()[pri:0, instance:Tests.KindergartenAddToList@3d1cfad4]" started-at="2021-03-17T20:00:44 EET" name="openHomePage" finished-at="2021-03-17T20:00:48 EET" duration-ms="3630" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- openHomePage -->
+        <test-method signature="uploadKindergarenToList()[pri:0, instance:Tests.KindergartenAddToList@3d1cfad4]" started-at="2021-03-17T20:00:48 EET" name="uploadKindergarenToList" finished-at="2021-03-17T20:00:51 EET" duration-ms="3120" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- uploadKindergarenToList -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:Tests.KindergartenAddToList@3d1cfad4]" started-at="2021-03-17T20:00:51 EET" name="tearDown" finished-at="2021-03-17T20:00:51 EET" duration-ms="275" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- Tests.KindergartenAddToList -->
+    </test> <!-- regression -->
+  </suite> <!-- RegressionTests -->
+</testng-results>

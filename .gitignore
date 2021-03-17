@@ -101,3 +101,5 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,maven,react
 
+# Automation
+/target/
