@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import Table from "./Table";
 import Dialog from "react-bootstrap-dialog";
-import ReactTooltip from 'react-tooltip';
+import ReactTooltip from "react-tooltip";
 
 class UsersTable extends Component {
-
   columns = [
     {
       path: "username",
@@ -16,7 +15,7 @@ class UsersTable extends Component {
       key: "delete",
       content: (user) => (
         <button
-        data-tip="Ištrinti"
+          data-tip="Ištrinti"
           onClick={() => {
             this.dialog.show({
               body: `Ištrinti naudotoją: ${user.username}`,
@@ -38,7 +37,8 @@ class UsersTable extends Component {
       key: "disable",
       content: (user) => (
         <button
-        data-tip="Deaktyvuoti"
+          hidden={true}
+          data-tip="Deaktyvuoti"
           onClick={() => {
             this.dialog.show({
               body: `Deaktyvuoti naudotoją: ${user.username}`,
@@ -60,7 +60,7 @@ class UsersTable extends Component {
       key: "reset",
       content: (user) => (
         <button
-        data-tip="Atstatyti slaptažodį"
+          data-tip="Atstatyti slaptažodį"
           onClick={() => {
             this.dialog.show({
               body: `Atstatyti slaptažodį naudotojui: ${user.username}`,
