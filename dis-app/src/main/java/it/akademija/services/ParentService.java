@@ -249,12 +249,12 @@ public class ParentService {
 	}
 
 	@Transactional
-	public void deleteFormById(Long id) {
+	public ResponseEntity<?> deleteFormById(Long id) {
 
 		ChildForm form = childFormRepository.findById(id).orElseThrow();
 		childFormRepository.deleteById(id);
 		Log.logMessage("Vaiko \"" + form.getName() + " " + form.getSurename() + "\" prašymas ištrintas.");
-		ResponseEntity.ok(new MessageResponse("Forma ištrinta!"));
+		return ResponseEntity.ok(new MessageResponse("Forma ištrinta!"));
 	}
 
 	@Transactional
