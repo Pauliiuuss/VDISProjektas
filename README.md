@@ -12,13 +12,14 @@ The project is for learning purpose.
 ### Technology Stack
 Component         | Technology
 ---               | ---
-Frontend          | React 16+
+Frontend          | React 16+ 
 Backend           | Spring Boot 2.1+, Java 11+
 Security          | Spring Security, JWT
 Database          | H2 Database
 Server            | TomcatApache 9.+
 Persistence       | JPA 
 API Documentation | Swagger-UI
+Testing           | JUnit, TestNG, Selenium
 
 ## Getting Started
 
@@ -39,19 +40,20 @@ mvn clean install org.codehaus.cargo:cargo-maven2-plugin:1.7.7:run -Dcargo.maven
 - Go to your project folder from your terminal
 - cd dis-ui
 - Run: `npm install` or `yarn install`
+- /services/LINK.js change const LINK = process.env.PUBLIC_URL to const LINK = 'http://localhost:8080'
 - After install, run: `npm run start` or `yarn start`
 - It will open your browser(http://localhost:3000)
 
 ### Database 
 - http://localhost:8080/console
 ```
-  datasource.url=jdbc:h2:file://tmp/
+  datasource.url=jdbc:h2:file://tmp/VDISDB000015.db
   username: sa
   password:
 ```
 
 ### Swagger UI
-- http://localhost:8080/swagger-ui.html
+- http://localhost:8080/swagger-ui/
 
 ***
 Copyright © 2021, PullStackTeam
